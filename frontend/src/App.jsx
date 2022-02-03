@@ -8,13 +8,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 export default function App() {
   return (
-    <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomeContainer />} />
           <Route path="/dressroom" element={<DressRoomContainer />} />
           <Route path="/login" element={<LoginContainer />} />
           <Route path="/signup" element={<SignupContainer />} />
         </Routes>
-    </BrowserRouter>
   );
 }

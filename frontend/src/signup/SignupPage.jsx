@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function SignupPage({ onChangeEmail, onChangePassword, onClickSubmit }) {
   return (
@@ -19,9 +20,11 @@ export default function SignupPage({ onChangeEmail, onChangePassword, onClickSub
       />
       <br />
       <button onClick={onClickSubmit}>가입</button>
-      <button onClick={() => {
-        window.location.pathname = '/'
-      }}>뒤로</button>
+      <Link to='/'>
+        <button>
+          뒤로
+        </button>
+      </Link>
     </div>
   );
 }
