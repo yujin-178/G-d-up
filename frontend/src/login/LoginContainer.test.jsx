@@ -7,6 +7,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 
 import { fireEvent, render } from "@testing-library/react";
+import { MemoryRouter } from 'react-router-dom';
 
 import LoginContainer from './LoginContainer.jsx';
 
@@ -16,20 +17,24 @@ beforeEach(() => {
   jest.clearAllMocks()
 });
 
+function renderLogin() {
+  return render((
+    <MemoryRouter>
+      <LoginContainer />
+    </MemoryRouter>
+  ));
+}
+
 describe('LoginContainer', () => {
   const dispatch = jest.fn();
   useDispatch.mockImplementation(() => dispatch)
 
   it('renders Login Page', () => {
-    render(
-      <LoginContainer />
-    );
+    renderLogin();
   });
 
   it('changes Login field', () => {
-    const { getByLabelText } = render(
-      <LoginContainer />
-    );
+    const { getByLabelText } = renderLogin();
 
     fireEvent.change(getByLabelText('email'), {
       target: { value: 'test@example.com' },
@@ -39,9 +44,7 @@ describe('LoginContainer', () => {
   });
   
   it('changes password field', () => {
-    const { getByLabelText } = render(
-      <LoginContainer />
-    );
+    const { getByLabelText } = renderLogin();
 
     fireEvent.change(getByLabelText('password'), {
       target: { value: 'passwordExample' },
@@ -49,16 +52,4 @@ describe('LoginContainer', () => {
 
     expect(dispatch).toBeCalled();
   });
-
-  // it('does login', () => {
-  //   const { getByLabelText } = render(
-  //     <LoginContainer />
-  //   );
-
-  //   fireEvent.click(getByLabelText('email'), {
-  //     target: { value: 'test@example.com' },
-  //   });
-
-  //   expect(dispatch).toBeCalled();
-  // });
 });

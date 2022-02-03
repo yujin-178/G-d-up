@@ -6,6 +6,7 @@ import React from 'react';
 import { render, fireEvent } from "@testing-library/react";
 
 import { useDispatch } from 'react-redux';
+import { MemoryRouter } from 'react-router-dom'; 
 
 import SignupContainer from './SignupContainer.jsx';
 
@@ -22,7 +23,9 @@ describe('SignupContainer', () => {
 
   it('renders SignupContainer page', () => {
     const { getByLabelText, getByText } = render((
-      <SignupContainer />
+      <MemoryRouter>
+        <SignupContainer />
+      </MemoryRouter>
     ));
 
     expect(getByLabelText('email')).not.toBeNull();
@@ -32,7 +35,9 @@ describe('SignupContainer', () => {
 
   it('changes email input field', () => {
     const { getByLabelText } = render((
-      <SignupContainer />
+      <MemoryRouter>
+        <SignupContainer />
+      </MemoryRouter>
     ));
 
     fireEvent.change(getByLabelText('email'), {
@@ -44,7 +49,9 @@ describe('SignupContainer', () => {
 
   it('changes password input field', () => {
     const { getByLabelText } = render((
-      <SignupContainer />
+      <MemoryRouter>
+        <SignupContainer />
+      </MemoryRouter>
     ));
 
     fireEvent.change(getByLabelText('password'), {

@@ -5,6 +5,7 @@
 import React from 'react';
 
 import { fireEvent, render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 
 import LoginPage from './LoginPage.jsx';
 
@@ -15,11 +16,13 @@ describe('LoginPage', () => {
 
   function renderLoginPage() {
     return render((
-      <LoginPage 
-        onChangeEmail={handleChangeEmail}
-        onClickLogin={handleClickLogin}
-        onChangePassword={handleChangePassword}
-      />
+      <MemoryRouter>
+        <LoginPage 
+          onChangeEmail={handleChangeEmail}
+          onClickLogin={handleClickLogin}
+          onChangePassword={handleChangePassword}
+        />
+      </MemoryRouter>
     ));
   }
 
