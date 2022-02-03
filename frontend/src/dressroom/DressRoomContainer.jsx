@@ -1,6 +1,5 @@
 import React from 'react';
 
-import ClosetContainer from './ClosetContainer.jsx';
 import { Link } from 'react-router-dom';
 
 export default function DressroomContainer() {
