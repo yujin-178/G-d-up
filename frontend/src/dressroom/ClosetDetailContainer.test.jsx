@@ -4,17 +4,17 @@
 
 import React from 'react';
 import { render } from "@testing-library/react";
-import DressRoomContainer from './DressRoomContainer.jsx';
+import ClosetDetailContainer from './ClosetDetailContainer.jsx';
 import { MemoryRouter } from 'react-router-dom';
 
-describe('DressRoomContainer', () => {
-  it('renders DressRoomContainer', () => {
+describe('ClosetDetailContainer', () => {
+  it('renders ClosetDetailContainer', () => {
     const { getByText } = render((
       <MemoryRouter>
-        <DressRoomContainer />
+        <ClosetDetailContainer />
       </MemoryRouter>
     ))
 
-    expect(getByText(/드레스룸/)).not.toBeNull();
+    expect(getByText(/상세정보/)).not.toBeNull();
   });
 });

@@ -5,11 +5,14 @@
 import React from 'react';
 import { render } from "@testing-library/react";
 import ClosetContainer from './ClosetContainer.jsx';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('ClosetContainer', () => {
   it('renders ClosetContainer', () => {
     const { getByText } = render((
-      <ClosetContainer />
+      <MemoryRouter>
+        <ClosetContainer />
+      </MemoryRouter>
     ))
 
     expect(getByText(/옷장/)).not.toBeNull();
