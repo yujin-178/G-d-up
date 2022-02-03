@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function AddClothesPage() {
+export default function AddClothesContainer() {
   return (
     <div>
       <h5>옷 추가</h5>

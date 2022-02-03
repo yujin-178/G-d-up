@@ -6,12 +6,12 @@ import React from 'react';
 
 import { render } from '@testing-library/react';
 
-import HomePage from './HomePage.jsx';
+import HomeContainer from './HomeContainer.jsx';
 
-describe('HomePage', () => {
-  it('renders Home Page', () => {
+describe('HomeContainer', () => {
+  it('renders Home Container', () => {
     const { getByText } = render((
-      <HomePage />
+      <HomeContainer />
     ));
 
     expect(getByText(/Home/)).not.toBeNull();

@@ -4,15 +4,16 @@
 
 import React from 'react';
 import { render } from "@testing-library/react";
-import ClosetPage from './ClosetPage.jsx';
+import AddClothesContainer from './AddClothesContainer.jsx';
 
-describe('ClosetPage', () => {
-  it('renders ClosetPage', () => {
+describe('AddClothesContainer', () => {
+  it('renders AddClothesContainer', () => {
+
+
     const { getByText } = render((
-      <ClosetPage />
+      <AddClothesContainer />
     ))
 
-    expect(getByText(/옷장/)).not.toBeNull();
     expect(getByText(/옷 추가/)).not.toBeNull();
   });
 });
