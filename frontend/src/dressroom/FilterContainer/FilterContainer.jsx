@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { filteredClothesSelector } from '../../filterSelector';
 import Categories from '../../components/Categories/Categories.jsx';
 import ClosetSidebar from '../../components/ClosetSidebar/ClosetSidebar.jsx';
 import {
@@ -10,6 +11,7 @@ import {
 
 function FilterContainer() {
   const dispatch = useDispatch();
+  const filteredClothes = useSelector(filteredClothesSelector);
   const filter = useSelector(state => state.filterSlice);
   const { category, colors } = filter;
 
