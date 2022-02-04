@@ -2,7 +2,7 @@ import React from 'react';
 import HomeContainer from './HomeContainer.jsx';
 import LoginContainer from './login/LoginContainer.jsx';
 import SignupContainer from './signup/SignupContainer.jsx';
-import ClosetContainer from './dressroom/ClosetContainer.jsx';
+import ClosetContainer from './dressroom/closet/ClosetContainer.jsx';
 
 import DressRoomContainer from './dressroom/DressRoomContainer.jsx';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
