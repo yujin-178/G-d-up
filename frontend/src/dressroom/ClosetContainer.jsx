@@ -18,13 +18,13 @@ export default function ClosetContainer() {
       <h5>옷장</h5>
       <FilterContainer />
       <ClosetItemListContainer />
-      <div>
       <button
-      onClick={()=> dispatch(changemodalIsOpen(true))}
-      >옷 추가</button>
-      <AddClothesContainer 
+        onClick={() => dispatch(changemodalIsOpen(true))}
+      >
+        옷 추가
+      </button>
+      <AddClothesContainer
       />
-      </div>
       <Link to='/dressroom'>
         <button>
           뒤로
