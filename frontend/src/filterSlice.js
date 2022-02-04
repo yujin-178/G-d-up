@@ -19,11 +19,45 @@ export const filterSlice = createSlice({
         category
       };
     },
+    changeSeasonFilter(state, action) {
+      const { isChecked, season } = action.payload;
+      if (isChecked) {
+        return {
+          ...state,
+          season: [...state.season, season]
+        };
+      }
+
+      const excluded = state.season.filter(item => item != season);
+      return {
+        ...state,
+        season: excluded
+      };
+    },
+    changeColorFilter(state, action) {
+      const selectedColors = state.colors;
+      const color = action.payload;
+
+      if (selectedColors.includes(color)) {
+        const removed = selectedColors.filter(item => item != color);
+        return {
+          ...state,
+          colors: [...removed]
+        };
+      }
+
+      return {
+        ...state,
+        colors: [...selectedColors, color]
+      };
+    },
   },
 });
 
 export const {
   changeCategoryFilter,
+  changeSeasonFilter,
+  changeColorFilter,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

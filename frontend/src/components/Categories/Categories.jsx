@@ -23,7 +23,7 @@ const ulStayle = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: beige;
+  background-color: #FFFAFA;
   height: 3rem;
   width: 50%;
 `;
