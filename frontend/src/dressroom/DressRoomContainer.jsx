@@ -22,20 +22,52 @@ export default function DressRoomContainer() {
     height: 100%;
   `
 
+  const Button = css`
+    margin: 0;
+    padding: 0.5rem 1rem;
+
+    font-family: "Noto Sans KR", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none;
+
+    display: inline-block;
+    width: auto;
+
+    border: none;
+    border-radius: 4px;
+  `
+
+  const FlexContainer = css`
+    display: flex;
+    justify-content: space-between;
+  `
+
   return (
     <div css={Container}>
       <div css={DressRoom}>
         <h2 css={Title}>드레스룸</h2>
-        <Link to='/closet'>
-          <button>
-            옷장 가기
-          </button>
-        </Link>
-        <Link to='/'>
-          <button>
-            뒤로
-          </button>
-        </Link>
+        <div css={FlexContainer}>
+          <div>
+          </div>
+          <div>
+          </div>
+          <div>
+          </div>
+          <div>
+            <Link to='/closet'>
+              <button css={Button}>
+                옷장 가기
+              </button>
+            </Link>
+            <Link to='/'>
+              <button css={Button}>
+                뒤로
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
 
