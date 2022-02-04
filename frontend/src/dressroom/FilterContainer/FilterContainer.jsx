@@ -11,7 +11,6 @@ import {
 
 function FilterContainer() {
   const dispatch = useDispatch();
-  const filteredClothes = useSelector(filteredClothesSelector);
   const filter = useSelector(state => state.filterSlice);
   const { category, colors } = filter;
 
