@@ -1,12 +1,17 @@
 import React from 'react';
 
-import ClosetContainer from './ClosetContainer.jsx';
 import { Link } from 'react-router-dom';
 
-export default function DressroomContainer() {
+import { css, jsx } from "@emotion/react";
+
+export default function DressRoomContainer() {
+  const Title = css`
+    background-color: hotpink;
+  `
+
   return (
     <div>
-      <h5>드레스룸</h5>
+      <h2 css={Title}>드레스룸</h2>
         <Link to='/closet'>
           <button>
             옷장 가기
