@@ -17,10 +17,21 @@ function ClosetSidebar(props) {
     toggleIsUserItem,
     onChangeSeason,
     onChangeColor,
+    customTags,
+    deleteCustomHandler,
+    inputRef,
+    onKeyPress,
   } = props;
 
   return (
     <aside css={sidebarStyle}>
+      <input
+        ref={inputRef}
+        css={searchInputStyle}
+        type="text"
+        placeholder="태그 입력"
+        onKeyPress={onKeyPress}
+      />
       <button onClick={toggleIsUserItem}>
         내 것만 보기 {`${isUserItem}`}
       </button>
@@ -42,6 +53,16 @@ function ClosetSidebar(props) {
                 onClick={() => onChangeColor(color)}
               >
               </button>
+            </li>
+          )
+        })}
+      </ul>
+      <ul>
+        {customTags.map((value, index) => {
+          return (
+            <li key={index}>
+              {value}
+              <button onClick={() => deleteCustomHandler(value)}>x</button>
             </li>
           )
         })}

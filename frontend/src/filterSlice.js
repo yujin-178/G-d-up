@@ -57,6 +57,25 @@ export const filterSlice = createSlice({
         colors: [...selectedColors, color]
       };
     },
+    addCustomFilter(state, action) {
+      const value = action.payload;
+      if (state.custom.indexOf(value) === -1) {
+        return {
+          ...state,
+          custom: [...state.custom, value]
+        };
+      }
+
+      return state;
+    },
+    deleteCustomFilter(state, action) {
+      const value = action.payload;
+      const removed = state.custom.filter(item => item !== value);
+      return {
+        ...state,
+        custom: removed
+      };
+    }
   },
 });
 
@@ -65,6 +84,8 @@ export const {
   changeIsUserItemFilter,
   changeSeasonFilter,
   changeColorFilter,
+  addCustomFilter,
+  deleteCustomFilter,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

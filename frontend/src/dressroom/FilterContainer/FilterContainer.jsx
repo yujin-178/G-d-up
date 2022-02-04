@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { filteredClothesSelector } from '../../filterSelector';
 import Categories from '../../components/Categories/Categories.jsx';
@@ -8,12 +8,27 @@ import {
   changeIsUserItemFilter,
   changeSeasonFilter,
   changeColorFilter,
+  addCustomFilter,
+  deleteCustomFilter,
 } from '../../filterSlice';
 
 function FilterContainer() {
+  const inputRef = useRef();
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filterSlice);
-  const { category, isUserItem, colors } = filter;
+  const { category, isUserItem, colors, custom } = filter;
+
+  const onKeyPress = event => {
+    if (event.key === 'Enter') {
+      const value = inputRef.current.value;
+      dispatch(addCustomFilter(value));
+      inputRef.current.value = '';
+    }
+  };
+
+  const deleteCustomHandler = value => {
+    dispatch(deleteCustomFilter(value));
+  };
 
   const categoryHandler = categoryName => {
     if (category !== categoryName) {
@@ -48,6 +63,10 @@ function FilterContainer() {
         toggleIsUserItem={userToggleHandler}
         onChangeSeason={seasonHandler}
         onChangeColor={colorHandler}
+        customTags={custom}
+        deleteCustomHandler={deleteCustomHandler}
+        inputRef={inputRef}
+        onKeyPress={onKeyPress}
       />
     </>
   )
