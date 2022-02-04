@@ -1,6 +1,10 @@
-import reducer from './reducer.js';
-import { createStore } from 'redux';
+import { configureStore } from '@reduxjs/toolkit';
+import filterSlice from './filterSlice';
+import clothesSlice from './clothesSlice';
 
-const store = createStore(reducer);
-
-export default store;
+export default configureStore({
+    reducer: {
+        filterSlice,
+        clothesSlice,
+    }
+});

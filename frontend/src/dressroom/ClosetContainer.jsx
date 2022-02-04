@@ -16,6 +16,7 @@ export default function ClosetContainer() {
   return (
     <div>
       <h5>옷장</h5>
+      <FilterContainer />
       <ClosetItemListContainer />
       <div>
       <button
