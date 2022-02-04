@@ -1,5 +1,5 @@
 package com.web.gdup.domain.cody.service;
 
-public class codyService {
+public class CodyService {
 
 }
