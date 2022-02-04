@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import { css } from '@emotion/react'
 
 const filters = {
@@ -10,9 +10,20 @@ const filters = {
   //'beige, black, brown, navy, green, grey, light blue, orange, pink, purple, red, silver, turquoise, white, yellow'
 }
 
-function ClosetSidebar({ selectedColors, onChangeSeason, onChangeColor }) {
+function ClosetSidebar(props) {
+  const {
+    selectedColors,
+    isUserItem,
+    toggleIsUserItem,
+    onChangeSeason,
+    onChangeColor,
+  } = props;
+
   return (
     <aside css={sidebarStyle}>
+      <button onClick={toggleIsUserItem}>
+        내 것만 보기 {`${isUserItem}`}
+      </button>
       <ul css={seasonItems}> 계절
         {filters.season.map((item, index) => (
           <li key={index} css={ItemList}>
@@ -53,7 +64,6 @@ const searchInputStyle = css`
   border: 0;
   outline: none;
   height: 35px;
-  background: #333;
   border-radius: 5px;
   width: 100%;
 `
@@ -87,7 +97,7 @@ const colorButton = ({ color, isSelected }) => css`
   border: 0;
   margin: 5px;
   ${isSelected &&
-    `
+  `
       border: 3px solid gold;
     `}
 `

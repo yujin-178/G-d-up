@@ -14,7 +14,6 @@ function Category ({ item, isSelected, handleClick }) {
   );
 }
 
-
 const liStyle = css`
   list-style-type: none;
 `

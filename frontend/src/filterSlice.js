@@ -19,6 +19,12 @@ export const filterSlice = createSlice({
         category
       };
     },
+    changeIsUserItemFilter(state) {
+      return {
+        ...state,
+        isUserItem: !state.isUserItem
+      };
+    },
     changeSeasonFilter(state, action) {
       const { isChecked, season } = action.payload;
       if (isChecked) {
@@ -28,10 +34,10 @@ export const filterSlice = createSlice({
         };
       }
 
-      const excluded = state.season.filter(item => item != season);
+      const removed = state.season.filter(item => item !== season);
       return {
         ...state,
-        season: excluded
+        season: removed
       };
     },
     changeColorFilter(state, action) {
@@ -39,7 +45,7 @@ export const filterSlice = createSlice({
       const color = action.payload;
 
       if (selectedColors.includes(color)) {
-        const removed = selectedColors.filter(item => item != color);
+        const removed = selectedColors.filter(item => item !== color);
         return {
           ...state,
           colors: [...removed]
@@ -56,6 +62,7 @@ export const filterSlice = createSlice({
 
 export const {
   changeCategoryFilter,
+  changeIsUserItemFilter,
   changeSeasonFilter,
   changeColorFilter,
 } = filterSlice.actions;
