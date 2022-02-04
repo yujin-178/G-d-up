@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { filteredClothesSelector } from '../../filterSelector';
-import Categories from '../../components/Categories/Categories.jsx';
-import ClosetSidebar from '../../components/ClosetSidebar/ClosetSidebar.jsx';
+import Categories from '../../components/categories/Categories.jsx';
+import ClosetSidebar from '../../components/closetSidebar/ClosetSidebar.jsx';
 import {
   changeCategoryFilter,
   changeSeasonFilter,

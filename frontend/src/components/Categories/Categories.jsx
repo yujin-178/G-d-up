@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import Category from '../Category/Category.jsx';
+import Category from '../category/Category.jsx';
 
 const categories = ['all', 'top', 'bottom', 'shoes', 'outer', 'accessories'];
 

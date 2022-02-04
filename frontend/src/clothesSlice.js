@@ -1,35 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { clothesData } from '../fixtures/clothesList';
 
-const initialState = [
-  {
-    'image': 'image1',
-    'category': 'top',
-    'season': ['summer', 'spring'],
-    'colors': ['red', 'blue'],
-    'custom': ['daily']
-  },
-  {
-    'image': 'image2',
-    'category': 'top',
-    'season': ['autumn, winter'],
-    'colors': ['white'],
-    'custom': ['daily']
-  },
-  {
-    'image': 'image3',
-    'category': 'bottom',
-    'season': ['summer'],
-    'colors': ['black', 'grey'],
-    'custom': ['출근']
-  },
-  {
-    'image': 'image4',
-    'category': 'outer',
-    'season': ['winter'],
-    'colors': ['beige', 'yellow'],
-    'custom': ['daily']
-  },
-];
+const initialState = clothesData;
 
 export const clothesSlice = createSlice({
   name: 'clothesSlice',
