@@ -15,3 +15,12 @@ export function changePasswordField(password) {
     },
   };
 }
+
+export function changemodalIsOpen(modalIsOpen){
+  return{
+    type: 'changemodalIsOpen',
+    payload: {
+      modalIsOpen,
+    }
+  }
+}
