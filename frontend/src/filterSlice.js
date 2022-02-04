@@ -12,9 +12,18 @@ export const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
-    //to-do
+    changeCategoryFilter(state, action) {
+      const category = action.payload;
+      return {
+        ...state,
+        category
+      };
+    },
   },
 });
 
-export default filterSlice.reducer;
+export const {
+  changeCategoryFilter,
+} = filterSlice.actions;
 
+export default filterSlice.reducer;
