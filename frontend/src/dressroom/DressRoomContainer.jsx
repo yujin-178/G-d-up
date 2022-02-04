@@ -40,8 +40,12 @@ export default function DressRoomContainer() {
   `
 
   const FlexContainer = css`
-    display: flex;
+    display: grid;
     justify-content: space-between;
+  `
+
+  const ClosetContainer = css`
+    grid-column: 3;
   `
 
   return (
@@ -49,13 +53,7 @@ export default function DressRoomContainer() {
       <div css={DressRoom}>
         <h2 css={Title}>드레스룸</h2>
         <div css={FlexContainer}>
-          <div>
-          </div>
-          <div>
-          </div>
-          <div>
-          </div>
-          <div>
+          <div css={ClosetContainer}>
             <Link to='/closet'>
               <button css={Button}>
                 옷장 가기
@@ -70,6 +68,5 @@ export default function DressRoomContainer() {
         </div>
       </div>
     </div>
-
   )
 }
