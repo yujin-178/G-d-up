@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { css } from '@emotion/react'
 
 const filters = {
@@ -32,9 +32,12 @@ function ClosetSidebar(props) {
         placeholder="태그 입력"
         onKeyPress={onKeyPress}
       />
-      <button onClick={toggleIsUserItem}>
-        내 것만 보기 {`${isUserItem}`}
-      </button>
+      <section css={toggleContainer}>
+        <div css={toggleBtn({ isUserItem })} onClick={toggleIsUserItem}>
+          <div css={toggleBtnCircle({ isUserItem })}></div>
+        </div>
+        <p css={toggleTitle}>내 옷만 보기</p>
+      </section>
       <ul css={seasonItems}> 계절
         {filters.season.map((item, index) => (
           <li key={index} css={ItemList}>
@@ -67,18 +70,18 @@ function ClosetSidebar(props) {
           )
         })}
       </ul>
-    </aside>
+    </aside >
   );
 }
 
 const sidebarStyle = css`
   position: relative;
-  background-color: #FFFAFA;
   border: 1px solid blue;
   width: 300px;
   height: 50%;
   box-sizing: border-box;
   padding: 30px 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.l);
 `
 
 const searchInputStyle = css`
@@ -108,7 +111,6 @@ const colorItems = css`
   flex-wrap: wrap;
 `
 
-
 const colorButton = ({ color, isSelected }) => css`
   background-color: #${color};
   height: 20px;
@@ -119,8 +121,40 @@ const colorButton = ({ color, isSelected }) => css`
   margin: 5px;
   ${isSelected &&
   `
-      border: 3px solid gold;
-    `}
+    border: 3px solid gold;
+  `}
+`
+
+const toggleContainer = css`
+  display: flex;
+`
+
+const toggleTitle = css`
+  margin-left: 10px;
+`
+
+const toggleBtn = ({ isUserItem }) => css`
+  width: 80px;
+  height: 40px;
+  background: grey;
+  border-radius: 30px;
+  transition: all 300ms ease-in-out;
+  ${isUserItem &&
+  `
+  background: #00acee;
+  `}
+`
+
+const toggleBtnCircle = ({ isUserItem }) => css`
+  width: 40px;
+  height: 40px;
+  background-color: white;
+  border-radius: 50%;
+  transition: all 300ms ease-in-out;
+  ${isUserItem &&
+  `
+  margin-left: 50%;
+  `}
 `
 
 export default ClosetSidebar;
