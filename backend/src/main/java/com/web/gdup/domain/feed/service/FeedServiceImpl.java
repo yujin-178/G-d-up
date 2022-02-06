@@ -5,7 +5,7 @@ import com.web.gdup.domain.feed.repository.FeedRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service // service 어노테이션을 통해 해당 클래스가 service라는 것을 인식
 public class FeedServiceImpl implements FeedService {
@@ -23,7 +23,11 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public Optional<FeedDto> getAllFeed() {
+    public List<FeedDto> getAllFeed() {
+
+        List<FeedDto> feeds = feedRepository.findAll();
+        if(feeds.size() != 0)
+            return feeds;
         return null;
     }
 
