@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server",
-    "build": "webpack --progress --mode production",
+    "build": "webpack --progress --mode production"
   },
   "proxy": "http://localhost:8080",
   "keywords": [],
