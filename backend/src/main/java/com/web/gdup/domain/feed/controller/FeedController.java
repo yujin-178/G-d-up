@@ -5,10 +5,7 @@ import com.web.gdup.domain.feed.dto.FeedDto;
 import com.web.gdup.domain.feed.service.FeedService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,5 +37,35 @@ public class FeedController {
         System.out.println(feed);
     }
 
+    @PostMapping("/write")
+    @ApiOperation(value = "Feed 작성하기 " , notes = "새로운 피드 글을 작성한다. ")
+    public void insertFeed(@RequestBody FeedDto feed){
+        System.out.println(feed);
 
+        feedService.insertFeed(feed);
+    }
+
+    public void modifyFeed(){
+
+    }
+
+    public void deleteFeed(){
+
+    }
+
+    public void pushLike(){
+
+    }
+
+    public void writeComment(){
+
+    }
+
+    public void modifyComment(){
+
+    }
+
+    public void deleteComment(){
+
+    }
 }

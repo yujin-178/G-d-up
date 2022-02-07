@@ -8,7 +8,7 @@ public interface FeedService {
 
     FeedDto getFeed(int feed_id);
     List<FeedDto> getAllFeed();
-    boolean insertFeed();
+    boolean insertFeed(FeedDto feed);
     boolean deleteFeed();
     FeedDto modifyFeed();
 }

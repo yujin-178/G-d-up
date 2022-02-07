@@ -32,7 +32,10 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public boolean insertFeed() {
+    public boolean insertFeed(FeedDto feed) {
+
+        feedRepository.save(feed);
+
         return false;
     }
 
