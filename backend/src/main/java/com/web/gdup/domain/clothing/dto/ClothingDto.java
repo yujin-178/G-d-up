@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 public class ClothingDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cothingid")
     private int clothingId;
 
     private String age;
@@ -36,12 +37,14 @@ public class ClothingDto {
     private String subcategory;
     private String season;
     @CreatedDate
+    @Column(name = "registrationdate")
     private LocalDateTime registrationDate;
 
     @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "imageId")
+    @JoinColumn(name = "imageid")
     private ImageDto imageModel;
 
+    @Column(name = "username")
     private String userName;
 
     @Builder
