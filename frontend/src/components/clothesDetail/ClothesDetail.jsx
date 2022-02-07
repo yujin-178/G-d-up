@@ -1,9 +1,7 @@
 import React from 'react';
-import { css } from '@emotion/react'
+import { css } from '@emotion/react';
 
-const allSeason = ['봄', '여름', '가을', '겨울'];
-
-export default function ClothesDetail({ selectedClothes, deleteHander }) {
+export default function ClothesDetail({ selectedClothes, deleteHander, allSeason }) {
   const {
     image,
     category,
