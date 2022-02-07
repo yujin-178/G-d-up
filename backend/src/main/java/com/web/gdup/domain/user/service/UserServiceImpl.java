@@ -16,6 +16,7 @@ public class UserServiceImpl implements  UserService{
     @Override
     public Optional<UserDto> login(String email, String password) {
         Optional<UserDto> user = userRepository.findUserByEmailAndPassword(email, password);
+        System.out.println(user);
         return user;
     }
 }
