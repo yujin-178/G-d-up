@@ -116,6 +116,19 @@ public class ClothingService implements ClothingServiceImpl{
 
     @Override
     public void deleteClothing(int clothingId) {
+        ClothingDto cDto = clothingRepository.getOne(clothingId);
+        String removeUrl = cDto.getImageModel().getImagePath();
+
+        File file = new File(removeUrl);
+        if(file.exists()) {
+            if(file.delete())
+                System.out.println("삭제 완료");
+            else
+                System.out.println("삭제 실패");
+        } else {
+            System.out.println("파일이 존재하지 않습니다.");
+        }
+
         clothingRepository.deleteById(clothingId);
     }
 

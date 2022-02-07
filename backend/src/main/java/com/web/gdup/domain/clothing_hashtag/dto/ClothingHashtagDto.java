@@ -1,9 +1,6 @@
 package com.web.gdup.domain.clothing_hashtag.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,6 +12,7 @@ import java.time.LocalDateTime;
 @Table(name = "clothing_hashtag")
 @IdClass(ClothingHashtagID.class)
 @ToString
+@Builder
 @Getter
 public class ClothingHashtagDto implements Serializable {
     @Id
@@ -25,5 +23,6 @@ public class ClothingHashtagDto implements Serializable {
     @Column(name = "clothingid")
     private int clothingId;
 
+    @Column(name = "registrationdate")
     private LocalDateTime registrationDate;
 }

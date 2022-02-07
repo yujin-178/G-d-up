@@ -25,6 +25,6 @@ public class HashtagService implements HashtagServiceImpl{
                 .orElse(HashtagDto.builder()
                         .tagName(tagName)
                         .build());
-        return hashtag;
+        return hashtagRepository.save(hashtag);
     }
 }
