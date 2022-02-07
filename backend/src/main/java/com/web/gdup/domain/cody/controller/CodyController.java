@@ -66,7 +66,7 @@ public class CodyController {
         return new ResponseEntity<String>("삭제 성공", HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping(value = "/update/{code_id}")
     @ApiOperation(
             value = "코디 수정",
             notes = "cody_id를 받아서 해당 코디를 수정합니다."
@@ -74,6 +74,7 @@ public class CodyController {
     public ResponseEntity<String> UpdateCody(@PathVariable(name = "cody_id") String cody_id){
         return new ResponseEntity<String>("수정 성공", HttpStatus.OK);
     }
+
 
 
 
