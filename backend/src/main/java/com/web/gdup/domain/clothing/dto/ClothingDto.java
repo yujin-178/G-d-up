@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class ClothingDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int clothing_id;
+    private int clothingId;
 
     private String age;
     private String color;
@@ -36,18 +36,17 @@ public class ClothingDto {
     private String subcategory;
     private String season;
     @CreatedDate
-    private LocalDateTime registration_date;
+    private LocalDateTime registrationDate;
 
     @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "image_id")
+    @JoinColumn(name = "imageId")
     private ImageDto imageModel;
 
-    @Column(nullable = false, name = "user_name")
     private String userName;
 
     @Builder
-    public ClothingDto(int clothing_id, String age, String color, String cut, String design, String gender, String hood, String layers, String length, String material, String neckline, String pattern, String sleeves, String style, String subcategory, String season, ImageDto imageModel, String userName, LocalDateTime registration_date) {
-        this.clothing_id = clothing_id;
+    public ClothingDto(int clothingId, String age, String color, String cut, String design, String gender, String hood, String layers, String length, String material, String neckline, String pattern, String sleeves, String style, String subcategory, String season, ImageDto imageModel, String userName, LocalDateTime registrationDate) {
+        this.clothingId = clothingId;
         this.age = age;
         this.color = color;
         this.cut = cut;
@@ -63,7 +62,7 @@ public class ClothingDto {
         this.style = style;
         this.subcategory = subcategory;
         this.season = season;
-        this.registration_date = registration_date;
+        this.registrationDate = registrationDate;
         this.imageModel = imageModel;
         this.userName = userName;
     }

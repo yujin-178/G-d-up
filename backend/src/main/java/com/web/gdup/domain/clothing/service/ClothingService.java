@@ -89,45 +89,45 @@ public class ClothingService implements ClothingServiceImpl{
         UUID uuid = UUID.randomUUID();
 
         String originImageName = file.getOriginalFilename();
-        String imageName = uuid.toString()+"_"+originImageName;
+        String image_name = uuid.toString()+"_"+originImageName;
 
         String savePath = "C:\\SSAFY\\download";
 
-        String imagePath = savePath + "\\" + imageName;
+        String imagePath = savePath + "\\" + image_name;
         try {
             file.transferTo(new File(imagePath));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        ImageDto imageModel = ImageDto.builder()
-                .image_name(originImageName)
-                .new_image_name(imageName)
-                .image_path(imagePath)
+        ImageDto image = ImageDto.builder()
+                .imageName(originImageName)
+                .newImageName(image_name)
+                .imagePath(imagePath)
                 .build();
-
-        int imageId = imageService.insertImage(imageModel);
+        System.out.println("여기까지");
+        int imageId = imageService.insertImage(image);
         ImageDto iDto = imageService.getImage(imageId);
 
         clothing.mapImage(iDto);
-        return clothingRepository.save(clothing).getClothing_id();
+        return clothingRepository.save(clothing).getClothingId();
     }
 
     @Override
     @Transactional
-    public ClothingDto getClothing(int id) {
-        ClothingDto clothing = clothingRepository.findById(id).get();
+    public ClothingDto getClothing(int clothingId) {
+        ClothingDto clothing = clothingRepository.findById(clothingId).get();
         return clothing;
     }
 
     @Override
-    public void deleteClothing(int clothing_id) {
-        clothingRepository.deleteById(clothing_id);
+    public void deleteClothing(int clothingId) {
+        clothingRepository.deleteById(clothingId);
     }
 
     @Override
-    public List<ClothingDto> getUserClothing(String user_name) {
-        return clothingRepository.findByUserName(user_name);
+    public List<ClothingDto> getUserClothing(String userName) {
+        return clothingRepository.findByUserName(userName);
     }
 
     private String urlParser(String str) throws IOException, ParseException {

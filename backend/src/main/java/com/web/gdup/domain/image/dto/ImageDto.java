@@ -16,19 +16,19 @@ import javax.persistence.*;
 public class ImageDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int image_id;
+    private int imageId;
 
-    private String image_name;
+    private String imageName;
 
-    private String new_image_name;
+    private String newImageName;
 
-    private String image_path;
+    private String imagePath;
 
     @Builder
-    public ImageDto(int image_id, String image_name, String new_image_name, String image_path) {
-        this.image_id = image_id;
-        this.image_name = image_name;
-        this.new_image_name = new_image_name;
-        this.image_path = image_path;
+    public ImageDto(int imageId, String imageName, String newImageName, String imagePath) {
+        this.imageId = imageId;
+        this.imageName = imageName;
+        this.newImageName = newImageName;
+        this.imagePath = imagePath;
     }
 }

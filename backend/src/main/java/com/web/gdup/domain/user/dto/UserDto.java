@@ -21,7 +21,7 @@ import javax.persistence.Table;
 public class UserDto {
 
     @Id
-    private String user_name;
+    private String userName;
 
 
     private String password;

@@ -40,22 +40,22 @@ public class ClothingController {
         return new ResponseEntity<String>("SUCESS", HttpStatus.OK);
     }
 
-    @GetMapping("/detail/{clothing_id}")
+    @GetMapping("/detail/{clothingId}")
     @ApiOperation(value = "옷 상세보기")
-    public ResponseEntity<ClothingDto> getClothing(@PathVariable("clothing_id") int clothing_id) {
-        return new ResponseEntity<ClothingDto>(clothingService.getClothing(clothing_id), HttpStatus.OK);
+    public ResponseEntity<ClothingDto> getClothing(@PathVariable("clothingId") int clothingId) {
+        return new ResponseEntity<ClothingDto>(clothingService.getClothing(clothingId), HttpStatus.OK);
     }
 
-    @GetMapping("/list/{user_name}")
+    @GetMapping("/list/{userName}")
     @ApiOperation(value = "옷 리스트 - 사용자 id 필요")
-    public ResponseEntity<List<ClothingDto>> getAllClothing(@PathVariable("user_name") String user_name) {
-        return new ResponseEntity<List<ClothingDto>>(clothingService.getUserClothing(user_name), HttpStatus.OK);
+    public ResponseEntity<List<ClothingDto>> getAllClothing(@PathVariable("userName") String userName) {
+        return new ResponseEntity<List<ClothingDto>>(clothingService.getUserClothing(userName), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{clothing_id}")
+    @DeleteMapping("/{clothingId}")
     @ApiOperation(value = "옷 삭제")
-    public ResponseEntity<String> deleteClothing(@PathVariable("clothing_id") int clothing_id) {
-        clothingService.deleteClothing(clothing_id);
+    public ResponseEntity<String> deleteClothing(@PathVariable("clothingId") int clothingId) {
+        clothingService.deleteClothing(clothingId);
         return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     }
 }
