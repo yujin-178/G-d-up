@@ -169,7 +169,7 @@ const Container = css`
 
 const imgContainer = css`
 	grid-column: 2;
-	display: block;
+	display: flex;
 	margin-top: 5rem;
 	border: 1px solid black;
 	width: 400px;
@@ -178,7 +178,9 @@ const imgContainer = css`
 `
 
 const previewImg = css`
-	position: absolute;
+	position: relative;
+	justify-content: center;
+	align-items:center;
 	max-width: 95%;
 	max-height: 95%;
 	width: auto;
