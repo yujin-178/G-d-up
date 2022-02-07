@@ -1,7 +1,6 @@
 package com.web.gdup.domain.user.controlller;
 
 import com.web.gdup.domain.follow.dto.FollowDto;
-import com.web.gdup.domain.follow.repository.FollowRepository;
 import com.web.gdup.domain.follow.service.FollowService;
 import com.web.gdup.domain.model.BasicResponse;
 import com.web.gdup.domain.user.dto.UserDto;
@@ -21,7 +20,6 @@ import java.util.Optional;
 public class UserController {
 
     @Autowired
-
     private UserService userService;
 
     @Autowired
@@ -114,4 +112,22 @@ public class UserController {
         return response;
     }
 
+    @GetMapping("/follow")
+    @ApiOperation(value = "팔로우 하기", notes = "현재 로그인 한 유저가 타 유저를 팔로우 하는 기능" +
+            "파라미터로 현재 로그인된 유저의 name 과 팔로우 하고자 하는 유저의 name이 필요하다.")
+    public Object follow(@RequestParam (required = true) final String userName, @RequestParam(required = true) final String following){
+
+        ResponseEntity response = null;
+
+        if(followService.follow(userName,following)){
+            final BasicResponse result = new BasicResponse();
+            result.status = true;
+            result.data = "success";
+            response = new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        else {
+            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return response;
+    }
 }
