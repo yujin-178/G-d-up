@@ -1,4 +1,4 @@
-package com.web.gdup.domain.model;
+package com.web.gdup.domain.image.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Builder;
@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Getter
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "image")
 public class ImageModel {

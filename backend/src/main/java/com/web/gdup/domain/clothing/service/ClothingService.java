@@ -4,7 +4,7 @@ import com.web.gdup.domain.clothing.dto.ClothingDto;
 import com.web.gdup.domain.clothing.entity.ClothingEntity;
 import com.web.gdup.domain.clothing.repository.ClothingApiRepositoryImpl;
 import com.web.gdup.domain.clothing.repository.ClothingRepository;
-import com.web.gdup.domain.model.ImageDto;
+import com.web.gdup.domain.image.dto.ImageModel;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -79,9 +79,9 @@ public class ClothingService implements ClothingServiceImpl{
 
     @Override
     @Transactional
-    public int insertClothing(ClothingDto clothingDto, ImageDto imageDto) {
+    public int insertClothing(ClothingDto clothingDto, ImageModel image) {
         ClothingEntity clothing = clothingDto.toEntity();
-        clothing.mapImage(imageDto.toEntity());
+        clothing.mapImage(image);
         return clothingRepository.save(clothing).getClothing_id();
     }
 

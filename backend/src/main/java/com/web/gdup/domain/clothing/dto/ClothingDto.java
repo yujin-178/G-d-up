@@ -1,7 +1,7 @@
 package com.web.gdup.domain.clothing.dto;
 
 import com.web.gdup.domain.clothing.entity.ClothingEntity;
-import com.web.gdup.domain.model.ImageModel;
+import com.web.gdup.domain.image.dto.ImageModel;
 import lombok.*;
 
 import java.time.LocalDateTime;

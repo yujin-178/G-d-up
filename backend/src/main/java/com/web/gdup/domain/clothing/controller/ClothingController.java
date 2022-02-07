@@ -2,8 +2,8 @@ package com.web.gdup.domain.clothing.controller;
 
 import com.web.gdup.domain.clothing.dto.ClothingDto;
 import com.web.gdup.domain.clothing.service.ClothingServiceImpl;
-import com.web.gdup.domain.model.ImageDto;
-import com.web.gdup.domain.model.ImageService;
+import com.web.gdup.domain.image.dto.ImageModel;
+import com.web.gdup.domain.image.service.ImageService;
 import io.swagger.annotations.ApiOperation;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,13 +52,14 @@ public class ClothingController {
         String imagePath = savePath + "\\" + imageName;
         file.transferTo(new File(imagePath));
 
-        ImageDto imageDto = new ImageDto();
-        imageDto.setImage_name(originImageName);
-        imageDto.setNew_image_name(imageName);
-        imageDto.setImage_path(imagePath);
+        ImageModel imageModel = ImageModel.builder()
+                .image_name(originImageName)
+                .new_image_name(imageName)
+                .image_path(imagePath)
+                .build();
 
-        int imageId = imageService.insertImage(imageDto);
-        ImageDto iDto = imageService.getImage(imageId);
+        int imageId = imageService.insertImage(imageModel);
+        ImageModel iDto = imageService.getImage(imageId);
         clothingService.insertClothing(clothingDto, iDto);
         return new ResponseEntity<String>("SUCESS", HttpStatus.OK);
     }

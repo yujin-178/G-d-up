@@ -1,6 +1,6 @@
 package com.web.gdup.domain.clothing.entity;
 
-import com.web.gdup.domain.model.ImageModel;
+import com.web.gdup.domain.image.dto.ImageModel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
