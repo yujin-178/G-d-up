@@ -41,16 +41,19 @@ public class ClothingController {
     }
 
     @GetMapping("/detail/{clothing_id}")
+    @ApiOperation(value = "옷 상세보기")
     public ResponseEntity<ClothingDto> getClothing(@PathVariable("clothing_id") int clothing_id) {
         return new ResponseEntity<ClothingDto>(clothingService.getClothing(clothing_id), HttpStatus.OK);
     }
 
     @GetMapping("/list/{user_name}")
+    @ApiOperation(value = "옷 리스트 - 사용자 id 필요")
     public ResponseEntity<List<ClothingDto>> getAllClothing(@PathVariable("user_name") String user_name) {
         return new ResponseEntity<List<ClothingDto>>(clothingService.getUserClothing(user_name), HttpStatus.OK);
     }
 
     @DeleteMapping("/{clothing_id}")
+    @ApiOperation(value = "옷 삭제")
     public ResponseEntity<String> deleteClothing(@PathVariable("clothing_id") int clothing_id) {
         clothingService.deleteClothing(clothing_id);
         return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
