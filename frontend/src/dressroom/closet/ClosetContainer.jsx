@@ -3,20 +3,20 @@ import { Link } from 'react-router-dom';
 import ClothesItemListContainer from './clothesList/ClothesItemListContainer.jsx';
 import FilterContainer from '../FilterContainer/FilterContainer.jsx';
 import AddClothesContainer from './AddClothesContainer.jsx';
-import { useDispatch } from 'react-redux';
+import ClosetDetailContainer from './clothesDetailContainer/ClothesDetailContainer.jsx';
 
 import {
 	changemodalIsOpen
 } from '../../actions.js'
 
 export default function ClosetContainer() {
-	const dispatch = useDispatch();
 
 	return (
 		<div css={GridContainer}>
 			<h5>옷장</h5>
 			<FilterContainer />
 			<ClothesItemListContainer />
+			<ClosetDetailContainer/>
 			<button
 				onClick={() => dispatch(changemodalIsOpen(true))}
 			>

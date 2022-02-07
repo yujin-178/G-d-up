@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-const getClothes = state => state.clothesSlice; // 현재는 mock data
+const getClothes = state => state.clothesSlice.clothes; // 현재는 mock data
 const getFilter = state => state.filterSlice;
 
 export const filteredClothesSelector = createSelector(
