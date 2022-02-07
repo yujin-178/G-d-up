@@ -1,7 +1,10 @@
 package com.web.gdup.domain.clothing.service;
 
+import com.web.gdup.domain.clothing.dto.ClothingDto;
+import com.web.gdup.domain.clothing.entity.ClothingEntity;
 import com.web.gdup.domain.clothing.repository.ClothingApiRepositoryImpl;
 import com.web.gdup.domain.clothing.repository.ClothingRepository;
+import com.web.gdup.domain.model.ImageDto;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -11,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.transaction.Transactional;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -71,6 +75,49 @@ public class ClothingService implements ClothingServiceImpl{
         String imageURL = urlParser(result);
         download(imageURL);
         return imageURL;
+    }
+
+    @Override
+    @Transactional
+    public int insertClothing(ClothingDto clothingDto, ImageDto imageDto) {
+        ClothingEntity clothing = clothingDto.toEntity();
+        clothing.mapImage(imageDto.toEntity());
+        return clothingRepository.save(clothing).getClothing_id();
+    }
+
+    @Override
+    @Transactional
+    public ClothingDto getClothing(int id) {
+        ClothingEntity clothing = clothingRepository.findById(id).get();
+
+        ClothingDto clothingDto = ClothingDto.builder()
+                .clothing_id(clothing.getClothing_id())
+                .age(clothing.getAge())
+                .color(clothing.getColor())
+                .cut(clothing.getCut())
+                .pattern(clothing.getPattern())
+                .design(clothing.getDesign())
+                .gender(clothing.getGender())
+                .hood(clothing.getHood())
+                .imageModel(clothing.getImageModel())
+//                .image_id(clothing.getImage_id())
+                .layers(clothing.getLayers())
+                .length(clothing.getLength())
+                .material(clothing.getMaterial())
+                .neckline(clothing.getNeckline())
+                .registration_date(clothing.getRegistration_date())
+                .season(clothing.getSeason())
+                .sleeves(clothing.getSleeves())
+                .style(clothing.getStyle())
+                .subcategory(clothing.getSubcategory())
+                .user_name(clothing.getUser_name())
+                .build();
+        return clothingDto;
+    }
+
+    @Override
+    public void deleteClothing(int clothing_id) {
+        clothingRepository.deleteById(clothing_id);
     }
 
     private String urlParser(String str) throws IOException, ParseException {

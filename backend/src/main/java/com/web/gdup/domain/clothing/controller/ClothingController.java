@@ -1,6 +1,9 @@
 package com.web.gdup.domain.clothing.controller;
 
+import com.web.gdup.domain.clothing.dto.ClothingDto;
 import com.web.gdup.domain.clothing.service.ClothingServiceImpl;
+import com.web.gdup.domain.model.ImageDto;
+import com.web.gdup.domain.model.ImageService;
 import io.swagger.annotations.ApiOperation;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 @CrossOrigin(origins = { "http://i6b108.p.ssafy.io:3000" })
 @RestController
@@ -18,18 +23,8 @@ public class ClothingController {
     @Autowired
     ClothingServiceImpl clothingService;
 
-
-    @GetMapping("/test2")
-    @ApiOperation(value = "jpa 테스트")
-    public void getTest() {
-//        System.out.println(common.getConfig().getApiKey());
-//        List<ImageModel> list  = cr.findAll();
-//        System.out.println(list.size());
-//
-//        for(ImageModel im : list) {
-//            System.out.println(im);
-//        }
-    }
+    @Autowired
+    ImageService imageService;
 
     @PostMapping("/tag")
     @ApiOperation(value = "태그 분석")
@@ -46,7 +41,36 @@ public class ClothingController {
 
     @PostMapping("/save")
     @ApiOperation(value = "옷 저장")
-    public ResponseEntity<String> insertClothing() {
+    public ResponseEntity<String> insertClothing(@RequestParam("imageFile") MultipartFile file, ClothingDto clothingDto) throws IOException {
+        UUID uuid = UUID.randomUUID();
+
+        String originImageName = file.getOriginalFilename();
+        String imageName = uuid.toString()+"_"+originImageName;
+
+        String savePath = "C:\\SSAFY\\download";
+
+        String imagePath = savePath + "\\" + imageName;
+        file.transferTo(new File(imagePath));
+
+        ImageDto imageDto = new ImageDto();
+        imageDto.setImage_name(originImageName);
+        imageDto.setNew_image_name(imageName);
+        imageDto.setImage_path(imagePath);
+
+        int imageId = imageService.insertImage(imageDto);
+        ImageDto iDto = imageService.getImage(imageId);
+        clothingService.insertClothing(clothingDto, iDto);
         return new ResponseEntity<String>("SUCESS", HttpStatus.OK);
+    }
+
+    @GetMapping("/detail/{clothing_id}")
+    public ResponseEntity<ClothingDto> getClothing(@PathVariable("clothing_id") int clothing_id) {
+        return new ResponseEntity<ClothingDto>(clothingService.getClothing(clothing_id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{clothing_id}")
+    public ResponseEntity<String> deleteClothing(@PathVariable("clothing_id") int clothing_id) {
+        clothingService.deleteClothing(clothing_id);
+        return new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
     }
 }
