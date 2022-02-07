@@ -1,23 +1,34 @@
 import React from 'react';
-
 import { Link } from 'react-router-dom';
-
 import ClothesItemListContainer from './clothesList/ClothesItemListContainer.jsx';
 import FilterContainer from '../FilterContainer/FilterContainer.jsx';
+import AddClothesContainer from './AddClothesContainer.jsx';
+import { useDispatch } from 'react-redux';
+
+import {
+	changemodalIsOpen
+} from '../../actions.js'
 
 export default function ClosetContainer() {
-  return (
-    <div>
-      <h5>옷장</h5>
-      <FilterContainer />
-      <ClothesItemListContainer />
-      <button>옷 추가</button>
-      <Link to='/dressroom'>
-        <button>
-          뒤로
-        </button>
-      </Link>
-    </div>
+	const dispatch = useDispatch();
 
-  )
+	return (
+		<div>
+			<h5>옷장</h5>
+			<FilterContainer />
+			<ClothesItemListContainer />
+			<button
+				onClick={() => dispatch(changemodalIsOpen(true))}
+			>
+				옷 추가
+			</button>
+			<AddClothesContainer
+			/>
+			<Link to='/dressroom'>
+				<button>
+					뒤로
+				</button>
+			</Link>
+		</div>
+	);
 }
