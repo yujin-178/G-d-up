@@ -4,13 +4,13 @@
 
 import React from 'react';
 import { render } from "@testing-library/react";
-import Categories from '../categories/Categories.jsx';
+import ClosetSidebar from './ClosetSidebar.jsx';
 
-describe('Categories', () => {
-  it('renders Categories', () => {
+describe('ClosetSidebar', () => {
+  it('renders ClosetSidebar', () => {
 
     const { getByText } = render((
-      <Categories />
+      <ClosetSidebar />
     ))
 
     expect(getByText(/Nav/)).not.toBeNull();
