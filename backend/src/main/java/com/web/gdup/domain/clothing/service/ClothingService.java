@@ -1,9 +1,9 @@
 package com.web.gdup.domain.clothing.service;
 
 import com.web.gdup.domain.clothing.dto.ClothingDto;
-import com.web.gdup.domain.clothing.entity.ClothingEntity;
 import com.web.gdup.domain.clothing.repository.ClothingRepository;
 import com.web.gdup.domain.image.dto.ImageDto;
+import com.web.gdup.domain.image.service.ImageServiceImpl;
 import com.web.gdup.global.component.CommonComponent;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONArray;
@@ -20,7 +20,9 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class ClothingService implements ClothingServiceImpl{
@@ -28,6 +30,8 @@ public class ClothingService implements ClothingServiceImpl{
     private ClothingRepository clothingRepository;
     @Autowired
     CommonComponent commonComponent;
+    @Autowired
+    ImageServiceImpl imageService;
 
     @Override
     public String getTag(MultipartFile file) throws IOException {
@@ -81,45 +85,49 @@ public class ClothingService implements ClothingServiceImpl{
 
     @Override
     @Transactional
-    public int insertClothing(ClothingDto clothingDto, ImageDto image) {
-        ClothingEntity clothing = clothingDto.toEntity();
-        clothing.mapImage(image);
-        return clothingRepository.save(clothing).getClothing_id();
+    public int insertClothing(MultipartFile file, ClothingDto clothing) {
+        UUID uuid = UUID.randomUUID();
+
+        String originImageName = file.getOriginalFilename();
+        String image_name = uuid.toString()+"_"+originImageName;
+
+        String savePath = "C:\\SSAFY\\download";
+
+        String imagePath = savePath + "\\" + image_name;
+        try {
+            file.transferTo(new File(imagePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ImageDto image = ImageDto.builder()
+                .imageName(originImageName)
+                .newImageName(image_name)
+                .imagePath(imagePath)
+                .build();
+        System.out.println("여기까지");
+        int imageId = imageService.insertImage(image);
+        ImageDto iDto = imageService.getImage(imageId);
+
+        clothing.mapImage(iDto);
+        return clothingRepository.save(clothing).getClothingId();
     }
 
     @Override
     @Transactional
-    public ClothingDto getClothing(int id) {
-        ClothingEntity clothing = clothingRepository.findById(id).get();
-
-        ClothingDto clothingDto = ClothingDto.builder()
-                .clothing_id(clothing.getClothing_id())
-                .age(clothing.getAge())
-                .color(clothing.getColor())
-                .cut(clothing.getCut())
-                .pattern(clothing.getPattern())
-                .design(clothing.getDesign())
-                .gender(clothing.getGender())
-                .hood(clothing.getHood())
-                .imageModel(clothing.getImageModel())
-//                .image_id(clothing.getImage_id())
-                .layers(clothing.getLayers())
-                .length(clothing.getLength())
-                .material(clothing.getMaterial())
-                .neckline(clothing.getNeckline())
-                .registration_date(clothing.getRegistration_date())
-                .season(clothing.getSeason())
-                .sleeves(clothing.getSleeves())
-                .style(clothing.getStyle())
-                .subcategory(clothing.getSubcategory())
-                .user_name(clothing.getUser_name())
-                .build();
-        return clothingDto;
+    public ClothingDto getClothing(int clothingId) {
+        ClothingDto clothing = clothingRepository.findById(clothingId).get();
+        return clothing;
     }
 
     @Override
-    public void deleteClothing(int clothing_id) {
-        clothingRepository.deleteById(clothing_id);
+    public void deleteClothing(int clothingId) {
+        clothingRepository.deleteById(clothingId);
+    }
+
+    @Override
+    public List<ClothingDto> getUserClothing(String userName) {
+        return clothingRepository.findByUserName(userName);
     }
 
     private String urlParser(String str) throws IOException, ParseException {
@@ -132,7 +140,7 @@ public class ClothingService implements ClothingServiceImpl{
     }
 
     private static void download(String spec) {
-        String outputDir = "C:\\SSAFY\\download";
+        String outputDir = "C:\\SSAFY\\removeBg";
         InputStream is = null;
         FileOutputStream os = null;
         try {
@@ -212,15 +220,12 @@ public class ClothingService implements ClothingServiceImpl{
             con.setDoOutput(true);
 
             try (OutputStream os = con.getOutputStream()) {
-                System.out.println("json 쪼개기");
                 byte[] input = json.getBytes("utf-8");
                 os.write(input, 0, input.length);
-                System.out.println("이게 오래걸리나?");
             }
 
             int responseCode = con.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
-                System.out.println("나옴");
                 return readBody(con.getInputStream());
             } else { // 에러 발생
                 return readBody(con.getErrorStream());

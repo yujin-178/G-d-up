@@ -13,7 +13,7 @@ public class SignupRequest {
 
     @ApiModelProperty(required = true)
     @NotNull
-    String user_name;
+    String userName;
 
     @ApiModelProperty(required = true)
     @NotNull
@@ -24,12 +24,12 @@ public class SignupRequest {
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d$@$!%*#?&]{8,}$")
     String password;
 
-    public String getUser_name() {
-        return user_name;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUser_name(String user_name) {
-        this.user_name = user_name;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getEmail() {

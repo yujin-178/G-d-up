@@ -17,20 +17,13 @@ public class ImageService implements ImageServiceImpl{
     @Override
     @Transactional
     public int insertImage(ImageDto image) {
-        return imageRepository.save(image).getImage_id();
+        return imageRepository.save(image).getImageId();
     }
 
     @Override
     @Transactional
-    public ImageDto getImage(int image_id) {
-        ImageDto imageModel = imageRepository.findById(image_id).get();
-
-//        ImageDto imageDto = ImageDto.builder()
-//                .image_id(image_id)
-//                .image_name(imageModel.getImage_name())
-//                .new_image_name(imageModel.getNew_image_name())
-//                .image_path(imageModel.getImage_path())
-//                .build();
+    public ImageDto getImage(int imageId) {
+        ImageDto imageModel = imageRepository.findById(imageId).get();
         return imageModel;
     }
 }

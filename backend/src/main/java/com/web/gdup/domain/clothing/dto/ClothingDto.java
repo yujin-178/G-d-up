@@ -1,17 +1,25 @@
 package com.web.gdup.domain.clothing.dto;
 
-import com.web.gdup.domain.clothing.entity.ClothingEntity;
 import com.web.gdup.domain.image.dto.ImageDto;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@ToString
+@Entity
 @NoArgsConstructor
+@Getter
+@Table(name = "clothing")
+@EntityListeners(AuditingEntityListener.class)
 public class ClothingDto {
-    private int clothing_id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int clothingId;
+
     private String age;
     private String color;
     private String cut;
@@ -27,13 +35,18 @@ public class ClothingDto {
     private String style;
     private String subcategory;
     private String season;
-    private LocalDateTime registration_date;
+    @CreatedDate
+    private LocalDateTime registrationDate;
+
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "imageId")
     private ImageDto imageModel;
-    private String user_name;
+
+    private String userName;
 
     @Builder
-    public ClothingDto(int clothing_id, String age, String color, String cut, String design, String gender, String hood, String layers, String length, String material, String neckline, String pattern, String sleeves, String style, String subcategory, String season, LocalDateTime registration_date, ImageDto imageModel, String user_name) {
-        this.clothing_id = clothing_id;
+    public ClothingDto(int clothingId, String age, String color, String cut, String design, String gender, String hood, String layers, String length, String material, String neckline, String pattern, String sleeves, String style, String subcategory, String season, ImageDto imageModel, String userName, LocalDateTime registrationDate) {
+        this.clothingId = clothingId;
         this.age = age;
         this.color = color;
         this.cut = cut;
@@ -49,34 +62,10 @@ public class ClothingDto {
         this.style = style;
         this.subcategory = subcategory;
         this.season = season;
-        this.registration_date = registration_date;
+        this.registrationDate = registrationDate;
         this.imageModel = imageModel;
-//        this.image_id = image_id;
-        this.user_name = user_name;
+        this.userName = userName;
     }
 
-    public ClothingEntity toEntity() {
-        ClothingEntity build = ClothingEntity.builder()
-                .clothing_id(clothing_id)
-                .age(age)
-                .color(color)
-                .cut(cut)
-                .design(design)
-                .gender(gender)
-                .hood(hood)
-//                .image_id(image_id)
-                .layers(layers)
-                .length(length)
-                .material(material)
-                .neckline(neckline)
-                .pattern(pattern)
-                .season(season)
-                .sleeves(sleeves)
-                .style(style)
-                .subcategory(subcategory)
-                .user_name(user_name)
-                .imageModel(imageModel)
-                .build();
-        return build;
-    }
+    public void mapImage(ImageDto image) { this.imageModel = image; }
 }
