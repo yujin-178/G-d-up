@@ -9,10 +9,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
-@Service
+
 public interface CodyService {
 
-    public List<CodyDto> getCodyListAll() ;
+    public List<CodyDto> getAllCodyList() ;
     public boolean addCodyItem(CodyDto codyDto, MultipartFile image) throws IOException, ParseException ;
+    public List<CodyDto> getUserCodyList(String id);
 
 }

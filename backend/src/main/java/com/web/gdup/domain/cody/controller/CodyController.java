@@ -19,7 +19,7 @@ import java.util.List;
 public class CodyController {
 
     @Autowired
-    CodyServiceImpl cs;
+    private CodyServiceImpl cs;
 
     @GetMapping(value = "/testHello")
     @ApiOperation(
@@ -39,7 +39,7 @@ public class CodyController {
     )
     public ResponseEntity<String> addCody(@PathVariable(name = "user_id") String id, CodyDto codyDto, @RequestParam MultipartFile image, @RequestParam String[] cody_tag) throws IOException, ParseException {
         ResponseEntity<String> re;
-        if(codyDto.getUser_name().equals(id))
+        if(codyDto.getUserName().equals(id))
             cs.addCodyItem(codyDto, image);
         else
              re = new ResponseEntity<>("사용자 정보와 로그인 정보 일치 하지 않음", HttpStatus.FAILED_DEPENDENCY);
@@ -51,10 +51,19 @@ public class CodyController {
 
     @GetMapping(value = "/list")
     @ApiOperation(
-            value = "모든 코디 목록 불러오기",
+            value = "코디 목록 불러오기",
             notes = "모든 사용자의 코디 정보를 불러온다.")
-    public ResponseEntity<List<CodyDto>> listCody() {
-        return new ResponseEntity<List<CodyDto>>(cs.getCodyListAll(), HttpStatus.OK);
+    public ResponseEntity<List<CodyDto>> allCodyList() {
+        return new ResponseEntity<List<CodyDto>>(cs.getAllCodyList(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/list/{user_id}")
+    @ApiOperation(
+            value = "코디 목록 불러오기",
+            notes = "특정 유저의 코디 목록 불러오기"
+    )
+    public ResponseEntity<List<CodyDto>> userCodyList(@PathVariable(name = "user_id") String id) {
+        return new ResponseEntity<List<CodyDto>>(cs.getUserCodyList(id), HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/delete/{cody_id}")
@@ -74,9 +83,5 @@ public class CodyController {
     public ResponseEntity<String> UpdateCody(@PathVariable(name = "cody_id") String cody_id){
         return new ResponseEntity<String>("수정 성공", HttpStatus.OK);
     }
-
-
-
-
 
 }
