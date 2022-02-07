@@ -3,14 +3,17 @@ import React from 'react';
 import ClothesItem from './ClothesItem.jsx';
 
 export default function ClothesItemList({ clothes }) {
-  const numbers = [...Array(4).keys()];
+  const numbers = [];
+  for (let i = 0; i < 16; i++) {
+    numbers.push(undefined);
+  }
+
   return (
-    clothes.map(item =>
+    numbers.map((number, idx) =>
       <ClothesItem
-        key={item['id']} 
-        item={item}  
-      >
-      </ClothesItem>
+        key={ idx }
+        item={ clothes[idx] }
+      />
     )
   );
 }
