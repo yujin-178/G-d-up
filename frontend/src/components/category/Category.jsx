@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/react'
 
-function Category ({ item, isSelected, handleClick }) {
+export default function Category ({ item, isSelected, handleClick }) {
   return (
     <li css={liStyle}>
       <button
@@ -17,7 +17,7 @@ function Category ({ item, isSelected, handleClick }) {
 const liStyle = css`
   list-style-type: none;
   padding-right: 3%;
-`
+`;
 
 const buttonStyle = ({ isSelected }) => css`
   background: none;
@@ -30,5 +30,3 @@ const buttonStyle = ({ isSelected }) => css`
     border-bottom: 2px solid #00acee;
   `}
 `;
-
-export default Category;

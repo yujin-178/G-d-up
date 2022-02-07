@@ -13,7 +13,7 @@ export default function ClosetContainer() {
 	const dispatch = useDispatch();
 
 	return (
-		<div>
+		<div css={GridContainer}>
 			<h5>옷장</h5>
 			<FilterContainer />
 			<ClothesItemListContainer />
@@ -32,3 +32,7 @@ export default function ClosetContainer() {
 		</div>
 	);
 }
+
+const GridContainer = css`
+	display: grid;
+`;

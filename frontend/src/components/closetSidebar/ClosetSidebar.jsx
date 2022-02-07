@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/react'
 
-function ClosetSidebar(props) {
+export default function ClosetSidebar(props) {
   const {
     season,
     colors,
@@ -90,7 +90,7 @@ const sidebarStyle = css`
   box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.2);
   font-size: 20px;
   background-color: #fff;
-`
+`;
 
 const searchInputStyle = css`
   height: 35px;
@@ -100,18 +100,18 @@ const searchInputStyle = css`
   border-bottom: 2px solid silver;
   width: 100%;
   font-size: 19px;
-`
+`;
 
 const seasonItems = css`
   font-size: 15px;
   padding: 0 1px;
   list-style:none
-`
+`;
 
 const menuItem = css`
   font-size: 15px;
   padding: 15px 0px;
-`
+`;
 
 const colorItems = css`
   padding: 0 5px;
@@ -119,7 +119,7 @@ const colorItems = css`
   align-items: center;
   flex-wrap: wrap;
   list-style:none;
-`
+`;
 
 const colorButton = ({ code, isSelected }) => css`
   background-color: #${code};
@@ -133,18 +133,18 @@ const colorButton = ({ code, isSelected }) => css`
   `
     border: 3px solid gold;
   `}
-`
+`;
 
 const toggleContainer = css`
   display: flex;
   padding-top: 30px;
-`
+`;
 
 const toggleTitle = css`
   margin-left: 10px;
   margin: 0;
   padding: 5px 10px;
-`
+`;
 
 const toggleBtn = ({ isUserItem }) => css`
   width: 60px;
@@ -156,7 +156,7 @@ const toggleBtn = ({ isUserItem }) => css`
   `
     background: #00acee;
   `}
-`
+`;
 
 const toggleBtnCircle = ({ isUserItem }) => css`
   width: 30px;
@@ -168,7 +168,7 @@ const toggleBtnCircle = ({ isUserItem }) => css`
   `
     margin-left: 50%;
   `}
-`
+`;
 
 const tagContainer = css`
   width: 80%;
@@ -177,7 +177,7 @@ const tagContainer = css`
   flex-wrap: wrap;
   padding: 5px;
   list-style:none;
-`
+`;
 
 const tagItem = css`
   position: relative;
@@ -190,30 +190,28 @@ const tagItem = css`
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
   margin: 5px;
   min-width: 50px;
-`
+`;
 
 const checkbox = css`
   vertical-align: middle;
   position: relative;
   bottom: 0.5px;
-`
+`;
 
 const checkboxTitle = css`
   display: inline-block;
   margin-left: 10px;
-`
+`;
 
 const tagTitle = css`
   margin: 0;
   padding: 4px;
   vertical-align: middle;
-`
+`;
 
 const tagDeleteBtn = css`
   border:none;
   background: none;
   padding: 0px 5px 2px 0px;
   cursor: pointer;
-`
-
-export default ClosetSidebar;
+`;
