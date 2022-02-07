@@ -6,8 +6,8 @@ import AddClothesContainer from './AddClothesContainer.jsx';
 import { useDispatch } from 'react-redux';
 
 import {
-	changemodalIsOpen
-} from '../../actions.js'
+  changeIsmodalOpen
+} from '../../modalSlice';
 
 export default function ClosetContainer() {
 	const dispatch = useDispatch();
@@ -18,7 +18,7 @@ export default function ClosetContainer() {
 			<FilterContainer />
 			<ClothesItemListContainer />
 			<button
-				onClick={() => dispatch(changemodalIsOpen(true))}
+				onClick={() => dispatch(changeIsmodalOpen(true))}
 			>
 				옷 추가
 			</button>
