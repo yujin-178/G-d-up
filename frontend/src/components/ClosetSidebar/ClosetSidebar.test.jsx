@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { render } from "@testing-library/react";
-import ClosetSidebar from './ClosetSidebar.jsx.js';
+import ClosetSidebar from './ClosetSidebar.jsx';
 
 describe('ClosetSidebar', () => {
   it('renders ClosetSidebar', () => {

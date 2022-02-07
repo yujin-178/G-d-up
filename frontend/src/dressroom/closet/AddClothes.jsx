@@ -3,7 +3,9 @@ import { css, jsx } from '@emotion/react';
 import { ClassNames } from '@emotion/core';
 import Modal from 'react-modal';
 
-Modal.setAppElement('#app')
+if (process.env.NODE_ENV !== 'test'){
+	Modal.setAppElement('#app')
+}
 
 export default function AddClothesPage({ onImgChange, preview, imgInput, modalToggle, IsmodalOpen }) {
 
@@ -32,6 +34,7 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
                   position: fixed;
                   width: 100%;
                   height: 100%;
+									overflow-y: hidden;
                   top: 0;
                   bottom: 0;
                   right: 0;
@@ -68,6 +71,8 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
 									border-radius: 8px;
                   outline: 0;
                   display: flex;
+									max-height:calc(100vh - 210px);
+									overflow-y: auto;
                   height: 0%;
                   width: 0%;
                   background-color: transparent;
@@ -121,8 +126,19 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
 									업로드
 								</button>
 							</div>
-						<div css={detail}>
+						<div css={detailContainer}>
 							<h3>옷 정보</h3>
+							<div css={detail}>
+								<p>카테고리 :</p> 
+								<p>색상 :</p> 
+								<p>소재 :</p> 
+								<p>패턴 : </p>
+							</div>
+							<div>
+								<p>계절</p>
+								<p>세탁</p>
+								<p>태그</p>
+							</div>
 						</div>
 						</div>	
 					</Modal>
@@ -133,6 +149,12 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
 }
 
 const detail = css`
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+`
+
+const detailContainer = css`
 	grid-row: 3;
 	grid-column: 2;
 `

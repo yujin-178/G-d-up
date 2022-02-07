@@ -9,7 +9,8 @@ import {
 
 export default function AddClothesContainer() {
 	const dispatch = useDispatch();
-	const {IsmodalOpen} = useSelector(state => state.modalSlice);
+	const modal = useSelector(state => state.modalSlice);
+	const {IsmodalOpen} = modal;
 
 	const [fileUrl, setFileUrl] = useState(null);
 	const imgInput = useRef(null);
