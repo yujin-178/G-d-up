@@ -2,6 +2,25 @@ import React from 'react';
 
 import { css } from '@emotion/react';
 
+export default function ClothesItem(props) {
+  const {
+    item,
+    onMouseOverHandler,
+    OnMouseLeaveHandler
+  } = props;
+
+  return (
+    <div css={ClothesItemBox}>
+      {item && (
+        <p
+          onMouseOver={() => onMouseOverHandler(item)}
+          onMouseLeave={OnMouseLeaveHandler}
+        >{item.image}</p>
+      )}
+    </div>
+  );
+}
+
 const ClothesItemBox = css`
   position: relative;
   background-color: #FFFFFF;
@@ -10,11 +29,4 @@ const ClothesItemBox = css`
   margin: 0.5rem;
   align-self: center;
   justify-self: center;
-`
-
-export default function ClothesItem() {
-  return (
-    <div css={ClothesItemBox}>
-    </div>
-  )
-}
+`;

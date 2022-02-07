@@ -12,13 +12,18 @@ export const clothesList = [{
 
 export const clothesData =  [
   {
-    'image': 'image1',
-    'category': 'top',
-    'season': ['summer', 'spring'],
-    'colors': ['red', 'blue'],
-    'custom': ['daily']
+    'id': 1,
+    image: 'https://image.msscdn.net/images/goods_img/20180619/803523/803523_1_500.jpg',
+    category: '상의',
+    color: '검정',
+    material: '면',
+    pattern: '기타',
+    season: '여름',
+    custom: ['여름', '데일리'],
+    laundry: 'information',
   },
   {
+    'id': 2,
     'image': 'image2',
     'category': 'top',
     'season': ['autumn, winter'],
@@ -26,6 +31,7 @@ export const clothesData =  [
     'custom': ['daily']
   },
   {
+    'id': 3,
     'image': 'image3',
     'category': 'bottom',
     'season': ['summer'],
@@ -33,6 +39,7 @@ export const clothesData =  [
     'custom': ['출근']
   },
   {
+    'id': 4,
     'image': 'image4',
     'category': 'outer',
     'season': ['winter'],
