@@ -4,13 +4,13 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  changeIsmodalOpen
+  changeisModalOpen
 } from '../../modalSlice';
 
 export default function AddClothesContainer() {
 	const dispatch = useDispatch();
 	const modal = useSelector(state => state.modalSlice);
-	const {IsmodalOpen} = modal;
+	const {isModalOpen} = modal;
 
 	const [fileUrl, setFileUrl] = useState(null);
 	const imgInput = useRef(null);
@@ -36,7 +36,7 @@ export default function AddClothesContainer() {
 	}
 
 	function handleModal(value) {
-		dispatch(changeIsmodalOpen(value))
+		dispatch(changeisModalOpen(value))
 	}
 
 	return (
@@ -46,7 +46,7 @@ export default function AddClothesContainer() {
 				preview={fileUrl}
 				imgInput={imgInput}
 				modalToggle={handleModal}
-				IsmodalOpen={IsmodalOpen}
+				isModalOpen={isModalOpen}
 			/>
 		</div>
 	)

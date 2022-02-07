@@ -7,14 +7,14 @@ if (process.env.NODE_ENV !== 'test'){
 	Modal.setAppElement('#app')
 }
 
-export default function AddClothes({ onImgChange, preview, imgInput, modalToggle, IsmodalOpen }) {
+export default function AddClothes({ onImgChange, preview, imgInput, modalToggle, isModalOpen }) {
 
 	return (
 		<div>
 			<ClassNames>
 				{({ css, cx }) => (
 					<Modal
-						isOpen={IsmodalOpen}
+						isOpen={isModalOpen}
 						onRequestClose={() => modalToggle(false)}
 						overlayClassName={{
 							base: 'overlay-base',
