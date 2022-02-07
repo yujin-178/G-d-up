@@ -1,4 +1,4 @@
-package com.web.gdup.domain.cody.dto;
+package com.web.gdup.domain.cody.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -21,12 +20,18 @@ public class CodyDto {
     @Id
     @NonNull
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+            @Column(name ="codyid")
     int codyId;
+    @Column(name ="codyname")
     String codyName;
+    @Column(name ="registrationdate")
     LocalDateTime registrationDate;
+    @Column(name ="updatedate")
     LocalDateTime updateDate;
     String content;
+    @Column(name ="username")
     String userName;
     int secret;
+    @Column(name ="imageid")
     int imageId;
 }
