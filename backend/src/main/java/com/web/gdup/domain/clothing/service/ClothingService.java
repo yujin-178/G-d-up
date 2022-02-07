@@ -2,9 +2,9 @@ package com.web.gdup.domain.clothing.service;
 
 import com.web.gdup.domain.clothing.dto.ClothingDto;
 import com.web.gdup.domain.clothing.entity.ClothingEntity;
-import com.web.gdup.domain.clothing.repository.ClothingApiRepositoryImpl;
 import com.web.gdup.domain.clothing.repository.ClothingRepository;
 import com.web.gdup.domain.image.dto.ImageDto;
+import com.web.gdup.global.component.CommonComponent;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,15 +17,17 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class ClothingService implements ClothingServiceImpl{
     @Autowired
     private ClothingRepository clothingRepository;
     @Autowired
-    private ClothingApiRepositoryImpl clothingApiRepository;
+    CommonComponent commonComponent;
 
     @Override
     public String getTag(MultipartFile file) throws IOException {
@@ -47,7 +49,7 @@ public class ClothingService implements ClothingServiceImpl{
         JSONObject data = new JSONObject(record);
         String body = data.toString();
         System.out.println("json 완료");
-        return clothingApiRepository.getTag(apiURL, body);
+        return apiMethod("POST", apiURL, body);
     }
 
     @Override
@@ -71,7 +73,7 @@ public class ClothingService implements ClothingServiceImpl{
         JSONObject data = new JSONObject(record);
         String body = data.toString();
 
-        String result = clothingApiRepository.getRemoveBg(apiURL, body);
+        String result = apiMethod("POST", apiURL, body);
         String imageURL = urlParser(result);
         download(imageURL);
         return imageURL;
@@ -191,6 +193,67 @@ public class ClothingService implements ClothingServiceImpl{
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+        }
+    }
+
+    private String apiMethod(String type, String apiUrl, String json) {
+        System.out.println("들어가기 전");
+        Map<String, String> requestHeaders = new HashMap<>();
+        requestHeaders.put("Content-type", "application/json");
+        requestHeaders.put("Authorization", commonComponent.getConfig().getApiKey());
+        requestHeaders.put("Accept", "application/json");
+
+        HttpURLConnection con = connect(apiUrl);
+        try {
+            con.setRequestMethod(type);
+            for (Map.Entry<String, String> header : requestHeaders.entrySet()) {
+                con.setRequestProperty(header.getKey(), header.getValue());
+            }
+            con.setDoOutput(true);
+
+            try (OutputStream os = con.getOutputStream()) {
+                System.out.println("json 쪼개기");
+                byte[] input = json.getBytes("utf-8");
+                os.write(input, 0, input.length);
+                System.out.println("이게 오래걸리나?");
+            }
+
+            int responseCode = con.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) { // 정상 호출
+                System.out.println("나옴");
+                return readBody(con.getInputStream());
+            } else { // 에러 발생
+                return readBody(con.getErrorStream());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("API 요청과 응답 실패", e);
+        } finally {
+            con.disconnect();
+        }
+    }
+
+    private HttpURLConnection connect(String apiUrl) {
+        try {
+            URL url = new URL(apiUrl);
+            return (HttpURLConnection) url.openConnection();
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("API URL이 잘못되었습니다. : " + apiUrl, e);
+        } catch (IOException e) {
+            throw new RuntimeException("연결이 실패했습니다. : " + apiUrl, e);
+        }
+    }
+
+    private String readBody(InputStream body) {
+        InputStreamReader streamReader = new InputStreamReader(body);
+        try (BufferedReader lineReader = new BufferedReader(streamReader)) {
+            StringBuilder responseBody = new StringBuilder();
+            String line;
+            while ((line = lineReader.readLine()) != null) {
+                responseBody.append(line);
+            }
+            return responseBody.toString();
+        } catch (IOException e) {
+            throw new RuntimeException("API 응답을 읽는데 실패했습니다.", e);
         }
     }
 }

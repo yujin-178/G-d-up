@@ -7,18 +7,20 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service
-public class ImageService {
+public class ImageService implements ImageServiceImpl{
     private ImageRepository imageRepository;
 
     public ImageService(ImageRepository imageRepository) {
         this.imageRepository = imageRepository;
     }
 
+    @Override
     @Transactional
     public int insertImage(ImageDto image) {
         return imageRepository.save(image).getImage_id();
     }
 
+    @Override
     @Transactional
     public ImageDto getImage(int image_id) {
         ImageDto imageModel = imageRepository.findById(image_id).get();
