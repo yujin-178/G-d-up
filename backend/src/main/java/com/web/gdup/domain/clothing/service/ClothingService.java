@@ -2,6 +2,7 @@ package com.web.gdup.domain.clothing.service;
 
 import com.web.gdup.domain.clothing.dto.ClothingDto;
 import com.web.gdup.domain.clothing.repository.ClothingRepository;
+import com.web.gdup.domain.clothing_hashtag.service.ClothingHashtagServiceImpl;
 import com.web.gdup.domain.image.dto.ImageDto;
 import com.web.gdup.domain.image.service.ImageServiceImpl;
 import com.web.gdup.global.component.CommonComponent;
@@ -19,10 +20,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ClothingService implements ClothingServiceImpl{
@@ -32,6 +30,8 @@ public class ClothingService implements ClothingServiceImpl{
     CommonComponent commonComponent;
     @Autowired
     ImageServiceImpl imageService;
+    @Autowired
+    ClothingHashtagServiceImpl clothingHashtagService;
 
     @Override
     public String getTag(MultipartFile file) throws IOException {
@@ -85,32 +85,26 @@ public class ClothingService implements ClothingServiceImpl{
 
     @Override
     @Transactional
-    public int insertClothing(MultipartFile file, ClothingDto clothing) {
-        UUID uuid = UUID.randomUUID();
+    public int insertClothing(MultipartFile file, ClothingDto clothing, String hashtag) {
+        ImageDto image = saveImage(file);
 
-        String originImageName = file.getOriginalFilename();
-        String image_name = uuid.toString()+"_"+originImageName;
-
-        String savePath = "C:\\SSAFY\\download";
-
-        String imagePath = savePath + "\\" + image_name;
-        try {
-            file.transferTo(new File(imagePath));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        ImageDto image = ImageDto.builder()
-                .imageName(originImageName)
-                .newImageName(image_name)
-                .imagePath(imagePath)
-                .build();
-        System.out.println("여기까지");
         int imageId = imageService.insertImage(image);
         ImageDto iDto = imageService.getImage(imageId);
 
         clothing.mapImage(iDto);
-        return clothingRepository.save(clothing).getClothingId();
+        int clothing_id = clothingRepository.save(clothing).getClothingId();
+        Set<String> hashtags = parseHashtags(hashtag);
+        clothingHashtagService.insertHashtags(clothing_id, hashtags);
+        return clothing_id;
+    }
+
+    private Set<String> parseHashtags(String hashtag) {
+        Set<String> set = new HashSet<>();
+        StringTokenizer st = new StringTokenizer(hashtag);
+        while(st.hasMoreTokens()) {
+            set.add(st.nextToken());
+        }
+        return set;
     }
 
     @Override
@@ -139,7 +133,30 @@ public class ClothingService implements ClothingServiceImpl{
         return whitebgUrl;
     }
 
-    private static void download(String spec) {
+    private ImageDto saveImage(MultipartFile file) {
+        UUID uuid = UUID.randomUUID();
+
+        String originImageName = file.getOriginalFilename();
+        String image_name = uuid.toString()+"_"+originImageName;
+
+        String savePath = "C:\\SSAFY\\download";
+
+        String imagePath = savePath + "\\" + image_name;
+        try {
+            file.transferTo(new File(imagePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        ImageDto image = ImageDto.builder()
+                .imageName(originImageName)
+                .newImageName(image_name)
+                .imagePath(imagePath)
+                .build();
+        return image;
+    }
+
+    private void download(String spec) {
         String outputDir = "C:\\SSAFY\\removeBg";
         InputStream is = null;
         FileOutputStream os = null;
