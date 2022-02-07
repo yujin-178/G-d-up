@@ -8,4 +8,5 @@ import java.util.List;
 public interface CodyRepository extends JpaRepository<CodyDto, Long> {
     List<CodyDto> findAllByUserName(String id);
     int deleteByCodyId(String id);
+
 }

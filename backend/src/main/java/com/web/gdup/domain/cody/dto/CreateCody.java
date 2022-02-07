@@ -15,7 +15,7 @@ public class CreateCody {
     private String codyName;
     private String content;
     private int secret;
-    private String[] codyTag;
+    private String codyTag;
     private List<ClothingInCody> clothingList;
 
 }

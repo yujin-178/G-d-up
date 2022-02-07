@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 @Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "cody")
 @Builder
 @Log
@@ -32,6 +32,5 @@ public class CodyDto {
     @Column(name ="username")
     String userName;
     int secret;
-    @Column(name ="imageid")
-    int imageId;
+
 }

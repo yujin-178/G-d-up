@@ -1,22 +1,18 @@
 package com.web.gdup.domain.cody.service;
 
 
+import com.web.gdup.domain.cody.dto.ClothingInCody;
+import com.web.gdup.domain.cody.dto.CreateCody;
+import com.web.gdup.domain.cody.entity.CodyClothingInfo;
 import com.web.gdup.domain.cody.entity.CodyDto;
 import com.web.gdup.domain.cody.repository.CodyRepository;
-import com.web.gdup.domain.image.dto.ImageDto;
-import com.web.gdup.domain.image.service.ImageService;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+import java.util.StringTokenizer;
 
 @Service
 public class CodyServiceImpl implements CodyService {
@@ -39,31 +35,46 @@ public class CodyServiceImpl implements CodyService {
     }
 
     @Override
-    public int addCodyItem(CodyDto codyDto, MultipartFile inputImage) throws IOException, ParseException {
-        UUID uuid = UUID.randomUUID();
-
-        String originImageName = inputImage.getOriginalFilename();
-        String imageSavedName = uuid.toString()+"_"+originImageName;
-
-        String savePath = "C:\\SSAFY\\download";
-        String imagePath = savePath + "\\" + imageSavedName;
-        try {
-            inputImage.transferTo(new File(imagePath));
-        } catch (IOException e) {
-            e.printStackTrace();
+    public int addCodyItem(CreateCody cc, String userName) {
+        StringTokenizer st = new StringTokenizer(cc.getCodyTag(), ", ");
+        List<String> codyTag = new ArrayList<>();
+        while(st.hasMoreTokens()){
+            // 해당 해쉬 태크가 존재하는지 확인하는 find 필요
+            codyTag.add(st.nextToken());
         }
 
-        ImageDto image = ImageDto.builder()
-                .imageName(originImageName)
-                .newImageName(imageSavedName)
-                .imagePath(imagePath)
-                .build();
+        CodyDto codyDto = CodyDto.builder()
+                .userName(userName)
+                .content(cc.getContent())
+                .codyName(cc.getCodyName())
+                .secret(cc.getSecret())
+                .updateDate(LocalDateTime.now())
+                .registrationDate(LocalDateTime.now()).build();
 
-        return 1;
+        CodyDto ans = cr.save(codyDto);
+
+        if(ans != null) {
+            System.out.println("Cody 생성 성공");
+            int len = cc.getClothingList().size();
+            List<ClothingInCody> cciList = cc.getClothingList();
+            for(int i = 0; i< len;i++){
+                ClothingInCody tmp = cciList.get(i);
+                CodyClothingInfo cci = CodyClothingInfo.builder()
+                        .codyId(ans.getCodyId())
+                        .clothingId(tmp.getClothingId())
+                        .m(tmp.getM()).x(tmp.getX()).y(tmp.getY()).z(tmp.getZ()).build();
+
+
+            }
+
+
+            return 1;
+        }
+        else {
+            System.out.println("Cody 생성 실패");
+            return 0;
+        }
     }
-
-
-
 }
 
 
