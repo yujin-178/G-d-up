@@ -16,12 +16,16 @@ import javax.persistence.*;
 public class ImageDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "imageid")
     private int imageId;
 
+    @Column(name="imagename")
     private String imageName;
 
+    @Column(name="newimagename")
     private String newImageName;
 
+    @Column(name="imagepath")
     private String imagePath;
 
     @Builder
