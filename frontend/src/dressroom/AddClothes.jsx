@@ -11,18 +11,15 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
         display: grid;
         grid-gap : 10px;
     `
-
 	const imgContainer = css`
         grid-column: 2;
         display: block;
         margin-top: 5rem;
         border: 1px solid black;
         width: 400px;
-        height: 300px;
-        
+        height: 300px;        
         position: relative;
     `
-
 	const previewImg = css`
         position: absolute;
         max-width: 95%; 
@@ -40,8 +37,7 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
 	const inputTag = css`
         display : none;
     `
-	const inputBtn = css`
-        
+	const inputBtn = css`        
         background: #6da0cf;
 
         margin: 0;
@@ -68,7 +64,7 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
         -webkit-appearance: none;
         -moz-appearance: none;
         appearance: none;
-    `
+		`
 	const CloseBtn = css`
         background: #c99f9f;
         height: 2rem;

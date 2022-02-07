@@ -9,7 +9,6 @@ import AddClothesContainer from './AddClothesContainer.jsx';
 describe('AddClothesContainer', () => {
 	it('renders AddClothesContainer', () => {
 
-
 		const { getByText } = render((
 			<AddClothesContainer />
 		))
