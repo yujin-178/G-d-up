@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== 'test'){
 	Modal.setAppElement('#app')
 }
 
-export default function AddClothesPage({ onImgChange, preview, imgInput, modalToggle, IsmodalOpen }) {
+export default function AddClothes({ onImgChange, preview, imgInput, modalToggle, IsmodalOpen }) {
 
 	return (
 		<div>
@@ -135,7 +135,9 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
 								<p>패턴 : </p>
 							</div>
 							<div>
-								<p>계절</p>
+								<div>
+									<p>계절</p>
+								</div>
 								<p>세탁</p>
 								<p>태그</p>
 							</div>
