@@ -1,6 +1,6 @@
 package com.web.gdup.domain.clothing.entity;
 
-import com.web.gdup.domain.image.dto.ImageModel;
+import com.web.gdup.domain.image.dto.ImageDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,12 +41,12 @@ public class ClothingEntity {
 //    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "")
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "image_id")
-    private ImageModel imageModel;
+    private ImageDto imageModel;
 //    private int image_id;
     private String user_name;
 
     @Builder
-    public ClothingEntity(int clothing_id, String age, String color, String cut, String design, String gender, String hood, String layers, String length, String material, String neckline, String pattern, String sleeves, String style, String subcategory, String season, ImageModel imageModel, String user_name) {
+    public ClothingEntity(int clothing_id, String age, String color, String cut, String design, String gender, String hood, String layers, String length, String material, String neckline, String pattern, String sleeves, String style, String subcategory, String season, ImageDto imageModel, String user_name) {
         this.clothing_id = clothing_id;
         this.age = age;
         this.color = color;
@@ -68,5 +68,5 @@ public class ClothingEntity {
         this.user_name = user_name;
     }
 
-    public void mapImage(ImageModel image) { this.imageModel = image; }
+    public void mapImage(ImageDto image) { this.imageModel = image; }
 }

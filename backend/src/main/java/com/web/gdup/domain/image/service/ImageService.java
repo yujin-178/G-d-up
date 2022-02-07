@@ -1,6 +1,6 @@
 package com.web.gdup.domain.image.service;
 
-import com.web.gdup.domain.image.dto.ImageModel;
+import com.web.gdup.domain.image.dto.ImageDto;
 import com.web.gdup.domain.image.repository.ImageRepository;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +15,13 @@ public class ImageService {
     }
 
     @Transactional
-    public int insertImage(ImageModel image) {
+    public int insertImage(ImageDto image) {
         return imageRepository.save(image).getImage_id();
     }
 
     @Transactional
-    public ImageModel getImage(int image_id) {
-        ImageModel imageModel = imageRepository.findById(image_id).get();
+    public ImageDto getImage(int image_id) {
+        ImageDto imageModel = imageRepository.findById(image_id).get();
 
 //        ImageDto imageDto = ImageDto.builder()
 //                .image_id(image_id)

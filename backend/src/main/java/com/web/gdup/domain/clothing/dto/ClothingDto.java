@@ -1,7 +1,7 @@
 package com.web.gdup.domain.clothing.dto;
 
 import com.web.gdup.domain.clothing.entity.ClothingEntity;
-import com.web.gdup.domain.image.dto.ImageModel;
+import com.web.gdup.domain.image.dto.ImageDto;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -28,11 +28,11 @@ public class ClothingDto {
     private String subcategory;
     private String season;
     private LocalDateTime registration_date;
-    private ImageModel imageModel;
+    private ImageDto imageModel;
     private String user_name;
 
     @Builder
-    public ClothingDto(int clothing_id, String age, String color, String cut, String design, String gender, String hood, String layers, String length, String material, String neckline, String pattern, String sleeves, String style, String subcategory, String season, LocalDateTime registration_date, ImageModel imageModel, String user_name) {
+    public ClothingDto(int clothing_id, String age, String color, String cut, String design, String gender, String hood, String layers, String length, String material, String neckline, String pattern, String sleeves, String style, String subcategory, String season, LocalDateTime registration_date, ImageDto imageModel, String user_name) {
         this.clothing_id = clothing_id;
         this.age = age;
         this.color = color;
