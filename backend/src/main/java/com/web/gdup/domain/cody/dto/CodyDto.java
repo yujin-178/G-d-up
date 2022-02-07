@@ -21,12 +21,12 @@ public class CodyDto {
     @Id
     @NonNull
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    int cody_id;
-    String cody_name;
-    LocalDateTime registration_date;
-    LocalDateTime update_date;
+    int codyId;
+    String codyName;
+    LocalDateTime registrationDate;
+    LocalDateTime updateDate;
     String content;
-    String user_name;
+    String userName;
     int secret;
-    int image_id;
+    int imageId;
 }

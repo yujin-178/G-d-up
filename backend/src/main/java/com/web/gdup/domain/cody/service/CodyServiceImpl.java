@@ -17,16 +17,23 @@ import java.util.List;
 @Service
 public class CodyServiceImpl implements CodyService {
     @Autowired
-    CodyRepository cr;
+    private CodyRepository cr;
 
-    public List<CodyDto> getCodyListAll() {
+    @Override
+    public List<CodyDto> getAllCodyList() {
         return cr.findAll();
     }
 
+    @Override
+    public List<CodyDto> getUserCodyList(String id){
+        return cr.findAllByUserName(id);
+    }
     public boolean addCodyItem(CodyDto codyDto, MultipartFile image) throws IOException, ParseException {
 
         return true;
     }
+
+
 
     public String urlParser(String str) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
