@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { css } from '@emotion/react'
 
 const filters = {
@@ -94,6 +94,7 @@ const sidebarStyle = css`
   box-sizing: border-box;
   padding: 30px 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.l);
+  box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.2);
   font-size: 20px;
   background-color: #fff;
 `
@@ -111,12 +112,11 @@ const searchInputStyle = css`
 const seasonItems = css`
   font-size: 15px;
   padding: 0 1px;
+  list-style:none
 `
 
 const menuItem = css`
-  text-decoration: none;
   font-size: 15px;
-  display: block;
   padding: 15px 0px;
 `
 
@@ -125,6 +125,7 @@ const colorItems = css`
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  list-style:none;
 `
 
 const colorButton = ({ color, isSelected }) => css`
@@ -182,12 +183,12 @@ const tagContainer = css`
   display: flex;
   flex-wrap: wrap;
   padding: 5px;
+  list-style:none;
 `
 
 const tagItem = css`
   position: relative;
   display: flex;
-  text-decoration: none;
   background-color: white;
   height: 25px;
   padding: 4px;
@@ -195,6 +196,7 @@ const tagItem = css`
   font-size: 15px;
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
   margin: 5px;
+  min-width: 50px;
 `
 
 const checkbox = css`
