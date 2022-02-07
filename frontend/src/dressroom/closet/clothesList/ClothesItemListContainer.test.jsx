@@ -16,5 +16,6 @@ describe('ClothesItemListContainer', () => {
     ))
 
     expect(getByText(/목록/)).not.toBeNull();
+    expect(getByText(/image/)).not.toBeNull();
   });
 });
