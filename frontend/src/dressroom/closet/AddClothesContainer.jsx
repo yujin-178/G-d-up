@@ -7,7 +7,6 @@ import {
   changeIsmodalOpen
 } from '../../modalSlice';
 
-
 export default function AddClothesContainer() {
 	const dispatch = useDispatch();
 	const {IsmodalOpen} = useSelector(state => state.modalSlice);

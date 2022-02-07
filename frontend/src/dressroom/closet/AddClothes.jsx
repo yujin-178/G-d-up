@@ -65,10 +65,9 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
                   bottom: auto;
                   margin: 0 auto;
                   border: 0;
+									border-radius: 8px;
                   outline: 0;
                   display: flex;
-                  justify-content: center;
-                  align-items: center;
                   height: 0%;
                   width: 0%;
                   background-color: transparent;
@@ -78,9 +77,11 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
                 }
 
                 .content-after {
-                  width: 80%;
+                  width: 55%;
                   height: 80%;
+									grid-column:4;
                   background-color: #f2f2f2;
+									justify-content: center;
                 }
 
                 .content-before {
@@ -92,11 +93,10 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
 						}
 					>
 						<div css={Container}>
-							<h5>옷 추가</h5>
 							<button
 								css={CloseBtn}
 								onClick={() => modalToggle(false)}>
-								Close
+								X
 							</button>
 							<div css={imgContainer}>
 								<img
@@ -121,7 +121,10 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
 									업로드
 								</button>
 							</div>
+						<div css={detail}>
+							<h3>옷 정보</h3>
 						</div>
+						</div>	
 					</Modal>
 				)}
 			</ClassNames>
@@ -129,10 +132,16 @@ export default function AddClothesPage({ onImgChange, preview, imgInput, modalTo
 	)
 }
 
+const detail = css`
+	grid-row: 3;
+	grid-column: 2;
+`
+
 const Container = css`
-    display: grid;
-    grid-gap : 10px;
-  `
+  display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: repeat(7, 1fr);
+`
 
 const imgContainer = css`
 	grid-column: 2;
@@ -141,7 +150,7 @@ const imgContainer = css`
 	border: 1px solid black;
 	width: 400px;
 	height: 300px;        
-	position: relative;
+
 `
 
 const previewImg = css`
@@ -156,6 +165,7 @@ const previewImg = css`
 
 const btnContainer = css`
 	grid-column: 2;
+	margin-top: 1rem;
 	width: 400px;
 	text-align: center;
 `
@@ -195,7 +205,12 @@ const inputBtn = css`
 
 const CloseBtn = css`
 	background: #c99f9f;
-	height: 2rem;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+	height: 1.5rem;
 	grid-column: 4;
 	grid-row: 1;
+	margin-top : 1rem;
+	margin-right: 1rem;
 `
