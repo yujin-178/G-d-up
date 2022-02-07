@@ -17,11 +17,11 @@ public class FeedDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int feed_id;
+    private int feedId;
 
     private String content;
-    private String registration_date;
-    private int cody_id;
-    private String user_name;
+    private String registrationDate;
+    private int codyId;
+    private String userName;
 
 }
