@@ -28,15 +28,15 @@ public class ClothingController {
 
     @PostMapping("/background")
     @ApiOperation(value = "배경 제거 API")
-    public ResponseEntity<String> getRemoveBg(@RequestParam("imageFile") MultipartFile file)
+    public ResponseEntity<String> getRemoveBg(@RequestPart("imageFile") MultipartFile file)
             throws IOException, ParseException {
         return new ResponseEntity<>(clothingService.getRemoveBg(file), HttpStatus.OK);
     }
 
-    @PostMapping("/save")
+    @PostMapping(value = "/save")
     @ApiOperation(value = "옷 저장")
-    public ResponseEntity<String> insertClothing(@RequestParam("imageFile") MultipartFile file, ClothingDto clothing) throws IOException {
-        clothingService.insertClothing(file, clothing);
+    public ResponseEntity<String> insertClothing(@RequestPart("imageFile") MultipartFile file, @RequestPart("clothing") ClothingDto clothing, @RequestParam("hashtag") String hashtag) throws IOException {
+        clothingService.insertClothing(file, clothing, hashtag);
         return new ResponseEntity<String>("SUCESS", HttpStatus.OK);
     }
 

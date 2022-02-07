@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ClothingServiceImpl {
-    String getTag(MultipartFile file) throws IOException;
-    String getRemoveBg(MultipartFile file) throws IOException, ParseException;
-    public int insertClothing(MultipartFile file, ClothingDto clothing);
+    public String getTag(MultipartFile file) throws IOException;
+    public String getRemoveBg(MultipartFile file) throws IOException, ParseException;
+    public int insertClothing(MultipartFile file, ClothingDto clothing, String hashtag);
     public ClothingDto getClothing(int id);
-    void deleteClothing(int clothing_id);
-    List<ClothingDto> getUserClothing(String user_name);
+    public void deleteClothing(int clothing_id);
+    public List<ClothingDto> getUserClothing(String user_name);
 }

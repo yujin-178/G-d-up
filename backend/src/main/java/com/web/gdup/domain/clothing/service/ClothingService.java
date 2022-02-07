@@ -2,6 +2,7 @@ package com.web.gdup.domain.clothing.service;
 
 import com.web.gdup.domain.clothing.dto.ClothingDto;
 import com.web.gdup.domain.clothing.repository.ClothingRepository;
+import com.web.gdup.domain.clothing_hashtag.service.ClothingHashtagServiceImpl;
 import com.web.gdup.domain.image.dto.ImageDto;
 import com.web.gdup.domain.image.service.ImageServiceImpl;
 import com.web.gdup.global.component.CommonComponent;
@@ -19,10 +20,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class ClothingService implements ClothingServiceImpl{
@@ -32,6 +30,8 @@ public class ClothingService implements ClothingServiceImpl{
     CommonComponent commonComponent;
     @Autowired
     ImageServiceImpl imageService;
+    @Autowired
+    ClothingHashtagServiceImpl clothingHashtagService;
 
     @Override
     public String getTag(MultipartFile file) throws IOException {
@@ -85,7 +85,68 @@ public class ClothingService implements ClothingServiceImpl{
 
     @Override
     @Transactional
-    public int insertClothing(MultipartFile file, ClothingDto clothing) {
+    public int insertClothing(MultipartFile file, ClothingDto clothing, String hashtag) {
+        ImageDto image = saveImage(file);
+
+        int imageId = imageService.insertImage(image);
+        ImageDto iDto = imageService.getImage(imageId);
+
+        clothing.mapImage(iDto);
+        int clothing_id = clothingRepository.save(clothing).getClothingId();
+        Set<String> hashtags = parseHashtags(hashtag);
+        clothingHashtagService.insertHashtags(clothing_id, hashtags);
+        return clothing_id;
+    }
+
+    private Set<String> parseHashtags(String hashtag) {
+        Set<String> set = new HashSet<>();
+        StringTokenizer st = new StringTokenizer(hashtag);
+        while(st.hasMoreTokens()) {
+            set.add(st.nextToken());
+        }
+        return set;
+    }
+
+    @Override
+    @Transactional
+    public ClothingDto getClothing(int clothingId) {
+        ClothingDto clothing = clothingRepository.findById(clothingId).get();
+        return clothing;
+    }
+
+    @Override
+    public void deleteClothing(int clothingId) {
+        ClothingDto cDto = clothingRepository.getOne(clothingId);
+        String removeUrl = cDto.getImageModel().getImagePath();
+
+        File file = new File(removeUrl);
+        if(file.exists()) {
+            if(file.delete())
+                System.out.println("삭제 완료");
+            else
+                System.out.println("삭제 실패");
+        } else {
+            System.out.println("파일이 존재하지 않습니다.");
+        }
+
+        clothingRepository.deleteById(clothingId);
+    }
+
+    @Override
+    public List<ClothingDto> getUserClothing(String userName) {
+        return clothingRepository.findByUserName(userName);
+    }
+
+    private String urlParser(String str) throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) parser.parse(str);
+        JSONArray jArray = (JSONArray) jsonObject.get("records");
+        JSONObject obj = (JSONObject) jArray.get(0);
+        String whitebgUrl = (String) obj.get("_output_url_whitebg");
+        return whitebgUrl;
+    }
+
+    private ImageDto saveImage(MultipartFile file) {
         UUID uuid = UUID.randomUUID();
 
         String originImageName = file.getOriginalFilename();
@@ -105,41 +166,10 @@ public class ClothingService implements ClothingServiceImpl{
                 .newImageName(image_name)
                 .imagePath(imagePath)
                 .build();
-        System.out.println("여기까지");
-        int imageId = imageService.insertImage(image);
-        ImageDto iDto = imageService.getImage(imageId);
-
-        clothing.mapImage(iDto);
-        return clothingRepository.save(clothing).getClothingId();
+        return image;
     }
 
-    @Override
-    @Transactional
-    public ClothingDto getClothing(int clothingId) {
-        ClothingDto clothing = clothingRepository.findById(clothingId).get();
-        return clothing;
-    }
-
-    @Override
-    public void deleteClothing(int clothingId) {
-        clothingRepository.deleteById(clothingId);
-    }
-
-    @Override
-    public List<ClothingDto> getUserClothing(String userName) {
-        return clothingRepository.findByUserName(userName);
-    }
-
-    private String urlParser(String str) throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) parser.parse(str);
-        JSONArray jArray = (JSONArray) jsonObject.get("records");
-        JSONObject obj = (JSONObject) jArray.get(0);
-        String whitebgUrl = (String) obj.get("_output_url_whitebg");
-        return whitebgUrl;
-    }
-
-    private static void download(String spec) {
+    private void download(String spec) {
         String outputDir = "C:\\SSAFY\\removeBg";
         InputStream is = null;
         FileOutputStream os = null;
