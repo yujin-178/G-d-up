@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  'category': 'all',
+  'category': '전체',
   'isUserItem': false,
-  'season': [],
-  'colors': [],
+  'selectedSeason': [],
+  'selectedColors': [],
   'custom': [],
 };
 
@@ -19,45 +19,75 @@ export const filterSlice = createSlice({
         category
       };
     },
+    changeIsUserItemFilter(state) {
+      return {
+        ...state,
+        isUserItem: !state.isUserItem
+      };
+    },
     changeSeasonFilter(state, action) {
       const { isChecked, season } = action.payload;
+      const { selectedSeason } = state;
+
       if (isChecked) {
         return {
           ...state,
-          season: [...state.season, season]
+          selectedSeason: [...selectedSeason, season]
         };
       }
 
-      const excluded = state.season.filter(item => item != season);
+      const removed = selectedSeason.filter(item => item !== season);
       return {
         ...state,
-        season: excluded
+        selectedSeason: removed
       };
     },
     changeColorFilter(state, action) {
-      const selectedColors = state.colors;
+      const { selectedColors } = state;
       const color = action.payload;
 
       if (selectedColors.includes(color)) {
-        const removed = selectedColors.filter(item => item != color);
+        const removed = selectedColors.filter(item => item !== color);
         return {
           ...state,
-          colors: [...removed]
+          selectedColors: [...removed]
         };
       }
 
       return {
         ...state,
-        colors: [...selectedColors, color]
+        selectedColors: [...selectedColors, color]
       };
     },
+    addCustomFilter(state, action) {
+      const value = action.payload;
+      if (state.custom.indexOf(value) === -1) {
+        return {
+          ...state,
+          custom: [...state.custom, value]
+        };
+      }
+
+      return state;
+    },
+    deleteCustomFilter(state, action) {
+      const value = action.payload;
+      const removed = state.custom.filter(item => item !== value);
+      return {
+        ...state,
+        custom: removed
+      };
+    }
   },
 });
 
 export const {
   changeCategoryFilter,
+  changeIsUserItemFilter,
   changeSeasonFilter,
   changeColorFilter,
+  addCustomFilter,
+  deleteCustomFilter,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;

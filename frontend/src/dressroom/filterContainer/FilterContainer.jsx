@@ -11,12 +11,15 @@ import {
   addCustomFilter,
   deleteCustomFilter,
 } from '../../filterSlice';
+import { css } from '@emotion/react'
+import { categories, season, colors } from '../../constants/filter';
 
 function FilterContainer() {
   const inputRef = useRef();
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filterSlice);
-  const { category, isUserItem, colors, custom } = filter;
+  const { category, isUserItem, selectedColors, custom } = filter;
+  const filteredClothes = useSelector(filteredClothesSelector);
 
   const onKeyPress = event => {
     if (event.key === 'Enter') {
@@ -54,11 +57,14 @@ function FilterContainer() {
   return (
     <>
       <Categories
+        categories={categories}
         selectedCategory={category}
         handleClick={categoryHandler}
       />
       <ClosetSidebar
-        selectedColors={colors}
+        season={season}
+        colors={colors}
+        selectedColors={selectedColors}
         isUserItem={isUserItem}
         toggleIsUserItem={userToggleHandler}
         onChangeSeason={seasonHandler}
