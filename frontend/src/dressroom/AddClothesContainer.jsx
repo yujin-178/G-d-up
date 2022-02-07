@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import AddClothesPage from './AddClothesPage.jsx'
+import AddClothesPage from './AddClothes.test.jsx'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
