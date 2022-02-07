@@ -2,12 +2,14 @@ import React from 'react';
 
 import ClothesItem from './ClothesItem.jsx';
 
-const numbers = [...Array(16).keys()];
-
-export default function ClothesItemList() {
+export default function ClothesItemList({ clothes }) {
+  const numbers = [...Array(4).keys()];
   return (
-    numbers.map(number =>
-      <ClothesItem key={number.toString()}>
+    clothes.map(item =>
+      <ClothesItem
+        key={item['id']} 
+        item={item}  
+      >
       </ClothesItem>
     )
   );

@@ -12,6 +12,7 @@ export const clothesList = [{
 
 export const clothesData =  [
   {
+    'id': 1,
     'image': 'image1',
     'category': 'top',
     'season': ['summer', 'spring'],
@@ -19,6 +20,7 @@ export const clothesData =  [
     'custom': ['daily']
   },
   {
+    'id': 2,
     'image': 'image2',
     'category': 'top',
     'season': ['autumn, winter'],
@@ -26,6 +28,7 @@ export const clothesData =  [
     'custom': ['daily']
   },
   {
+    'id': 3,
     'image': 'image3',
     'category': 'bottom',
     'season': ['summer'],
@@ -33,6 +36,7 @@ export const clothesData =  [
     'custom': ['출근']
   },
   {
+    'id': 4,
     'image': 'image4',
     'category': 'outer',
     'season': ['winter'],

@@ -2,9 +2,10 @@ import React from 'react';
 
 import { css } from '@emotion/react';
 
-export default function ClothesItem() {
+export default function ClothesItem({ item }) {
   return (
     <div css={ClothesItemBox}>
+      <p>{ item.image }</p>
     </div>
   )
 }

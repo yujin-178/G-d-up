@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { render } from "@testing-library/react";
-import Categories from './Categories.jsx';
+import Categories from '../categories/Categories.jsx';
 
 describe('Categories', () => {
   it('renders Categories', () => {

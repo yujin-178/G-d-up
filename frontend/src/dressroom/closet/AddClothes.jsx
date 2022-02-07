@@ -3,7 +3,9 @@ import { css, jsx } from '@emotion/react';
 import { ClassNames } from '@emotion/core';
 import Modal from 'react-modal';
 
-Modal.setAppElement('#app')
+if (process.env.NODE_ENV !== 'test'){
+	Modal.setAppElement('#app')
+}
 
 export default function AddClothesPage({ onImgChange, preview, imgInput, modalToggle, modalIsOpen }) {
 	const Container = css`

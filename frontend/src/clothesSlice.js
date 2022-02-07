@@ -4,7 +4,7 @@ import { clothesData } from '../fixtures/clothesList';
 const initialState = clothesData;
 
 export const clothesSlice = createSlice({
-  name: 'clothesSlice',
+  name: 'clothes',
   initialState,
   reducers: {
     // todo: clothes add, delete, update
