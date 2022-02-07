@@ -1,11 +1,10 @@
 package com.web.gdup.domain.clothing.repository;
 
-import java.util.List;
-
+import com.web.gdup.domain.clothing.dto.ClothingDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.web.gdup.domain.model.ImageModel;
+import java.util.List;
 
-public interface ClothingRepository extends JpaRepository<ImageModel, Integer>{
-    List<ImageModel> findAll();
+public interface ClothingRepository extends JpaRepository<ClothingDto, Integer>{
+    List<ClothingDto> findByUserName(String userName);
 }

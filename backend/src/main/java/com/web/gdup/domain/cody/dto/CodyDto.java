@@ -2,25 +2,31 @@ package com.web.gdup.domain.cody.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.extern.java.Log;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Table(name = "cody")
+@Builder
+@Log
 public class CodyDto {
     @Id
+    @NonNull
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    long cody_id;
-    String cody_name;
-    String registration_date;
-    String update_date;
+    int codyId;
+    String codyName;
+    LocalDateTime registrationDate;
+    LocalDateTime updateDate;
     String content;
-    String user_name;
+    String userName;
     int secret;
-    int image_id;
+    int imageId;
 }

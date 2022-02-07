@@ -10,11 +10,11 @@ app = Flask(__name__)
 def hello():
     endpoint = 'https://api.ximilar.com/tagging/fashion/v2/detect_tags'
     headers = {
-        'Authorization': "Token API_KEY",
+        'Authorization': "Token e19e9bdd91e3166724d1d2841a29ffbc39c018b0",
         'Content-Type': 'application/json'
     }
 
-    with open('test.jpg', "rb") as image_file:
+    with open('test.png', "rb") as image_file:
         encoded_string = base64.b64encode(image_file.read()).decode('utf-8')
 
     data = {

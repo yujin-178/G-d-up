@@ -2,9 +2,7 @@ import React from 'react';
 import { css } from '@emotion/react';
 import Category from '../category/Category.jsx';
 
-const categories = ['all', 'top', 'bottom', 'shoes', 'outer', 'accessories'];
-
-function Categories({ selectedCategory, handleClick }) {
+function Categories({ categories, selectedCategory, handleClick }) {
   return (
     <ul css={ulStayle}>
       {categories.map((category, index) =>(
@@ -21,11 +19,15 @@ function Categories({ selectedCategory, handleClick }) {
 
 const ulStayle = css`
   display: flex;
-  justify-content: center;
   align-items: center;
-  background-color: #FFFAFA;
-  height: 3rem;
-  width: 50%;
+  background-color: #fff;
+  height: 4rem;
+  width: 40%;
+  min-width: 600px;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 0;
+  box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.2);
 `;
 
 export default Categories;
