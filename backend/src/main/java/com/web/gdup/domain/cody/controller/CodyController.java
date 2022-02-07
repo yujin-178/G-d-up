@@ -32,12 +32,12 @@ public class CodyController {
 
 
 
-    @PostMapping(value = "/addCody/{id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/addCody/{user_id}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @ApiOperation(
             value = "코디 추가",
             notes = "코디의 사진, 태크 정보를 받아서 새로운 코디를 만든다."
     )
-    public ResponseEntity<String> addCody(@PathVariable(name = "id") String id, CodyDto codyDto, @RequestParam MultipartFile image, @RequestParam String[] cody_tag) throws IOException, ParseException {
+    public ResponseEntity<String> addCody(@PathVariable(name = "user_id") String id, CodyDto codyDto, @RequestParam MultipartFile image, @RequestParam String[] cody_tag) throws IOException, ParseException {
         ResponseEntity<String> re;
         if(codyDto.getUser_name().equals(id))
             cs.addCodyItem(codyDto, image);
@@ -51,8 +51,8 @@ public class CodyController {
 
     @GetMapping(value = "/list")
     @ApiOperation(
-            value = "listCody",
-            notes = "사용자의 모든 코디 정보를 불러온다.")
+            value = "모든 코디 목록 불러오기",
+            notes = "모든 사용자의 코디 정보를 불러온다.")
     public ResponseEntity<List<CodyDto>> listCody() {
         return new ResponseEntity<List<CodyDto>>(cs.getCodyListAll(), HttpStatus.OK);
     }
@@ -64,6 +64,15 @@ public class CodyController {
     )
     public ResponseEntity<String> deleteCody(@PathVariable(name = "cody_id") String cody_id){
         return new ResponseEntity<String>("삭제 성공", HttpStatus.OK);
+    }
+
+    @PostMapping
+    @ApiOperation(
+            value = "코디 수정",
+            notes = "cody_id를 받아서 해당 코디를 수정합니다."
+    )
+    public ResponseEntity<String> UpdateCody(@PathVariable(name = "cody_id") String cody_id){
+        return new ResponseEntity<String>("수정 성공", HttpStatus.OK);
     }
 
 
