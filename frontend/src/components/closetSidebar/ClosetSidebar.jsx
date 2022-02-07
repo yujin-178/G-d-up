@@ -1,17 +1,10 @@
 import React from 'react';
 import { css } from '@emotion/react'
 
-const filters = {
-  'season': ['spring', 'summer', 'autumn', 'winter'],
-  'colors': [
-    'f5f5dc', '000000', '964b00', '000080', '008000', '808080', 'add8e6', 'ffa500',
-    'ffc0cb', '800080', 'ff0000', 'c0c0c0', '40e0d0', 'ffffff', 'ffff00'
-  ]
-  //'beige, black, brown, navy, green, grey, light blue, orange, pink, purple, red, silver, turquoise, white, yellow'
-}
-
 function ClosetSidebar(props) {
   const {
+    season,
+    colors,
     selectedColors,
     isUserItem,
     toggleIsUserItem,
@@ -41,7 +34,7 @@ function ClosetSidebar(props) {
       <>
         <p>🌹 season</p>
         <ul css={seasonItems}>
-          {filters.season.map((item, index) => (
+          {season.map((item, index) => (
             <li key={index} css={menuItem}>
               <input
                 css={checkbox}
@@ -57,13 +50,13 @@ function ClosetSidebar(props) {
       <>
         <p>✨ color</p>
         <ul css={colorItems}>
-          {filters.colors.map((color, index) => {
-            const isSelected = selectedColors.includes(color);
+          {colors.map(({ name, code }, index) => {
+            const isSelected = selectedColors.includes(name);
             return (
               <li key={index} css={menuItem}>
                 <button
-                  css={colorButton({ color, isSelected })}
-                  onClick={() => onChangeColor(color)}
+                  css={colorButton({ code, isSelected })}
+                  onClick={() => onChangeColor(name)}
                 >
                 </button>
               </li>
@@ -128,8 +121,8 @@ const colorItems = css`
   list-style:none;
 `
 
-const colorButton = ({ color, isSelected }) => css`
-  background-color: #${color};
+const colorButton = ({ code, isSelected }) => css`
+  background-color: #${code};
   height: 25px;
   width: 25px;
   cursor: pointer;
