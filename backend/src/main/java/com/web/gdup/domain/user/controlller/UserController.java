@@ -1,6 +1,5 @@
 package com.web.gdup.domain.user.controlller;
 
-import com.web.gdup.domain.follow.dto.FollowDto;
 import com.web.gdup.domain.follow.service.FollowService;
 import com.web.gdup.domain.model.BasicResponse;
 import com.web.gdup.domain.user.dto.UserDto;
@@ -35,7 +34,7 @@ public class UserController {
         if(user.isPresent()){
             final BasicResponse result = new BasicResponse();
             result.status = true;
-            result.data = "success";
+            result.message = "success";
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
@@ -46,7 +45,7 @@ public class UserController {
 
 
 
-    @GetMapping("/find/follow")
+    @GetMapping("/find/follow/")
     @ApiOperation(value = "팔로우가 가능한 유저 목록", notes = "로그인 한 유저가 구독할 수 있는 유저들의 목록을 반환한다." +
             "파라미터로 현재 로그인된 유저의 name이 필요하다.")
     public Object findFollow(@RequestParam (required = true) final String userName){
@@ -59,7 +58,7 @@ public class UserController {
             }
             final BasicResponse result = new BasicResponse();
             result.status = true;
-            result.data = "success";
+            result.message = "success";
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
@@ -81,7 +80,7 @@ public class UserController {
             }
             final BasicResponse result = new BasicResponse();
             result.status = true;
-            result.data = "success";
+            result.message = "success";
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
@@ -103,7 +102,7 @@ public class UserController {
             }
             final BasicResponse result = new BasicResponse();
             result.status = true;
-            result.data = "success";
+            result.message = "success";
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
@@ -112,7 +111,7 @@ public class UserController {
         return response;
     }
 
-    @GetMapping("/follow")
+    @GetMapping("/follow/")
     @ApiOperation(value = "팔로우 하기", notes = "현재 로그인 한 유저가 타 유저를 팔로우 하는 기능" +
             "파라미터로 현재 로그인된 유저의 name 과 팔로우 하고자 하는 유저의 name이 필요하다.")
     public Object follow(@RequestParam (required = true) final String userName, @RequestParam(required = true) final String following){
@@ -122,7 +121,7 @@ public class UserController {
         if(followService.follow(userName,following)){
             final BasicResponse result = new BasicResponse();
             result.status = true;
-            result.data = "success";
+            result.message = "success";
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
@@ -140,13 +139,12 @@ public class UserController {
         if(followService.unfollow(userName,following)){
             final BasicResponse result = new BasicResponse();
             result.status = true;
-            result.data = "success";
+            result.message = "success";
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
             response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return response;
-
     }
 }
