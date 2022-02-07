@@ -2,10 +2,21 @@ import React from 'react';
 
 import { css } from '@emotion/react';
 
-export default function ClothesItem({ item }) {
+export default function ClothesItem(props) {
+  const {
+    item,
+    onMouseOverHandler,
+    OnMouseLeaveHandler
+  } = props;
+
   return (
     <div css={ClothesItemBox}>
-      { item && <p>{ item.image }</p> }
+      {item && (
+        <p
+          onMouseOver={() => onMouseOverHandler(item)}
+          onMouseLeave={OnMouseLeaveHandler}
+        >{item.image}</p>
+      )}
     </div>
   );
 }
