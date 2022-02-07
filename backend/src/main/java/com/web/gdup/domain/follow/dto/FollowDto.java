@@ -1,9 +1,6 @@
 package com.web.gdup.domain.follow.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,9 +9,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "follow")
-@IdClass(FollowID.class)
+@IdClass(FollowId.class)
 @ToString
 @Getter
+
 public class FollowDto implements Serializable {
 
     @Id

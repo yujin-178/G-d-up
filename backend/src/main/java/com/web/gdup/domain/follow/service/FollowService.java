@@ -12,4 +12,5 @@ public interface FollowService {
     List<String> findFollowing(String userName); // 현재 로그인 된 유저의 following을 찾아 반환
     List<String> findFollower(String userName); // 현재 로그인 된 유저의 follower을 찾아 반환
     boolean follow(String userName, String following); // 현재 로그인 된 유저가 타 사용자를 follow
+    boolean unfollow(String userName, String following); // 현재 로그인 된 유저가 타 사용자를 unfollow)
 }

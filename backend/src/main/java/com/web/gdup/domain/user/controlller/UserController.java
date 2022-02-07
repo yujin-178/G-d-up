@@ -130,4 +130,23 @@ public class UserController {
         }
         return response;
     }
+
+    @GetMapping("/unfollow")
+    @ApiOperation(value = "언팔로우 하기", notes = "현재 로그인 한 유저가 타 유저를 언팔로우 하는 기능" +
+            "파라미터로 현재 로그인된 유저의 name 과 팔로우 하고자 하는 유저의 name이 필요하다.")
+    public Object unfollow(@RequestParam (required = true) final String userName, @RequestParam(required = true) final String following){
+        ResponseEntity response = null;
+
+        if(followService.unfollow(userName,following)){
+            final BasicResponse result = new BasicResponse();
+            result.status = true;
+            result.data = "success";
+            response = new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        else {
+            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return response;
+
+    }
 }

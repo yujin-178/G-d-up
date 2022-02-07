@@ -1,7 +1,7 @@
 package com.web.gdup.domain.follow.service;
 
 import com.web.gdup.domain.follow.dto.FollowDto;
-import com.web.gdup.domain.follow.dto.FollowID;
+import com.web.gdup.domain.follow.dto.FollowId;
 import com.web.gdup.domain.follow.repository.FollowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,12 +49,25 @@ public class FollowServiceImpl implements FollowService {
     @Override
     public boolean follow(String userName, String following) {
 
-
         Optional<FollowDto> follow  = followRepository.findFollowDtoByUserNameAndFollowing(userName, following);
 
         if(!follow.isPresent()){ // 팔로우 관계가 아니라면
             FollowDto newFollow = followRepository.save(new FollowDto(userName, following));
             System.out.println(newFollow);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean unfollow(String userName, String following) {
+//        Optional<FollowDto> follow  = followRepository.findFollowDtoByUserNameAndFollowing(userName, following);
+
+        FollowId followId = new FollowId(userName,following);
+        FollowDto follow = followRepository.getOne(followId);
+
+        if(follow != null){
+            followRepository.delete(follow);
             return true;
         }
         return false;

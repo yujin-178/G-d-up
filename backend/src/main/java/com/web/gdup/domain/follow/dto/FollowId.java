@@ -1,8 +1,6 @@
 package com.web.gdup.domain.follow.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -17,10 +15,10 @@ import java.io.Serializable;
 * equals, hashcode 구현 (@Data 어노테이션 추가로 자동생성 )
 *  */
 
-@Data
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FollowID implements Serializable {
+public class FollowId implements Serializable {
 
 
     private String userName;
