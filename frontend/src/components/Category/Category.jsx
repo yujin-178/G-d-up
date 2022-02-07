@@ -15,7 +15,7 @@ export default function Category ({ item, isSelected, handleClick }) {
 }
 
 const liStyle = css`
-  list-style-type: none;
+  lvhfeist-style-type: none;
   padding-right: 3%;
 `;
 

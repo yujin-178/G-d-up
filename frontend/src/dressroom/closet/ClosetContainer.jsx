@@ -6,8 +6,8 @@ import AddClothesContainer from './AddClothesContainer.jsx';
 import ClosetDetailContainer from './clothesDetailContainer/ClothesDetailContainer.jsx';
 
 import {
-	changemodalIsOpen
-} from '../../actions.js'
+  changeisModalOpen
+} from '../../modalSlice';
 
 export default function ClosetContainer() {
 
@@ -18,7 +18,7 @@ export default function ClosetContainer() {
 			<ClothesItemListContainer />
 			<ClosetDetailContainer/>
 			<button
-				onClick={() => dispatch(changemodalIsOpen(true))}
+				onClick={() => dispatch(changeisModalOpen(true))}
 			>
 				옷 추가
 			</button>
