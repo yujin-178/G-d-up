@@ -7,7 +7,7 @@ export default function ClothesItem({ item }) {
     <div css={ClothesItemBox}>
       { item && <p>{ item.image }</p> }
     </div>
-  )
+  );
 }
 
 const ClothesItemBox = css`

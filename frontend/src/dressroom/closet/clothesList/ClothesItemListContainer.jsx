@@ -17,7 +17,7 @@ export default function ClothesItemListContainer() {
         />
       </div>
     </div>
-  )
+  );
 }
 
 const ItemContainer = css`

@@ -25,48 +25,48 @@ export default function DressRoomContainer() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 const Title = css`
-padding: 2rem 0 0 0;
-text-align: center;
-font-size: 50px;
+  padding: 2rem 0 0 0;
+  text-align: center;
+  font-size: 50px;
 `;
 
 const DressRoom = css`
-min-height: 30rem;
-background-image: url("/images/dressroombackground.jpg");
-background-size: cover;
-background-position: center;
+  min-height: 30rem;
+  background-image: url("/images/dressroombackground.jpg");
+  background-size: cover;
+  background-position: center;
 `;
 
 const Container = css`
-height: 100%;
+  height: 100%;
 `;
 
 const Button = css`
-margin: 0;
-padding: 0.5rem 1rem;
+  margin: 0;
+  padding: 0.5rem 1rem;
 
-font-family: "Noto Sans KR", sans-serif;
-font-size: 1rem;
-font-weight: 400;
-text-align: center;
-text-decoration: none;
+  font-family: "Noto Sans KR", sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+  text-decoration: none;
 
-display: inline-block;
-width: auto;
+  display: inline-block;
+  width: auto;
 
-border: none;
-border-radius: 4px;
+  border: none;
+  border-radius: 4px;
 `;
 
 const FlexContainer = css`
-display: grid;
-justify-content: space-between;
+  display: grid;
+  justify-content: space-between;
 `;
 
 const ClosetContainer = css`
-grid-column: 3;
+  grid-column: 3;
 `;
