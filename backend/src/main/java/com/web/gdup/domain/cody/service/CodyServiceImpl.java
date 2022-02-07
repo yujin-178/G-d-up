@@ -4,8 +4,13 @@ package com.web.gdup.domain.cody.service;
 import com.web.gdup.domain.cody.dto.ClothingInCody;
 import com.web.gdup.domain.cody.dto.CreateCody;
 import com.web.gdup.domain.cody.entity.CodyClothingInfo;
+import com.web.gdup.domain.cody.entity.CodyClothingPK;
 import com.web.gdup.domain.cody.entity.CodyDto;
+import com.web.gdup.domain.cody.repository.CodyClothingRepository;
 import com.web.gdup.domain.cody.repository.CodyRepository;
+import com.web.gdup.domain.hashtag.dto.HashtagDto;
+import com.web.gdup.domain.hashtag.repository.HashtagRepository;
+import com.web.gdup.domain.hashtag.service.HashtagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +23,15 @@ import java.util.StringTokenizer;
 public class CodyServiceImpl implements CodyService {
     @Autowired
     private CodyRepository cr;
+
+    @Autowired
+    private HashtagRepository hr;
+
+    @Autowired
+    private HashtagService hs;
+
+    @Autowired
+    private CodyClothingRepository ccr;
 
     @Override
     public List<CodyDto> getAllCodyList() {
@@ -37,11 +51,17 @@ public class CodyServiceImpl implements CodyService {
     @Override
     public int addCodyItem(CreateCody cc, String userName) {
         StringTokenizer st = new StringTokenizer(cc.getCodyTag(), ", ");
-        List<String> codyTag = new ArrayList<>();
-        while(st.hasMoreTokens()){
-            // 해당 해쉬 태크가 존재하는지 확인하는 find 필요
-            codyTag.add(st.nextToken());
+
+        while (st.hasMoreTokens()) {
+            String tagTmp = st.nextToken();
+            if(!tagTmp.equals(hr.getOne(tagTmp).getTagName()) ) {
+                HashtagDto hash = HashtagDto.builder().tagName("#" + tagTmp).build();
+//                System.out.println("hash : " + hash.toString());
+                hs.insertHashtag(hash);
+            }
+
         }
+
 
         CodyDto codyDto = CodyDto.builder()
                 .userName(userName)
@@ -53,24 +73,25 @@ public class CodyServiceImpl implements CodyService {
 
         CodyDto ans = cr.save(codyDto);
 
-        if(ans != null) {
+        if (ans != null) {
             System.out.println("Cody 생성 성공");
             int len = cc.getClothingList().size();
             List<ClothingInCody> cciList = cc.getClothingList();
-            for(int i = 0; i< len;i++){
+            for (int i = 0; i < len; i++) {
                 ClothingInCody tmp = cciList.get(i);
                 CodyClothingInfo cci = CodyClothingInfo.builder()
                         .codyId(ans.getCodyId())
                         .clothingId(tmp.getClothingId())
                         .m(tmp.getM()).x(tmp.getX()).y(tmp.getY()).z(tmp.getZ()).build();
-
+                // 기존에 없는 새로운 값인지 확인하는 작업이 있어야 하지 않을까?
+//                System.out.println("tmp : " +tmp.toString());
+                ccr.save(cci);
 
             }
 
 
             return 1;
-        }
-        else {
+        } else {
             System.out.println("Cody 생성 실패");
             return 0;
         }
