@@ -15,6 +15,6 @@ describe('ClosetDetailContainer', () => {
       </MemoryRouter>
     ))
 
-    expect(getByText(/상세정보/)).not.toBeNull();
+    expect(getByText(/옷 정보/)).not.toBeNull();
   });
 });
