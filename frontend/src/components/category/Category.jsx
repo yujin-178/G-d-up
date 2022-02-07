@@ -14,19 +14,20 @@ function Category ({ item, isSelected, handleClick }) {
   );
 }
 
-
 const liStyle = css`
   list-style-type: none;
+  padding-right: 3%;
 `
 
 const buttonStyle = ({ isSelected }) => css`
   background: none;
   border: none;
   cursor: pointer;
+  font-size: 20px;
   ${isSelected &&
   `
-    background-color: #413F42;
-    color: white;
+    color: #00acee;
+    border-bottom: 2px solid #00acee;
   `}
 `;
 
