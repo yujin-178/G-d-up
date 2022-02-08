@@ -12,6 +12,6 @@ public interface CodyService {
     public List<CodyDto> getAllCodyList() ;
     public int addCodyItem(CreateCody cc, String userName)  ;
     public List<CodyDto> getUserCodyList(String id);
-    public int deleteCodyItem(String id);
+    public int deleteCodyItem(int id);
 
 }

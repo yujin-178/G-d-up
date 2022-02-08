@@ -44,7 +44,7 @@ public class CodyServiceImpl implements CodyService {
     }
 
     @Override
-    public int deleteCodyItem(String id) {
+    public int deleteCodyItem(int id) {
         return cr.deleteByCodyId(id);
     }
 
