@@ -4,12 +4,15 @@ import ClothesItemListContainer from './clothesList/ClothesItemListContainer.jsx
 import FilterContainer from '../FilterContainer/FilterContainer.jsx';
 import AddClothesContainer from './AddClothesContainer.jsx';
 import ClosetDetailContainer from './clothesDetailContainer/ClothesDetailContainer.jsx';
+import { useDispatch } from 'react-redux';
 // import { css, jsx } from '@emotion/react';
+
 import {
   changeisModalOpen
 } from '../../modalSlice';
 
 export default function ClosetContainer() {
+  const dispatch = useDispatch();
 
   return (
     <div>

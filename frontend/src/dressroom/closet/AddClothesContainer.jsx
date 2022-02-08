@@ -28,7 +28,7 @@ export default function AddClothesContainer() {
       },
     };
     axios.post(``, formData, config)
-      .then(res => {
+      .then(() => {
         URL.revokeObjectURL(fileUrl);
         setFileUrl("");
 
