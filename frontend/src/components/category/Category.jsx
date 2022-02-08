@@ -1,5 +1,5 @@
 import React from 'react';
-import { css } from '@emotion/react'
+import { css } from '@emotion/react';
 
 export default function Category ({ item, isSelected, handleClick }) {
   return (

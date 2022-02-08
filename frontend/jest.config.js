@@ -3,4 +3,4 @@ module.exports = {
     'jest-plugin-context/setup',
     './jest.setup.js',
   ],
-}
+};
