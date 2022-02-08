@@ -1,8 +1,9 @@
 import React from 'react';
 import { css } from '@emotion/react';
 
-export default function ClothesDetail({ selectedClothes, deleteHander, allSeason }) {
+export default function ClothesDetail({ selectedClothes, deleteHandler, allSeason }) {
   const {
+    id,
     image,
     category,
     color,
@@ -17,7 +18,7 @@ export default function ClothesDetail({ selectedClothes, deleteHander, allSeason
     <div css={detailContainer}>
       <div css={buttonGroup}>
         <button>수정</button>
-        <button onClick={() => deleteHander(1)}>삭제</button>
+        <button onClick={() => deleteHandler(id)}>삭제</button>
       </div>
       <img css={clothesImage} src={image} alt="image" />
       <div>
@@ -35,10 +36,10 @@ export default function ClothesDetail({ selectedClothes, deleteHander, allSeason
         <div css={clothesInfoGroup}>
           <p>계절</p>
           <ul css={ulStyle}>
-            {allSeason.map(item => {
+            {allSeason.map((item, index) => {
               const isMatched = item === season;
               return (
-                <li css={liStyle({ isMatched })}>
+                <li css={liStyle({ isMatched })} key={index}>
                   <p css={itemTitle}>{item}</p>
                 </li>
               );
@@ -47,8 +48,8 @@ export default function ClothesDetail({ selectedClothes, deleteHander, allSeason
         </div>
         <div css={clothesInfoGroup}>
           <p>태그</p>
-          <ul css={ulStyle}>{custom.map(item => (
-            <li css={tagItem}>
+          <ul css={ulStyle}>{custom.map((item, index) => (
+            <li css={tagItem} key={index}>
               {item}
             </li>
           ))}</ul>

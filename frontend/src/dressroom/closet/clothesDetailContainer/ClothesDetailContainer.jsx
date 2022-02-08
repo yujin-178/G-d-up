@@ -7,15 +7,15 @@ import { season } from '../../../constants/filter';
 export default function ClosetDetailContainer() {
   const { selectedClothes } = useSelector(state => state.clothesSlice);
   const dispatch = useDispatch();
-  const deleteHander = clothesId => {
+  // todo: username과 clothes의 username이 일치하는 경우
+  const deleteHandler = clothesId => {
     dispatch(deleteClothesById(clothesId));
   };
-  console
 
   return (
     <ClothesDetail
       selectedClothes={selectedClothes}
-      deleteHander={deleteHander}
+      deleteHandler={deleteHandler}
       allSeason={season}
     />
   );
