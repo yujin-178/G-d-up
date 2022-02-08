@@ -1,27 +1,19 @@
 package com.web.gdup.domain.clothing.dto;
 
-import com.web.gdup.domain.image.dto.ImageDto;
+import com.web.gdup.domain.clothing.entity.ClothingEntity;
+import com.web.gdup.domain.image.entity.ImageEntity;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Entity
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "clothing")
+@ToString
 @Builder
-@EntityListeners(AuditingEntityListener.class)
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClothingDto {
-    @Id
-    @Column(name = "clothingid")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int clothingId;
-
     private String age;
     private String color;
     private String cut;
@@ -37,18 +29,32 @@ public class ClothingDto {
     private String style;
     private String subcategory;
     private String season;
-    @CreatedDate
-    @Column(name = "registrationdate")
     private LocalDateTime registrationDate;
-
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "imageid")
-    private ImageDto imageModel;
-
-    @Column(name = "username")
+    private ImageEntity imageModel;
     private String userName;
 
-    public void mapImage(ImageDto image) {
-        this.imageModel = image;
+    public ClothingEntity toEntity() {
+        ClothingEntity build = ClothingEntity.builder()
+                .clothingId(clothingId)
+                .age(age)
+                .color(color)
+                .cut(cut)
+                .design(design)
+                .gender(gender)
+                .hood(hood)
+                .layers(layers)
+                .length(length)
+                .material(material)
+                .neckline(neckline)
+                .pattern(pattern)
+                .season(season)
+                .sleeves(sleeves)
+                .style(style)
+                .subcategory(subcategory)
+                .userName(userName)
+                .imageModel(imageModel)
+                .registrationDate(LocalDateTime.now())
+                .build();
+        return build;
     }
 }

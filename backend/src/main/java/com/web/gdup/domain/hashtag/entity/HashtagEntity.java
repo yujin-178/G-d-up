@@ -1,4 +1,4 @@
-package com.web.gdup.domain.hashtag.dto;
+package com.web.gdup.domain.hashtag.entity;
 
 import lombok.*;
 
@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @ToString
 @Builder
 @Table(name = "hashtag")
-public class HashtagDto {
+public class HashtagEntity {
     @Id
     @Column(name = "tagname")
     private String tagName;

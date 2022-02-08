@@ -1,6 +1,6 @@
 package com.web.gdup.domain.hashtag.service;
 
-import com.web.gdup.domain.hashtag.dto.HashtagDto;
+import com.web.gdup.domain.hashtag.entity.HashtagEntity;
 import com.web.gdup.domain.hashtag.repository.HashtagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,18 +11,18 @@ public class HashtagService implements HashtagServiceImpl{
     private HashtagRepository hashtagRepository;
 
     @Override
-    public String insertHashtag(HashtagDto tag) {
+    public String insertHashtag(HashtagEntity tag) {
         return hashtagRepository.save(tag).getTagName();
     }
 
     @Override
-    public HashtagDto getHashtag(String tag) {
+    public HashtagEntity getHashtag(String tag) {
         return hashtagRepository.getOne(tag);
     }
 
-    public HashtagDto findOrCreateHashtag(String tagName) {
-        HashtagDto hashtag = hashtagRepository.findById(tagName)
-                .orElse(HashtagDto.builder()
+    public HashtagEntity findOrCreateHashtag(String tagName) {
+        HashtagEntity hashtag = hashtagRepository.findById(tagName)
+                .orElse(HashtagEntity.builder()
                         .tagName(tagName)
                         .build());
         return hashtagRepository.save(hashtag);

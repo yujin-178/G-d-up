@@ -1,7 +1,9 @@
 package com.web.gdup.domain.clothing.service;
 
 import com.web.gdup.domain.clothing.dto.ClothingDto;
+import com.web.gdup.domain.clothing.entity.ClothingEntity;
 import com.web.gdup.domain.clothing.repository.ClothingRepository;
+import com.web.gdup.domain.clothing_hashtag.dto.ClothingHashtagDto;
 import com.web.gdup.domain.clothing_hashtag.service.ClothingHashtagServiceImpl;
 import com.web.gdup.domain.image.dto.ImageDto;
 import com.web.gdup.domain.image.service.ImageServiceImpl;
@@ -87,13 +89,13 @@ public class ClothingService implements ClothingServiceImpl{
     @Transactional
     public int insertClothing(MultipartFile file, ClothingDto clothing, String hashtag) {
         ImageDto image = saveImage(file);
-
         int imageId = imageService.insertImage(image);
         ImageDto iDto = imageService.getImage(imageId);
 
-        clothing.mapImage(iDto);
-        int clothing_id = clothingRepository.save(clothing).getClothingId();
+        clothing.setImageModel(iDto.toEntity());
+        int clothing_id = clothingRepository.save(clothing.toEntity()).getClothingId();
         Set<String> hashtags = parseHashtags(hashtag);
+
         clothingHashtagService.insertHashtags(clothing_id, hashtags);
         return clothing_id;
     }
@@ -109,32 +111,52 @@ public class ClothingService implements ClothingServiceImpl{
 
     @Override
     @Transactional
-    public ClothingDto getClothing(int clothingId) {
-        ClothingDto clothing = clothingRepository.findById(clothingId).get();
-        return clothing;
+    public HashMap<String, Object> getClothing(int clothingId) {
+        ClothingEntity clothing = clothingRepository.findById(clothingId).get();
+        ClothingDto clothingDto = buildClothingDto(clothing);
+
+        List<ClothingHashtagDto> hashtags = clothingHashtagService.getHashtags(clothingId);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("clothing", clothing);
+        map.put("hashtag", hashtags);
+        return map;
     }
 
     @Override
-    public void deleteClothing(int clothingId) {
-        ClothingDto cDto = clothingRepository.getOne(clothingId);
-        String removeUrl = cDto.getImageModel().getImagePath();
+    public Optional<ClothingEntity> deleteClothing(int clothingId) {
+        ClothingEntity clothing = clothingRepository.getOne(clothingId);
+        String removeUrl = clothing.getImageModel().getImagePath();
 
         File file = new File(removeUrl);
         if(file.exists()) {
-            if(file.delete())
+            if(file.delete()) {
+                clothingRepository.deleteById(clothingId);
                 System.out.println("삭제 완료");
+            }
             else
                 System.out.println("삭제 실패");
         } else {
             System.out.println("파일이 존재하지 않습니다.");
         }
 
-        clothingRepository.deleteById(clothingId);
+        Optional<ClothingEntity> deleteClothing = clothingRepository.findById(clothingId);
+        return deleteClothing;
     }
 
     @Override
-    public List<ClothingDto> getUserClothing(String userName) {
-        return clothingRepository.findByUserName(userName);
+    public List<HashMap<String, Object>> getUserClothing(String userName) {
+        List<HashMap<String, Object>> result = new ArrayList<>();
+        HashMap<String, Object> map = new HashMap<>();
+
+        List<ClothingEntity> list = clothingRepository.findByUserName(userName);
+        for(ClothingEntity cd : list) {
+            ClothingDto clothingDto = buildClothingDto(cd);
+
+            map.put("clothing", clothingDto);
+            map.put("hashtag", clothingHashtagService.getHashtags(cd.getClothingId()));
+            result.add(map);
+        }
+        return result;
     }
 
     private String urlParser(String str) throws IOException, ParseException {
@@ -144,6 +166,31 @@ public class ClothingService implements ClothingServiceImpl{
         JSONObject obj = (JSONObject) jArray.get(0);
         String whitebgUrl = (String) obj.get("_output_url_whitebg");
         return whitebgUrl;
+    }
+
+    private ClothingDto buildClothingDto(ClothingEntity clothing) {
+        ClothingDto clothingDto = ClothingDto.builder()
+                .age(clothing.getAge())
+                .color(clothing.getColor())
+                .clothingId(clothing.getClothingId())
+                .cut(clothing.getCut())
+                .design(clothing.getDesign())
+                .gender(clothing.getGender())
+                .hood(clothing.getHood())
+                .layers(clothing.getLayers())
+                .length(clothing.getLength())
+                .material(clothing.getMaterial())
+                .neckline(clothing.getNeckline())
+                .pattern(clothing.getPattern())
+                .season(clothing.getSeason())
+                .sleeves(clothing.getSleeves())
+                .style(clothing.getStyle())
+                .subcategory(clothing.getSubcategory())
+                .userName(clothing.getUserName())
+                .imageModel(clothing.getImageModel())
+                .registrationDate(clothing.getRegistrationDate())
+                .build();
+        return clothingDto;
     }
 
     private ImageDto saveImage(MultipartFile file) {
