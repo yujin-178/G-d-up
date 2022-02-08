@@ -24,7 +24,7 @@ module.exports = {
   "rules": {
     "semi": ["error", "always"],
     "react/prop-types": "off",
-    "indent": ["error", 2, { "StaticBlock": {"body": 1} }],
+    "indent": ["error", 2, { "StaticBlock": { "body": 1 } }],
     "object-curly-spacing": ["error", "always"],
     "eol-last": ["error", "always"],
     "no-multiple-empty-lines": ["error", { "max": 1, "maxEOF": 0, "maxBOF": 0 }],

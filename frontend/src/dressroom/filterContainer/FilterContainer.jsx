@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { filteredClothesSelector } from '../../filterSelector';
+// import { filteredClothesSelector } from '../../filterSelector';
 import Categories from '../../components/categories/Categories.jsx';
 import ClosetSidebar from '../../components/closetSidebar/ClosetSidebar.jsx';
 import {
@@ -11,7 +11,6 @@ import {
   addCustomFilter,
   deleteCustomFilter,
 } from '../../filterSlice';
-import { css } from '@emotion/react'
 import { categories, season, colors } from '../../constants/filter';
 
 function FilterContainer() {
@@ -19,7 +18,7 @@ function FilterContainer() {
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filterSlice);
   const { category, isUserItem, selectedColors, custom } = filter;
-  const filteredClothes = useSelector(filteredClothesSelector);
+  // const filteredClothes = useSelector(filteredClothesSelector);
 
   const onKeyPress = event => {
     if (event.key === 'Enter') {
@@ -75,7 +74,7 @@ function FilterContainer() {
         onKeyPress={onKeyPress}
       />
     </>
-  )
+  );
 }
 
 export default FilterContainer;
