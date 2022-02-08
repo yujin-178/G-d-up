@@ -56,7 +56,7 @@ public class FeedController {
         return response;
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("/delete")
     @ApiOperation(value = "Feed 지우기 " , notes = "작성한 피드를 지운다. ")
     public Object DeleteFeed(@RequestParam int feedId  ){
         ResponseEntity response = null;
