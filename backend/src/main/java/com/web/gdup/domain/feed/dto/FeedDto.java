@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity // db와 맵핑될 엔티티라는 것을 명시, JPA에 관리 대상임
 @NoArgsConstructor
@@ -17,11 +18,17 @@ public class FeedDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "feedid")
     private int feedId;
 
     private String content;
-    private String registrationDate;
+    @Column(updatable = false, name = "registrationdate")
+    private LocalDateTime registrationDate;
+
+    @Column(name = "codyid")
     private int codyId;
+
+    @Column(name = "username")
     private String userName;
 
 }
