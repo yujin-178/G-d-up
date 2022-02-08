@@ -15,11 +15,21 @@ public class FeedServiceImpl implements FeedService {
     private FeedRepository feedRepository;
 
     @Override
-    public FeedDto getFeed(int feed_id) {
-        FeedDto feed = feedRepository.getOne(feed_id);
+    public Optional<FeedDto> getFeed(int feedId) {
+        Optional<FeedDto> feedDto = feedRepository.findById(feedId);
+        if(feedDto.isPresent())
+            return feedDto;
+        return null;
+    }
 
-        if(feed != null)
+    @Override
+    public FeedDto modifyFeed(FeedDto feed) {
+
+        Optional<FeedDto> feedDto = feedRepository.findById(feed.getFeedId());
+        if(feedDto.isPresent()){
+            feedRepository.save(feed);
             return feed;
+        }
         return null;
     }
 
@@ -53,16 +63,5 @@ public class FeedServiceImpl implements FeedService {
             return true;
         }
         return  false;
-    }
-
-    @Override
-    public FeedDto modifyFeed(FeedDto feed) {
-
-        Optional<FeedDto> feedDto = feedRepository.findById(feed.getFeedId());
-        if(feedDto.isPresent()){
-            feedRepository.save(feed);
-            return feed;
-        }
-        return null;
     }
 }

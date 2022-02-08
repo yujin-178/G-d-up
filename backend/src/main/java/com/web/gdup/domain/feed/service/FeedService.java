@@ -3,10 +3,11 @@ package com.web.gdup.domain.feed.service;
 import com.web.gdup.domain.feed.dto.FeedDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FeedService {
 
-    FeedDto getFeed(int feed_id);
+    Optional<FeedDto> getFeed(int feedId);
     List<FeedDto> getAllFeed();
     boolean insertFeed(FeedDto feed);
     boolean deleteFeed(int feedId);

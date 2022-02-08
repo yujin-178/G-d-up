@@ -5,12 +5,15 @@ import com.web.gdup.domain.feed.dto.FeedDto;
 import com.web.gdup.domain.feed.service.FeedService;
 import com.web.gdup.domain.model.BasicResponse;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.ConfigurablePropertyAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = { "http://i6b108.p.ssafy.io:3000" })
 @RestController("/feed")
@@ -85,17 +88,24 @@ public class FeedController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping ("/detail")
     @ApiOperation(value = "선택된 피드 불러오기")
-    public void getFeed(@RequestParam int feed_id){
+    public Object getFeed(@RequestParam int feedId){
 
-        FeedDto feed = feedService.getFeed(feed_id);
+        ResponseEntity response = null;
 
-        System.out.println(feed);
+        Optional<FeedDto> feed = feedService.getFeed(feedId);
+        if(feed.isPresent()){
+            final BasicResponse result = new BasicResponse();
+            result.status = true;
+            result.message = "success";
+            result.data = feed;
+            response = new ResponseEntity<>(result, HttpStatus.OK);
+        }  else {
+            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return response;
     }
-
-
-
 
     public void pushLike(){
 
