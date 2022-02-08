@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Builder
 @Log
 @IdClass(CodyClothingPK.class)
-public class CodyClothingInfo {
+public class CodyClothingEntity {
 
     @Id
     @Column(name = "codyid")

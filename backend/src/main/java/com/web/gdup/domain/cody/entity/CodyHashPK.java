@@ -5,12 +5,12 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import java.io.Serializable;
+
 @Getter
 @ToString
-public class CodyClothingPK implements Serializable {
+public class CodyHashPK implements Serializable {
+    @Column(name = "tagname")
+    private String tagName;
     @Column(name = "codyid")
     private int codyId;
-    @Column(name = "clothingid")
-    private int clothingId;
-
 }

@@ -1,6 +1,6 @@
 package com.web.gdup.domain.cody.entity;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.web.gdup.domain.image.dto.ImageDto;
 import lombok.*;
 import lombok.extern.java.Log;
 
@@ -16,21 +16,24 @@ import java.time.LocalDateTime;
 @Table(name = "cody")
 @Builder
 @Log
-public class CodyDto {
+public class CodyEntity {
     @Id
     @NonNull
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-            @Column(name ="codyid")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "codyid")
     int codyId;
-    @Column(name ="codyname")
+    @Column(name = "codyname")
     String codyName;
-    @Column(name ="registrationdate")
+    @Column(name = "registrationdate")
     LocalDateTime registrationDate;
-    @Column(name ="updatedate")
+    @Column(name = "updatedate")
     LocalDateTime updateDate;
     String content;
-    @Column(name ="username")
+    @Column(name = "username")
     String userName;
+    @Column(name = "secret")
     int secret;
+    @Column(name = "imageid")
+    private int imageModel;
 
 }
