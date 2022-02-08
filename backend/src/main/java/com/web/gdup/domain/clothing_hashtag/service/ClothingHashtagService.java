@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,12 @@ public class ClothingHashtagService implements ClothingHashtagServiceImpl{
             System.out.println(cd.getClothingId());
             System.out.println(cd.getTagName());
         }
+    }
+
+    @Override
+    public List<ClothingHashtagDto> getHashtags(int clothing_id) {
+        List<ClothingHashtagDto> hashtags = clothingHashtagRepository.findByClothingId(clothing_id);
+        return hashtags;
     }
 
     private Set<ClothingHashtagDto> mapToClothingHashtags(int clothing_id, Set<String> hashtags) {

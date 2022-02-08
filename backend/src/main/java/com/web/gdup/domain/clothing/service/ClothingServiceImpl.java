@@ -5,13 +5,15 @@ import org.json.simple.parser.ParseException;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 public interface ClothingServiceImpl {
     public String getTag(MultipartFile file) throws IOException;
     public String getRemoveBg(MultipartFile file) throws IOException, ParseException;
     public int insertClothing(MultipartFile file, ClothingDto clothing, String hashtag);
-    public ClothingDto getClothing(int id);
-    public void deleteClothing(int clothing_id);
-    public List<ClothingDto> getUserClothing(String user_name);
+    public HashMap<String, Object> getClothing(int id);
+    public Optional<ClothingDto> deleteClothing(int clothing_id);
+    public List<HashMap<String, Object>> getUserClothing(String user_name);
 }

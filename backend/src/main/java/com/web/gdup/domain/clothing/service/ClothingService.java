@@ -2,6 +2,7 @@ package com.web.gdup.domain.clothing.service;
 
 import com.web.gdup.domain.clothing.dto.ClothingDto;
 import com.web.gdup.domain.clothing.repository.ClothingRepository;
+import com.web.gdup.domain.clothing_hashtag.dto.ClothingHashtagDto;
 import com.web.gdup.domain.clothing_hashtag.service.ClothingHashtagServiceImpl;
 import com.web.gdup.domain.image.dto.ImageDto;
 import com.web.gdup.domain.image.service.ImageServiceImpl;
@@ -109,32 +110,49 @@ public class ClothingService implements ClothingServiceImpl{
 
     @Override
     @Transactional
-    public ClothingDto getClothing(int clothingId) {
+    public HashMap<String, Object> getClothing(int clothingId) {
         ClothingDto clothing = clothingRepository.findById(clothingId).get();
-        return clothing;
+        List<ClothingHashtagDto> hashtags = clothingHashtagService.getHashtags(clothingId);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("clothing", clothing);
+        map.put("hashtag", hashtags);
+        return map;
     }
 
     @Override
-    public void deleteClothing(int clothingId) {
+    public Optional<ClothingDto> deleteClothing(int clothingId) {
         ClothingDto cDto = clothingRepository.getOne(clothingId);
         String removeUrl = cDto.getImageModel().getImagePath();
 
         File file = new File(removeUrl);
         if(file.exists()) {
-            if(file.delete())
+            if(file.delete()) {
+                clothingRepository.deleteById(clothingId);
                 System.out.println("삭제 완료");
+            }
             else
                 System.out.println("삭제 실패");
         } else {
             System.out.println("파일이 존재하지 않습니다.");
         }
 
-        clothingRepository.deleteById(clothingId);
+        Optional<ClothingDto> deleteClothing = clothingRepository.findById(clothingId);
+
+        return deleteClothing;
     }
 
     @Override
-    public List<ClothingDto> getUserClothing(String userName) {
-        return clothingRepository.findByUserName(userName);
+    public List<HashMap<String, Object>> getUserClothing(String userName) {
+        List<HashMap<String, Object>> result = new ArrayList<>();
+        HashMap<String, Object> map = new HashMap<>();
+
+        List<ClothingDto> list = clothingRepository.findByUserName(userName);
+        for(ClothingDto cd : list) {
+            map.put("clothing", cd);
+            map.put("hashtag", clothingHashtagService.getHashtags(cd.getClothingId()));
+            result.add(map);
+        }
+        return result;
     }
 
     private String urlParser(String str) throws IOException, ParseException {
