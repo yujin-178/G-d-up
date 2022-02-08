@@ -205,18 +205,18 @@ const detail = css`
 	display: grid;
 	grid-template-columns: 1fr 1fr;
 	grid-template-rows: 1fr 1fr;
-`
+`;
 
 const detailContainer = css`
 	grid-row: 3;
 	grid-column: 2;
-`
+`;
 
 const Container = css`
   display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-template-rows: repeat(7, 1fr);
-`
+`;
 
 const imgContainer = css`
 	grid-column: 2;
@@ -225,8 +225,7 @@ const imgContainer = css`
 	border: 1px solid black;
 	width: 400px;
 	height: 300px;        
-
-`
+`;
 
 const previewImg = css`
 	position: relative;
@@ -238,18 +237,18 @@ const previewImg = css`
 	height: auto;
 	margin : auto;
 	top:0; bottom:0; left:0; right:0;
-`
+`;
 
 const btnContainer = css`
 	grid-column: 2;
 	margin-top: 1rem;
 	width: 400px;
 	text-align: center;
-`
+`;
 
 const inputTag = css`
 	display : none;
-`
+`;
 
 const inputBtn = css`
 	background: #6da0cf;
@@ -278,7 +277,7 @@ const inputBtn = css`
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
-`
+`;
 
 const CloseBtn = css`
 	background: #c99f9f;
@@ -290,6 +289,4 @@ const CloseBtn = css`
 	grid-row: 1;
 	margin-top : 1rem;
 	margin-right: 1rem;
-
-	cursor: pointer;
-`
+`;
