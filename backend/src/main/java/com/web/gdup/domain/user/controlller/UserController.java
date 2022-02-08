@@ -2,16 +2,16 @@ package com.web.gdup.domain.user.controlller;
 
 import com.web.gdup.domain.follow.service.FollowService;
 import com.web.gdup.domain.model.BasicResponse;
+import com.web.gdup.domain.user.dto.SignupRequest;
 import com.web.gdup.domain.user.dto.UserDto;
 import com.web.gdup.domain.user.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +39,25 @@ public class UserController {
         }
         else {
             response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        return response;
+    }
+
+    @PostMapping("singup")
+    @ApiOperation(value = "가입하기")
+    public Object signup(@Valid @RequestBody SignupRequest request){
+        final  BasicResponse result = new BasicResponse();
+        ResponseEntity response = null;
+
+        if(userService.signup(request)){
+            result.status = true;
+            result.message = "SUCCESS";
+            response = new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        else {
+            result.status = false;
+            result.message = "FAIL";
+            response = new ResponseEntity<>(result, HttpStatus.OK); // 이미있는경우, NOT FOUND인가?
         }
         return response;
     }
@@ -111,7 +130,7 @@ public class UserController {
         return response;
     }
 
-    @GetMapping("/follow/")
+    @GetMapping("/follow")
     @ApiOperation(value = "팔로우 하기", notes = "현재 로그인 한 유저가 타 유저를 팔로우 하는 기능" +
             "파라미터로 현재 로그인된 유저의 name 과 팔로우 하고자 하는 유저의 name이 필요하다.")
     public Object follow(@RequestParam (required = true) final String userName, @RequestParam(required = true) final String following){

@@ -16,6 +16,14 @@ public class FeedController {
     @Autowired
     private FeedService feedService;
 
+//    @PostMapping("/write")
+//    public Object writeFeed(@RequestBody ){
+//
+//    }
+
+
+
+
     @GetMapping("/all")
     @ApiOperation(value = "모든 피드 불러오기",
             notes = "로그인된 사용자가 팔로우하는 사람들의 feed를 반환한다."
