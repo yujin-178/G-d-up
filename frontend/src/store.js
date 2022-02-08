@@ -6,10 +6,10 @@ import logger from 'redux-logger';
 import modalSlice from './modalSlice';
 
 export default configureStore({
-    reducer: {
-        filterSlice,
-        clothesSlice,
-        modalSlice,
-    },
-    middleware: [thunk, logger],
+  reducer: {
+    filterSlice,
+    clothesSlice,
+    modalSlice,
+  },
+  middleware: [thunk, logger],
 });
