@@ -39,6 +39,10 @@ public class ClothingEntity {
     private String style;
     private String subcategory;
     private String season;
+    private String category;
+    private String topcategory;
+    private String fit;
+
     @CreatedDate
     @Column(name = "registrationdate")
     private LocalDateTime registrationDate;
