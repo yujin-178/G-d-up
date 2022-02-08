@@ -1,6 +1,7 @@
 package com.web.gdup.domain.cody.controller;
 
 import com.web.gdup.domain.cody.dto.CreateCody;
+import com.web.gdup.domain.cody.dto.UpdateCody;
 import com.web.gdup.domain.cody.entity.CodyEntity;
 import com.web.gdup.domain.cody.service.CodyServiceImpl;
 import io.swagger.annotations.ApiOperation;
@@ -25,7 +26,7 @@ public class CodyController {
             value = "코디 추가",
             notes = "유저의 모든 코디 목록을 보내준다."
     )
-    public ResponseEntity<String> createCody(@RequestPart(value = "imageFile") MultipartFile file, @RequestPart( value = "createCody") CreateCody cc) {
+    public ResponseEntity<String> createCody(@RequestPart(value = "imageFile") MultipartFile file, @RequestPart(value = "createCody") CreateCody cc) {
         ResponseEntity<String> re;
 
         System.out.println(cc.toString());
@@ -35,20 +36,24 @@ public class CodyController {
             re = new ResponseEntity<>("Cody 생성 성공", HttpStatus.OK);
         else
             re = new ResponseEntity<>("Cody 생성 실패", HttpStatus.BAD_REQUEST);
-        re = new ResponseEntity<>("Cody 생성 성공", HttpStatus.OK);
+
         return re;
     }
 
 
-
-    @PutMapping(value = "/update/{userName}/{codyId}")
+    @PutMapping(value = "/update")
     @ApiOperation(
             value = "코디 수정",
-            notes = "cody_id를 받아서 해당 코디를 수정합니다."
+            notes = "수정된 코드 정보를 받아서 해당 코디를 수정합니다."
     )
-    public ResponseEntity<String> updateCody(@PathVariable(name = "codyId") String codyId, @PathVariable(name = "userName") String userId, @RequestBody CreateCody cc) {
+    public ResponseEntity<String> updateCody(@RequestPart(value = "imageFile") MultipartFile file, @RequestPart(value = "updateCody") UpdateCody uc) {
+        System.out.println(uc.getCodyId());
+        System.out.println(file.getOriginalFilename());
+        if (cs.updateCodyItem(uc, file) == 1)
+            return new ResponseEntity<String>("수정 성공", HttpStatus.OK);
+        else
+            return new ResponseEntity<String>("수정 실패", HttpStatus.NOT_FOUND);
 
-        return new ResponseEntity<String>("수정 성공", HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/delete/{codyId}")
@@ -57,16 +62,19 @@ public class CodyController {
             notes = "cody_id를 받아서 해당 코디를 삭제 합니다."
     )
     public ResponseEntity<String> deleteCody(@PathVariable(name = "codyId") int cody_id) {
-        return new ResponseEntity<String>("코디 삭제" + cs.deleteCodyItem(cody_id), HttpStatus.OK);
+        if (cs.deleteCodyItem(cody_id) == 1)
+            return new ResponseEntity<String>("코디 삭제 성공", HttpStatus.OK);
+        else
+            return new ResponseEntity<String>("코디 삭제 실패", HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(value = "/read/{userId}")
+    @GetMapping(value = "/read/{userName}")
     @ApiOperation(
             value = "코디 목록 불러오기",
             notes = "특정 유저의 코디 목록 불러오기"
     )
-    public ResponseEntity<List<CodyEntity>> readCodyList(@PathVariable(name = "userId") String id) {
-        return new ResponseEntity<List<CodyEntity>>(cs.getUserCodyList(id), HttpStatus.OK);
+    public ResponseEntity<List<CodyEntity>> readCodyList(@PathVariable(name = "userName") String userName) {
+        return new ResponseEntity<List<CodyEntity>>(cs.getUserCodyList(userName), HttpStatus.OK);
     }
 
 }

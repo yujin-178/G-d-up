@@ -34,6 +34,6 @@ public class CodyEntity {
     @Column(name = "secret")
     int secret;
     @Column(name = "imageid")
-    private int imageModel;
+    private int imageId;
 
 }

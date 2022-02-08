@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface CodyRepository extends JpaRepository<CodyEntity, Long> {
+public interface CodyRepository extends JpaRepository<CodyEntity, Integer> {
     List<CodyEntity> findAllByUserName(String id);
     @Transactional
     int deleteByCodyId(int id);
