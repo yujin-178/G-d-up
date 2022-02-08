@@ -3,7 +3,7 @@ import { css, jsx } from '@emotion/react';
 import { ClassNames } from '@emotion/core';
 import Modal from 'react-modal';
 
-if (process.env.NODE_ENV !== 'test'){
+if (process.env.NODE_ENV !== 'test') {
 	Modal.setAppElement('#app')
 }
 
@@ -126,29 +126,80 @@ export default function AddClothes({ onImgChange, preview, imgInput, modalToggle
 									업로드
 								</button>
 							</div>
-						<div css={detailContainer}>
-							<h3>옷 정보</h3>
-							<div css={detail}>
-								<p>카테고리 :</p> 
-								<p>색상 :</p> 
-								<p>소재 :</p> 
-								<p>패턴 : </p>
-							</div>
-							<div>
-								<div>
-									<p>계절</p>
+							<div css={detailContainer}>
+								<h3>옷 정보</h3>
+								<div css={detail}>
+									<p>카테고리 :</p>
+									<p>색상 :</p>
+									<p>소재 :</p>
+									<p>패턴 : </p>
 								</div>
-								<p>세탁</p>
-								<p>태그</p>
+								<div>
+									<div>
+										<p>계절</p>
+									</div>
+									<p>세탁</p>
+									<p>태그</p>
+								</div>
+								<div css={submitBtnContainer}>
+									<button
+										css={saveBtn}
+										onClick={() => modalToggle(false)}
+									>
+										저장
+									</button>
+									<button
+										css={cancelBtn}
+										onClick={() => modalToggle(false)}
+									>
+										취소
+									</button>
+								</div>
 							</div>
 						</div>
-						</div>	
 					</Modal>
 				)}
 			</ClassNames>
 		</div>
 	)
 }
+
+const submitBtnContainer = css`
+	display:grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+
+	margin: 1.5rem;
+
+	font-family: "Noto Sans KR", sans-serif;
+	font-size: 1rem;
+	font-weight: 300;
+	text-align: center;
+	transition: 0.5s;
+`
+
+const cancelBtn = css`
+	grid-column: 4;
+
+	background: #c99f9f;
+	padding: 0.5rem 1rem;
+	width: 4rem;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+`
+
+const saveBtn = css`
+	grid-column: 2;
+
+	background: #6da0cf;
+	padding: 0.5rem 1rem;
+	width: 4rem;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+`
 
 const detail = css`
 	display: grid;
@@ -169,7 +220,7 @@ const Container = css`
 
 const imgContainer = css`
 	grid-column: 2;
-	display: block;
+	display: flex;
 	margin-top: 5rem;
 	border: 1px solid black;
 	width: 400px;
@@ -178,7 +229,9 @@ const imgContainer = css`
 `
 
 const previewImg = css`
-	position: absolute;
+	position: relative;
+	justify-content: center;
+	align-items:center;
 	max-width: 95%;
 	max-height: 95%;
 	width: auto;
@@ -237,4 +290,6 @@ const CloseBtn = css`
 	grid-row: 1;
 	margin-top : 1rem;
 	margin-right: 1rem;
+
+	cursor: pointer;
 `
