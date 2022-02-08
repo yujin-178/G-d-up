@@ -26,7 +26,6 @@ public class UserServiceImpl implements  UserService{
 
         Optional<UserDto> user = userRepository.findById(request.getUserName());
 
-
         if(!user.isPresent()){ // 해당 유저네임으로 가입된 사람들이 없기 때문에, 진행 가능
             System.out.println("회원가입 진행 가능");
             userRepository.save(new UserDto(request.getUserName(), request.getPassword(), request.getEmail()));
@@ -34,5 +33,10 @@ public class UserServiceImpl implements  UserService{
         }
         System.out.println("이미 있다.");
         return false;
+    }
+
+    @Override
+    public UserDto  getUserInfo(String targetName) {
+       return userRepository.getOne(targetName);
     }
 }

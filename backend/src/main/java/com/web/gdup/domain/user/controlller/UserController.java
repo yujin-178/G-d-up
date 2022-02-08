@@ -43,7 +43,7 @@ public class UserController {
         return response;
     }
 
-    @PostMapping("singup")
+    @PostMapping("/singup")
     @ApiOperation(value = "가입하기")
     public Object signup(@Valid @RequestBody SignupRequest request){
         final  BasicResponse result = new BasicResponse();
@@ -57,7 +57,26 @@ public class UserController {
         else {
             result.status = false;
             result.message = "FAIL";
-            response = new ResponseEntity<>(result, HttpStatus.OK); // 이미있는경우, NOT FOUND인가?
+            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // 이미있는경우, NOT FOUND인가?
+        }
+        return response;
+    }
+
+    @GetMapping("/info")
+    @ApiOperation(value = "타 사용자 상세보기", notes = "타 사용자의 정보(introduction)를 반환한다." +
+            "파라미터로 타켓 유저의 name이 필요하다.")
+    public Object getUserInfo(@RequestParam String targetName){
+        UserDto user = userService.getUserInfo(targetName);
+        ResponseEntity response = null;
+
+        if(user != null){
+            final BasicResponse result = new BasicResponse();
+            result.status = true;
+            result.message = "success";
+            result.data = user.getIntroduction();
+            response = new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         return response;
     }
