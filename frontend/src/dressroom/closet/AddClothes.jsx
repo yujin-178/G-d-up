@@ -289,4 +289,6 @@ const CloseBtn = css`
 	grid-row: 1;
 	margin-top : 1rem;
 	margin-right: 1rem;
-`;
+
+	cursor: pointer;
+`
