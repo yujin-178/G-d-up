@@ -4,7 +4,8 @@ import ClothesItemListContainer from './clothesList/ClothesItemListContainer.jsx
 import FilterContainer from '../FilterContainer/FilterContainer.jsx';
 import AddClothesContainer from './AddClothesContainer.jsx';
 import ClosetDetailContainer from './clothesDetailContainer/ClothesDetailContainer.jsx';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { filteredClothesSelector } from '../../filterSelector.js';
 // import { css, jsx } from '@emotion/react';
 
 import {
@@ -13,6 +14,8 @@ import {
 
 export default function ClosetContainer() {
   const dispatch = useDispatch();
+  const filteredClothes = useSelector(state => filteredClothesSelector(state));
+  console.log(filteredClothes);
 
   return (
     <div>
