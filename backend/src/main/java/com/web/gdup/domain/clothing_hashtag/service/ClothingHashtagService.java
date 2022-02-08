@@ -1,14 +1,16 @@
 package com.web.gdup.domain.clothing_hashtag.service;
 
 import com.web.gdup.domain.clothing_hashtag.dto.ClothingHashtagDto;
+import com.web.gdup.domain.clothing_hashtag.entity.ClothingHashtagEntity;
 import com.web.gdup.domain.clothing_hashtag.repository.ClothingHashtagRepository;
-import com.web.gdup.domain.hashtag.dto.HashtagDto;
+import com.web.gdup.domain.hashtag.entity.HashtagEntity;
 import com.web.gdup.domain.hashtag.service.HashtagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,14 +34,18 @@ public class ClothingHashtagService implements ClothingHashtagServiceImpl{
 
     @Override
     public List<ClothingHashtagDto> getHashtags(int clothing_id) {
-        List<ClothingHashtagDto> hashtags = clothingHashtagRepository.findByClothingId(clothing_id);
-        return hashtags;
+        List<ClothingHashtagDto> result = new ArrayList<>();
+        List<ClothingHashtagEntity> hashtags = clothingHashtagRepository.findByClothingId(clothing_id);
+        for(ClothingHashtagEntity hashtag : hashtags) {
+            result.add(buildClothingHashtagDto(hashtag));
+        }
+        return result;
     }
 
     private Set<ClothingHashtagDto> mapToClothingHashtags(int clothing_id, Set<String> hashtags) {
         Set<ClothingHashtagDto> ht = hashtags.stream()
                 .map(tagName -> {
-                    HashtagDto hashtag = hashtagService.findOrCreateHashtag(tagName);
+                    HashtagEntity hashtag = hashtagService.findOrCreateHashtag(tagName);
                     return findOrCreateClothingHashtag(clothing_id, hashtag.getTagName());
                 })
                 .collect(Collectors.toSet());
@@ -47,12 +53,22 @@ public class ClothingHashtagService implements ClothingHashtagServiceImpl{
     }
 
     public ClothingHashtagDto findOrCreateClothingHashtag(int clothing_id, String tagName) {
-        ClothingHashtagDto hashtag = clothingHashtagRepository.findByClothingIdAndTagName(clothing_id, tagName)
-                .orElse(ClothingHashtagDto.builder()
+        ClothingHashtagEntity hashtag = clothingHashtagRepository.findByClothingIdAndTagName(clothing_id, tagName)
+                .orElse(ClothingHashtagEntity.builder()
                         .clothingId(clothing_id)
                         .tagName(tagName)
                         .registrationDate(LocalDateTime.now())
                         .build());
-        return clothingHashtagRepository.save(hashtag);
+        ClothingHashtagEntity clothingHashtag = clothingHashtagRepository.save(hashtag);
+        return buildClothingHashtagDto(clothingHashtag);
+    }
+
+    private ClothingHashtagDto buildClothingHashtagDto(ClothingHashtagEntity clothingHashtag) {
+        ClothingHashtagDto clothingHashtagDto = ClothingHashtagDto.builder()
+                .clothingId(clothingHashtag.getClothingId())
+                .tagName(clothingHashtag.getTagName())
+                .registrationDate(clothingHashtag.getRegistrationDate())
+                .build();
+        return clothingHashtagDto;
     }
 }

@@ -1,6 +1,7 @@
 package com.web.gdup.domain.clothing.service;
 
 import com.web.gdup.domain.clothing.dto.ClothingDto;
+import com.web.gdup.domain.clothing.entity.ClothingEntity;
 import org.json.simple.parser.ParseException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +15,6 @@ public interface ClothingServiceImpl {
     public String getRemoveBg(MultipartFile file) throws IOException, ParseException;
     public int insertClothing(MultipartFile file, ClothingDto clothing, String hashtag);
     public HashMap<String, Object> getClothing(int id);
-    public Optional<ClothingDto> deleteClothing(int clothing_id);
+    public Optional<ClothingEntity> deleteClothing(int clothing_id);
     public List<HashMap<String, Object>> getUserClothing(String user_name);
 }

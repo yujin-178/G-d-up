@@ -1,6 +1,7 @@
 package com.web.gdup.domain.clothing.controller;
 
 import com.web.gdup.domain.clothing.dto.ClothingDto;
+import com.web.gdup.domain.clothing.entity.ClothingEntity;
 import com.web.gdup.domain.clothing.service.ClothingServiceImpl;
 import com.web.gdup.domain.model.BasicResponse;
 import io.swagger.annotations.ApiOperation;
@@ -114,7 +115,7 @@ public class ClothingController {
     @DeleteMapping("/{clothingId}")
     @ApiOperation(value = "옷 삭제")
     public ResponseEntity deleteClothing(@PathVariable("clothingId") int clothingId) {
-        Optional<ClothingDto> deleteClothing = clothingService.deleteClothing(clothingId);
+        Optional<ClothingEntity> deleteClothing = clothingService.deleteClothing(clothingId);
         ResponseEntity response = null;
         BasicResponse result = new BasicResponse();
 

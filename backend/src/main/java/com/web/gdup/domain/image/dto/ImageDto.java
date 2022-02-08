@@ -1,31 +1,19 @@
 package com.web.gdup.domain.image.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.web.gdup.domain.image.entity.ImageEntity;
+import lombok.*;
 
-import javax.persistence.*;
-
-@Entity
 @NoArgsConstructor
 @Getter
+@Setter
+@ToString
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Table(name = "image")
 public class ImageDto {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "imageid")
     private int imageId;
-
-    @Column(name="imagename")
     private String imageName;
-
-    @Column(name="newimagename")
     private String newImageName;
-
-    @Column(name="imagepath")
     private String imagePath;
 
     @Builder
@@ -35,4 +23,15 @@ public class ImageDto {
         this.newImageName = newImageName;
         this.imagePath = imagePath;
     }
+
+    public ImageEntity toEntity() {
+        ImageEntity build = ImageEntity.builder()
+                .imageId(imageId)
+                .imageName(newImageName)
+                .newImageName(newImageName)
+                .imagePath(imagePath)
+                .build();
+        return build;
+    }
+
 }
