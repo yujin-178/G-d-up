@@ -17,6 +17,7 @@ const initialState = {
 const handleClick = jest.fn();
 const seasonHandler = jest.fn();
 const colorHandler = jest.fn();
+const handleEnter = jest.fn();
 const useRefSpy = jest.spyOn(React, "useRef").mockImplementation(() => ({ current: { value: '' } }));
 const renderComponent = () => render((
   <ClosetSidebar
@@ -30,7 +31,7 @@ const renderComponent = () => render((
     customTags={initialState.custom}
     deleteCustomHandler={handleClick}
     inputRef={useRefSpy}
-    onKeyPress={handleClick}
+    onKeyPress={handleEnter}
   />
 ));
 
@@ -53,8 +54,8 @@ describe('closetSidebar', () => {
     const { getByTestId } = renderComponent();
 
     const input = getByTestId('input');
-    fireEvent.keyPress(input, { key: "Enter" });
-    expect(handleClick).toBeCalledTimes(1);
+    fireEvent.keyPress(input, { key: 'Enter', code: 'Enter', charCode: 13 });
+    expect(handleEnter).toBeCalledTimes(1);
   });
   it('click checkbox', () => {
     const { getByLabelText, getByTestId } = renderComponent();
