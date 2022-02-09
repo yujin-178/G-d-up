@@ -1,4 +1,4 @@
-package com.web.gdup.domain.clothing.service.dto;
+package com.web.gdup.domain.clothing.dto;
 
 import com.web.gdup.domain.clothing.entity.ClothingEntity;
 import com.web.gdup.domain.image.entity.ImageEntity;

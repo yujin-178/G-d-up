@@ -4,7 +4,6 @@ import com.web.gdup.domain.comment.Entity.CommentEntity;
 import com.web.gdup.domain.comment.dto.CommentDto;
 import com.web.gdup.domain.comment.dto.ReCommentDto;
 import com.web.gdup.domain.comment.service.CommentService;
-import com.web.gdup.domain.feed.dto.FeedDto;
 import com.web.gdup.domain.model.BasicResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
