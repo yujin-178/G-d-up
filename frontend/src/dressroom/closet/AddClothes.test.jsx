@@ -5,6 +5,7 @@
 import React from 'react';
 import AddClothes from './AddClothes.jsx';
 
+import { mount, shallow } from 'enzyme';
 import Modal from 'react-modal';
 import { mount, shallow } from 'enzyme';
 
