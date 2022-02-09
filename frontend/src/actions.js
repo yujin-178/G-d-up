@@ -22,5 +22,5 @@ export function changemodalIsOpen(modalIsOpen){
     payload: {
       modalIsOpen,
     }
-  }
+  };
 }
