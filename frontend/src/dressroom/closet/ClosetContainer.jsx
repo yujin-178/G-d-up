@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import ClothesItemListContainer from './clothesList/ClothesItemListContainer.jsx';
 import FilterContainer from '../FilterContainer/FilterContainer.jsx';
 import AddClothesContainer from './AddClothesContainer.jsx';
-import ClosetDetailContainer from './clothesDetailContainer/ClothesDetailContainer.jsx';
+import ClothesDetailContainer from './clothesDetailContainer/ClothesDetailContainer.jsx';
 import { useSelector, useDispatch } from 'react-redux';
 import { filteredClothesSelector } from '../../filterSelector.js';
 // import { css, jsx } from '@emotion/react';
@@ -22,7 +22,7 @@ export default function ClosetContainer() {
       <h5>옷장</h5>
       <FilterContainer />
       <ClothesItemListContainer />
-      <ClosetDetailContainer/>
+      <ClothesDetailContainer />
       <button
         onClick={() => dispatch(changeisModalOpen(true))}
       >
