@@ -6,27 +6,18 @@ import React from 'react';
 import AddClothes from './AddClothes.jsx';
 
 import Modal from 'react-modal';
+import { mount, shallow } from 'enzyme';
 
-// jest.mock('react-modal', () => {
-//   const React = require('react');
-//   const TestReactModal = require('./mockReactModal');
-//   return TestReactModal.default;
-// });
+
+jest.mock('react-redux');
 
 describe('AddClothes', () => {
 	const dispatch = jest.fn();
 	
 	it('renders react-modal', () => {
-		const wrapper = render(<AddClothesContainer />);
+		const wrapper = shallow(<AddClothes />);
 		expect(wrapper.find(Modal)).toHaveLength(1);
-	});
-
-	it('opens modal when button is clicked', () => {
-		const wrapper = render(<AddClothesContainer />);
-		expect(wrapper.find(Modal).prop('IsmodalOpen')).toBe(false);
-
-		wrapper.find('button').simulate('click');
-  	expect(wrapper.find(Modal).prop('IsmodalOpen')).toBe(true);
+		expect(wrapper.find(Modal).prop('isOpen')).toBe(false);
 	});
 
 	it('closes modal clicked x', ()=> {
