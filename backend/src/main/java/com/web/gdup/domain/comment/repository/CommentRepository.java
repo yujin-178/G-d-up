@@ -6,8 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer> {
-    @Query(value = "select max(commentId) + 1 from comment" , nativeQuery = true)
-    int findOriginId();
 
     @Query(value = "select max(groupOrder) + 1 from comment where originId =:origin_id",
     nativeQuery = true)

@@ -21,9 +21,9 @@ public class CommentServiceImpl implements CommentService {
         CommentEntity comment = commentDto.toEntity();
 
         if(comment != null){
-            int originId = commentRepository.findOriginId();
-            comment.setOriginId(originId);
-            commentRepository.save(comment);
+            CommentEntity c = commentRepository.save(comment);
+            c.setOriginId(c.getCommentId());
+            commentRepository.save(c);
             return true;
         }
         return false;
