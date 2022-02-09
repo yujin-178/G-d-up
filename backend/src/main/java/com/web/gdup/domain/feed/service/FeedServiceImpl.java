@@ -36,8 +36,8 @@ public class FeedServiceImpl implements FeedService {
     @Override
     public List<FeedDto> getAllFeed(String userName) {
 
-        List<FeedDto> feeds = feedRepository.findAll();
-        if(feeds.size() != 0)
+        List<FeedDto> feeds = feedRepository.findFollowingFeeds(userName);
+        if(feeds.size() != 0) 
             return feeds;
         return null;
     }
