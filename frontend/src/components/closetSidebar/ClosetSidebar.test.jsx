@@ -43,34 +43,34 @@ describe('closetSidebar', () => {
     expect(getByText(/season/)).not.toBeNull();
     expect(getByText(/color/)).not.toBeNull();
   });
-  it('toggle button', () => {
+  it('toggles button', () => {
     const { getByTestId } = renderComponent();
-
     const toggleElement = getByTestId('toggle');
+
     fireEvent.click(toggleElement);
     expect(handleClick).toBeCalledTimes(1);
   });
-  it('submit custom tag', () => {
+  it('submits custom tag', () => {
     const { getByTestId } = renderComponent();
-
     const input = getByTestId('input');
+
     fireEvent.keyPress(input, { key: 'Enter', code: 'Enter', charCode: 13 });
     expect(handleEnter).toBeCalledTimes(1);
   });
-  it('click checkbox', () => {
+  it('clicks checkbox', () => {
     const { getByLabelText, getByTestId } = renderComponent();
-
     const label = getByLabelText('봄');
     fireEvent.click(label);
     const checkbox = getByTestId('봄');
+
     expect(checkbox).toHaveAttribute('type', 'checkbox');
     expect(checkbox).toBeChecked();
     expect(seasonHandler).toBeCalledTimes(1);
   });
-  it('click color', () => {
+  it('clicks color', () => {
     const { getByTestId } = renderComponent();
-
     const colorBtn = getByTestId('red');
+
     fireEvent.click(colorBtn);
     expect(colorHandler).toBeCalledTimes(1);
   });
