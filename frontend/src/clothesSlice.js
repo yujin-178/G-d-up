@@ -10,7 +10,7 @@ const initialState = {
 
 export const deleteClothesById = createAsyncThunk(
   'clothes/deleteClothes',
-  async (clothesId) => {
+  async (clothesId, thunkAPI) => {
     // todo: api request
 
     // const response = await axiosServer({
