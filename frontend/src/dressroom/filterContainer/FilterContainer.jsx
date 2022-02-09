@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Categories from '../../components/categories/Categories.jsx';
-import ClosetSidebar from '../../components/closetSidebar/ClosetSidebar.jsx';
+import ClosetSideBar from '../../components/closetSidebar/ClosetSideBar.jsx';
 import {
   changeCategoryFilter,
   changeIsUserItemFilter,
@@ -62,7 +62,7 @@ function FilterContainer() {
         selectedCategory={category}
         handleClick={categoryHandler}
       />
-      <ClosetSidebar
+      <ClosetSideBar
         season={season}
         colors={colors}
         selectedColors={selectedColors}
