@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface ClothingServiceImpl {
     public HashMap<String, String> getTag(MultipartFile file) throws IOException;
     public String getRemoveBg(MultipartFile file) throws IOException, ParseException;
-    public int insertClothing(MultipartFile file, ClothingDto clothing, String hashtag);
+    public int insertClothing(MultipartFile file, ClothingDto clothing, String hashtag, String washing);
     public HashMap<String, Object> getClothing(int id);
     public Optional<ClothingEntity> deleteClothing(int clothing_id);
     public List<HashMap<String, Object>> getUserClothing(String user_name);

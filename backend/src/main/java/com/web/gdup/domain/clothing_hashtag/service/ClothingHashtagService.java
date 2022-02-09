@@ -26,18 +26,14 @@ public class ClothingHashtagService implements ClothingHashtagServiceImpl{
     @Transactional
     public void insertHashtags(int clothing_id, Set<String> hashtags) {
         Set<ClothingHashtagDto> set = mapToClothingHashtags(clothing_id, hashtags);
-        for(ClothingHashtagDto cd : set) {
-            System.out.println(cd.getClothingId());
-            System.out.println(cd.getTagName());
-        }
     }
 
     @Override
-    public List<ClothingHashtagDto> getHashtags(int clothing_id) {
-        List<ClothingHashtagDto> result = new ArrayList<>();
+    public List<String> getHashtags(int clothing_id) {
+        List<String> result = new ArrayList<>();
         List<ClothingHashtagEntity> hashtags = clothingHashtagRepository.findByClothingId(clothing_id);
         for(ClothingHashtagEntity hashtag : hashtags) {
-            result.add(buildClothingHashtagDto(hashtag));
+            result.add(buildClothingHashtagDto(hashtag).getTagName());
         }
         return result;
     }

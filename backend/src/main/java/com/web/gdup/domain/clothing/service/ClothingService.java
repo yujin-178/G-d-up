@@ -6,6 +6,7 @@ import com.web.gdup.domain.clothing.entity.ClothingEntity;
 import com.web.gdup.domain.clothing.repository.ClothingRepository;
 import com.web.gdup.domain.clothing_hashtag.dto.ClothingHashtagDto;
 import com.web.gdup.domain.clothing_hashtag.service.ClothingHashtagServiceImpl;
+import com.web.gdup.domain.clothing_washing.service.ClothingWashingServiceImpl;
 import com.web.gdup.domain.image.dto.ImageDto;
 import com.web.gdup.domain.image.service.ImageServiceImpl;
 import com.web.gdup.global.component.CommonComponent;
@@ -36,6 +37,8 @@ public class ClothingService implements ClothingServiceImpl{
     ImageServiceImpl imageService;
     @Autowired
     ClothingHashtagServiceImpl clothingHashtagService;
+    @Autowired
+    ClothingWashingServiceImpl clothingWashingService;
 
     private TranslationEng te = new TranslationEng();
     private HashMap<String, HashMap<String, String>> map = te.getTranslationEng();
@@ -99,16 +102,19 @@ public class ClothingService implements ClothingServiceImpl{
 
     @Override
     @Transactional
-    public int insertClothing(MultipartFile file, ClothingDto clothing, String hashtag) {
+    public int insertClothing(MultipartFile file, ClothingDto clothing, String hashtag, String washing) {
         ImageDto image = saveImage(file);
         int imageId = imageService.insertImage(image);
         ImageDto iDto = imageService.getImage(imageId);
-
         clothing.setImageModel(iDto.toEntity());
+
         int clothing_id = clothingRepository.save(clothing.toEntity()).getClothingId();
         Set<String> hashtags = parseHashtags(hashtag);
-
         clothingHashtagService.insertHashtags(clothing_id, hashtags);
+
+        String[] str = washing.split(" ");
+        clothingWashingService.insertClothingWashing(clothing_id, str);
+
         return clothing_id;
     }
 
@@ -118,10 +124,12 @@ public class ClothingService implements ClothingServiceImpl{
         ClothingEntity clothing = clothingRepository.findById(clothingId).get();
         ClothingDto clothingDto = buildClothingDto(clothing);
 
-        List<ClothingHashtagDto> hashtags = clothingHashtagService.getHashtags(clothingId);
+        List<String> hashtags = clothingHashtagService.getHashtags(clothingId);
+        List<String> washing = clothingWashingService.getWashingMethods(clothingId);
         HashMap<String, Object> map = new HashMap<>();
         map.put("clothing", clothing);
         map.put("hashtag", hashtags);
+        map.put("washing", washing);
         return map;
     }
 
@@ -149,14 +157,14 @@ public class ClothingService implements ClothingServiceImpl{
     @Override
     public List<HashMap<String, Object>> getUserClothing(String userName) {
         List<HashMap<String, Object>> result = new ArrayList<>();
-        HashMap<String, Object> map = new HashMap<>();
 
-        List<ClothingEntity> list = clothingRepository.findByUserName(userName);
+        List<ClothingEntity> list = clothingRepository.findAllByUserName(userName);
         for(ClothingEntity cd : list) {
             ClothingDto clothingDto = buildClothingDto(cd);
-
+            HashMap<String, Object> map = new HashMap<>();
             map.put("clothing", clothingDto);
             map.put("hashtag", clothingHashtagService.getHashtags(cd.getClothingId()));
+            map.put("washing", clothingWashingService.getWashingMethods(cd.getClothingId()));
             result.add(map);
         }
         return result;

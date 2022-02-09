@@ -26,7 +26,7 @@ public class ClothingController {
 
     @PostMapping("/tag")
     @ApiOperation(value = "태그 분석")
-    public ResponseEntity getTag(@RequestParam("imageFile") MultipartFile file) throws IOException  {
+    public ResponseEntity getTag(@RequestPart("imageFile") MultipartFile file) throws IOException  {
         HashMap<String, String> data = clothingService.getTag(file);
         ResponseEntity response = null;
 
@@ -68,8 +68,8 @@ public class ClothingController {
 
     @PostMapping(value = "/save")
     @ApiOperation(value = "옷 저장")
-    public ResponseEntity insertClothing(@RequestPart("imageFile") MultipartFile file, @RequestPart("clothing") ClothingDto clothing, @RequestParam("hashtag") String hashtag) throws IOException {
-        int data = clothingService.insertClothing(file, clothing, hashtag);
+    public ResponseEntity insertClothing(@RequestPart("imageFile") MultipartFile file, @RequestPart("clothing") ClothingDto clothing, @RequestPart("hashtag") String hashtag, @RequestPart("washing") String washing) throws IOException {
+        int data = clothingService.insertClothing(file, clothing, hashtag, washing);
         ResponseEntity response = null;
 
         BasicResponse result = new BasicResponse();

@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ClothingRepository extends JpaRepository<ClothingEntity, Integer>{
-    List<ClothingEntity> findByUserName(String userName);
+    List<ClothingEntity> findAllByUserName(String userName);
 }

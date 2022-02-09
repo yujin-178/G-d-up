@@ -43,6 +43,12 @@ public class ClothingEntity {
     private String topcategory;
     private String fit;
 
+//    @OneToMany
+//    @JoinTable(name = "clothing_washing",
+//            joinColumns = @JoinColumn(name="clothingid", referencedColumnName = "clothingid"),
+//            inverseJoinColumns = @JoinColumn(name = "washingid", referencedColumnName = "id"))
+//    private List<WashingMethodEntity> washing = new ArrayList<WashingMethodEntity>();
+
     @CreatedDate
     @Column(name = "registrationdate")
     private LocalDateTime registrationDate;
