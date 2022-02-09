@@ -9,6 +9,6 @@ public interface CommentService {
     boolean insertComment(CommentDto commentDto);
     boolean insertReComment(ReCommentDto reCommentDto);
     boolean deleteComment(int commentId);
-    CommentEntity modifyComment(CommentEntity commentEntity);
+    CommentEntity modifyComment(int commentId, String content);
 
 }

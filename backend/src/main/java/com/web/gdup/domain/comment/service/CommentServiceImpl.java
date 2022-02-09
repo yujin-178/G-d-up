@@ -4,7 +4,6 @@ import com.web.gdup.domain.comment.Entity.CommentEntity;
 import com.web.gdup.domain.comment.dto.CommentDto;
 import com.web.gdup.domain.comment.dto.ReCommentDto;
 import com.web.gdup.domain.comment.repository.CommentRepository;
-import com.web.gdup.domain.feed.dto.FeedDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,12 +55,14 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentEntity modifyComment(CommentEntity commentEntity) {
-        Optional<CommentEntity> comment = commentRepository.findById(commentEntity.getOriginId());
+    public CommentEntity modifyComment(int commentId, String content) {
+
+        Optional<CommentEntity> comment = commentRepository.findById(commentId);
 
         if(comment.isPresent()){
-            commentRepository.save(commentEntity);
-            return  commentEntity;
+            comment.get().setContent(content);
+            commentRepository.save(comment.get());
+            return  comment.get();
         }
         return null;
     }

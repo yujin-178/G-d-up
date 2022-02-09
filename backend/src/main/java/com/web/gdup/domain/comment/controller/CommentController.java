@@ -70,8 +70,8 @@ public class CommentController {
 
     @PutMapping("/modify")
     @ApiOperation(value = "comment 수정하기 " , notes = "작성된  댓글을 수정한다. ")
-    public Object modifyComment(@RequestBody CommentEntity commentEntity){
-        CommentEntity comment = commentService.modifyComment(commentEntity);
+    public Object modifyComment(@RequestParam int commentId,@RequestParam String content){
+        CommentEntity comment = commentService.modifyComment(commentId, content);
         ResponseEntity response = null;
 
         if(comment != null){
