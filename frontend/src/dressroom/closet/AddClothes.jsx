@@ -3,6 +3,7 @@ import { css, jsx, Global } from '@emotion/react';
 import Modal from 'react-modal';
 
 import LaundryModal from '/src/dressroom/closet/LaundryModal';
+import { range } from 'lodash';
 
 if (process.env.NODE_ENV !== 'test') {
 	Modal.setAppElement('#app');
@@ -18,8 +19,8 @@ export default function AddClothes({ onImgChange, preview, imgInput, modalToggle
 				isOpen={isModalOpen}
 				onRequestClose={() => modalToggle(false)}
 				closeTimeoutMS={500}
-				onAfterOpen={()=>{document.body.style.overflow = 'hidden'}}
-				onAfterClose={() => document.body.removeAttribute('style') }
+				onAfterOpen={() => { document.body.style.overflow = 'hidden' }}
+				onAfterClose={() => document.body.removeAttribute('style')}
 			>
 				<div css={Container}>
 					<button
@@ -64,21 +65,10 @@ export default function AddClothes({ onImgChange, preview, imgInput, modalToggle
 							</div>
 							<div css={laundryContainer}>
 								세탁:
-								<button css={laundryItem1} onClick={()=>handleLaundry(true)}>
-								</button>
-
-								<button css={laundryItem2} onClick={()=>handleLaundry(true)}>
-								</button>
-								<button css={laundryItem3} onClick={()=>handleLaundry(true)}>
-
-								</button>
-								<button css={laundryItem4} onClick={()=>handleLaundry(true)}>
-
-								</button>
-								<button css={laundryItem5} onClick={()=>handleLaundry(true)}>
-
-								</button>
-
+								{range(1, 6).map((i) => (
+									<button css={css`height: 60px; cursor:pointer;`} onClick={() => handleLaundry(true)} key={i}>
+									</button>
+								))}
 								<LaundryModal
 									laundryOpen={laundryOpen}
 									handlelaundry={handleLaundry}
@@ -111,37 +101,6 @@ const laundryContainer = css`
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 	grid-gap : 10px;
-`
-
-const laundryItem1 = css`
-	grid-columns: 2;
-	border : 1px solid;
-	height: 80px;
-	cursor : pointer;
-`
-
-const laundryItem2 = css`
-	grid-columns: 3;
-	border : 1px solid;
-	cursor : pointer;
-`
-
-const laundryItem3 = css`
-	grid-columns: 4;
-	border : 1px solid;
-	cursor : pointer;
-`
-
-const laundryItem4 = css`
-	grid-columns: 5;
-	border : 1px solid;
-	cursor : pointer;
-`
-
-const laundryItem5 = css`
-	grid-columns: 6;
-	border : 1px solid;
-	cursor : pointer;
 `
 
 const submitBtnContainer = css`
@@ -327,7 +286,7 @@ const modalClass = css`
 }
 
 .ReactModal__Content--after-open {
-	width: 55%;
+	width: 80%;
 	height: 80%;
 	grid-column:4;
 	background-color: #f2f2f2;

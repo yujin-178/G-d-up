@@ -1,6 +1,7 @@
 import React from 'react';
-import { css, jsx, Global } from '@emotion/react';
+import { css } from '@emotion/react';
 import Modal from 'react-modal';
+import { range } from 'lodash';
 
 if (process.env.NODE_ENV !== 'test') {
 	Modal.setAppElement('#app')
@@ -9,59 +10,99 @@ if (process.env.NODE_ENV !== 'test') {
 export default function LaundryModal({ laundryOpen, handlelaundry }) {
 	return (
 		<div>
-			<Global 
-				styles={modalClass}
-			/>
-					<Modal
-						isOpen={laundryOpen}
-						onRequestClose={() => handlelaundry(false)}
-						closeTimeoutMS={500}
-					>
-						<div css={Container}>
-							<button
-								css={CloseBtn}
-								onClick={() => handlelaundry(false)}>
-								X
-							</button>
-							<div css={detailContainer}>
-								<h3>물세탁</h3>
-								<div css={detail}>
-									<p>카테고리 :</p>
-									<p>색상 :</p>
-									<p>소재 :</p>
-									<p>패턴 : </p>
-								</div>
-								<div>
-									<div>
-										<p>계절</p>
-									</div>
-									<p>세탁</p>
-									<p>태그</p>
-								</div>
-								<div css={submitBtnContainer}>
-									<button
-										css={saveBtn}
-										onClick={() => handlelaundry(false)}
-									>
-										저장
-									</button>
-									<button
-										css={cancelBtn}
-										onClick={() => handlelaundry(false)}
-									>
-										취소
-									</button>
-								</div>
-							</div>
+			<Modal
+				isOpen={laundryOpen}
+				onRequestClose={() => handlelaundry(false)}
+				closeTimeoutMS={500}
+			>
+				<div css={Container}>
+					<button
+						css={CloseBtn}
+						onClick={() => handlelaundry(false)}>
+						X
+					</button>
+					<div css={detailContainer}>
+
+						<h3>물세탁</h3>
+						<div css={detail}>
+							{range(1, 8).map((i) => (
+								<img src={`laundry/a_${i}.png`} alt={`a_${i}`} css={imgStyle} />
+							))}
 						</div>
-					</Modal>
+
+						<h3>표백</h3>
+						<div css={detail}>
+							{range(1, 7).map((i) => (
+								<img src={`laundry/b_${i}.png`} alt={`b_${i}`} css={imgStyle} />
+							))}
+						</div>
+
+						<h3>드라이</h3>
+						<div css={detail}>
+							{range(1, 5).map((i) => (
+								<img src={`laundry/c_${i}.png`} alt={`c_${i}`} css={imgStyle} />
+							))}
+						</div>
+
+						<h3>건조</h3>
+						<div css={detail}>
+							{range(1, 9).map((i) => (
+								<img src={`laundry/d_${i}.png`} alt={`d_${i}`} css={imgStyle} />
+							))}
+						</div>
+
+						<h3>다림질</h3>
+						<div css={detail}>
+							{range(1, 8).map((i) => (
+								<img src={`laundry/e_${i}.png`} alt={`e_${i}`} css={imgStyle} />
+							))}
+						</div>
+
+						<div css={submitBtnContainer}>
+							<button
+								css={saveBtn}
+								onClick={() => handlelaundry(false)}
+							>
+								저장
+							</button>
+							<button
+								css={cancelBtn}
+								onClick={() => handlelaundry(false)}
+							>
+								취소
+							</button>
+						</div>
+					</div>
+				</div>
+			</Modal>
 		</div>
 	)
 }
 
+const Container = css`
+  display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: repeat(7, 1fr);
+`
+
+const detailContainer = css`
+	grid-row: 1;
+	grid-column: 1;
+`
+
+const detail = css`
+	display: grid;
+	grid-template-columns: repeat(7,1fr);
+	grid-gap : 10px;
+`
+
+const imgStyle = css`
+	border: 1px solid;
+`
+
 const submitBtnContainer = css`
 	display:grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: repeat(6,1fr);
 
 	margin: 1.5rem;
 
@@ -74,7 +115,7 @@ const submitBtnContainer = css`
 
 const cancelBtn = css`
 	grid-column: 4;
-
+	margin-left: 10px;
 	background: #c99f9f;
 	padding: 0.5rem 1rem;
 	width: 4rem;
@@ -85,8 +126,8 @@ const cancelBtn = css`
 `
 
 const saveBtn = css`
-	grid-column: 2;
-
+	grid-column: 3;
+	margin-left: 40px;
 	background: #6da0cf;
 	padding: 0.5rem 1rem;
 	width: 4rem;
@@ -96,101 +137,17 @@ const saveBtn = css`
 	cursor: pointer;
 `
 
-const detail = css`
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	grid-template-rows: 1fr 1fr;
-`
-
-const detailContainer = css`
-	grid-row: 3;
-	grid-column: 2;
-`
-
-const Container = css`
-  display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-template-rows: repeat(7, 1fr);
-`
-
 const CloseBtn = css`
 	background: #c99f9f;
 	border: none;
 	border-radius: 4px;
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),  0 2px 4px -1px rgba(0, 0, 0, 0.06);
 	height: 1.5rem;
-	grid-column: 4;
+	width : 1.5rem;
+	grid-column: 5;
 	grid-row: 1;
 	margin-top : 1rem;
-	margin-right: 1rem;
+	margin-left: 1rem;
 
 	cursor: pointer;
-`
-
-const modalClass = css`
-.ReactModal__Overlay {
-	padding: 1rem;
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	overflow-y: hidden;
-	top: 0;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0);
-	opacity: 0;
-	transition-property: background-color, opacity;
-	transition-duration: 500ms;
-	transition-timing-function: ease-in-out;
-	outline: 0;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
-
-.ReactModal__Overlay--after-open {
-	background-color: rgba(0, 0, 0, 0.8);
-	opacity: 1;
-}
-
-.ReactModal__Overlay--before-close {
-	background-color: rgba(0, 0, 0, 0);
-	opacity: 0;
-}
-
-.ReactModal__Content {
-	position: relative;
-	top: auto;
-	left: auto;
-	right: auto;
-	bottom: auto;
-	margin: 0 auto;
-	border: 0;
-	border-radius: 8px;
-	outline: 0;
-	display: flex;
-	max-height:calc(100vh - 210px);
-	overflow-y: auto;
-	height: 0%;
-	width: 0%;
-	background-color: transparent;
-	transition-property: background-color, width, height;
-	transition-duration: 500ms;
-	transition-timing-function: ease-in-out;
-}
-
-.ReactModal__Content--after-open {
-	width: 55%;
-	height: 80%;
-	grid-column:4;
-	background-color: #f2f2f2;
-	justify-content: center;
-}
-
-.ReactModal__Content--before-close {
-	width: 0%;
-	height: 0%;
-	background-color: transparent;
-}
 `
