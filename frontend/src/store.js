@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import filterSlice from './filterSlice';
-import clothesSlice from './clothesSlice';
+import filterSlice from './slices/filterSlice';
+import clothesSlice from './slices/clothesSlice';
+import modalSlice from './slices/modalSlice';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import modalSlice from './modalSlice';
 
 export default configureStore({
   reducer: {

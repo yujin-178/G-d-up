@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   changeEmailField,
   changePasswordField,
-} from '../actions.js';
+} from '../../actions';
 
-import SignupPage from './SignupPage.jsx';
+import SignupPage from '../../components/auth/SignupPage';
 
 import axios from 'axios';
 

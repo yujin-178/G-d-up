@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import ClothesItemListContainer from './clothesList/ClothesItemListContainer.jsx';
-import FilterContainer from '../filterContainer/FilterContainer.jsx';
+import ClothesItemListContainer from './ClothesItemListContainer.jsx';
+import FilterContainer from './FilterContainer.jsx';
 import AddClothesContainer from './AddClothesContainer.jsx';
-import ClothesDetailContainer from './clothesDetailContainer/ClothesDetailContainer.jsx';
+import ClothesDetailContainer from './ClothesDetailContainer.jsx';
 import { useSelector, useDispatch } from 'react-redux';
-import { filteredClothesSelector } from '../../filterSelector.js';
+import { filteredClothesSelector } from '../../filterSelector';
 // import { css, jsx } from '@emotion/react';
 
 import {
   changeisModalOpen
-} from '../../modalSlice';
+} from '../../slices/modalSlice';
 
 export default function ClosetContainer() {
   const dispatch = useDispatch();

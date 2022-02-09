@@ -1,12 +1,11 @@
 import React, { useState, useRef } from 'react';
-import AddClothes from './AddClothes.jsx';
+import AddClothes from '../../components/dressroom/AddClothes';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
   changeisModalOpen
-} from '../../modalSlice';
-
+} from '../../slices/modalSlice';
 export default function AddClothesContainer() {
   const dispatch = useDispatch();
   const modal = useSelector(state => state.modalSlice);

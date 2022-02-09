@@ -1,8 +1,8 @@
 import React from 'react';
-import ClothesDetail from '../../../components/clothesDetail/ClothesDetail.jsx';
+import ClothesDetail from '../../components/dressroom/ClothesDetail';
 import { useSelector, useDispatch } from 'react-redux';
-import { deleteClothesById } from '../../../clothesSlice.js';
-import { season } from '../../../constants/filter';
+import { deleteClothesById } from '../../slices/clothesSlice';
+import { season } from '../../constants/filter';
 
 export default function ClothesDetailContainer() {
   const { selectedClothes } = useSelector(state => state.clothesSlice);
