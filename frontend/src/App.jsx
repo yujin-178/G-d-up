@@ -5,7 +5,7 @@ import SignupContainer from './signup/SignupContainer.jsx';
 import ClosetContainer from './dressroom/closet/ClosetContainer.jsx';
 import AddClothesContainer from './dressroom/closet/AddClothesContainer.jsx';
 
-import DressRoomContainer from './dressroom/DressRoomContainer.jsx';
+import DressRoomContainer from './dressroom/DressRoomContainer';
 import { Route, Routes } from 'react-router-dom';
 
 export default function App() {
