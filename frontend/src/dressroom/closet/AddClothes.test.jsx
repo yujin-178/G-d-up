@@ -3,8 +3,7 @@
  */
 
 import React from 'react';
-import { render } from "@testing-library/react";
-import AddClothesContainer from './AddClothesContainer.jsx';
+import AddClothes from './AddClothes.jsx';
 
 import Modal from 'react-modal';
 
@@ -14,21 +13,9 @@ import Modal from 'react-modal';
 //   return TestReactModal.default;
 // });
 
-
-
-describe('AddClothesContainer', () => {
-	it('renders AddClothesContainer', () => {
-
-		const { getByText } = render((
-			<AddClothesContainer />
-		))
-		// if (process.env.NODE_ENV !== 'test') {
-		// 	ReactModal.setAppElement('#app');
-		// }
-
-		expect(getByText(/옷 추가/)).not.toBeNull();
-	});
-
+describe('AddClothes', () => {
+	const dispatch = jest.fn();
+	
 	it('renders react-modal', () => {
 		const wrapper = render(<AddClothesContainer />);
 		expect(wrapper.find(Modal)).toHaveLength(1);
@@ -41,5 +28,21 @@ describe('AddClothesContainer', () => {
 		wrapper.find('button').simulate('click');
   	expect(wrapper.find(Modal).prop('IsmodalOpen')).toBe(true);
 	});
+
+	it('closes modal clicked x', ()=> {
+		const wrapper = shallow(<AddClothes />);
+		expect(wrapper.find(Modal).dive().find('button')).not.toBeNull();
+
+		expect(wrapper.find(Modal).dive().find('button')[0]).not.toBeNull();
+
+		const CloseBtn = wrapper.find(Modal).dive().findWhere(
+			node => node.type() === 'button' && node.text() === 'X'
+		);
+		// expect(CloseBtn.length).toEqual(1);
+
+		// CloseBtn.simulate('click');
+		// expect(wrapper.find(Modal).prop('isOpen')).toBe(false);
+
+	})
 	
 });

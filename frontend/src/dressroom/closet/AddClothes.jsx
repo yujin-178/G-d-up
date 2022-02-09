@@ -1,6 +1,5 @@
 import React from 'react';
-import { css } from '@emotion/react';
-import { ClassNames } from '@emotion/core';
+import { css, jsx, Global } from '@emotion/react';
 import Modal from 'react-modal';
 
 if (process.env.NODE_ENV !== 'test') {
@@ -11,91 +10,13 @@ export default function AddClothes({ onImgChange, preview, imgInput, modalToggle
 
   return (
     <div>
-      <ClassNames>
-        {({ css }) => (
+      <Global 
+				styles={modalClass}
+			/>
           <Modal
             isOpen={isModalOpen}
             onRequestClose={() => modalToggle(false)}
-            overlayClassName={{
-              base: 'overlay-base',
-              afterOpen: 'overlay-after',
-              beforeClose: 'overlay-before'
-            }}
-            className={{
-              base: "content-base",
-              afterOpen: "content-after",
-              beforeClose: "content-before"
-            }}
             closeTimeoutMS={500}
-            portalClassName={
-              css`
-                .overlay-base {
-                  padding: 1rem;
-                  position: fixed;
-                  width: 100%;
-                  height: 100%;
-									overflow-y: hidden;
-                  top: 0;
-                  bottom: 0;
-                  right: 0;
-                  left: 0;
-                  background-color: rgba(0, 0, 0, 0);
-                  opacity: 0;
-                  transition-property: background-color, opacity;
-                  transition-duration: 500ms;
-                  transition-timing-function: ease-in-out;
-                  outline: 0;
-                  display: flex;
-                  justify-content: center;
-                  align-items: center;
-                }
-
-                .overlay-after {
-                  background-color: rgba(0, 0, 0, 0.8);
-                  opacity: 1;
-                }
-
-                .overlay-before {
-                  background-color: rgba(0, 0, 0, 0);
-                  opacity: 0;
-                }
-
-                .content-base {
-                  position: relative;
-                  top: auto;
-                  left: auto;
-                  right: auto;
-                  bottom: auto;
-                  margin: 0 auto;
-                  border: 0;
-									border-radius: 8px;
-                  outline: 0;
-                  display: flex;
-									max-height:calc(100vh - 210px);
-									overflow-y: auto;
-                  height: 0%;
-                  width: 0%;
-                  background-color: transparent;
-                  transition-property: background-color, width, height;
-                  transition-duration: 500ms;
-                  transition-timing-function: ease-in-out;
-                }
-
-                .content-after {
-                  width: 55%;
-                  height: 80%;
-									grid-column:4;
-                  background-color: #f2f2f2;
-									justify-content: center;
-                }
-
-                .content-before {
-                  width: 0%;
-                  height: 0%;
-                  background-color: transparent;
-                }
-              `
-            }
           >
             <div css={Container}>
               <button
@@ -158,8 +79,6 @@ export default function AddClothes({ onImgChange, preview, imgInput, modalToggle
               </div>
             </div>
           </Modal>
-        )}
-      </ClassNames>
     </div>
   );
 }
