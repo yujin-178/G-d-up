@@ -13,7 +13,8 @@ import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = { "http://i6b108.p.ssafy.io:3000" })
-@RestController("/feed")
+@RestController
+@RequestMapping("/feed")
 public class FeedController {
 
     @Autowired
@@ -77,12 +78,25 @@ public class FeedController {
     @ApiOperation(value = "모든 피드 불러오기",
             notes = "로그인된 사용자의 팔로잉의 feed를 반환한다."
     )
-    public void getFeeds(@RequestParam String userName){
+    public Object getFeeds(@RequestParam String userName){
         List<FeedDto> feeds = feedService.getAllFeed(userName);
+        ResponseEntity response = null;
 
-        for(FeedDto feed : feeds){
-            System.out.println(feed);
+        if(feeds != null){
+            for(FeedDto feed : feeds){
+                System.out.println(feed);
+            }
+            final BasicResponse result = new BasicResponse();
+            result.status = true;
+            result.message = "success";
+            result.data = feeds;
+            response = new ResponseEntity<>(result, HttpStatus.OK);
         }
+        else {
+            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
+        return response;
     }
 
     @GetMapping ("/detail")
