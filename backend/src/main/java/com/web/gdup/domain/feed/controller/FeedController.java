@@ -60,6 +60,7 @@ public class FeedController {
     @DeleteMapping("/delete")
     @ApiOperation(value = "Feed 지우기 " , notes = "작성한 피드를 지운다. ")
     public Object DeleteFeed(@RequestParam int feedId  ){
+        //관련 댓글도 다 사라져야함
         ResponseEntity response = null;
 
         if(feedService.deleteFeed(feedId)){
@@ -113,24 +114,8 @@ public class FeedController {
             result.data = feed;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }  else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            response = new ResponseEntity<>(null, HttpStatus.OK);
         }
         return response;
-    }
-
-    public void pushLike(){
-
-    }
-
-    public void writeComment(){
-
-    }
-
-    public void modifyComment(){
-
-    }
-
-    public void deleteComment(){
-
     }
 }
