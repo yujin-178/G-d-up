@@ -44,6 +44,7 @@ public class CodyServiceImpl implements CodyService {
 
     @Autowired
     private ImageRepository ir;
+
     @Override
     public List<CodyEntity> getAllCodyList() {
         return cr.findAll();
@@ -57,15 +58,23 @@ public class CodyServiceImpl implements CodyService {
     @Override
     public int deleteCodyItem(int id) {
         CodyEntity tmp = cr.getOne(id);
-        ir.deleteById(id);
-        return cr.deleteByCodyId(id);
+
+        if (cr.deleteByCodyId(id) == 0)
+            return 0;
+
+        int imageId = tmp.getImageId();
+
+        if (ir.deleteByImageId(imageId) == 0)
+            return 0;
+
+        return 1;
     }
 
     @Override
     public int updateCodyItem(UpdateCody uc, MultipartFile file) {
         System.out.println(uc.getCodyId());
         System.out.println(file.getOriginalFilename());
-        CodyEntity ce =  cr.getOne(uc.getCodyId());
+        CodyEntity ce = cr.getOne(uc.getCodyId());
 
         ImageDto imageDto = updateImage(file, ce.getImageId());
 
@@ -98,7 +107,6 @@ public class CodyServiceImpl implements CodyService {
         ccr.deleteByCodyId(ce.getCodyId());
 
 
-
         int len = uc.getClothingList().size();
         List<ClothingInCody> cciList = uc.getClothingList();
         for (int i = 0; i < len; i++) {
@@ -110,7 +118,6 @@ public class CodyServiceImpl implements CodyService {
             // 기존에 없는 새로운 값인지 확인하는 작업이 있어야 하지 않을까?
             ccr.save(cci);
         }
-
 
 
         return 1;
@@ -170,7 +177,7 @@ public class CodyServiceImpl implements CodyService {
         }
     }
 
-    private ImageDto updateImage(MultipartFile file, int imageId){
+    private ImageDto updateImage(MultipartFile file, int imageId) {
         ImageDto imageDto = imageService.getImage(imageId);
 
         String originImageName = file.getOriginalFilename();
