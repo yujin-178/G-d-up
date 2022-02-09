@@ -26,8 +26,22 @@ public class ClothingController {
 
     @PostMapping("/tag")
     @ApiOperation(value = "태그 분석")
-    public ResponseEntity<String> getTag(@RequestParam("imageFile") MultipartFile file) throws IOException  {
-        return new ResponseEntity<String>(clothingService.getTag(file), HttpStatus.OK);
+    public ResponseEntity getTag(@RequestParam("imageFile") MultipartFile file) throws IOException  {
+        HashMap<String, String> data = clothingService.getTag(file);
+        ResponseEntity response = null;
+
+        BasicResponse result = new BasicResponse();
+        if(!data.isEmpty()) {
+            result.status = true;
+            result.message = "sucess";
+            result.data = data;
+            response = new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            result.status = false;
+            result.message = "fail";
+            response = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return response;
     }
 
     @PostMapping("/background")

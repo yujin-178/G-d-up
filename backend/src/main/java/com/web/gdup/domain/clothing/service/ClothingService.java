@@ -1,6 +1,7 @@
 package com.web.gdup.domain.clothing.service;
 
 import com.web.gdup.domain.clothing.dto.ClothingDto;
+import com.web.gdup.domain.clothing.dto.ClothingResponse;
 import com.web.gdup.domain.clothing.entity.ClothingEntity;
 import com.web.gdup.domain.clothing.repository.ClothingRepository;
 import com.web.gdup.domain.clothing_hashtag.dto.ClothingHashtagDto;
@@ -8,6 +9,7 @@ import com.web.gdup.domain.clothing_hashtag.service.ClothingHashtagServiceImpl;
 import com.web.gdup.domain.image.dto.ImageDto;
 import com.web.gdup.domain.image.service.ImageServiceImpl;
 import com.web.gdup.global.component.CommonComponent;
+import com.web.gdup.global.component.TranslationEng;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -35,8 +37,11 @@ public class ClothingService implements ClothingServiceImpl{
     @Autowired
     ClothingHashtagServiceImpl clothingHashtagService;
 
+    private TranslationEng te = new TranslationEng();
+    private HashMap<String, HashMap<String, String>> map = te.getTranslationEng();
+
     @Override
-    public String getTag(MultipartFile file) throws IOException {
+    public HashMap<String, String> getTag(MultipartFile file) throws IOException {
         System.out.println("이미지 처리");
         String apiURL = "https://api.ximilar.com/tagging/fashion/v2/detect_tags";
 
@@ -55,7 +60,14 @@ public class ClothingService implements ClothingServiceImpl{
         JSONObject data = new JSONObject(record);
         String body = data.toString();
         System.out.println("json 완료");
-        return apiMethod("POST", apiURL, body);
+        String jsonData = apiMethod("POST", apiURL, body);
+        HashMap<String, String> result = null;
+        try {
+            result = columnParser(jsonData);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 
     @Override
@@ -98,15 +110,6 @@ public class ClothingService implements ClothingServiceImpl{
 
         clothingHashtagService.insertHashtags(clothing_id, hashtags);
         return clothing_id;
-    }
-
-    private Set<String> parseHashtags(String hashtag) {
-        Set<String> set = new HashSet<>();
-        StringTokenizer st = new StringTokenizer(hashtag);
-        while(st.hasMoreTokens()) {
-            set.add(st.nextToken());
-        }
-        return set;
     }
 
     @Override
@@ -159,6 +162,42 @@ public class ClothingService implements ClothingServiceImpl{
         return result;
     }
 
+    private Set<String> parseHashtags(String hashtag) {
+        Set<String> set = new HashSet<>();
+        StringTokenizer st = new StringTokenizer(hashtag);
+        while(st.hasMoreTokens()) {
+            set.add(st.nextToken());
+        }
+        return set;
+    }
+
+    private HashMap<String, String> columnParser(String str) throws ParseException {
+        String[] clothingResponse = {"category", "topcategory", "age", "color", "cut", "design", "gender", "hood", "layers", "material", "neckline", "pattern", "sleeves", "style", "subcategory", "season", "fit"};
+
+        HashMap<String, String> result = new HashMap<>();
+        for(String cr : clothingResponse) {
+            result.put(cr, null);
+        }
+
+        ClothingResponse cResponse = new ClothingResponse();
+
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) parser.parse(str);
+        JSONArray records = (JSONArray) jsonObject.get("records");
+        JSONObject obj = (JSONObject) records.get(0);
+        JSONArray objects = (JSONArray) obj.get("_objects");
+        JSONObject object = (JSONObject) objects.get(0);
+        JSONObject tags = (JSONObject) object.get("_tags");
+
+        for(Object tag:tags.keySet()){
+            JSONArray tagArray = (JSONArray) tags.get(tag);
+            JSONObject name = (JSONObject) tagArray.get(0);
+            String tagName = tag.toString().toLowerCase();
+            result.put(tagName, map.get(tag).get(name.get("name")));
+        }
+        return result;
+    }
+
     private String urlParser(String str) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         JSONObject jsonObject = (JSONObject) parser.parse(str);
@@ -189,6 +228,9 @@ public class ClothingService implements ClothingServiceImpl{
                 .userName(clothing.getUserName())
                 .imageModel(clothing.getImageModel())
                 .registrationDate(clothing.getRegistrationDate())
+                .category(clothing.getCategory())
+                .topcategory(clothing.getTopcategory())
+                .fit(clothing.getFit())
                 .build();
         return clothingDto;
     }

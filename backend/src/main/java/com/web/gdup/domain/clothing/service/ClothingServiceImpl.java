@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ClothingServiceImpl {
-    public String getTag(MultipartFile file) throws IOException;
+    public HashMap<String, String> getTag(MultipartFile file) throws IOException;
     public String getRemoveBg(MultipartFile file) throws IOException, ParseException;
     public int insertClothing(MultipartFile file, ClothingDto clothing, String hashtag);
     public HashMap<String, Object> getClothing(int id);
