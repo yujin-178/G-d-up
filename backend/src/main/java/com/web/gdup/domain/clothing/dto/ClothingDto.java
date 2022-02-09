@@ -32,6 +32,9 @@ public class ClothingDto {
     private LocalDateTime registrationDate;
     private ImageEntity imageModel;
     private String userName;
+    private String category;
+    private String topcategory;
+    private String fit;
 
     public ClothingEntity toEntity() {
         ClothingEntity build = ClothingEntity.builder()
@@ -54,6 +57,9 @@ public class ClothingDto {
                 .userName(userName)
                 .imageModel(imageModel)
                 .registrationDate(LocalDateTime.now())
+                .category(category)
+                .topcategory(topcategory)
+                .fit(fit)
                 .build();
         return build;
     }
