@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import ClothesItemListContainer from './clothesList/ClothesItemListContainer.jsx';
-import FilterContainer from '../FilterContainer/FilterContainer.jsx';
+import FilterContainer from '../filterContainer/FilterContainer.jsx';
 import AddClothesContainer from './AddClothesContainer.jsx';
 import ClothesDetailContainer from './clothesDetailContainer/ClothesDetailContainer.jsx';
 import { useSelector, useDispatch } from 'react-redux';
