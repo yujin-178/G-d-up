@@ -3,17 +3,34 @@
  */
 
 import React from 'react';
-import { render } from "@testing-library/react";
+
 import AddClothesContainer from './AddClothesContainer.jsx';
+import { render, fireEvent, getByRole, screen } from "@testing-library/react";
+
+import { useSelector, useDispatch } from 'react-redux';
+
+jest.mock('react-redux');
 
 describe('AddClothesContainer', () => {
-  it('renders AddClothesContainer', () => {
+	const dispatch = jest.fn();
 
+	useDispatch.mockImplementation(()=> dispatch);
+	useSelector.mockImplementation((selector)=> selector({
+		isModalOpen : true,
+	}) || {});
 
-    const { getByText } = render((
-      <AddClothesContainer />
-    ))
+	it('handleModal function well', ()=> {
+		const handleModal = jest.fn();
 
-    // expect(getByText(/옷 추가/)).not.toBeNull();
-  });
-});
+		const { getByText, container } = render((
+			<AddClothesContainer />
+		));
+
+		// const xbtn = screen.getByRole('button', {name: /x/i})
+		// fireEvent.click(xbtn);
+		// expect(dispatch).toBeCalledWith({
+		// 	type:'handleModal',
+		// });
+
+	})
+	});

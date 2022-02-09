@@ -19,6 +19,7 @@ export default function ClosetSidebar(props) {
   return (
     <aside css={sidebarStyle}>
       <input
+        data-testid="input"
         ref={inputRef}
         css={searchInputStyle}
         type="text"
@@ -26,7 +27,10 @@ export default function ClosetSidebar(props) {
         onKeyPress={onKeyPress}
       />
       <div css={toggleContainer}>
-        <div css={toggleBtn({ isUserItem })} onClick={toggleIsUserItem}>
+        <div
+          data-testid="toggle"
+          css={toggleBtn({ isUserItem })}
+          onClick={toggleIsUserItem}>
           <div css={toggleBtnCircle({ isUserItem })}></div>
         </div>
         <p css={toggleTitle}>내 옷만 보기</p>
@@ -37,6 +41,7 @@ export default function ClosetSidebar(props) {
           {season.map((item, index) => (
             <li key={index} css={menuItem}>
               <input
+                data-testid={item}
                 css={checkbox}
                 type="checkbox"
                 id={item}
@@ -55,6 +60,7 @@ export default function ClosetSidebar(props) {
             return (
               <li key={index} css={menuItem}>
                 <button
+                  data-testid={name}
                   css={colorButton({ code, isSelected })}
                   onClick={() => onChangeColor(name)}
                 >

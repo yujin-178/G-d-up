@@ -1,8 +1,7 @@
 import React, { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-// import { filteredClothesSelector } from '../../filterSelector';
 import Categories from '../../components/categories/Categories.jsx';
-import ClosetSidebar from '../../components/closetSidebar/ClosetSidebar.jsx';
+import ClosetSideBar from '../../components/closetSidebar/ClosetSideBar.jsx';
 import {
   changeCategoryFilter,
   changeIsUserItemFilter,
@@ -18,13 +17,16 @@ function FilterContainer() {
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filterSlice);
   const { category, isUserItem, selectedColors, custom } = filter;
-  // const filteredClothes = useSelector(filteredClothesSelector);
 
   const onKeyPress = event => {
     if (event.key === 'Enter') {
       const value = inputRef.current.value;
-      dispatch(addCustomFilter(value));
-      inputRef.current.value = '';
+      if (value) {
+        dispatch(addCustomFilter(value));
+        inputRef.current.value = '';
+      } else {
+        alert('내용을 입력해주세요');
+      }
     }
   };
 
@@ -60,7 +62,7 @@ function FilterContainer() {
         selectedCategory={category}
         handleClick={categoryHandler}
       />
-      <ClosetSidebar
+      <ClosetSideBar
         season={season}
         colors={colors}
         selectedColors={selectedColors}

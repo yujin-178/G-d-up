@@ -1,4 +1,4 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './src/index.jsx',
@@ -16,4 +16,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
-}
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  }
+};

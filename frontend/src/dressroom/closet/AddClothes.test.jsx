@@ -3,43 +3,37 @@
  */
 
 import React from 'react';
-import { render } from "@testing-library/react";
-import AddClothesContainer from './AddClothesContainer.jsx';
+import AddClothes from './AddClothes.jsx';
 
 import Modal from 'react-modal';
-
-// jest.mock('react-modal', () => {
-//   const React = require('react');
-//   const TestReactModal = require('./mockReactModal');
-//   return TestReactModal.default;
-// });
+import { mount, shallow } from 'enzyme';
 
 
+jest.mock('react-redux');
 
-describe('AddClothesContainer', () => {
-	it('renders AddClothesContainer', () => {
-
-		const { getByText } = render((
-			<AddClothesContainer />
-		))
-		// if (process.env.NODE_ENV !== 'test') {
-		// 	ReactModal.setAppElement('#app');
-		// }
-
-		expect(getByText(/옷 추가/)).not.toBeNull();
-	});
-
+describe('AddClothes', () => {
+	const dispatch = jest.fn();
+	
 	it('renders react-modal', () => {
-		const wrapper = render(<AddClothesContainer />);
+		const wrapper = shallow(<AddClothes />);
 		expect(wrapper.find(Modal)).toHaveLength(1);
+		expect(wrapper.find(Modal).prop('isOpen')).toBe(false);
 	});
 
-	it('opens modal when button is clicked', () => {
-		const wrapper = render(<AddClothesContainer />);
-		expect(wrapper.find(Modal).prop('IsmodalOpen')).toBe(false);
+	it('closes modal clicked x', ()=> {
+		const wrapper = shallow(<AddClothes />);
+		expect(wrapper.find(Modal).dive().find('button')).not.toBeNull();
 
-		wrapper.find('button').simulate('click');
-  	expect(wrapper.find(Modal).prop('IsmodalOpen')).toBe(true);
-	});
+		expect(wrapper.find(Modal).dive().find('button')[0]).not.toBeNull();
+
+		const CloseBtn = wrapper.find(Modal).dive().findWhere(
+			node => node.type() === 'button' && node.text() === 'X'
+		);
+		// expect(CloseBtn.length).toEqual(1);
+
+		// CloseBtn.simulate('click');
+		// expect(wrapper.find(Modal).prop('isOpen')).toBe(false);
+
+	})
 	
 });
