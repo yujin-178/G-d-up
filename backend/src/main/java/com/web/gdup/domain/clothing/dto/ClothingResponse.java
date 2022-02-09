@@ -1,4 +1,4 @@
-package com.web.gdup.domain.clothing.dto;
+package com.web.gdup.domain.clothing.service.dto;
 
 import com.web.gdup.domain.image.entity.ImageEntity;
 import lombok.*;

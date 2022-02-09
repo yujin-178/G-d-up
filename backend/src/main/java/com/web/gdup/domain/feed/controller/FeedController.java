@@ -59,7 +59,7 @@ public class FeedController {
 
     @DeleteMapping("/delete")
     @ApiOperation(value = "Feed 지우기 " , notes = "작성한 피드를 지운다. ")
-    public Object DeleteFeed(@RequestParam int feedId  ){
+    public Object deleteFeed(@RequestParam int feedId  ){
         //관련 댓글도 다 사라져야함
         ResponseEntity response = null;
 
