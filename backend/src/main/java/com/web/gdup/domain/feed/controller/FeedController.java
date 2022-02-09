@@ -1,17 +1,14 @@
 package com.web.gdup.domain.feed.controller;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.web.gdup.domain.feed.dto.FeedDto;
 import com.web.gdup.domain.feed.service.FeedService;
 import com.web.gdup.domain.model.BasicResponse;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.ConfigurablePropertyAccessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -78,10 +75,10 @@ public class FeedController {
 
     @GetMapping("/all")
     @ApiOperation(value = "모든 피드 불러오기",
-            notes = "로그인된 사용자가 팔로우하는 사람들의 feed를 반환한다."
+            notes = "로그인된 사용자의 팔로잉의 feed를 반환한다."
     )
-    public void getAllFeed(){
-        List<FeedDto> feeds = feedService.getAllFeed();
+    public void getFeeds(@RequestParam String userName){
+        List<FeedDto> feeds = feedService.getAllFeed(userName);
 
         for(FeedDto feed : feeds){
             System.out.println(feed);
