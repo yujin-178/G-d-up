@@ -2,7 +2,7 @@ package com.web.gdup.domain.clothing.controller;
 
 import com.web.gdup.domain.clothing.dto.ClothingDto;
 import com.web.gdup.domain.clothing.entity.ClothingEntity;
-import com.web.gdup.domain.clothing.service.ClothingServiceImpl;
+import com.web.gdup.domain.clothing.service.ClothingService;
 import com.web.gdup.domain.model.BasicResponse;
 import io.swagger.annotations.ApiOperation;
 import org.json.simple.parser.ParseException;
@@ -22,7 +22,7 @@ import java.util.Optional;
 @RequestMapping("/clothing")
 public class ClothingController {
     @Autowired
-    ClothingServiceImpl clothingService;
+    ClothingService clothingService;
 
     @PostMapping("/tag")
     @ApiOperation(value = "태그 분석")
