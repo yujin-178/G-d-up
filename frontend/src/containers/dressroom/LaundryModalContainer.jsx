@@ -27,6 +27,11 @@ export default function laundryModalContainer() {
 		dispatch(changeSelectedIcon(num))
 	}
 
+	function saveLaundry() {
+		dispatch(changelaundryOpen(false))
+		// 백엔드 요청 보내기
+	}
+
 	return (
 		<div>
 			<LaundryModal
@@ -35,6 +40,7 @@ export default function laundryModalContainer() {
 				iconSelect={handleSelectedIcon}
 				selectedIcon={selectedIcon}
 				laundryLabel={laundryLabel}
+				saveLaundry={saveLaundry}
 			/>
 		</div>
 	);

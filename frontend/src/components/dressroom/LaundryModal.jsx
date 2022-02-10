@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'test') {
 	Modal.setAppElement('#app')
 }
 
-export default function LaundryModal({ laundryOpen, handleLaundry, iconSelect, selectedIcon, laundryLabel }) {
+export default function LaundryModal({ saveLaundry, laundryOpen, handleLaundry, iconSelect, selectedIcon, laundryLabel }) {
 	return (
 		<div>
 			<Modal
@@ -24,33 +24,31 @@ export default function LaundryModal({ laundryOpen, handleLaundry, iconSelect, s
 						X
 					</button>
 					<div css={detailContainer}>
-						
-							{range(0, 5).map((i) => (
-								<LaundryItem
-									key={i}
-									Label={laundryLabel[i][0]}
-									Nums={laundryLabel[i][1]}
-									iconSelect={iconSelect}
-									selectedIcon={selectedIcon}
-								/>
-							))}
-
-					<div css={submitBtnContainer}>
-						<button
-							css={saveBtn}
-							onClick={() => handleLaundry(false)}
-						>
-							저장
-						</button>
-						<button
-							css={cancelBtn}
-							onClick={() => handleLaundry(false)}
-						>
-							취소
-						</button>
+						{range(0, 5).map((i) => (
+							<LaundryItem
+								key={i}
+								Label={laundryLabel[i][0]}
+								Nums={laundryLabel[i][1]}
+								iconSelect={iconSelect}
+								selectedIcon={selectedIcon}
+							/>
+						))}
+						<div css={submitBtnContainer}>
+							<button
+								css={saveBtn}
+								onClick={() => saveLaundry()}
+							>
+								저장
+							</button>
+							<button
+								css={cancelBtn}
+								onClick={() => handleLaundry(false)}
+							>
+								취소
+							</button>
+						</div>
 					</div>
 				</div>
-		</div>
 			</Modal >
 		</div >
 	)
