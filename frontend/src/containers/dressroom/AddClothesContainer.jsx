@@ -4,57 +4,63 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
-  changeisModalOpen,
-	changelaundryOpen,
+	changeisModalOpen,
 } from '../../slices/modalSlice';
 
+import {
+	changelaundryOpen,
+} from '../../slices/laundrySlice';
+
 export default function AddClothesContainer() {
-  const dispatch = useDispatch();
-  const modal = useSelector(state => state.modalSlice);
-  const { isModalOpen, laundryOpen } = modal;
+	const dispatch = useDispatch();
+	const modal = useSelector(state => state.modalSlice);
+	const { isModalOpen } = modal;
 
-  const [fileUrl, setFileUrl] = useState(null);
-  const imgInput = useRef(null);
+	const laundry = useSelector(state => state.laundrySlice);
+	const { selectedIcon } = laundry;
 
-  function onImgChange(event) {
-    const imgFile = event.target.files[0];
-    const imgURL = URL.createObjectURL(imgFile);
-    setFileUrl(imgURL);
+	const [fileUrl, setFileUrl] = useState(null);
+	const imgInput = useRef(null);
 
-    const formData = new FormData();
-    formData.append('imageFile', event.target.files[0]);
-    const config = {
-      Headers: {
-        'content-type': 'multipart/form-data',
-      },
-    };
-    axios.post(``, formData, config)
-      .then(() => {
-        URL.revokeObjectURL(fileUrl);
-        setFileUrl("");
+	function onImgChange(event) {
+		const imgFile = event.target.files[0];
+		const imgURL = URL.createObjectURL(imgFile);
+		setFileUrl(imgURL);
 
-      });
-  }
+		const formData = new FormData();
+		formData.append('imageFile', event.target.files[0]);
+		const config = {
+			Headers: {
+				'content-type': 'multipart/form-data',
+			},
+		};
+		axios.post(``, formData, config)
+			.then(() => {
+				URL.revokeObjectURL(fileUrl);
+				setFileUrl("");
 
-  function handleModal(value) {
-    dispatch(changeisModalOpen(value));
-  }
+			});
+	}
+
+	function handleModal(value) {
+		dispatch(changeisModalOpen(value));
+	}
 
 	function handleLaundry(value) {
 		dispatch(changelaundryOpen(value));
 	}
 
-  return (
-    <div>
-      <AddClothes
-        onImgChange={onImgChange}
-        preview={fileUrl}
-        imgInput={imgInput}
-        modalToggle={handleModal}
-        isModalOpen={isModalOpen}
-				laundryOpen={laundryOpen}
+	return (
+		<div>
+			<AddClothes
+				onImgChange={onImgChange}
+				preview={fileUrl}
+				imgInput={imgInput}
+				modalToggle={handleModal}
+				isModalOpen={isModalOpen}
 				handleLaundry={handleLaundry}
-      />
-    </div>
-  );
+				selectedLaundry={selectedIcon}
+			/>
+		</div>
+	);
 }

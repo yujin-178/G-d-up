@@ -1,15 +1,14 @@
 import React from 'react';
-import { css, jsx, Global } from '@emotion/react';
+import { css, Global } from '@emotion/react';
 import Modal from 'react-modal';
-
-import LaundryModal from './LaundryModal';
 import { range } from 'lodash';
+import LaundryModalContainer from '../../containers/dressroom/LaundryModalContainer';
 
 if (process.env.NODE_ENV !== 'test') {
 	Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry, laundryOpen }) {
+export default function AddClothes({ selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
 	return (
 		<div>
 			<Global
@@ -64,14 +63,18 @@ export default function AddClothes({ onImgChange, preview, imgInput, modalToggle
 								<p>계절</p>
 							</div>
 							<div css={laundryContainer}>
-								세탁:
-								{range(1, 6).map((i) => (
-									<button css={css`height: 60px; cursor:pointer;`} onClick={() => handleLaundry(true)} key={i}>
-									</button>
+								<p css={css`width:40px;`}>세탁:</p>
+								{range(selectedLaundry.length).map((i) => (
+									<img src={`laundry/${selectedLaundry[i]}.png`} alt={i} />
 								))}
-								<LaundryModal
-									laundryOpen={laundryOpen}
-									handlelaundry={handleLaundry}
+								<div css={AddBtnContainer}>
+									<button css={AddBtn}
+										onClick={() => handleLaundry(true)}>
+										추가 +
+									</button>
+								</div>
+
+								<LaundryModalContainer
 								/>
 							</div>
 							<p>태그</p>
@@ -97,9 +100,21 @@ export default function AddClothes({ onImgChange, preview, imgInput, modalToggle
 	);
 }
 
+const AddBtnContainer = css`
+	display: flex;
+	justify-content: center;
+	align-items : center;
+`
+
+const AddBtn = css`
+	height: 60px; 
+	width:50px; 
+	cursor:pointer;
+`
+
 const laundryContainer = css`
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: repeat(5, 0.5fr);
 	grid-gap : 10px;
 `
 
