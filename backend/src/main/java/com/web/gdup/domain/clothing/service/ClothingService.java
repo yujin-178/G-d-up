@@ -4,12 +4,13 @@ import com.web.gdup.domain.clothing.dto.ClothingDto;
 import com.web.gdup.domain.clothing.dto.ClothingResponse;
 import com.web.gdup.domain.clothing.entity.ClothingEntity;
 import com.web.gdup.domain.clothing.repository.ClothingRepository;
-import com.web.gdup.domain.clothing_hashtag.dto.ClothingHashtagDto;
 import com.web.gdup.domain.clothing_hashtag.service.ClothingHashtagServiceImpl;
+import com.web.gdup.domain.clothing_washing.dto.ClothingWashingDto;
 import com.web.gdup.domain.clothing_washing.service.ClothingWashingServiceImpl;
 import com.web.gdup.domain.image.dto.ImageDto;
 import com.web.gdup.domain.image.service.ImageServiceImpl;
 import com.web.gdup.global.component.CommonComponent;
+import com.web.gdup.global.component.EcoMatching;
 import com.web.gdup.global.component.TranslationEng;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONArray;
@@ -108,6 +109,12 @@ public class ClothingService implements ClothingServiceImpl{
         ImageDto iDto = imageService.getImage(imageId);
         clothing.setImageModel(iDto.toEntity());
 
+        if(clothing.getMaterial()!=null) {
+            EcoMatching ecoMatch = new EcoMatching();
+            HashMap<String, String> eco = ecoMatch.setEcoMatching();
+            clothing.setEco(eco.get(clothing.getMaterial()));
+        }
+
         int clothing_id = clothingRepository.save(clothing.toEntity()).getClothingId();
         Set<String> hashtags = parseHashtags(hashtag);
         clothingHashtagService.insertHashtags(clothing_id, hashtags);
@@ -125,7 +132,7 @@ public class ClothingService implements ClothingServiceImpl{
         ClothingDto clothingDto = buildClothingDto(clothing);
 
         List<String> hashtags = clothingHashtagService.getHashtags(clothingId);
-        List<String> washing = clothingWashingService.getWashingMethods(clothingId);
+        List<ClothingWashingDto> washing = clothingWashingService.getWashingMethods(clothingId);
         HashMap<String, Object> map = new HashMap<>();
         map.put("clothing", clothing);
         map.put("hashtag", hashtags);
@@ -239,6 +246,7 @@ public class ClothingService implements ClothingServiceImpl{
                 .category(clothing.getCategory())
                 .topcategory(clothing.getTopcategory())
                 .fit(clothing.getFit())
+                .eco(clothing.getEco())
                 .build();
         return clothingDto;
     }

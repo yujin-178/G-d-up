@@ -35,11 +35,11 @@ public class ClothingWashingService implements ClothingWashingServiceImpl{
     }
 
     @Override
-    public List<String> getWashingMethods(int clothing_id) {
-        List<String> result = new ArrayList<>();
+    public List<ClothingWashingDto> getWashingMethods(int clothing_id) {
+        List<ClothingWashingDto> result = new ArrayList<>();
         List<ClothingWashingEntity> methods = clothingWashingRepository.findByClothingid(clothing_id);
         for(ClothingWashingEntity method : methods) {
-            result.add(buildClothingWashingDto(method).getWashingMethod().getMethod());
+            result.add(buildClothingWashingDto(method));
         }
         return result;
     }
