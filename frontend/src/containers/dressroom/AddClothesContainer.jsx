@@ -23,22 +23,20 @@ export default function AddClothesContainer() {
 	const imgInput = useRef(null);
 
 	function onImgChange(event) {
-		const imgFile = event.target.files[0];
-		const imgURL = URL.createObjectURL(imgFile);
-		setFileUrl(imgURL);
-
 		const formData = new FormData();
 		formData.append('imageFile', event.target.files[0]);
 		const config = {
 			Headers: {
-				'content-type': 'multipart/form-data',
+				'Content-Type': 'multipart/form-data',
 			},
 		};
-		axios.post(``, formData, config)
-			.then(() => {
-				URL.revokeObjectURL(fileUrl);
-				setFileUrl("");
-
+		axios.post(`http://i6b108.p.ssafy.io:8000/clothing/background`, formData, config)
+			.then((res) => {
+				const imgURL = res.data.data;
+				setFileUrl(imgURL);
+			})
+			.catch((err)=>{
+				console.log(err);
 			});
 	}
 
