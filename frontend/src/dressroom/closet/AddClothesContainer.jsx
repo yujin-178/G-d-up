@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import AddClothes from '/src/dressroom/closet/AddClothes.jsx';
+import AddClothes from './AddClothes.jsx';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 
