@@ -13,7 +13,7 @@ import com.web.gdup.domain.cody.repository.CodyRepository;
 import com.web.gdup.domain.hashtag.service.HashtagService;
 import com.web.gdup.domain.image.dto.ImageDto;
 import com.web.gdup.domain.image.repository.ImageRepository;
-import com.web.gdup.domain.image.service.ImageServiceImpl;
+import com.web.gdup.domain.image.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,7 +37,7 @@ public class CodyServiceImpl implements CodyService {
     private CodyClothingRepository ccr;
 
     @Autowired
-    private ImageServiceImpl imageService;
+    private ImageService imageService;
 
     @Autowired
     private CodyHashtagRepository chr;
@@ -100,6 +100,7 @@ public class CodyServiceImpl implements CodyService {
             hs.findOrCreateHashtag(tagTmp);
             CodyHashtagEntity CHtmp = CodyHashtagEntity.builder()
                     .codyId(ce.getCodyId())
+                    .registrationDate(LocalDateTime.now())
                     .tagName(tagTmp).build();
             chr.save(CHtmp);
         }
@@ -148,8 +149,10 @@ public class CodyServiceImpl implements CodyService {
         while (st.hasMoreTokens()) {
             String tagTmp = st.nextToken();
             hs.findOrCreateHashtag(tagTmp);
+            System.out.println(LocalDateTime.now());
             CodyHashtagEntity CHtmp = CodyHashtagEntity.builder()
                     .codyId(ans.getCodyId())
+                    .registrationDate(LocalDateTime.now())
                     .tagName(tagTmp).build();
             chr.save(CHtmp);
         }
@@ -203,6 +206,7 @@ public class CodyServiceImpl implements CodyService {
         String image_name = uuid.toString() + "_" + originImageName;
 
         String savePath = "C:\\SSAFY\\download";
+//        String savePath = /home/ubuntu/backend/download;
 
         String imagePath = savePath + "\\" + image_name;
         try {

@@ -16,7 +16,7 @@ module.exports = {
   devServer: {
     historyApiFallback: true,
   },
-	resolve: {
+  resolve: {
     extensions: ['.js', '.jsx'],
   }
 };

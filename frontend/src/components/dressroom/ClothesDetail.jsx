@@ -63,19 +63,22 @@ export default function ClothesDetail({ selectedClothes, deleteHandler, allSeaso
 }
 
 const liStyle = ({ isMatched }) => css`
-background-color: #e2e2e2;
-width: 3.8rem;
-height: 2rem;
-text-align: center;
-  ${isMatched &&
-  `
-    background-color: #00acee;
-  `}
+  background-color: #e2e2e2;
+  width: 3.8rem;
+  height: 2rem;
+  text-align: center;
+    ${isMatched &&
+    `
+      background-color: #00acee;
+    `}
 `;
 
 const detailContainer = css`
+  grid-column: 3 / 4;
+  grid-row: 1 / 3;
   background-color: grey;
-  width: 30%;
+  width: 100%;
+  margin: 0 3rem 1rem 3rem;
   font-size: 18px;
   position: relative;
 `;
