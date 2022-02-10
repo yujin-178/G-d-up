@@ -11,14 +11,13 @@ import axios from 'axios';
 export default function ClothesItemListContainer() {
   const dispatch = useDispatch();
 
-  function loadClothes(username) {
-    axios({
+  async function loadClothes(username) {
+    const { data: { data } } = await axios({
       method: 'get',
       url: `http://i6b108.p.ssafy.io:8000/clothing/list/${username}`,
-    })
-      .then(function (response) {
-        console.log(response.data.data);
-      });
+    });
+
+    console.log(data);
   }
 
   useEffect(() => {
