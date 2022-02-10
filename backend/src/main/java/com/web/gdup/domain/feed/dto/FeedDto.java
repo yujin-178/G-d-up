@@ -22,6 +22,7 @@ public class FeedDto {
     private int feedId;
 
     private String content;
+
     @Column(updatable = false, name = "registrationdate")
     private LocalDateTime registrationDate;
 

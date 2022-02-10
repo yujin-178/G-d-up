@@ -2,6 +2,7 @@ package com.web.gdup.domain.feed.controller;
 
 import com.web.gdup.domain.feed.dto.FeedDto;
 import com.web.gdup.domain.feed.service.FeedService;
+import com.web.gdup.domain.like.service.LikeService;
 import com.web.gdup.domain.model.BasicResponse;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class FeedController {
 
     @Autowired
     private FeedService feedService;
+
+    @Autowired
+    private LikeService likeService;
 
     @PostMapping("/write")
     @ApiOperation(value = "Feed 작성하기 " , notes = "새로운 피드 글을 작성한다. ")
@@ -115,6 +119,26 @@ public class FeedController {
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }  else {
             response = new ResponseEntity<>(null, HttpStatus.OK);
+        }
+        return response;
+    }
+
+    @GetMapping ("like/push")
+    @ApiOperation(value = "피드 좋아요 누르기",
+            notes = "좋아요 누를 피드 번호와 현재 로그인 된 유저 이름을 파라미터로 받는다. ")
+    public Object pushLike(@RequestParam int feedId, @RequestParam String userName){
+        ResponseEntity response = null;
+
+        final BasicResponse result = new BasicResponse();
+        result.status = true;
+        result.message = "success";
+
+        if(likeService.pushLike(feedId, userName)){
+            result.data = "push";
+            response = new ResponseEntity<>(result, HttpStatus.OK);
+        }  else {
+            result.data = "unpush";
+            response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         return response;
     }
