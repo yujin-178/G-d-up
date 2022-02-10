@@ -2,85 +2,106 @@ import React from 'react';
 import { css, jsx, Global } from '@emotion/react';
 import Modal from 'react-modal';
 
+import LaundryModal from '/src/dressroom/closet/LaundryModal';
+import { range } from 'lodash';
+
 if (process.env.NODE_ENV !== 'test') {
-  Modal.setAppElement('#app');
+	Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ onImgChange, preview, imgInput, modalToggle, isModalOpen }) {
-  return (
-    <div>
-      <Global
-        styles={modalClass}
-      />
-      <Modal
-        isOpen={isModalOpen}
-        onRequestClose={() => modalToggle(false)}
-        closeTimeoutMS={500}
-      >
-        <div css={Container}>
-          <button
-            css={CloseBtn}
-            onClick={() => modalToggle(false)}>
+export default function AddClothes({ onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry, laundryOpen }) {
+	return (
+		<div>
+			<Global
+				styles={modalClass}
+			/>
+			<Modal
+				isOpen={isModalOpen}
+				onRequestClose={() => modalToggle(false)}
+				closeTimeoutMS={500}
+				onAfterOpen={() => { document.body.style.overflow = 'hidden' }}
+				onAfterClose={() => document.body.removeAttribute('style')}
+			>
+				<div css={Container}>
+					<button
+						css={CloseBtn}
+						onClick={() => modalToggle(false)}>
 						X
-          </button>
-          <div css={imgContainer}>
-            <img
-              src={preview}
-              css={previewImg}
-            />
-          </div>
+					</button>
+					<div css={imgContainer}>
+						<img
+							src={preview}
+							css={previewImg}
+						/>
+					</div>
 
-          <div css={btnContainer}>
-            <input
-              css={inputTag}
-              ref={refParam => imgInput = refParam}
-              type="file"
-              accept='image/*'
-              name="file"
-              onChange={onImgChange}
-            />
-            <button
-              css={inputBtn}
-              onClick={() => imgInput.click()}
-            >
+					<div css={btnContainer}>
+						<input
+							css={inputTag}
+							ref={refParam => imgInput = refParam}
+							type="file"
+							accept='image/*'
+							name="file"
+							onChange={onImgChange}
+						/>
+						<button
+							css={inputBtn}
+							onClick={() => imgInput.click()}
+						>
 							업로드
-            </button>
-          </div>
-          <div css={detailContainer}>
-            <h3>옷 정보</h3>
-            <div css={detail}>
-              <p>카테고리 :</p>
-              <p>색상 :</p>
-              <p>소재 :</p>
-              <p>패턴 : </p>
-            </div>
-            <div>
-              <div>
-                <p>계절</p>
-              </div>
-              <p>세탁</p>
-              <p>태그</p>
-            </div>
-            <div css={submitBtnContainer}>
-              <button
-                css={saveBtn}
-                onClick={() => modalToggle(false)}
-              >
+						</button>
+					</div>
+					<div css={detailContainer}>
+						<h3>옷 정보</h3>
+						<div css={detail}>
+							<p>카테고리 :</p>
+							<p>색상 :</p>
+							<p>소재 :</p>
+							<p>패턴 : </p>
+						</div>
+						<div>
+							<div>
+								<p>계절</p>
+							</div>
+							<div css={laundryContainer}>
+								세탁:
+								{range(1, 6).map((i) => (
+									<button css={css`height: 60px; cursor:pointer;`} onClick={() => handleLaundry(true)} key={i}>
+									</button>
+								))}
+								<LaundryModal
+									laundryOpen={laundryOpen}
+									handlelaundry={handleLaundry}
+								/>
+							</div>
+							<p>태그</p>
+						</div>
+						<div css={submitBtnContainer}>
+							<button
+								css={saveBtn}
+								onClick={() => modalToggle(false)}
+							>
 								저장
-              </button>
-              <button
-                css={cancelBtn}
-                onClick={() => modalToggle(false)}
-              >
+							</button>
+							<button
+								css={cancelBtn}
+								onClick={() => modalToggle(false)}
+							>
 								취소
-              </button>
-            </div>
-          </div>
-        </div>
-      </Modal>
-    </div>
-  );
+							</button>
+						</div>
+					</div>
+				</div>
+			</Modal>
+		</div>
+	);
 }
+
+const laundryContainer = css`
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-gap : 10px;
+`
 
 const submitBtnContainer = css`
 	display:grid;F
@@ -143,7 +164,6 @@ const imgContainer = css`
 	border: 1px solid black;
 	width: 400px;
 	height: 300px;        
-
 `;
 
 const previewImg = css`
@@ -266,7 +286,7 @@ const modalClass = css`
 }
 
 .ReactModal__Content--after-open {
-	width: 55%;
+	width: 80%;
 	height: 80%;
 	grid-column:4;
 	background-color: #f2f2f2;
