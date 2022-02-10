@@ -1,5 +1,6 @@
 package com.web.gdup.domain.cody.repository;
 
+import com.web.gdup.domain.cody.entity.CodyEntity;
 import com.web.gdup.domain.cody.entity.CodyHashPK;
 import com.web.gdup.domain.cody.entity.CodyHashtagEntity;
 import com.web.gdup.domain.wordcloud.dto.wordDto;
@@ -17,4 +18,7 @@ public interface CodyHashtagRepository extends JpaRepository<CodyHashtagEntity, 
             "group by tagName"
             , nativeQuery = true)
     List<Object[]> getlist();
+
+
+    List<CodyHashtagEntity> findAllByTagName(String tagName);
 }

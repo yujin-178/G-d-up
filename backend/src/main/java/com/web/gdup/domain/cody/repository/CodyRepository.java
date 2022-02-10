@@ -7,7 +7,8 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 public interface CodyRepository extends JpaRepository<CodyEntity, Integer> {
-    List<CodyEntity> findAllByUserName(String id);
+    List<CodyEntity> findAllByUserName(String userName);
+
     @Transactional
     int deleteByCodyId(int id);
 }
