@@ -14,16 +14,13 @@ import com.web.gdup.domain.hashtag.service.HashtagService;
 import com.web.gdup.domain.image.dto.ImageDto;
 import com.web.gdup.domain.image.repository.ImageRepository;
 import com.web.gdup.domain.image.service.ImageService;
-import com.web.gdup.domain.image.service.ImageServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Clock;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.UUID;
