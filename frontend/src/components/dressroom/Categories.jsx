@@ -18,11 +18,12 @@ export default function Categories({ categories, selectedCategory, handleClick }
 }
 
 const ulStyle = css`
+  grid-column: 1 / 3;
   display: flex;
   align-items: center;
   background-color: #fff;
   height: 4rem;
-  width: 40%;
+  width: 100%;
   min-width: 600px;
   border-radius: 10px;
   padding: 10px;
