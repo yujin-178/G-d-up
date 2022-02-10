@@ -2,7 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   'isModalOpen' : false,
-  'laundryOpen' : false,
 };
 
 export const modalSlice = createSlice({
@@ -16,19 +15,11 @@ export const modalSlice = createSlice({
         isModalOpen
       };
     },
-    changelaundryOpen(state, action) {
-      const laundryOpen = action.payload;
-      return {
-        ...state,
-        laundryOpen
-      };
-    },
   },
 });
 
 export const {
-  changeisModalOpen,
-  changelaundryOpen,
+  changeisModalOpen
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

@@ -17,6 +17,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = {"http://i6b108.p.ssafy.io:3000", "http://localhost:8080"})
 public class UserController {
 
     @Autowired
