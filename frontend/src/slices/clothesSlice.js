@@ -23,7 +23,7 @@ export const deleteClothesById = createAsyncThunk(
 );
 
 export const setClothes = createAsyncThunk(
-  'setClothes',
+  'clothes/setClothes',
   async (userName, thunkAPI) => {
     const clothes = await loadClothesByUserName(userName);
     return clothes;
