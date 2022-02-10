@@ -11,6 +11,11 @@ export default function DressRoomContainer() {
         <h2 css={Title}>드레스룸</h2>
         <div css={FlexContainer}>
           <div css={ClosetContainer}>
+            <Link to='/cody'>
+              <button css={Button}>
+                코디 목록으로
+              </button>
+            </Link>
             <Link to='/closet'>
               <button css={Button}>
                 옷장 가기
