@@ -7,7 +7,7 @@ import { css } from "@emotion/react";
 export default function ClothesItemList({ clothes, onMouseOverHandler, OnMouseLeaveHandler }) {
   const numbers = [];
   for (let i = 0; i < 20; i++) {
-    numbers.push(undefined);
+    numbers.push(null);
   }
 
   return (

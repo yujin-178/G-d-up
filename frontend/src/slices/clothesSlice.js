@@ -3,7 +3,7 @@ import { clothesData } from '../../fixtures/clothesList';
 import { loadClothesByUserName } from '../services/api';
 
 const initialState = {
-  clothes: clothesData,
+  clothes: [],
   selectedClothes: clothesData[0],
   loading: false,
   error: null,

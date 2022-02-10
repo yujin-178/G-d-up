@@ -9,13 +9,14 @@ export default function ClothesItem(props) {
     OnMouseLeaveHandler
   } = props;
 
+  console.log(item);
   return (
     <div css={ClothesItemBox}>
       {item && (
         <p
-          onMouseOver={() => onMouseOverHandler(item)}
+          // onMouseOver={() => onMouseOverHandler(item)}
           onMouseLeave={OnMouseLeaveHandler}
-        >{item.image}</p>
+        >{item.clothing.imageModel.imagePath}</p>
       )}
     </div>
   );
