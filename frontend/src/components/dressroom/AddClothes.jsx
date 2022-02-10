@@ -70,7 +70,7 @@ export default function AddClothes({ selectedLaundry, onImgChange, preview, imgI
 								<div css={AddBtnContainer}>
 									<button css={AddBtn}
 										onClick={() => handleLaundry(true)}>
-										추가 +
+										+
 									</button>
 								</div>
 
@@ -107,9 +107,13 @@ const AddBtnContainer = css`
 `
 
 const AddBtn = css`
-	height: 60px; 
-	width:50px; 
-	cursor:pointer;
+	width: 30px;
+	height: 25px;
+	background: #ecc194;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
 `
 
 const laundryContainer = css`
@@ -301,7 +305,7 @@ const modalClass = css`
 }
 
 .ReactModal__Content--after-open {
-	width: 80%;
+	width: 50%;
 	height: 80%;
 	grid-column:4;
 	background-color: #f2f2f2;
