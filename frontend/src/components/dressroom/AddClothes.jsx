@@ -1,15 +1,14 @@
 import React from 'react';
-import { css, jsx, Global } from '@emotion/react';
+import { css, Global } from '@emotion/react';
 import Modal from 'react-modal';
-
-import LaundryModal from './LaundryModal';
 import { range } from 'lodash';
+import LaundryModalContainer from '../../containers/dressroom/LaundryModalContainer';
 
 if (process.env.NODE_ENV !== 'test') {
 	Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry, laundryOpen }) {
+export default function AddClothes({ onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
 	return (
 		<div>
 			<Global
@@ -69,9 +68,7 @@ export default function AddClothes({ onImgChange, preview, imgInput, modalToggle
 									<button css={css`height: 60px; cursor:pointer;`} onClick={() => handleLaundry(true)} key={i}>
 									</button>
 								))}
-								<LaundryModal
-									laundryOpen={laundryOpen}
-									handlelaundry={handleLaundry}
+								<LaundryModalContainer
 								/>
 							</div>
 							<p>태그</p>
