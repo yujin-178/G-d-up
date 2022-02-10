@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { fireEvent, render } from "@testing-library/react";
 import { MemoryRouter } from 'react-router-dom';
 
-import LoginContainer from './LoginContainer.jsx';
+import LoginContainer from './LoginContainer';
 
 jest.mock('react-redux');
 

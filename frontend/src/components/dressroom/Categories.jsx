@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import Category from '../category/Category.jsx';
+import Category from './Category.jsx';
 
 export default function Categories({ categories, selectedCategory, handleClick }) {
   return (

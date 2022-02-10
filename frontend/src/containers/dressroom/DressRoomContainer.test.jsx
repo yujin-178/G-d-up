@@ -13,7 +13,7 @@ describe('DressRoomContainer', () => {
       <MemoryRouter>
         <DressRoomContainer />
       </MemoryRouter>
-    ))
+    ));
 
     expect(getByText(/드레스룸/)).not.toBeNull();
   });
