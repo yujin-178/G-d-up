@@ -25,6 +25,12 @@ export const clothesSlice = createSlice({
   name: 'clothes',
   initialState,
   reducers: {
+    setClothes(state, { clothes }) {
+      return {
+        ...state,
+        clothes,
+      };
+    },
     selectClothes(state, action) {
       return {
         ...state,
@@ -59,6 +65,7 @@ export const clothesSlice = createSlice({
 });
 
 export const {
+  setClothes,
   selectClothes,
 } = clothesSlice.actions;
 

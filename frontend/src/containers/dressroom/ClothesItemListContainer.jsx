@@ -3,12 +3,18 @@ import React from 'react';
 import ClothesItemList from '../../components/dressroom/ClothesItemList';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { selectClothes } from '../../slices/clothesSlice';
+import { setClothes, selectClothes } from '../../slices/clothesSlice';
 import { debounce } from "lodash";
+import { useEffect } from 'react';
 
 export default function ClothesItemListContainer() {
-  const { clothes, selectedClothes } = useSelector(state => state.clothesSlice);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setClothes({}));
+  });
+
+  const { clothes, selectedClothes } = useSelector(state => state.clothesSlice);
 
   const onMouseOverHandler = debounce(clothes => {
     if (selectedClothes.id !== clothes.id) {

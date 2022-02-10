@@ -11,6 +11,14 @@ import { clothesData } from '../../../fixtures/clothesList';
 
 jest.mock('react-redux');
 
+const renderClothesItemListContainer = () => {
+  render((
+    <MemoryRouter>
+      <ClothesItemListContainer />
+    </MemoryRouter>
+  ));
+};
+
 describe('ClothesItemListContainer', () => {
   useSelector.mockImplementation((selector) => selector({
     clothesSlice: {
@@ -22,6 +30,12 @@ describe('ClothesItemListContainer', () => {
   }));
   
   it('renders ClothesItemListContainer', () => {
+    const { getAllByText } = renderClothesItemListContainer();
+
+    expect(getAllByText(/image/)).not.toBeNull();
+  });
+
+  it('loads ClothesItemList', () => {
     const { getAllByText } = render((
       <MemoryRouter>
         <ClothesItemListContainer />

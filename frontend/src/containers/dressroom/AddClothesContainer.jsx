@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   changeisModalOpen,
-	changelaundryOpen,
+  changelaundryOpen,
 } from '../../slices/modalSlice';
 
 export default function AddClothesContainer() {
@@ -40,9 +40,9 @@ export default function AddClothesContainer() {
     dispatch(changeisModalOpen(value));
   }
 
-	function handleLaundry(value) {
-		dispatch(changelaundryOpen(value));
-	}
+  function handleLaundry(value) {
+    dispatch(changelaundryOpen(value));
+  }
 
   return (
     <div>
@@ -52,8 +52,8 @@ export default function AddClothesContainer() {
         imgInput={imgInput}
         modalToggle={handleModal}
         isModalOpen={isModalOpen}
-				laundryOpen={laundryOpen}
-				handleLaundry={handleLaundry}
+        laundryOpen={laundryOpen}
+        handleLaundry={handleLaundry}
       />
     </div>
   );
