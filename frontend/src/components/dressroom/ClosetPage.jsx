@@ -11,28 +11,32 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
   console.log(filteredClothes);
 
   return (
-    <div css={GridWrapper}>
-      <FilterContainer />
-      <div>
-        <ClothesItemListContainer />
-        <button
-          onClick={onClickModal}
-        >
-          옷 추가
-        </button>
+    <div>
+      <div css={GridWrapper}>
+        <FilterContainer />
+        <div>
+          <ClothesItemListContainer />
+          <button
+            onClick={onClickModal}
+          >
+            옷 추가
+          </button>
+        </div>
+        <ClothesDetailContainer />
+        <AddClothesContainer />
+        <Link to='/dressroom'>
+          <button>
+            뒤로
+          </button>
+        </Link>
       </div>
-      <ClothesDetailContainer />
-      <AddClothesContainer />
-      <Link to='/dressroom'>
-        <button>
-          뒤로
-        </button>
-      </Link>
     </div>
   );
 }
 
 const GridWrapper = css`
+  width: 90rem;
+  margin: 10rem auto;
 	display: grid;
   grid-template-columns: 17rem 35rem 35rem;
   grid-row-gap: 10px;

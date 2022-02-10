@@ -75,11 +75,12 @@ const liStyle = ({ isMatched }) => css`
 
 const detailContainer = css`
   grid-column: 3 / 4;
-  grid-row: 1 / 4;
+  grid-row: 1 / 3;
   background-color: grey;
   width: 100%;
-  margin: 1rem 3rem 1rem 3rem;
+  margin: 0 3rem 1rem 3rem;
   font-size: 18px;
+  position: relative;
 `;
 
 const clothesImage = css`

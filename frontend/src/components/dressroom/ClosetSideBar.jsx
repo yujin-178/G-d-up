@@ -88,7 +88,7 @@ export default function ClosetSidebar(props) {
 
 const sidebarStyle = css`
   grid-column: 1 / 2;
-  grid-row: 2 / 4;
+  grid-row: 2 / 3;
   position: relative;
   width: 250px;
   height: 100%;
