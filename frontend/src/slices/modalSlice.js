@@ -28,7 +28,7 @@ export const modalSlice = createSlice({
 
 export const {
   changeisModalOpen,
-	changelaundryOpen,
+  changelaundryOpen,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;
