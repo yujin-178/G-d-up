@@ -4,6 +4,7 @@ import com.web.gdup.domain.cody.entity.CodyEntity;
 import com.web.gdup.domain.comment.Entity.CommentEntity;
 import com.web.gdup.domain.comment.service.CommentService;
 import com.web.gdup.domain.feed.dto.FeedDto;
+import com.web.gdup.domain.feed.dto.RecommandDto;
 import com.web.gdup.domain.feed.service.FeedService;
 import com.web.gdup.domain.like.service.LikeService;
 import com.web.gdup.domain.model.BasicResponse;
@@ -174,14 +175,14 @@ public class FeedController {
         return new ResponseEntity<>(ws.getList(), HttpStatus.OK);
     }
 
-//    @GetMapping("/tag/search/{tagName}")
-//    @ApiOperation(
-//            value = "tag word 리스트 가져오기",
-//            notes = "최신 태그 리스트를 가져온다."
-//    )
-//    public ResponseEntity<List<CodyEntity>> getTagCodyList() {
-//
-//        return new ResponseEntity<>(, HttpStatus.OK);
-//    }
+    @GetMapping("/tag/search/{tagName}")
+    @ApiOperation(
+            value = "tag word 리스트 가져오기",
+            notes = "최신 태그 리스트를 가져온다."
+    )
+    public ResponseEntity<List<RecommandDto>> getTagCodyList(@PathVariable String tagName) {
+
+        return new ResponseEntity<>((List<RecommandDto>) feedService.recommendService(tagName), HttpStatus.OK);
+    }
 
 }
