@@ -20,6 +20,6 @@ describe('ClothesItemList', () => {
       <ClothesItemList 
         clothes={clothes}
       />
-    )
+    );
   });
 });

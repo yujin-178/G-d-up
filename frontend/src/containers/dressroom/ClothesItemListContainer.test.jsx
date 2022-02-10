@@ -22,13 +22,12 @@ describe('ClothesItemListContainer', () => {
   }));
   
   it('renders ClothesItemListContainer', () => {
-    const { getByText, getAllByText } = render((
+    const { getAllByText } = render((
       <MemoryRouter>
         <ClothesItemListContainer />
       </MemoryRouter>
     ));
 
-    expect(getByText(/목록/)).not.toBeNull();
     expect(getAllByText(/image/)).not.toBeNull();
   });
 });

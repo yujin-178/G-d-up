@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { css, jsx } from "@emotion/react";
+import { css } from "@emotion/react";
 
 export default function DressRoomContainer() {
   return (

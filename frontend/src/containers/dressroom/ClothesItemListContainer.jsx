@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { css } from "@emotion/react";
-
 import ClothesItemList from '../../components/dressroom/ClothesItemList';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -24,23 +22,11 @@ export default function ClothesItemListContainer() {
 
   return (
     <div>
-      <h5>목록</h5>
-      <div css={ItemContainer}>
-        <ClothesItemList
-          clothes={clothes}
-          onMouseOverHandler={onMouseOverHandler}
-          OnMouseLeaveHandler={OnMouseLeaveHandler}
-        />
-      </div>
+      <ClothesItemList
+        clothes={clothes}
+        onMouseOverHandler={onMouseOverHandler}
+        OnMouseLeaveHandler={OnMouseLeaveHandler}
+      />
     </div>
   );
 }
-
-const ItemContainer = css`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  padding: 0.5rem;
-  background-color: #BFAEA4;
-  width: 25rem;
-  height: 25em;
-`;
