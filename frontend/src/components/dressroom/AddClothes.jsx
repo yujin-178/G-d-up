@@ -2,7 +2,7 @@ import React from 'react';
 import { css, jsx, Global } from '@emotion/react';
 import Modal from 'react-modal';
 
-import LaundryModal from '/src/dressroom/closet/LaundryModal';
+import LaundryModal from './LaundryModal';
 import { range } from 'lodash';
 
 if (process.env.NODE_ENV !== 'test') {

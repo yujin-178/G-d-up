@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   changeisModalOpen,
 	changelaundryOpen,
-} from '../../modalSlice';
+} from '../../slices/modalSlice';
 
 export default function AddClothesContainer() {
   const dispatch = useDispatch();
