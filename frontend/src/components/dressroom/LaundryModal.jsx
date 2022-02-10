@@ -3,79 +3,54 @@ import { css } from '@emotion/react';
 import Modal from 'react-modal';
 import { range } from 'lodash';
 
+import LaundryItem from './LaundryItem';
+
 if (process.env.NODE_ENV !== 'test') {
 	Modal.setAppElement('#app')
 }
 
-export default function LaundryModal({ laundryOpen, handlelaundry }) {
+export default function LaundryModal({ saveLaundry, laundryOpen, handleLaundry, iconSelect, selectedIcon, laundryLabel }) {
 	return (
 		<div>
 			<Modal
 				isOpen={laundryOpen}
-				onRequestClose={() => handlelaundry(false)}
+				onRequestClose={() => handleLaundry(false)}
 				closeTimeoutMS={500}
 			>
 				<div css={Container}>
 					<button
 						css={CloseBtn}
-						onClick={() => handlelaundry(false)}>
+						onClick={() => handleLaundry(false)}>
 						X
 					</button>
 					<div css={detailContainer}>
-
-						<h3>물세탁</h3>
-						<div css={detail}>
-							{range(1, 8).map((i) => (
-								<img src={`laundry/a_${i}.png`} alt={`a_${i}`} css={imgStyle} />
-							))}
-						</div>
-
-						<h3>표백</h3>
-						<div css={detail}>
-							{range(1, 7).map((i) => (
-								<img src={`laundry/b_${i}.png`} alt={`b_${i}`} css={imgStyle} />
-							))}
-						</div>
-
-						<h3>드라이</h3>
-						<div css={detail}>
-							{range(1, 5).map((i) => (
-								<img src={`laundry/c_${i}.png`} alt={`c_${i}`} css={imgStyle} />
-							))}
-						</div>
-
-						<h3>건조</h3>
-						<div css={detail}>
-							{range(1, 9).map((i) => (
-								<img src={`laundry/d_${i}.png`} alt={`d_${i}`} css={imgStyle} />
-							))}
-						</div>
-
-						<h3>다림질</h3>
-						<div css={detail}>
-							{range(1, 8).map((i) => (
-								<img src={`laundry/e_${i}.png`} alt={`e_${i}`} css={imgStyle} />
-							))}
-						</div>
-
+						{laundryLabel.map((laundry) => (
+							<LaundryItem
+								key={laundryLabel.indexOf(laundry)}
+								kind={laundry['kind']}
+								range={laundry['range']}
+								iconSelect={iconSelect}
+								selectedIcon={selectedIcon}
+							/>
+						))}
 						<div css={submitBtnContainer}>
 							<button
 								css={saveBtn}
-								onClick={() => handlelaundry(false)}
+								onClick={() => saveLaundry()}
 							>
 								저장
 							</button>
 							<button
 								css={cancelBtn}
-								onClick={() => handlelaundry(false)}
+								onClick={() => handleLaundry(false)}
 							>
 								취소
 							</button>
 						</div>
 					</div>
 				</div>
-			</Modal>
-		</div>
+			</Modal >
+		</div >
 	)
 }
 
@@ -88,16 +63,6 @@ const Container = css`
 const detailContainer = css`
 	grid-row: 1;
 	grid-column: 1;
-`
-
-const detail = css`
-	display: grid;
-	grid-template-columns: repeat(7,1fr);
-	grid-gap : 10px;
-`
-
-const imgStyle = css`
-	border: 1px solid;
 `
 
 const submitBtnContainer = css`

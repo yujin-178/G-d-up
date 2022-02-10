@@ -5,13 +5,19 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import {
   changeisModalOpen,
-  changelaundryOpen,
 } from '../../slices/modalSlice';
+
+import {
+  changelaundryOpen,
+} from '../../slices/laundrySlice';
 
 export default function AddClothesContainer() {
   const dispatch = useDispatch();
   const modal = useSelector(state => state.modalSlice);
-  const { isModalOpen, laundryOpen } = modal;
+  const { isModalOpen } = modal;
+
+  const laundry = useSelector(state => state.laundrySlice);
+  const { selectedIcon } = laundry;
 
   const [fileUrl, setFileUrl] = useState(null);
   const imgInput = useRef(null);
@@ -52,8 +58,8 @@ export default function AddClothesContainer() {
         imgInput={imgInput}
         modalToggle={handleModal}
         isModalOpen={isModalOpen}
-        laundryOpen={laundryOpen}
         handleLaundry={handleLaundry}
+        selectedLaundry={selectedIcon}
       />
     </div>
   );
