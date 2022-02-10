@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { clothesData } from '../../fixtures/clothesList';
+import { loadClothesByUserName } from '../services/api';
 
 const initialState = {
   clothes: clothesData,
@@ -21,16 +22,18 @@ export const deleteClothesById = createAsyncThunk(
   }
 );
 
+export const setClothes = createAsyncThunk(
+  'setClothes',
+  async (userName, thunkAPI) => {
+    const clothes = await loadClothesByUserName(userName);
+    return clothes;
+  }
+);
+
 export const clothesSlice = createSlice({
   name: 'clothes',
   initialState,
   reducers: {
-    setClothes(state, { clothes }) {
-      return {
-        ...state,
-        clothes,
-      };
-    },
     selectClothes(state, action) {
       return {
         ...state,
@@ -39,6 +42,25 @@ export const clothesSlice = createSlice({
     },
   },
   extraReducers: {
+    [setClothes.pending]: (state, action) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    [setClothes.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        clothes: action.payload,
+      };
+    },
+    [setClothes.rejected]: (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        error: '오류가 발생했습니다.'
+      };
+    },
     [deleteClothesById.pending]: (state, action) => {
       return {
         ...state,
@@ -65,7 +87,6 @@ export const clothesSlice = createSlice({
 });
 
 export const {
-  setClothes,
   selectClothes,
 } = clothesSlice.actions;
 

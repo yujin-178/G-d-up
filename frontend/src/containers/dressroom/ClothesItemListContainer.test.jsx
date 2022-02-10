@@ -8,6 +8,7 @@ import ClothesItemListContainer from './ClothesItemListContainer.jsx';
 import { MemoryRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { clothesData } from '../../../fixtures/clothesList';
+import { useEffect } from 'react';
 
 jest.mock('react-redux');
 
@@ -35,13 +36,12 @@ describe('ClothesItemListContainer', () => {
     expect(getAllByText(/image/)).not.toBeNull();
   });
 
-  it('loads ClothesItemList', () => {
-    const { getAllByText } = render((
-      <MemoryRouter>
-        <ClothesItemListContainer />
-      </MemoryRouter>
-    ));
+  it('loads initial ClothesItemList', () => {
+    const loadClothes = jest.fn();
+    useEffect.mockImplementation(() => loadClothes);
 
-    expect(getAllByText(/image/)).not.toBeNull();
+    renderClothesItemListContainer();
+
+    expect(loadClothes).toBeCalled();
   });
 });

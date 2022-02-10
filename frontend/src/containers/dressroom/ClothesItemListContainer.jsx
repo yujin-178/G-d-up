@@ -21,7 +21,7 @@ export default function ClothesItemListContainer() {
   }
 
   useEffect(() => {
-    loadClothes('admin');
+    setClothes();
   });
 
   const { clothes, selectedClothes } = useSelector(state => state.clothesSlice);
