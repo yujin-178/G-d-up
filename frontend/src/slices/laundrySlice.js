@@ -11,12 +11,12 @@ export const laundrySlice = createSlice({
 	reducers: {
 		changeSelectedIcon(state, action) {
 			const { selectedIcon } = state;
-			const num = action.payload
+			const num = action.payload;
 			if (selectedIcon.includes(num)) {
-				selectedIcon.splice(selectedIcon.indexOf(num),1)
+				selectedIcon.splice(selectedIcon.indexOf(num), 1);
 			}
 			else {
-				selectedIcon.push(num)
+				selectedIcon.push(num);
 			}
 		},
 		changelaundryOpen(state, action) {

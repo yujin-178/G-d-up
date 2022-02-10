@@ -24,11 +24,11 @@ export default function LaundryModal({ saveLaundry, laundryOpen, handleLaundry, 
 						X
 					</button>
 					<div css={detailContainer}>
-						{range(0, 5).map((i) => (
+						{laundryLabel.map((laundry) => (
 							<LaundryItem
-								key={i}
-								Label={laundryLabel[i][0]}
-								Nums={laundryLabel[i][1]}
+								key={laundryLabel.indexOf(laundry)}
+								kind={laundry['kind']}
+								range={laundry['range']}
 								iconSelect={iconSelect}
 								selectedIcon={selectedIcon}
 							/>

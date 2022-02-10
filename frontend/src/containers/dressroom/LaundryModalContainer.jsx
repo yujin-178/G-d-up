@@ -13,22 +13,25 @@ export default function laundryModalContainer() {
 	const laundry = useSelector(state => state.laundrySlice);
 	const { laundryOpen, selectedIcon } = laundry;
 
-	const laundryLabel = [
-		['물세탁', range(1, 8)], ['표백', range(8, 14)],
-		['다림질', range(14, 21)], ['드라이클리닝', range(21, 25)],
-		['건조', range(25, 33)]
-	]
+	const laundryLabel =
+		[
+			{ 'kind': '물세탁', 'range': range(1, 8) },
+			{ 'kind': '표백', 'range': range(8, 14) },
+			{ 'kind': '다림질', 'range': range(14, 21) },
+			{ 'kind': '드라이클리닝', 'range': range(21, 25) },
+			{ 'kind': '건조', 'range': range(25, 33) }
+		];
 
 	function handleLaundryOpen(value) {
 		dispatch(changelaundryOpen(value));
 	}
 
 	function handleSelectedIcon(num) {
-		dispatch(changeSelectedIcon(num))
+		dispatch(changeSelectedIcon(num));
 	}
 
 	function saveLaundry() {
-		dispatch(changelaundryOpen(false))
+		dispatch(changelaundryOpen(false));
 		// 백엔드 요청 보내기
 	}
 

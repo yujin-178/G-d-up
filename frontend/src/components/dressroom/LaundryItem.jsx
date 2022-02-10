@@ -1,12 +1,12 @@
 import React from 'react';
 import { css } from '@emotion/react';
 
-export default function LaundryItem({ Label, Nums, iconSelect, selectedIcon }) {
+export default function LaundryItem({ kind, range, iconSelect, selectedIcon }) {
 	return (
 		<div>
-			<h3>{Label}</h3>
+			<h3>{kind}</h3>
 			<div css={detail}>
-			{Nums.map((i) => {
+			{range.map((i) => {
 				const select = selectedIcon.includes(i);
 				return (
 					<img src={`laundry/${i}.png`} alt={i}
