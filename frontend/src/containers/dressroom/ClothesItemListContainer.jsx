@@ -24,7 +24,6 @@ export default function ClothesItemListContainer() {
 
   return (
     <div>
-      <h5>목록</h5>
       <div css={ItemContainer}>
         <ClothesItemList
           clothes={clothes}
@@ -37,6 +36,8 @@ export default function ClothesItemListContainer() {
 }
 
 const ItemContainer = css`
+  grid-column: 2 / 4;
+  grid-row: 2 / 4;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 0.5rem;

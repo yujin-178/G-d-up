@@ -18,6 +18,7 @@ export default function Categories({ categories, selectedCategory, handleClick }
 }
 
 const ulStyle = css`
+  grid-column: 1 / 3;
   display: flex;
   align-items: center;
   background-color: #fff;

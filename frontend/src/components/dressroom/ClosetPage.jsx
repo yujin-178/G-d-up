@@ -5,32 +5,36 @@ import FilterContainer from '../../containers/dressroom/FilterContainer.jsx';
 import AddClothesContainer from '../../containers/dressroom/AddClothesContainer.jsx';
 import ClothesDetailContainer from '../../containers/dressroom/ClothesDetailContainer.jsx';
 
-// import { css, jsx } from '@emotion/react';
+import { css } from '@emotion/react';
 
 export default function ClosetPage({ onClickModal, filteredClothes }) {
   console.log(filteredClothes);
 
   return (
-    <div>
-      <h5>옷장</h5>
+    <div css={GridWrapper}>
       <FilterContainer />
-      <ClothesItemListContainer />
+      <div>
+        <ClothesItemListContainer />
+        <button
+          onClick={onClickModal}
+        >
+          옷 추가
+        </button>
+      </div>
       <ClothesDetailContainer />
-      <button
-        onClick={onClickModal}
-      >
-				옷 추가
-      </button>
       <AddClothesContainer />
       <Link to='/dressroom'>
         <button>
-					뒤로
+          뒤로
         </button>
       </Link>
     </div>
   );
 }
 
-// const GridContainer = css`
-// 	display: grid;
-// `;
+const GridWrapper = css`
+	display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+`;
