@@ -4,7 +4,7 @@ import ClothesItem from './ClothesItem.jsx';
 
 export default function ClothesItemList({ clothes, onMouseOverHandler, OnMouseLeaveHandler }) {
   const numbers = [];
-  for (let i = 0; i < 16; i++) {
+  for (let i = 0; i < 20; i++) {
     numbers.push(undefined);
   }
 

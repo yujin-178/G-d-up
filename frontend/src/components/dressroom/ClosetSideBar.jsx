@@ -91,7 +91,7 @@ const sidebarStyle = css`
   grid-row: 2 / 4;
   position: relative;
   width: 250px;
-  height: 50%;
+  height: 100%;
   box-sizing: border-box;
   padding: 30px 20px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.l);

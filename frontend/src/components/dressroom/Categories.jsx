@@ -23,7 +23,7 @@ const ulStyle = css`
   align-items: center;
   background-color: #fff;
   height: 4rem;
-  width: 40%;
+  width: 100%;
   min-width: 600px;
   border-radius: 10px;
   padding: 10px;

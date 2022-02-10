@@ -77,9 +77,9 @@ const detailContainer = css`
   grid-column: 3 / 4;
   grid-row: 1 / 4;
   background-color: grey;
-  width: 30%;
+  width: 100%;
+  margin: 1rem 3rem 1rem 3rem;
   font-size: 18px;
-  position: relative;
 `;
 
 const clothesImage = css`

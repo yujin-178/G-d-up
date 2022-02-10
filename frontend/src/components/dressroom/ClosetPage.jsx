@@ -34,7 +34,8 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
 
 const GridWrapper = css`
 	display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
+  grid-template-columns: 17rem 35rem 35rem;
+  grid-row-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
+  grid-auto-columns: minmax(100px, auto);
 `;
