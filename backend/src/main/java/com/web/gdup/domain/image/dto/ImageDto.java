@@ -27,7 +27,7 @@ public class ImageDto {
     public ImageEntity toEntity() {
         ImageEntity build = ImageEntity.builder()
                 .imageId(imageId)
-                .imageName(newImageName)
+                .imageName(imageName)
                 .newImageName(newImageName)
                 .imagePath(imagePath)
                 .build();

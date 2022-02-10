@@ -257,9 +257,9 @@ public class ClothingServiceImpl implements ClothingService{
         String originImageName = file.getOriginalFilename();
         String image_name = uuid.toString()+"_"+originImageName;
 
-        String savePath = "/home/ubuntu/backend/download";
-
-        String imagePath = savePath + "/" + image_name;
+//        String savePath = "/home/ubuntu/backend/download";
+        String savePath = "C:\\SSAFY\\download";
+        String imagePath = savePath + "\\" + image_name;
         try {
             file.transferTo(new File(imagePath));
         } catch (IOException e) {
@@ -275,7 +275,8 @@ public class ClothingServiceImpl implements ClothingService{
     }
 
     private void download(String spec) {
-        String outputDir = "/home/ubuntu/backend/removeBg";
+//        String outputDir = "/home/ubuntu/backend/removeBg";
+        String outputDir = "C:\\SSAFY\\removeBg";
         InputStream is = null;
         FileOutputStream os = null;
         try {
