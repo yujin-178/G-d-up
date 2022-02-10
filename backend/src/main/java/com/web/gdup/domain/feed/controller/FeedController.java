@@ -1,15 +1,19 @@
 package com.web.gdup.domain.feed.controller;
 
+import com.web.gdup.domain.comment.Entity.CommentEntity;
+import com.web.gdup.domain.comment.service.CommentService;
 import com.web.gdup.domain.feed.dto.FeedDto;
 import com.web.gdup.domain.feed.service.FeedService;
 import com.web.gdup.domain.like.service.LikeService;
 import com.web.gdup.domain.model.BasicResponse;
+import com.web.gdup.domain.user.dto.UserDto;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +27,9 @@ public class FeedController {
 
     @Autowired
     private LikeService likeService;
+
+    @Autowired
+    private CommentService commentService;
 
     @PostMapping("/write")
     @ApiOperation(value = "Feed 작성하기 " , notes = "새로운 피드 글을 작성한다. ")
@@ -111,11 +118,21 @@ public class FeedController {
         ResponseEntity response = null;
 
         Optional<FeedDto> feed = feedService.getFeed(feedId);
+        int likeCnt = likeService.getLikeCnt(feedId);
+        List<String> users = likeService.getUsers(feedId);
+        List<CommentEntity> comments = commentService.getComments(feedId);
+
+        HashMap<String,Object> map = new HashMap<>();
+        map.put("feed", feed);
+        map.put("likeCnt", likeCnt);
+        map.put("users", users);
+        map.put("comments", comments);
+
         if(feed.isPresent()){
             final BasicResponse result = new BasicResponse();
             result.status = true;
             result.message = "success";
-            result.data = feed;
+            result.data = map;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }  else {
             response = new ResponseEntity<>(null, HttpStatus.OK);
@@ -123,7 +140,7 @@ public class FeedController {
         return response;
     }
 
-    @GetMapping ("like/push")
+    @GetMapping ("/like/push")
     @ApiOperation(value = "피드 좋아요 누르기",
             notes = "좋아요 누를 피드 번호와 현재 로그인 된 유저 이름을 파라미터로 받는다. ")
     public Object pushLike(@RequestParam int feedId, @RequestParam String userName){
@@ -142,4 +159,6 @@ public class FeedController {
         }
         return response;
     }
+
+
 }

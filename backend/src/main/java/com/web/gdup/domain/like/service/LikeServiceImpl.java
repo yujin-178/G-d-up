@@ -6,6 +6,7 @@ import com.web.gdup.domain.like.repository.LikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,5 +33,15 @@ public class LikeServiceImpl implements LikeService {
         likeRepository.save(likeEntity);
         return  true;
 
+    }
+
+    @Override
+    public int getLikeCnt(int feedId) {
+        return likeRepository.getLikeCnt(feedId);
+    }
+
+    @Override
+    public List<String> getUsers(int feedId) {
+        return likeRepository.findUsers(feedId);
     }
 }

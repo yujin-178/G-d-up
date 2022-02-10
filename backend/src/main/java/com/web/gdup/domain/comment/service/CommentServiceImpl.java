@@ -7,6 +7,7 @@ import com.web.gdup.domain.comment.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -52,6 +53,11 @@ public class CommentServiceImpl implements CommentService {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<CommentEntity> getComments(int feedId) {
+        return commentRepository.findByFeedId(feedId);
     }
 
     @Override
