@@ -169,8 +169,8 @@ public class TranslationEng {
         HashMap<String, String> material = new HashMap<>();
         material.put("corduroy","코듀로이");
         material.put("cotton","면");
-        material.put("denim","청");
-        material.put("fur","털");
+        material.put("denim","데님");
+        material.put("fur","퍼");
         material.put("knitwear","니트웨어");
         material.put("lace","레이스");
         material.put("leather","가죽");
@@ -179,12 +179,12 @@ public class TranslationEng {
         material.put("mesh/transparent","메쉬/투명");
         material.put("silk","실크");
         material.put("softshell","소프트쉘");
-        material.put("suede","스웨이드 가죽");
+        material.put("suede","스웨이드");
         material.put("synthetic","인조");
         material.put("textile","직물");
         material.put("tweed","트위드");
         material.put("velvet","벨벳");
-        material.put("wool","양모");
+        material.put("wool","울");
 
         HashMap<String, String> categories = new HashMap<>();
         categories.put("Clothing/Baby Clothes","아기 옷");

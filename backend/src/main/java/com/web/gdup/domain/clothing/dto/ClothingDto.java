@@ -35,6 +35,7 @@ public class ClothingDto {
     private String category;
     private String topcategory;
     private String fit;
+    private String eco;
 
     public ClothingEntity toEntity() {
         ClothingEntity build = ClothingEntity.builder()
@@ -60,6 +61,7 @@ public class ClothingDto {
                 .category(category)
                 .topcategory(topcategory)
                 .fit(fit)
+                .eco(eco)
                 .build();
         return build;
     }

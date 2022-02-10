@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @ToString
 @Builder
 @Getter
+@Setter
 public class ClothingHashtagDto implements Serializable {
     private String tagName;
     private int clothingId;
