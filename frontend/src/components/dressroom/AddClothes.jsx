@@ -101,7 +101,7 @@ export default function AddClothes({ resText, isResOpen, handleResponse, saveClo
             <div css={laundryContainer}>
               <p css={css`width:40px;`}>세탁:</p>
               {range(selectedLaundry.length).map((i) => (
-                <img src={process.env.PUBLIC_URL + `/laundry/${selectedLaundry[i]}.png`} alt={i} key={i}/>
+                <img src={`/laundry/${selectedLaundry[i]}.png`} alt={i} key={i}/>
               ))}
               <div css={AddBtnContainer}>
                 <button css={AddBtn}
