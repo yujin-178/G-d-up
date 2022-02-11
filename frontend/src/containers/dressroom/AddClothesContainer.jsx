@@ -100,6 +100,16 @@ export default function AddClothesContainer() {
       });
   }
 
+  function importAll(r) {
+    let images = {};
+    r.keys().map((item) => { 
+      images[(item.replace('./', '')).replace('.png','')] = r(item).default; 
+    });
+    return images;
+  }
+  const r = require.context('../../../public/laundry/', false, /\.(png|jpe?g|svg)$/);
+  const images = importAll(r);
+
   return (
     <div>
       <AddClothes
@@ -118,6 +128,7 @@ export default function AddClothesContainer() {
         handleResponse={handleResponse}
         isResOpen={isResOpen}
         resText={resText}
+        images={images}
       />
     </div>
   );

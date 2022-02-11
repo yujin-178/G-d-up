@@ -11,7 +11,7 @@ export default configureStore({
     filterSlice,
     clothesSlice,
     modalSlice,
-		laundrySlice,
+    laundrySlice,
   },
   middleware: [thunk, logger],
 });

@@ -6,7 +6,7 @@ import React from 'react';
 import { render } from "@testing-library/react";
 import ClothesDetailContainer from './ClothesDetailContainer';
 import { MemoryRouter } from 'react-router-dom';
-import { clothesData } from '../../../fixtures/clothesList';
+import { clothesData } from '../../fixtures/clothesList';
 import { useSelector } from 'react-redux';
 const mockStore= () => ({
   clothesSlice: {
