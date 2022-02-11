@@ -18,7 +18,7 @@ export default function CodyContainer() {
     dispatch(setClothes('jisoon'));
   }, []);
 
-  const onClickHandler = async(target) => {
+  const onClickHandler = async (target) => {
     const { clothingId } = target.clothing;
 
     if (codyItems.find(item => item.clothingId === clothingId)) {
@@ -29,12 +29,14 @@ export default function CodyContainer() {
     const { base64 } = response.data.data;
 
     const z_index = codyItems.length + 1;
-    const initalPosition = { x: 0, y: 0, z: z_index };
+    const initialPosition = { x: 0, y: 0, z: z_index, m: 1, };
+    const initialSize = { width: '160px', height: '160px' };
 
     setCodyItems(() => [...codyItems, {
       clothingId,
       image: base64,
-      position: initalPosition,
+      position: initialPosition,
+      size: initialSize
     }]);
   };
 
@@ -75,13 +77,30 @@ export default function CodyContainer() {
   const handleOnStop = (itemId, data) => {
     setCodyItems(codyItems.map(item => {
       if (item.clothingId === itemId) {
+        const { z, m } = item.position;
         return {
           ...item,
           position: {
             x: data.x,
             y: data.y,
-            z: item.position.z,
-            m: 1,
+            z,
+            m,
+          }
+        };
+      }
+
+      return item;
+    }));
+  };
+
+  const handleResizeStop = (itemId, ref) => {
+    setCodyItems(codyItems.map(item => {
+      if (item.clothingId === itemId) {
+        return {
+          ...item,
+          size: {
+            width: ref.style.width,
+            height: ref.style.height,
           }
         };
       }
@@ -109,6 +128,7 @@ export default function CodyContainer() {
         codyItems={codyItems}
         handleOnStart={handleOnStart}
         handleOnStop={handleOnStop}
+        handleResizeStop={handleResizeStop}
       />
     </>
   );

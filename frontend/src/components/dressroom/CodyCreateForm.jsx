@@ -5,7 +5,7 @@ import CodyItem from './CodyItem';
 import axios from 'axios';
 import { createFile } from '../../services/api';
 
-export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop }) {
+export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop, handleResizeStop }) {
   const canvasRef = useRef();
 
   const createCody = async (file) => {
@@ -65,6 +65,7 @@ export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop 
               item={item}
               handleOnStart={handleOnStart}
               handleOnStop={handleOnStop}
+              handleResizeStop={handleResizeStop}
             />
           );
         })}
@@ -110,9 +111,9 @@ const searchInputStyle = css`
 
 const canvas = css`
   min-width: 400px;
-  max-width: 400px;
-  min-height: 400px;
-  background-color: beige;
+  max-width: 500px;
+  min-height: 500px;
+  background-color: white;
   position: relative;
   border: 1px solid grey;
 `;
