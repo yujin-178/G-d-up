@@ -14,13 +14,13 @@ export default function laundryModalContainer() {
   const { laundryOpen, selectedIcon } = laundry;
 
   const laundryLabel =
-		[
+    [
       { 'kind': '물세탁', 'range': range(1, 8) },
       { 'kind': '표백', 'range': range(8, 14) },
       { 'kind': '다림질', 'range': range(14, 21) },
       { 'kind': '드라이클리닝', 'range': range(21, 25) },
-      { 'kind': '건조', 'range': range(25, 33) },
-		];
+      { 'kind': '건조', 'range': range(25, 33) }
+    ];
 
   function handleLaundryOpen(value) {
     dispatch(changelaundryOpen(value));
