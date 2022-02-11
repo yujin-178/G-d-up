@@ -8,34 +8,25 @@ export default function Item({ item, handleOnStart, handleOnStop, handleResizeSt
   const { width, height } = size;
 
   return (
-    <>
-      <Rnd
-        size={{ width, height }}
-        position={{ x, y }}
-        onDragStart={() => handleOnStart(item)}
-        onDragStop={(e, data) => handleOnStop(clothingId, data)}
-        onResizeStart={() => handleOnStart(item)}
-        onResizeStop={(e, direction, ref) => handleResizeStop(clothingId, ref)}
-        minWidth={20}
-        minHeight={20}
-        maxWidth={300}
-        maxHeight={300}
-        bounds="parent"
-        css={z_index({ z })}
-      >
-        <div css={itemInCanvas({ image, width, height })}></div>
-      </Rnd>
-    </>
+    <Rnd
+      size={{ width, height }}
+      position={{ x, y }}
+      onDragStart={() => handleOnStart(item)}
+      onDragStop={(e, data) => handleOnStop(clothingId, data)}
+      onResizeStart={() => handleOnStart(item)}
+      onResizeStop={(e, direction, ref, delta, position) => handleResizeStop(clothingId, ref, position)}
+      minWidth={20}
+      minHeight={20}
+      maxWidth={300}
+      maxHeight={300}
+      bounds="parent"
+      css={itemInCanvas({ image, width, height, z })}
+    >
+    </Rnd>
   );
 }
 
-const z_index = ({ z, width, height }) => css`
-  z-index: ${z};
-  width: ${width}px;
-  height: ${height}px;
-`;
-
-const itemInCanvas = ({ image, width, height }) => css`
+const itemInCanvas = ({ image, width, height, z }) => css`
   background-color: transparent;
   background-position: center center;
   position: absolute;
@@ -45,4 +36,5 @@ const itemInCanvas = ({ image, width, height }) => css`
   border: 1px solid grey;
   width: ${width};
   height: ${height};
+  z-index: ${z};
 `;

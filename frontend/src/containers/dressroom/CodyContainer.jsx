@@ -93,11 +93,15 @@ export default function CodyContainer() {
     }));
   };
 
-  const handleResizeStop = (itemId, ref) => {
+  const handleResizeStop = (itemId, ref, position) => {
     setCodyItems(codyItems.map(item => {
       if (item.clothingId === itemId) {
         return {
           ...item,
+          position: {
+            ...item.position,
+            ...position,
+          },
           size: {
             width: ref.style.width,
             height: ref.style.height,
