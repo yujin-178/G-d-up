@@ -2,6 +2,7 @@ package com.web.gdup.domain.cody.service;
 
 
 import com.web.gdup.domain.cody.dto.ClothingInCody;
+import com.web.gdup.domain.cody.dto.CodyAllList;
 import com.web.gdup.domain.cody.dto.CreateCody;
 import com.web.gdup.domain.cody.dto.UpdateCody;
 import com.web.gdup.domain.cody.entity.CodyClothingEntity;
@@ -21,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.UUID;
@@ -47,12 +49,21 @@ public class CodyServiceImpl implements CodyService {
 
     @Override
     public List<CodyEntity> getAllCodyList() {
+
         return cr.findAll();
     }
 
     @Override
-    public List<CodyEntity> getUserCodyList(String name) {
-        return cr.findAllByUserName(name);
+    public List<CodyAllList> getUserCodyList(String name) {
+
+        List<CodyEntity> tmp = cr.findAllByUserName(name);
+        List<CodyAllList> codyAllLists = new ArrayList<>();
+        for (CodyEntity a : tmp) {
+            codyAllLists.add(new CodyAllList(a, ir.getOne(a.getImageId())));
+        }
+
+        return codyAllLists;
+
     }
 
     @Override
@@ -205,7 +216,7 @@ public class CodyServiceImpl implements CodyService {
 
         String originImageName = file.getOriginalFilename();
         String[] extension = originImageName.split("\\.");
-        String image_name = uuid.toString() + "_" + System.currentTimeMillis()+"."+extension[1];
+        String image_name = uuid.toString() + "_" + System.currentTimeMillis() + "." + extension[1];
 
         String image_url = "";
 //        String savePath = "C:\\SSAFY\\download";
@@ -226,7 +237,6 @@ public class CodyServiceImpl implements CodyService {
                 .build();
         return image;
     }
-
 
 
 }
