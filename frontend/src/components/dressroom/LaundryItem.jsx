@@ -9,7 +9,7 @@ export default function LaundryItem({ kind, range, iconSelect, selectedIcon }) {
         {range.map((i) => {
           const select = selectedIcon.includes(i);
           return (
-            <img src={`laundry/${i}.png`} alt={i}
+            <img src={process.env.PUBLIC_URL + `laundry/${i}.png`} alt={i}
               key={i}
               css={imgStyle({ select })}
               onClick={() => iconSelect(i)}
