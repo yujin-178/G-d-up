@@ -7,11 +7,13 @@ import ClothesDetailContainer from '../../containers/dressroom/ClothesDetailCont
 
 import { css } from '@emotion/react';
 
+import { DressRoom } from '../dressRoomCss';
+
 export default function ClosetPage({ onClickModal, filteredClothes }) {
   console.log(filteredClothes);
 
   return (
-    <div>
+    <div css={DressRoom}>
       <div css={GridWrapper}>
         <FilterContainer />
         <div>
