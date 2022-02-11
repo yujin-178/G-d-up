@@ -100,6 +100,15 @@ export default function AddClothesContainer() {
       });
   }
 
+  const cache = {};
+
+  function importAll(r) {
+    r.keys().forEach((key)=> (cache[key] = r[key]));
+  }
+  importAll(require.context('../../../public/laundry', false, /\.(png|jpe?g|svg)$/));
+
+  const images = Object.entries(cache).map(module => module[1].default);
+
   return (
     <div>
       <AddClothes
@@ -118,6 +127,7 @@ export default function AddClothesContainer() {
         handleResponse={handleResponse}
         isResOpen={isResOpen}
         resText={resText}
+        images={images}
       />
     </div>
   );

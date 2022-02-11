@@ -1,4 +1,5 @@
 import React from 'react';
+import DressRoomImg from '../../../public/images/dressroombackground.jpg';
 
 import { Link } from 'react-router-dom';
 
@@ -41,7 +42,7 @@ const Title = css`
 
 const DressRoom = css`
   min-height: 30rem;
-  background-image: url("/images/dressroombackground.jpg");
+  background-image: url(${DressRoomImg});
   background-size: cover;
   background-position: center;
 `;

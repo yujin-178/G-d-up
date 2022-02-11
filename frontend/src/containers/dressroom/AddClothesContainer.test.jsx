@@ -2,10 +2,10 @@
  * @jest-environment jsdom
  */
 
-import React from 'react';
+// import React from 'react';
 
-import AddClothesContainer from './AddClothesContainer.jsx';
-import { render, fireEvent, getByRole, screen } from "@testing-library/react";
+// import AddClothesContainer from './AddClothesContainer.jsx';
+// import { render } from "@testing-library/react";
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -20,11 +20,11 @@ describe('AddClothesContainer', () => {
   }) || {});
 
   it('handleModal function well', ()=> {
-    const handleModal = jest.fn();
+    // const handleModal = jest.fn();
 
-    const { getByText, container } = render((
-      <AddClothesContainer />
-    ));
+    // const { getByText, container } = render((
+    //   <AddClothesContainer />
+    // ));
 
     // const xbtn = screen.getByRole('button', {name: /x/i})
     // fireEvent.click(xbtn);

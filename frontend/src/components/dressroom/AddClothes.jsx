@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
+export default function AddClothes({ images, resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
   return (
     <div>
       <Global
@@ -100,16 +100,21 @@ export default function AddClothes({ resText, isResOpen, handleResponse, saveClo
 
             <div css={laundryContainer}>
               <p css={css`width:40px;`}>세탁:</p>
-              {range(selectedLaundry.length).map((i) => (
-                <img src={`/laundry/${selectedLaundry[i]}.png`} alt={i} key={i}/>
-              ))}
+              {range(selectedLaundry.length).map((i) => {
+                const image = images[i + 1];
+                return (
+                  <img src={image} alt={i} key={i} />
+                );
+              })}
               <div css={AddBtnContainer}>
                 <button css={AddBtn}
                   onClick={() => handleLaundry(true)}>
                   +
                 </button>
               </div>
-              <LaundryModalContainer />
+              <LaundryModalContainer
+                images={images}
+              />
             </div>
 
             <div css={tag}>

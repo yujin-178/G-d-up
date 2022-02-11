@@ -8,7 +8,7 @@ import {
 } from '../../slices/laundrySlice';
 import { range } from 'lodash';
 
-export default function laundryModalContainer() {
+export default function laundryModalContainer({ images }) {
   const dispatch = useDispatch();
   const laundry = useSelector(state => state.laundrySlice);
   const { laundryOpen, selectedIcon } = laundry;
@@ -44,6 +44,7 @@ export default function laundryModalContainer() {
         selectedIcon={selectedIcon}
         laundryLabel={laundryLabel}
         saveLaundry={saveLaundry}
+        images={images}
       />
     </div>
   );

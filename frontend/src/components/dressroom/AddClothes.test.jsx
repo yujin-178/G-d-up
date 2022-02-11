@@ -6,12 +6,12 @@ import React from 'react';
 import AddClothes from './AddClothes.jsx';
 
 import Modal from 'react-modal';
-import { mount, shallow } from 'enzyme';
+import { shallow } from 'enzyme';
 
 jest.mock('react-redux');
 
 describe('AddClothes', () => {
-  const dispatch = jest.fn();
+  // const dispatch = jest.fn();
 	
   it('renders react-modal', () => {
     const wrapper = shallow(<AddClothes />);
@@ -25,9 +25,9 @@ describe('AddClothes', () => {
 
     expect(wrapper.find(Modal).dive().find('button')[0]).not.toBeNull();
 
-    const CloseBtn = wrapper.find(Modal).dive().findWhere(
-      node => node.type() === 'button' && node.text() === 'X'
-    );
+    // const CloseBtn = wrapper.find(Modal).dive().findWhere(
+    //   node => node.type() === 'button' && node.text() === 'X'
+    // );
     // expect(CloseBtn.length).toEqual(1);
 
     // CloseBtn.simulate('click');
