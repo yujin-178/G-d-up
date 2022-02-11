@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CodyCreateForm from '../../components/codyCreateForm/CodyCreateForm';
+import CodyCreateForm from '../../components/dressroom/CodyCreateForm';
 
 export default function CodyContainer() {
   return (
