@@ -1,15 +1,14 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { css, Global } from '@emotion/react';
 import Modal from 'react-modal';
 import { range } from 'lodash';
 import LaundryModalContainer from '../../containers/dressroom/LaundryModalContainer';
-import ResModal from './ResModal';
 
 if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
+export default function AddClothes({ selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
   return (
     <div>
       <Global
@@ -55,76 +54,35 @@ export default function AddClothes({ resText, isResOpen, handleResponse, saveClo
             <h3>옷 정보</h3>
             <div css={detail}>
               <p>카테고리 :</p>
-              <div css={valueStyle}>
-                <Fragment>
-                  {tagInfo['subcategory'] ?
-                    tagInfo['category'] + ">" + tagInfo['subcategory']
-                    : tagInfo['category']
-                  }
-                </Fragment>
-              </div>
-              <p css={css`grid-column:1;`}>
-                색상 :
-              </p>
-              <div css={valueStyle}>
-                {tagInfo['color']}
-              </div>
-              <p css={css`grid-column:3; margin-left:10px;`}>
-                소재 :
-              </p>
-              <div css={valueStyle2}>
-                {tagInfo['material']}
-              </div>
-              <p>
-                패턴 :
-              </p>
-              <div css={valueStyle}>
-                {tagInfo['pattern']}
-              </div>
+              <p>색상 :</p>
+              <p>소재 :</p>
+              <p>패턴 : </p>
             </div>
-
-            <div css={season}>
-              <p>계절 : </p>
-              {allSeason.map((item, index) => {
-                const seasonMatched = item === tagInfo['season'];
-                return (
-                  <p css={liStyle({ seasonMatched })}
-                    key={index}
-                    onClick={() => selectSeason(item)}
-                  >
-                    {item}
-                  </p>
-                );
-              })}
-            </div>
-
-            <div css={laundryContainer}>
-              <p css={css`width:40px;`}>세탁:</p>
-              {range(selectedLaundry.length).map((i) => (
-                <img src={`/${selectedLaundry[i]}.png`} alt={i} key={i}/>
-              ))}
-              <div css={AddBtnContainer}>
-                <button css={AddBtn}
-                  onClick={() => handleLaundry(true)}>
-                  +
-                </button>
+            <div>
+              <div>
+                <p>계절</p>
               </div>
-              <LaundryModalContainer />
-            </div>
-
-            <div css={tag}>
-              <p>태그 : </p>
-              {tagGroup.map((item, index) => (
-                <div css={tagItem} key={index}>
-                  {item}
+              <div css={laundryContainer}>
+                <p css={css`width:40px;`}>세탁:</p>
+                {range(selectedLaundry.length).map((i) => (
+                  <img src={`laundry/${selectedLaundry[i]}.png`} alt={i} key={i} />
+                ))}
+                <div css={AddBtnContainer}>
+                  <button css={AddBtn}
+                    onClick={() => handleLaundry(true)}>
+                    추가 +
+                  </button>
                 </div>
-              ))}
-            </div>
 
+                <LaundryModalContainer
+                />
+              </div>
+              <p>태그</p>
+            </div>
             <div css={submitBtnContainer}>
               <button
                 css={saveBtn}
-                onClick={() => saveClothes()}
+                onClick={() => modalToggle(false)}
               >
                 저장
               </button>
@@ -135,11 +93,6 @@ export default function AddClothes({ resText, isResOpen, handleResponse, saveClo
                 취소
               </button>
             </div>
-            <ResModal
-              isResOpen={isResOpen}
-              handleResponse={handleResponse}
-              resText={resText}
-            />
           </div>
         </div>
       </Modal>
@@ -147,94 +100,22 @@ export default function AddClothes({ resText, isResOpen, handleResponse, saveClo
   );
 }
 
-const valueStyle = css`
-	border: 1px solid;
-	height: 35px;
-	display: inline-block;
-	grid-column:2;
-	width: max-content;
-	min-width: 80%;
-	padding : 5px;
-	text-align: center;
-	display: flex;
-	justify-content: center;
-  align-items: center;
-`;
-
-const valueStyle2 = css`
-	border: 1px solid;
-	height: 35px;
-	display: inline-block;
-	grid-column:4;
-	width: max-content;
-	min-width: 80%;
-	display: flex;
-	justify-content: center;
-  align-items: center;
-`;
-
-const tagItem = css`
-  display: flex;
-	justify-content: center;
-  align-items: center;
-
-  background-color: #faefe8;
-  height: 25px;
-	width : max-content;
-  padding: 4px;
-  border-radius: 18px;
-
-  font-size: 13px;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
-  margin: 5px;
-  min-width: 50px;
-`;
-
-const tag = css`
-	display: grid;
-	grid-template-columns: 100px 1fr 1fr 1fr 1fr;
-`;
-
-const season = css`
-	display: grid;
-	grid-template-columns: repeat(5,1fr);
-`;
-
-const liStyle = ({ seasonMatched }) => css`
-  background-color: #e2e2e2;
-  width: 3.8rem;
-  height: 2rem;
-	display: flex;
-	justify-content: center;
-  align-items: center;
-	cursor: pointer;
-    ${seasonMatched &&
-  `
-      background-color: #00acee;
-    `}
-`;
-
 const AddBtnContainer = css`
 	display: flex;
+	justify-content: center;
 	align-items : center;
-	margin-left: 20px;
 `;
 
 const AddBtn = css`
-	width: 30px;
-	height: 25px;
-	background: #ecc194;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
+	height: 60px; 
+	width:50px; 
+	cursor:pointer;
 `;
 
 const laundryContainer = css`
 	display: grid;
 	grid-template-columns: repeat(5, 0.5fr);
-	margin-top: 10px;
-	margin-bottom: 10px;
+	grid-gap : 10px;
 `;
 
 const submitBtnContainer = css`
@@ -274,16 +155,15 @@ const saveBtn = css`
 	cursor: pointer;
 `;
 
+const detail = css`
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+`;
+
 const detailContainer = css`
 	grid-row: 3;
 	grid-column: 2;
-	grid-gap: 10px;
-`;
-
-const detail = css`
-	display: grid;
-	grid-template-columns: 80px 1fr 70px 1fr;
-	align-items: center;
 `;
 
 const Container = css`
@@ -421,7 +301,7 @@ const modalClass = css`
 }
 
 .ReactModal__Content--after-open {
-	width: 50%;
+	width: 80%;
 	height: 80%;
 	grid-column:4;
 	background-color: #f2f2f2;
