@@ -11,49 +11,44 @@ export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop 
   const screenshot = async (element) => {
     const canvas = await html2canvas(element);
     const data = canvas.toDataURL("image/jpg");
+    const response = await axios.get(data, { responseType: "blob" });
+    const blob = response.data;
+    const fd = new FormData();
+    const file = new File([blob], "filename.jpeg");
+    fd.append('imageFile', file);
 
-    fetch(data)
-      .then(res => res.blob())
-      .then(blob => {
-        const fd = new FormData();
-        const file = new File([blob], "filename.jpeg");
+    const itemsIncody = codyItems.map(item => {
+      const { clothingId, position } = item;
+      return {
+        clothingId,
+        x: position.x,
+        y: position.y,
+        z: position.z,
+        m: position.m,
+      };
+    });
 
-        fd.append('imageFile', file);
-        console.log(fd.get('imageFile'));
+    const temp_data = {
+      userName: 'jisoon',
+      codyName: 'name',
+      content: 'content',
+      secret: 0,
+      clothingList: itemsIncody,
+      codyTag: '',
+    };
 
-        const itemsIncody = codyItems.map(item => {
-          const { clothingId, position } = item;
-          return {
-            clothingId,
-            x: position.x,
-            y: position.y,
-            z: position.z,
-            m: position.m,
-          };
-        });
+    fd.append('createCody', new Blob([JSON.stringify(temp_data)], { type: 'application/json' }));
 
-        const data = {
-          userName: 'jisoon',
-          codyName: 'name',
-          content: 'content',
-          secret: 0,
-          clothingList: itemsIncody,
-          codyTag: '',
-        };
+    const config = {
+      Headers: { 'Content-Type': 'multipart/form-data' },
+    };
 
-        fd.append('createCody', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-
-        const config = {
-          Headers: { 'Content-Type': 'multipart/form-data' },
-        };
-
-        axios.post('http://i6b108.p.ssafy.io:8000/cody/create', fd, config)
-          .then(function (response) {
-            console.log(response);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+    axios.post('http://i6b108.p.ssafy.io:8000/cody/create', fd, config)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
       });
   };
 
