@@ -40,7 +40,9 @@ const Title = css`
 `;
 
 const DressRoom = css`
-  min-height: 30rem;
+  margin: 0 auto;
+  width: 100rem;
+  min-height: 50rem;
   background-image: url("/images/dressroombackground.jpg");
   background-size: cover;
   background-position: center;
