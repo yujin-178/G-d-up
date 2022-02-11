@@ -18,4 +18,5 @@ public interface LikeRepository extends JpaRepository<LikeEntity, Integer> {
     @Query(value = "select userName from likes where feedId = :feedNo",
     nativeQuery = true)
     List<String> findUsers(@Param("feedNo") int feedId);
+
 }

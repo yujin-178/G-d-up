@@ -1,13 +1,12 @@
 package com.web.gdup.domain.feed.controller;
 
-import com.web.gdup.domain.cody.entity.CodyEntity;
 import com.web.gdup.domain.comment.Entity.CommentEntity;
 import com.web.gdup.domain.comment.service.CommentService;
 import com.web.gdup.domain.feed.dto.FeedDto;
+import com.web.gdup.domain.feed.dto.RecommandDto;
 import com.web.gdup.domain.feed.service.FeedService;
 import com.web.gdup.domain.like.service.LikeService;
 import com.web.gdup.domain.model.BasicResponse;
-import com.web.gdup.domain.user.dto.UserDto;
 import com.web.gdup.domain.wordcloud.service.wordService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = { "http://i6b108.p.ssafy.io:3000", "http://localhost:8080" })
+@CrossOrigin
 @RestController
 @RequestMapping("/feed")
 public class FeedController {
@@ -174,14 +173,14 @@ public class FeedController {
         return new ResponseEntity<>(ws.getList(), HttpStatus.OK);
     }
 
-//    @GetMapping("/tag/search/{tagName}")
-//    @ApiOperation(
-//            value = "tag word 리스트 가져오기",
-//            notes = "최신 태그 리스트를 가져온다."
-//    )
-//    public ResponseEntity<List<CodyEntity>> getTagCodyList() {
-//
-//        return new ResponseEntity<>(, HttpStatus.OK);
-//    }
+    @GetMapping("/tag/search/{tagName}")
+    @ApiOperation(
+            value = "tag word 리스트 가져오기",
+            notes = "최신 태그 리스트를 가져온다."
+    )
+    public ResponseEntity<List<RecommandDto>> getTagCodyList(@PathVariable String tagName) {
+
+        return new ResponseEntity<>((List<RecommandDto>) feedService.recommendService(tagName), HttpStatus.OK);
+    }
 
 }

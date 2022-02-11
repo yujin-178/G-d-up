@@ -28,7 +28,7 @@ public class ImageServiceImpl implements ImageService{
 
         ImageDto imageDto = ImageDto.builder()
                 .imageId(imageId)
-                .imageName(image.getImageName())
+                .imageUrl(image.getImageUrl())
                 .newImageName(image.getNewImageName())
                 .build();
         return imageDto;
