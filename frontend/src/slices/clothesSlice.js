@@ -35,7 +35,7 @@ export const clothesSlice = createSlice({
       };
     },
 		changeTagInfo(state, action){
-			const tags = action.payload;
+			const tags = action.payload.data;
 			const tagList = []
 			for (let tag in tags) {
 				if (tags[tag] !== null){
@@ -44,7 +44,10 @@ export const clothesSlice = createSlice({
 			}
 			return{
 				...state,
-				tagInfo : tags,
+				tagInfo : {
+					...tags,
+					'userName' : action.payload.userName
+				},
 				tagGroup : tagList,
 			};
 		},

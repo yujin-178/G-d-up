@@ -8,7 +8,7 @@ if (process.env.NODE_ENV !== 'test') {
 	Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
+export default function AddClothes({ saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
 	return (
 		<div>
 			<Global

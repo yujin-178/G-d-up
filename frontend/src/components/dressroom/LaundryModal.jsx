@@ -58,11 +58,13 @@ const Container = css`
   display: grid;
 	grid-template-columns: repeat(5, 1fr);
 	grid-template-rows: repeat(7, 1fr);
+	max-width: 100%;
 `
 
 const detailContainer = css`
 	grid-row: 1;
 	grid-column: 1;
+	width: max-content;
 `
 
 const submitBtnContainer = css`
