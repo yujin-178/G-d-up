@@ -13,6 +13,7 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
   console.log(filteredClothes);
 
   return (
+
     <div css={DressRoom}>
       <div css={GridWrapper}>
         <FilterContainer />
@@ -22,11 +23,12 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
             css={AddIcon}
             src="/images/add_icon.svg"
             width="100rem"
-            onClick={onClickModal} 
+            onClick={onClickModal}
             alt="추가아이콘"
           />
         </div>
         <ClothesDetailContainer />
+
         <AddClothesContainer />
         <Link to='/dressroom'>
           <button>
@@ -34,18 +36,30 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
           </button>
         </Link>
       </div>
+
     </div>
+
   );
 }
 
+const Container = css`
+  height: 100%;
+`;
+
+const GridContainer = css`
+
+`;
+
 const GridWrapper = css`
-  width: 90rem;
-  margin: 10rem auto;
+  position: relative;
+  width: 56rem;
+  margin: 10rem 10rem 10rem 10rem;
 	display: grid;
-  grid-template-columns: 17rem 35rem 35rem;
+  grid-template-columns: 17rem 35rem;
   grid-row-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
   grid-auto-columns: minmax(100px, auto);
+  background-color: #BFAEA4;
 `;
 
 const AddIcon = css`

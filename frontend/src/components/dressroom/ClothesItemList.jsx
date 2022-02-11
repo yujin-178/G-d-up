@@ -11,7 +11,7 @@ export default function ClothesItemList({ clothes, onMouseOverHandler, OnMouseLe
   }
 
   return (
-    <div css={ItemContainer}>
+    <div css={ItemListContainer}>
       {numbers.map((number, idx) =>
         <ClothesItem
           key={idx}
@@ -24,9 +24,9 @@ export default function ClothesItemList({ clothes, onMouseOverHandler, OnMouseLe
   );
 }
 
-const ItemContainer = css`
-  grid-column: 2 / 4;
-  grid-row: 2 / 4;
+const ItemListContainer = css`
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 0.5rem;

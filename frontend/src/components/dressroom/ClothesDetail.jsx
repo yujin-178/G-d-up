@@ -76,9 +76,10 @@ const liStyle = ({ isMatched }) => css`
 const detailContainer = css`
   grid-column: 3 / 4;
   grid-row: 1 / 3;
-  background-color: grey;
-  width: 100%;
-  margin: 0 3rem 1rem 3rem;
+  background-color: #3A3D41;
+  opacity: 0.8;
+  width: 40rem;
+  margin: 1rem 3rem 1rem 3rem;
   font-size: 18px;
   position: relative;
 `;
