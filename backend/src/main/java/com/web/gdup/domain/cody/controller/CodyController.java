@@ -1,8 +1,8 @@
 package com.web.gdup.domain.cody.controller;
 
+import com.web.gdup.domain.cody.dto.CodyAllList;
 import com.web.gdup.domain.cody.dto.CreateCody;
 import com.web.gdup.domain.cody.dto.UpdateCody;
-import com.web.gdup.domain.cody.entity.CodyEntity;
 import com.web.gdup.domain.cody.service.CodyServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 
 import java.util.List;
 
@@ -74,8 +73,8 @@ public class CodyController {
             value = "코디 목록 불러오기",
             notes = "특정 유저의 코디 목록 불러오기"
     )
-    public ResponseEntity<List<CodyEntity>> readCodyList(@PathVariable(name = "userName") String userName) {
-        return new ResponseEntity<List<CodyEntity>>(cs.getUserCodyList(userName), HttpStatus.OK);
+    public ResponseEntity<List<CodyAllList>> readCodyList(@PathVariable(name = "userName") String userName) {
+        return new ResponseEntity<List<CodyAllList>>(cs.getUserCodyList(userName), HttpStatus.OK);
     }
 
 }
