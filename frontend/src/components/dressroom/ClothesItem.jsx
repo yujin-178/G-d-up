@@ -5,7 +5,7 @@ import { css } from '@emotion/react';
 export default function ClothesItem(props) {
   const {
     item,
-    onMouseOverHandler,
+    // onMouseOverHandler,
     OnMouseLeaveHandler
   } = props;
 

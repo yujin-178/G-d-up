@@ -14,7 +14,8 @@ const initialState = {
 
 export const deleteClothesById = createAsyncThunk(
   'clothes/deleteClothes',
-  async (clothesId, thunkAPI) => {
+  async (clothesId) => {
+  // async (clothesId, thunkAPI) => {
     // todo: api request
 
     // const response = await axiosServer({
@@ -27,7 +28,8 @@ export const deleteClothesById = createAsyncThunk(
 
 export const setClothes = createAsyncThunk(
   'clothes/setClothes',
-  async (userName, thunkAPI) => {
+  async (userName) => {
+    // async (userName, thunkAPI) => {
     const clothes = await loadClothesByUserName(userName);
     return clothes;
   }
@@ -78,7 +80,8 @@ export const clothesSlice = createSlice({
     }
   },
   extraReducers: {
-    [setClothes.pending]: (state, action) => {
+    // [setClothes.pending]: (state, action) => {
+    [setClothes.pending]: (state) => {
       return {
         ...state,
         loading: true,
@@ -91,14 +94,16 @@ export const clothesSlice = createSlice({
         clothes: action.payload,
       };
     },
-    [setClothes.rejected]: (state, action) => {
+    // [setClothes.rejected]: (state, action) => {
+    [setClothes.rejected]: (state) => {
       return {
         ...state,
         loading: false,
         error: '오류가 발생했습니다.'
       };
     },
-    [deleteClothesById.pending]: (state, action) => {
+    [deleteClothesById.pending]: (state) => {
+    // [deleteClothesById.pending]: (state, action) => {
       return {
         ...state,
         loading: true
@@ -113,7 +118,8 @@ export const clothesSlice = createSlice({
         selectedClothes: deleted[0],
       };
     },
-    [deleteClothesById.rejected]: (state, action) => {
+    [deleteClothesById.rejected]: (state) => {
+    // [deleteClothesById.rejected]: (state, action) => {
       return {
         ...state,
         loading: false,
