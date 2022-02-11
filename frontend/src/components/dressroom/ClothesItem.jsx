@@ -9,7 +9,6 @@ export default function ClothesItem(props) {
     OnMouseLeaveHandler
   } = props;
 
-  console.log(item);
   return (
     <div css={ClothesItemBox}>
       {item && (

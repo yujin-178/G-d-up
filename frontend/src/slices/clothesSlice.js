@@ -51,6 +51,7 @@ export const clothesSlice = createSlice({
     [setClothes.fulfilled]: (state, action) => {
       return {
         ...state,
+        loading: false,
         clothes: action.payload,
       };
     },
