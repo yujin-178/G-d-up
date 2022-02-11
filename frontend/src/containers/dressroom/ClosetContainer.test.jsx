@@ -6,7 +6,7 @@ import React from 'react';
 import { render } from "@testing-library/react";
 import ClosetContainer from './ClosetContainer.jsx';
 import { MemoryRouter } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { clothesData } from '../../../fixtures/clothesList.js';
 
 const mockStore= () => ({
@@ -30,7 +30,11 @@ const mockStore= () => ({
 
 jest.mock('react-redux');
 
+const dispatch = jest.fn();
+
 describe('ClosetContainer', () => {
+  useDispatch.mockImplementation(() => dispatch);
+
   it('renders ClosetContainer', () => {
     useSelector.mockImplementation((selector) => selector(mockStore()));
     const { getByText } = render((

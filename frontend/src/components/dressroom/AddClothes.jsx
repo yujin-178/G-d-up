@@ -5,118 +5,118 @@ import { range } from 'lodash';
 import LaundryModalContainer from '../../containers/dressroom/LaundryModalContainer';
 
 if (process.env.NODE_ENV !== 'test') {
-	Modal.setAppElement('#app');
+  Modal.setAppElement('#app');
 }
 
 export default function AddClothes({ selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
-	return (
-		<div>
-			<Global
-				styles={modalClass}
-			/>
-			<Modal
-				isOpen={isModalOpen}
-				onRequestClose={() => modalToggle(false)}
-				closeTimeoutMS={500}
-				onAfterOpen={() => { document.body.style.overflow = 'hidden' }}
-				onAfterClose={() => document.body.removeAttribute('style')}
-			>
-				<div css={Container}>
-					<button
-						css={CloseBtn}
-						onClick={() => modalToggle(false)}>
+  return (
+    <div>
+      <Global
+        styles={modalClass}
+      />
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => modalToggle(false)}
+        closeTimeoutMS={500}
+        onAfterOpen={() => { document.body.style.overflow = 'hidden'; }}
+        onAfterClose={() => document.body.removeAttribute('style')}
+      >
+        <div css={Container}>
+          <button
+            css={CloseBtn}
+            onClick={() => modalToggle(false)}>
 						X
-					</button>
-					<div css={imgContainer}>
-						<img
-							src={preview}
-							css={previewImg}
-						/>
-					</div>
+          </button>
+          <div css={imgContainer}>
+            <img
+              src={preview}
+              css={previewImg}
+            />
+          </div>
 
-					<div css={btnContainer}>
-						<input
-							css={inputTag}
-							ref={refParam => imgInput = refParam}
-							type="file"
-							accept='image/*'
-							name="file"
-							onChange={onImgChange}
-						/>
-						<button
-							css={inputBtn}
-							onClick={() => imgInput.click()}
-						>
+          <div css={btnContainer}>
+            <input
+              css={inputTag}
+              ref={refParam => imgInput = refParam}
+              type="file"
+              accept='image/*'
+              name="file"
+              onChange={onImgChange}
+            />
+            <button
+              css={inputBtn}
+              onClick={() => imgInput.click()}
+            >
 							업로드
-						</button>
-					</div>
-					<div css={detailContainer}>
-						<h3>옷 정보</h3>
-						<div css={detail}>
-							<p>카테고리 :</p>
-							<p>색상 :</p>
-							<p>소재 :</p>
-							<p>패턴 : </p>
-						</div>
-						<div>
-							<div>
-								<p>계절</p>
-							</div>
-							<div css={laundryContainer}>
-								<p css={css`width:40px;`}>세탁:</p>
-								{range(selectedLaundry.length).map((i) => (
-									<img src={`laundry/${selectedLaundry[i]}.png`} alt={i} />
-								))}
-								<div css={AddBtnContainer}>
-									<button css={AddBtn}
-										onClick={() => handleLaundry(true)}>
+            </button>
+          </div>
+          <div css={detailContainer}>
+            <h3>옷 정보</h3>
+            <div css={detail}>
+              <p>카테고리 :</p>
+              <p>색상 :</p>
+              <p>소재 :</p>
+              <p>패턴 : </p>
+            </div>
+            <div>
+              <div>
+                <p>계절</p>
+              </div>
+              <div css={laundryContainer}>
+                <p css={css`width:40px;`}>세탁:</p>
+                {range(selectedLaundry.length).map((i) => (
+                  <img src={`laundry/${selectedLaundry[i]}.png`} alt={i} />
+                ))}
+                <div css={AddBtnContainer}>
+                  <button css={AddBtn}
+                    onClick={() => handleLaundry(true)}>
 										추가 +
-									</button>
-								</div>
+                  </button>
+                </div>
 
-								<LaundryModalContainer
-								/>
-							</div>
-							<p>태그</p>
-						</div>
-						<div css={submitBtnContainer}>
-							<button
-								css={saveBtn}
-								onClick={() => modalToggle(false)}
-							>
+                <LaundryModalContainer
+                />
+              </div>
+              <p>태그</p>
+            </div>
+            <div css={submitBtnContainer}>
+              <button
+                css={saveBtn}
+                onClick={() => modalToggle(false)}
+              >
 								저장
-							</button>
-							<button
-								css={cancelBtn}
-								onClick={() => modalToggle(false)}
-							>
+              </button>
+              <button
+                css={cancelBtn}
+                onClick={() => modalToggle(false)}
+              >
 								취소
-							</button>
-						</div>
-					</div>
-				</div>
-			</Modal>
-		</div>
-	);
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </div>
+  );
 }
 
 const AddBtnContainer = css`
 	display: flex;
 	justify-content: center;
 	align-items : center;
-`
+`;
 
 const AddBtn = css`
 	height: 60px; 
 	width:50px; 
 	cursor:pointer;
-`
+`;
 
 const laundryContainer = css`
 	display: grid;
 	grid-template-columns: repeat(5, 0.5fr);
 	grid-gap : 10px;
-`
+`;
 
 const submitBtnContainer = css`
 	display:grid;F
