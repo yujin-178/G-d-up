@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "react-scripts build && webpack --progress --mode production"
+    "build": "webpack --progress --mode production"
   },
   "author": "",
   "license": "ISC",
