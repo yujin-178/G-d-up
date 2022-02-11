@@ -190,6 +190,7 @@ public class CodyServiceImpl implements CodyService {
 
         String imagePath = savePath + "/" + image_name;
         try {
+
             file.transferTo(new File(imagePath));
         } catch (IOException e) {
             e.printStackTrace();
