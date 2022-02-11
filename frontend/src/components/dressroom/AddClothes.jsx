@@ -3,12 +3,13 @@ import { css, Global } from '@emotion/react';
 import Modal from 'react-modal';
 import { range } from 'lodash';
 import LaundryModalContainer from '../../containers/dressroom/LaundryModalContainer';
+import ResModal from './ResModal';
 
 if (process.env.NODE_ENV !== 'test') {
 	Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
+export default function AddClothes({ resText ,isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
 	return (
 		<div>
 			<Global
@@ -57,7 +58,7 @@ export default function AddClothes({ saveClothes, selectSeason, tagGroup, allSea
 							<div css={valueStyle}>
 								<Fragment>
 									{tagInfo['subcategory'] ?
-										tagInfo['category'] +">"+ tagInfo['subcategory']
+										tagInfo['category'] + ">" + tagInfo['subcategory']
 										: tagInfo['category']
 									}
 								</Fragment>
@@ -134,6 +135,11 @@ export default function AddClothes({ saveClothes, selectSeason, tagGroup, allSea
 								취소
 							</button>
 						</div>
+						<ResModal
+							isResOpen={isResOpen}
+							handleResponse={handleResponse}
+							resText={resText}
+						/>
 					</div>
 				</div>
 			</Modal>

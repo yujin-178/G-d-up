@@ -1,7 +1,6 @@
 import React from 'react';
 import { css } from '@emotion/react';
 import Modal from 'react-modal';
-import { range } from 'lodash';
 
 import LaundryItem from './LaundryItem';
 

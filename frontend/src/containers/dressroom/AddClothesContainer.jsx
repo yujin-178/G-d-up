@@ -6,6 +6,8 @@ import { season } from '../../constants/filter';
 
 import {
 	changeisModalOpen,
+	changeisResOpen,
+	changeResText
 } from '../../slices/modalSlice';
 
 import {
@@ -21,7 +23,7 @@ import {
 export default function AddClothesContainer() {
 	const dispatch = useDispatch();
 	const modal = useSelector(state => state.modalSlice);
-	const { isModalOpen } = modal;
+	const { isModalOpen, isResOpen, resText } = modal;
 
 	const laundry = useSelector(state => state.laundrySlice);
 	const { selectedIcon } = laundry;
@@ -37,6 +39,24 @@ export default function AddClothesContainer() {
 			'Content-Type': 'multipart/form-data',
 		},
 	};
+
+	
+	function handleModal(value) {
+		dispatch(changeisModalOpen(value));
+	}
+
+	function handleLaundry(value) {
+		dispatch(changelaundryOpen(value));
+	}
+
+	function handleSeason(value) {
+		dispatch(selectSeason(value));
+	}
+
+	function handleResponse(value) {
+		dispatch(changeisResOpen(value));
+		dispatch(changeisModalOpen(value))
+	}
 
 	function onImgChange(event) {
 		const formData = new FormData();
@@ -72,24 +92,13 @@ export default function AddClothesContainer() {
 
 		axios.post(`http://i6b108.p.ssafy.io:8000/clothing/save`, formData ,config)
 		.then((res)=> {
-			// 성공 모달 창 출력
-			console.log(res);
+			dispatch(changeResText(res.data.message));
+			dispatch(changeisResOpen(true));
 		})
 		.catch((err)=>{
-			console.log(err);
+			dispatch(changeResText(err.data.data.message));
+			dispatch(changeisResOpen(true));
 		})
-	}
-
-	function handleModal(value) {
-		dispatch(changeisModalOpen(value));
-	}
-
-	function handleLaundry(value) {
-		dispatch(changelaundryOpen(value));
-	}
-
-	function handleSeason(value) {
-		dispatch(selectSeason(value));
 	}
 
 	return (
@@ -107,6 +116,9 @@ export default function AddClothesContainer() {
 				tagGroup={tagGroup}
 				selectSeason={handleSeason}
 				saveClothes={saveClothes}
+				handleResponse={handleResponse}
+				isResOpen={isResOpen}
+				resText={resText}
 			/>
 		</div>
 	);
