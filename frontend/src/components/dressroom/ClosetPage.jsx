@@ -18,7 +18,7 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
           <ClothesItemListContainer />
           <img
             css={AddIcon}
-            src="/images/add_icon.svg"
+            src="/add_icon.svg"
             width="100rem"
             onClick={onClickModal} 
             alt="추가아이콘"
