@@ -100,14 +100,15 @@ export default function AddClothesContainer() {
       });
   }
 
-  const cache = {};
-
   function importAll(r) {
-    r.keys().forEach((key)=> (cache[key] = r[key]));
+    let images = {};
+    r.keys().map((item) => { 
+      images[(item.replace('./', '')).replace('.png','')] = r(item).default; 
+    });
+    return images;
   }
-  importAll(require.context('../../../public/laundry', false, /\.(png|jpe?g|svg)$/));
-
-  const images = Object.entries(cache).map(module => module[1].default);
+  const r = require.context('../../../public/laundry/', false, /\.(png|jpe?g|svg)$/);
+  const images = importAll(r);
 
   return (
     <div>

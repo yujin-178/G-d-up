@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { css, Global } from '@emotion/react';
 import Modal from 'react-modal';
-import { range } from 'lodash';
 import LaundryModalContainer from '../../containers/dressroom/LaundryModalContainer';
 import ResModal from './ResModal';
 
@@ -100,8 +99,8 @@ export default function AddClothes({ images, resText, isResOpen, handleResponse,
 
             <div css={laundryContainer}>
               <p css={css`width:40px;`}>세탁:</p>
-              {range(selectedLaundry.length).map((i) => {
-                const image = images[i + 1];
+              {selectedLaundry.map((i) => {
+                const image = images[i];
                 return (
                   <img src={image} alt={i} key={i} />
                 );
