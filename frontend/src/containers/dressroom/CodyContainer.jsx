@@ -6,6 +6,7 @@ import { resetFilter } from '../../slices/filterSlice';
 import FilterContainer from './FilterContainer';
 import ClothesItemList from '../../components/dressroom/ClothesItemList';
 import { setClothes } from '../../slices/clothesSlice';
+import axios from 'axios';
 
 export default function CodyContainer() {
   const { clothes } = useSelector(state => state.clothesSlice);
@@ -17,17 +18,22 @@ export default function CodyContainer() {
     dispatch(setClothes('jisoon'));
   }, []);
 
-  const onClickHandler = target => {
-    if (codyItems.find(item => item.image === target.image)) {
+  const onClickHandler = async(target) => {
+    const { clothingId } = target.clothing;
+
+    if (codyItems.find(item => item.clothingId === clothingId)) {
       return;
     }
+
+    const response = await axios.get(`http://i6b108.p.ssafy.io:8888/clothing/test/detail/${clothingId}`);
+    const { base64 } = response.data.data;
 
     const z_index = codyItems.length + 1;
     const initalPosition = { x: 0, y: 0, z: z_index };
 
     setCodyItems(() => [...codyItems, {
-      id: Date.now(),
-      image: target.image || "https://cafe24img.poxo.com/dcollec/web/product/medium/202112/db33dab5fd0f188c82fc6ded213370ba.jpg",
+      clothingId,
+      image: base64,
       position: initalPosition,
     }]);
   };
@@ -42,7 +48,7 @@ export default function CodyContainer() {
     setCodyItems(codyItems.map((item) => {
       const { z } = item.position;
 
-      if (item.id === activatedItem.id) {
+      if (item.clothingId === activatedItem.clothingId) {
         return {
           ...item,
           position: {
@@ -68,13 +74,14 @@ export default function CodyContainer() {
 
   const handleOnStop = (itemId, data) => {
     setCodyItems(codyItems.map(item => {
-      if (item.id === itemId) {
+      if (item.clothingId === itemId) {
         return {
           ...item,
           position: {
             x: data.x,
             y: data.y,
-            z: item.position.z
+            z: item.position.z,
+            m: 1,
           }
         };
       }
@@ -98,6 +105,7 @@ export default function CodyContainer() {
         onClickHandler={onClickHandler}
       />
       <CodyCreateForm
+        clothes={clothes}
         codyItems={codyItems}
         handleOnStart={handleOnStart}
         handleOnStop={handleOnStop}

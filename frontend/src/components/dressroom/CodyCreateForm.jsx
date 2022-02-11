@@ -2,12 +2,67 @@ import React from 'react';
 import { css } from '@emotion/react';
 import { useRef } from 'react';
 import CodyItem from './CodyItem';
+import html2canvas from 'html2canvas';
+import axios from 'axios';
 
 export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop }) {
   const canvasRef = useRef();
 
+  const screenshot = async (element) => {
+    const canvas = await html2canvas(element);
+    const data = canvas.toDataURL("image/jpg");
+
+    fetch(data)
+      .then(res => res.blob())
+      .then(blob => {
+        const fd = new FormData();
+        const file = new File([blob], "filename.jpeg");
+
+        fd.append('imageFile', file);
+        console.log(fd.get('imageFile'));
+
+        const itemsIncody = codyItems.map(item => {
+          const { clothingId, position } = item;
+          return {
+            clothingId,
+            x: position.x,
+            y: position.y,
+            z: position.z,
+            m: position.m,
+          };
+        });
+
+        const data = {
+          userName: 'jisoon',
+          codyName: 'name',
+          content: 'content',
+          secret: 0,
+          clothingList: itemsIncody,
+          codyTag: '',
+        };
+
+        fd.append('createCody', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+
+        const config = {
+          Headers: { 'Content-Type': 'multipart/form-data' },
+        };
+
+        axios.post('http://i6b108.p.ssafy.io:8000/cody/create', fd, config)
+          .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+  };
+
   return (
     <form>
+      <button onClick={(e) => {
+        e.preventDefault();
+        screenshot(canvasRef.current);
+      }}>test</button>
       <div
         id="canvas"
         css={canvas}
@@ -24,16 +79,15 @@ export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop 
           );
         })}
       </div>
-
       <input
         css={tagInput}
         type="text"
-        placeholder="태그 입력"
+        placeholder="제목 입력"
       />
       <textarea
         css={memo}
         name="memo"
-        placeholder="메모 입력"
+        placeholder="내용 입력"
       />
       <input type="text" css={searchInputStyle} />
       <button>리셋</button>
@@ -70,4 +124,5 @@ const canvas = css`
   min-height: 400px;
   background-color: beige;
   position: relative;
+  border: 1px solid grey;
 `;

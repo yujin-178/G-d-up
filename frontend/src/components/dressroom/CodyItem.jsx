@@ -3,13 +3,13 @@ import { css } from '@emotion/react';
 import Draggable from 'react-draggable';
 
 export default function Item({ item, handleOnStart, handleOnStop }) {
-  const { id, image, position } = item;
+  const { clothingId, image, position } = item;
   const { x, y, z } = position;
 
   return (
     <Draggable
       bounds="parent"
-      onStop={(e, data) => handleOnStop(id, data)}
+      onStop={(e, data) => handleOnStop(clothingId, data)}
       onStart={() => handleOnStart(item)}
       defaultPosition={{ x, y }}
     >
