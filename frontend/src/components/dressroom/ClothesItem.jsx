@@ -13,7 +13,8 @@ export default function ClothesItem(props) {
     <div css={ClothesItemBox}>
       {item && (
         <img
-          src={item.clothing.imageModel.imagePath}
+          width="100%"
+          src={item.clothing.imageModel.imageUrl}
           // onMouseOver={() => onMouseOverHandler(item)}
           onMouseLeave={OnMouseLeaveHandler}
         />

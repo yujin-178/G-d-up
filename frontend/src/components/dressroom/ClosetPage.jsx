@@ -16,11 +16,13 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
         <FilterContainer />
         <div>
           <ClothesItemListContainer />
-          <button
-            onClick={onClickModal}
-          >
-            옷 추가
-          </button>
+          <img
+            css={AddIcon}
+            src="/images/add_icon.svg"
+            width="100rem"
+            onClick={onClickModal} 
+            alt="추가아이콘"
+          />
         </div>
         <ClothesDetailContainer />
         <AddClothesContainer />
@@ -42,4 +44,13 @@ const GridWrapper = css`
   grid-row-gap: 10px;
   grid-auto-rows: minmax(100px, auto);
   grid-auto-columns: minmax(100px, auto);
+`;
+
+const AddIcon = css`
+  position: relative;
+  left: 32rem;
+  bottom: 5rem;
+  &:hover {
+    bottom: 5.3rem;
+  }
 `;

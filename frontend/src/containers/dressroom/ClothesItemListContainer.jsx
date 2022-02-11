@@ -11,7 +11,7 @@ export default function ClothesItemListContainer() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setClothes('admin'));
+    dispatch(setClothes('jisoon'));
   }, []);
 
   const { clothes, selectedClothes } = useSelector(state => state.clothesSlice);
