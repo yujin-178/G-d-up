@@ -5,7 +5,7 @@
 import React from 'react';
 import { render } from "@testing-library/react";
 import ClothesItemList from './ClothesItemList.jsx';
-import { clothesData } from '../../../fixtures/clothesList';
+import { clothesData } from '../../fixtures/clothesList';
 
 describe('ClothesItemList', () => {
   const clothes = {

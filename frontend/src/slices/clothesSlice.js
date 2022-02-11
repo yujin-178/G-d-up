@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { clothesData } from '../../fixtures/clothesList';
+import { clothesData } from '../fixtures/clothesList';
 import { loadClothesByUserName } from '../services/api';
 
 const initialState = {
