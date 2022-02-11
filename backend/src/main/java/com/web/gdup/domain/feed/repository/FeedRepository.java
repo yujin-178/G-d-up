@@ -15,4 +15,7 @@ public interface FeedRepository extends JpaRepository<FeedDto, Integer> {
             "(select following from follow where userName = :loginName ) "
             , nativeQuery = true)
     List<FeedDto> findFollowingFeeds(@Param("loginName") String userName);
+
+
+    List<FeedDto> findAllByCodyId(int codyId);
 }

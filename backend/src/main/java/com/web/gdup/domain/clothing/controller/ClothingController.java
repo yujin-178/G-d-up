@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin(origins = { "http://i6b108.p.ssafy.io:3000" })
+@CrossOrigin
 @RestController
 @RequestMapping("/clothing")
 public class ClothingController {
