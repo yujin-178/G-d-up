@@ -19,13 +19,17 @@ module.exports = {
         use: 'babel-loader',
       },
       {
-        test: /\.(png|svg|jpg|jpge|gif|ico)$/,
+        test: /\.(png|svg|jpe?g|gif|ico|woff|woff2|eot|ttf)(\?[a-z0-9=.]+)?$/,
         use: [{
           loader: 'url-loader',
           options: {
             limit: 10000,
           }
         }],
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"]
       }
     ],
   },

@@ -8,6 +8,7 @@ import { Provider } from 'react-redux';
 import App from './App.jsx';
 
 import store from './store.js';
+import "../public/font/font.css";
 
 ReactDOM.render(
   (
