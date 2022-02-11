@@ -21,8 +21,8 @@ public class ImageEntity {
     @Column(name = "imageid")
     private int imageId;
 
-    @Column(name="imagename")
-    private String imageName;
+    @Column(name="imageurl")
+    private String imageUrl;
 
     @Column(name="newimagename")
     private String newImageName;

@@ -183,12 +183,12 @@ public class CodyServiceImpl implements CodyService {
     private ImageDto updateImage(MultipartFile file, int imageId) {
         ImageDto imageDto = imageService.getImage(imageId);
 
-        String originImageName = file.getOriginalFilename();
         String image_name = imageDto.getNewImageName();
 
-        String savePath = "C:\\SSAFY\\download";
+//        String savePath = "C:\\SSAFY\\download";
+        String savePath = "/home/ubuntu/backend/download";
 
-        String imagePath = savePath + "\\" + image_name;
+        String imagePath = savePath + "/" + image_name;
         try {
             file.transferTo(new File(imagePath));
         } catch (IOException e) {
@@ -203,20 +203,23 @@ public class CodyServiceImpl implements CodyService {
         UUID uuid = UUID.randomUUID();
 
         String originImageName = file.getOriginalFilename();
-        String image_name = uuid.toString() + "_" + originImageName;
+        String[] extension = originImageName.split("\\.");
+        String image_name = uuid.toString() + "_" + System.currentTimeMillis()+"."+extension[1];
 
-        String savePath = "C:\\SSAFY\\download";
-//        String savePath = /home/ubuntu/backend/download;
+        String image_url = "";
+//        String savePath = "C:\\SSAFY\\download";
+        String savePath = "/home/ubuntu/backend/download";
 
-        String imagePath = savePath + "\\" + image_name;
+        String imagePath = savePath + "/" + image_name;
         try {
             file.transferTo(new File(imagePath));
+            image_url = "http://i6b108.p.ssafy.io:8000/images/" + image_name;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         ImageDto image = ImageDto.builder()
-                .imageName(originImageName)
+                .imageUrl(image_url)
                 .newImageName(image_name)
                 .imagePath(imagePath)
                 .build();
