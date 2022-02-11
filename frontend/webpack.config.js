@@ -18,6 +18,15 @@ module.exports = {
         exclude: /node_modules/,
         use: 'babel-loader',
       },
+      {
+        test: /\.(png|svg|jpg|jpge|gif|ico)$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+          }
+        }],
+      }
     ],
   },
   devServer: {
