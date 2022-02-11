@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@CrossOrigin(origins = {"http://i6b108.p.ssafy.io:3000"})
+@CrossOrigin
 @RestController
 @RequestMapping("/cody")
 public class CodyController {

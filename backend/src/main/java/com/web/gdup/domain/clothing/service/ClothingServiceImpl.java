@@ -255,19 +255,26 @@ public class ClothingServiceImpl implements ClothingService{
         UUID uuid = UUID.randomUUID();
 
         String originImageName = file.getOriginalFilename();
-        String image_name = uuid.toString()+"_"+originImageName;
+        System.out.println(originImageName);
 
+        String[] extension = originImageName.split("\\.");
+        System.out.println(extension[0]);
+        String image_name = uuid.toString()+"_"+System.currentTimeMillis()+"."+extension[1];
+
+        String image_url = "";
+//        String savePath = "C:\\SSAFY\\download";
         String savePath = "/home/ubuntu/backend/download";
-
         String imagePath = savePath + "/" + image_name;
+
         try {
             file.transferTo(new File(imagePath));
+            image_url = "http://i6b108.p.ssafy.io:8000/images/" + image_name;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         ImageDto image = ImageDto.builder()
-                .imageName(originImageName)
+                .imageUrl(image_url)
                 .newImageName(image_name)
                 .imagePath(imagePath)
                 .build();
@@ -276,6 +283,7 @@ public class ClothingServiceImpl implements ClothingService{
 
     private void download(String spec) {
         String outputDir = "/home/ubuntu/backend/removeBg";
+//        String outputDir = "C:\\SSAFY\\removeBg";
         InputStream is = null;
         FileOutputStream os = null;
         try {

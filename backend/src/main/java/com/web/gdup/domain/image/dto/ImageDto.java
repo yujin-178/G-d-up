@@ -12,14 +12,14 @@ import lombok.*;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ImageDto {
     private int imageId;
-    private String imageName;
+    private String imageUrl;
     private String newImageName;
     private String imagePath;
 
     @Builder
-    public ImageDto(int imageId, String imageName, String newImageName, String imagePath) {
+    public ImageDto(int imageId, String imageUrl, String newImageName, String imagePath) {
         this.imageId = imageId;
-        this.imageName = imageName;
+        this.imageUrl = imageUrl;
         this.newImageName = newImageName;
         this.imagePath = imagePath;
     }
@@ -27,7 +27,7 @@ public class ImageDto {
     public ImageEntity toEntity() {
         ImageEntity build = ImageEntity.builder()
                 .imageId(imageId)
-                .imageName(newImageName)
+                .imageUrl(imageUrl)
                 .newImageName(newImageName)
                 .imagePath(imagePath)
                 .build();

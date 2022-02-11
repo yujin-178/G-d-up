@@ -12,10 +12,12 @@ export default function ClothesItem(props) {
   return (
     <div css={ClothesItemBox}>
       {item && (
-        <p
-          onMouseOver={() => onMouseOverHandler(item)}
+        <img
+          width="100%"
+          src={item.clothing.imageModel.imageUrl}
+          // onMouseOver={() => onMouseOverHandler(item)}
           onMouseLeave={OnMouseLeaveHandler}
-        >{item.image}</p>
+        />
       )}
     </div>
   );
