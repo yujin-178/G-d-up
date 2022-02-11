@@ -3,38 +3,38 @@ import { css } from '@emotion/react';
 import Modal from 'react-modal';
 
 if (process.env.NODE_ENV !== 'test') {
-	Modal.setAppElement('#app')
+  Modal.setAppElement('#app');
 }
 
 export default function ResModal({ resText, handleResponse, isResOpen }) {
-	return (
-		<div>
-			<Modal
-				isOpen={isResOpen}
-				onRequestClose={() => handleResponse(false)}
-				closeTimeoutMS={500}
-				style={{
-					content: {
-						position: 'relative',
-						width: '25%',
-						height: '20%',
-					}
-				}}
-			>
-				<div css={Container}>
-					<div>
-						<p>{resText}</p>
-						<button
-							css={saveBtn}
-							onClick={() => handleResponse(false)}
-						>
+  return (
+    <div>
+      <Modal
+        isOpen={isResOpen}
+        onRequestClose={() => handleResponse(false)}
+        closeTimeoutMS={500}
+        style={{
+          content: {
+            position: 'relative',
+            width: '25%',
+            height: '20%',
+          }
+        }}
+      >
+        <div css={Container}>
+          <div>
+            <p>{resText}</p>
+            <button
+              css={saveBtn}
+              onClick={() => handleResponse(false)}
+            >
 							확인
-						</button>
-					</div>
-				</div>
-			</Modal >
-		</div >
-	)
+            </button>
+          </div>
+        </div>
+      </Modal >
+    </div >
+  );
 }
 
 const Container = css`
@@ -43,7 +43,7 @@ const Container = css`
 	text-align: center;
 	justify-content: center;
 	align-items: center;
-`
+`;
 
 const saveBtn = css`
 	grid-column: 3;
@@ -62,4 +62,4 @@ const saveBtn = css`
 	font-weight: 300;
 	text-align: center;
 	transition: 0.5s;
-`
+`;

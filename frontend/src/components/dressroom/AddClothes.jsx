@@ -6,145 +6,145 @@ import LaundryModalContainer from '../../containers/dressroom/LaundryModalContai
 import ResModal from './ResModal';
 
 if (process.env.NODE_ENV !== 'test') {
-	Modal.setAppElement('#app');
+  Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ resText ,isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
-	return (
-		<div>
-			<Global
-				styles={modalClass}
-			/>
-			<Modal
-				isOpen={isModalOpen}
-				onRequestClose={() => modalToggle(false)}
-				closeTimeoutMS={500}
-				onAfterOpen={() => { document.body.style.overflow = 'hidden' }}
-				onAfterClose={() => document.body.removeAttribute('style')}
-			>
-				<div css={Container}>
-					<button
-						css={CloseBtn}
-						onClick={() => modalToggle(false)}>
-						X
-					</button>
-					<div css={imgContainer}>
-						<img
-							src={preview}
-							css={previewImg}
-						/>
-					</div>
+export default function AddClothes({ resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
+  return (
+    <div>
+      <Global
+        styles={modalClass}
+      />
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={() => modalToggle(false)}
+        closeTimeoutMS={500}
+        onAfterOpen={() => { document.body.style.overflow = 'hidden'; }}
+        onAfterClose={() => document.body.removeAttribute('style')}
+      >
+        <div css={Container}>
+          <button
+            css={CloseBtn}
+            onClick={() => modalToggle(false)}>
+            X
+          </button>
+          <div css={imgContainer}>
+            <img
+              src={preview}
+              css={previewImg}
+            />
+          </div>
 
-					<div css={btnContainer}>
-						<input
-							css={inputTag}
-							ref={refParam => imgInput = refParam}
-							type="file"
-							accept='image/*'
-							name="file"
-							onChange={onImgChange}
-						/>
-						<button
-							css={inputBtn}
-							onClick={() => imgInput.click()}
-						>
-							업로드
-						</button>
-					</div>
-					<div css={detailContainer}>
-						<h3>옷 정보</h3>
-						<div css={detail}>
-							<p>카테고리 :</p>
-							<div css={valueStyle}>
-								<Fragment>
-									{tagInfo['subcategory'] ?
-										tagInfo['category'] + ">" + tagInfo['subcategory']
-										: tagInfo['category']
-									}
-								</Fragment>
-							</div>
-							<p css={css`grid-column:1;`}>
-								색상 :
-							</p>
-							<div css={valueStyle}>
-								{tagInfo['color']}
-							</div>
-							<p css={css`grid-column:3; margin-left:10px;`}>
-								소재 :
-							</p>
-							<div css={valueStyle2}>
-								{tagInfo['material']}
-							</div>
-							<p>
-								패턴 :
-							</p>
-							<div css={valueStyle}>
-								{tagInfo['pattern']}
-							</div>
-						</div>
+          <div css={btnContainer}>
+            <input
+              css={inputTag}
+              ref={refParam => imgInput = refParam}
+              type="file"
+              accept='image/*'
+              name="file"
+              onChange={onImgChange}
+            />
+            <button
+              css={inputBtn}
+              onClick={() => imgInput.click()}
+            >
+              업로드
+            </button>
+          </div>
+          <div css={detailContainer}>
+            <h3>옷 정보</h3>
+            <div css={detail}>
+              <p>카테고리 :</p>
+              <div css={valueStyle}>
+                <Fragment>
+                  {tagInfo['subcategory'] ?
+                    tagInfo['category'] + ">" + tagInfo['subcategory']
+                    : tagInfo['category']
+                  }
+                </Fragment>
+              </div>
+              <p css={css`grid-column:1;`}>
+                색상 :
+              </p>
+              <div css={valueStyle}>
+                {tagInfo['color']}
+              </div>
+              <p css={css`grid-column:3; margin-left:10px;`}>
+                소재 :
+              </p>
+              <div css={valueStyle2}>
+                {tagInfo['material']}
+              </div>
+              <p>
+                패턴 :
+              </p>
+              <div css={valueStyle}>
+                {tagInfo['pattern']}
+              </div>
+            </div>
 
-						<div css={season}>
-							<p>계절 : </p>
-							{allSeason.map((item, index) => {
-								const seasonMatched = item === tagInfo['season'];
-								return (
-									<p css={liStyle({ seasonMatched })}
-										key={index}
-										onClick={() => selectSeason(item)}
-									>
-										{item}
-									</p>
-								)
-							})}
-						</div>
+            <div css={season}>
+              <p>계절 : </p>
+              {allSeason.map((item, index) => {
+                const seasonMatched = item === tagInfo['season'];
+                return (
+                  <p css={liStyle({ seasonMatched })}
+                    key={index}
+                    onClick={() => selectSeason(item)}
+                  >
+                    {item}
+                  </p>
+                );
+              })}
+            </div>
 
-						<div css={laundryContainer}>
-							<p css={css`width:40px;`}>세탁:</p>
-							{range(selectedLaundry.length).map((i) => (
-								<img src={`laundry/${selectedLaundry[i]}.png`} alt={i} />
-							))}
-							<div css={AddBtnContainer}>
-								<button css={AddBtn}
-									onClick={() => handleLaundry(true)}>
-									+
-								</button>
-							</div>
-							<LaundryModalContainer />
-						</div>
+            <div css={laundryContainer}>
+              <p css={css`width:40px;`}>세탁:</p>
+              {range(selectedLaundry.length).map((i) => (
+                <img src={`laundry/${selectedLaundry[i]}.png`} alt={i} key={i}/>
+              ))}
+              <div css={AddBtnContainer}>
+                <button css={AddBtn}
+                  onClick={() => handleLaundry(true)}>
+                  +
+                </button>
+              </div>
+              <LaundryModalContainer />
+            </div>
 
-						<div css={tag}>
-							<p>태그 : </p>
-							{tagGroup.map((item, index) => (
-								<div css={tagItem} key={index}>
-									{item}
-								</div>
-							))}
-						</div>
+            <div css={tag}>
+              <p>태그 : </p>
+              {tagGroup.map((item, index) => (
+                <div css={tagItem} key={index}>
+                  {item}
+                </div>
+              ))}
+            </div>
 
-						<div css={submitBtnContainer}>
-							<button
-								css={saveBtn}
-								onClick={() => saveClothes()}
-							>
-								저장
-							</button>
-							<button
-								css={cancelBtn}
-								onClick={() => modalToggle(false)}
-							>
-								취소
-							</button>
-						</div>
-						<ResModal
-							isResOpen={isResOpen}
-							handleResponse={handleResponse}
-							resText={resText}
-						/>
-					</div>
-				</div>
-			</Modal>
-		</div>
-	);
+            <div css={submitBtnContainer}>
+              <button
+                css={saveBtn}
+                onClick={() => saveClothes()}
+              >
+                저장
+              </button>
+              <button
+                css={cancelBtn}
+                onClick={() => modalToggle(false)}
+              >
+                취소
+              </button>
+            </div>
+            <ResModal
+              isResOpen={isResOpen}
+              handleResponse={handleResponse}
+              resText={resText}
+            />
+          </div>
+        </div>
+      </Modal>
+    </div>
+  );
 }
 
 const valueStyle = css`
@@ -159,7 +159,7 @@ const valueStyle = css`
 	display: flex;
 	justify-content: center;
   align-items: center;
-`
+`;
 
 const valueStyle2 = css`
 	border: 1px solid;
@@ -171,7 +171,7 @@ const valueStyle2 = css`
 	display: flex;
 	justify-content: center;
   align-items: center;
-`
+`;
 
 const tagItem = css`
   display: flex;
@@ -193,12 +193,12 @@ const tagItem = css`
 const tag = css`
 	display: grid;
 	grid-template-columns: 100px 1fr 1fr 1fr 1fr;
-`
+`;
 
 const season = css`
 	display: grid;
 	grid-template-columns: repeat(5,1fr);
-`
+`;
 
 const liStyle = ({ seasonMatched }) => css`
   background-color: #e2e2e2;
@@ -209,7 +209,7 @@ const liStyle = ({ seasonMatched }) => css`
   align-items: center;
 	cursor: pointer;
     ${seasonMatched &&
-	`
+  `
       background-color: #00acee;
     `}
 `;
@@ -218,7 +218,7 @@ const AddBtnContainer = css`
 	display: flex;
 	align-items : center;
 	margin-left: 20px;
-`
+`;
 
 const AddBtn = css`
 	width: 30px;
@@ -228,14 +228,14 @@ const AddBtn = css`
 	border-radius: 4px;
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
-`
+`;
 
 const laundryContainer = css`
 	display: grid;
 	grid-template-columns: repeat(5, 0.5fr);
 	margin-top: 10px;
 	margin-bottom: 10px;
-`
+`;
 
 const submitBtnContainer = css`
 	display:grid;F

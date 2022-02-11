@@ -6,9 +6,9 @@ const initialState = {
   selectedClothes: clothesData[0],
   loading: false,
   error: null,
-	tagInfo : {'season': ''},
-	imgURL : '',
-	tagGroup:[],
+  tagInfo: { 'season': '' },
+  imgURL: '',
+  tagGroup: [],
 };
 
 export const deleteClothesById = createAsyncThunk(
@@ -34,39 +34,39 @@ export const clothesSlice = createSlice({
         selectedClothes: action.payload,
       };
     },
-		changeTagInfo(state, action){
-			const tags = action.payload.data;
-			const tagList = []
-			for (let tag in tags) {
-				if (tags[tag] !== null){
-					tagList.push(`#${tags[tag]}`)
-				}
-			}
-			return{
-				...state,
-				tagInfo : {
-					...tags,
-					'userName' : action.payload.userName
-				},
-				tagGroup : tagList,
-			};
-		},
-		setImgURL(state,action) {
-			return{
-				...state,
-				imgURL : action.payload,
-			};
-		},
-		selectSeason(state, action) {
-			const { tagInfo } = state;
-			return{
-				...state,
-				tagInfo : {
-					...tagInfo,
-					'season' : action.payload
-				}
-			};
-		}
+    changeTagInfo(state, action) {
+      const tags = action.payload.data;
+      const tagList = [];
+      for (let tag in tags) {
+        if (tags[tag] !== null) {
+          tagList.push(`#${tags[tag]}`);
+        }
+      }
+      return {
+        ...state,
+        tagInfo: {
+          ...tags,
+          'userName': action.payload.userName
+        },
+        tagGroup: tagList,
+      };
+    },
+    setImgURL(state, action) {
+      return {
+        ...state,
+        imgURL: action.payload,
+      };
+    },
+    selectSeason(state, action) {
+      const { tagInfo } = state;
+      return {
+        ...state,
+        tagInfo: {
+          ...tagInfo,
+          'season': action.payload
+        }
+      };
+    }
   },
   extraReducers: {
     [deleteClothesById.pending]: (state, action) => {
@@ -96,9 +96,9 @@ export const clothesSlice = createSlice({
 
 export const {
   selectClothes,
-	changeTagInfo,
-	setImgURL,
-	selectSeason,
+  changeTagInfo,
+  setImgURL,
+  selectSeason,
 } = clothesSlice.actions;
 
 export default clothesSlice.reducer;

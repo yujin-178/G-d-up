@@ -5,52 +5,52 @@ import Modal from 'react-modal';
 import LaundryItem from './LaundryItem';
 
 if (process.env.NODE_ENV !== 'test') {
-	Modal.setAppElement('#app')
+  Modal.setAppElement('#app');
 }
 
 export default function LaundryModal({ saveLaundry, laundryOpen, handleLaundry, iconSelect, selectedIcon, laundryLabel }) {
-	return (
-		<div>
-			<Modal
-				isOpen={laundryOpen}
-				onRequestClose={() => handleLaundry(false)}
-				closeTimeoutMS={500}
-			>
-				<div css={Container}>
-					<button
-						css={CloseBtn}
-						onClick={() => handleLaundry(false)}>
-						X
-					</button>
-					<div css={detailContainer}>
-						{laundryLabel.map((laundry) => (
-							<LaundryItem
-								key={laundryLabel.indexOf(laundry)}
-								kind={laundry['kind']}
-								range={laundry['range']}
-								iconSelect={iconSelect}
-								selectedIcon={selectedIcon}
-							/>
-						))}
-						<div css={submitBtnContainer}>
-							<button
-								css={saveBtn}
-								onClick={() => saveLaundry()}
-							>
-								저장
-							</button>
-							<button
-								css={cancelBtn}
-								onClick={() => handleLaundry(false)}
-							>
-								취소
-							</button>
-						</div>
-					</div>
-				</div>
-			</Modal >
-		</div >
-	)
+  return (
+    <div>
+      <Modal
+        isOpen={laundryOpen}
+        onRequestClose={() => handleLaundry(false)}
+        closeTimeoutMS={500}
+      >
+        <div css={Container}>
+          <button
+            css={CloseBtn}
+            onClick={() => handleLaundry(false)}>
+            X
+          </button>
+          <div css={detailContainer}>
+            {laundryLabel.map((laundry) => (
+              <LaundryItem
+                key={laundryLabel.indexOf(laundry)}
+                kind={laundry['kind']}
+                range={laundry['range']}
+                iconSelect={iconSelect}
+                selectedIcon={selectedIcon}
+              />
+            ))}
+            <div css={submitBtnContainer}>
+              <button
+                css={saveBtn}
+                onClick={() => saveLaundry()}
+              >
+                저장
+              </button>
+              <button
+                css={cancelBtn}
+                onClick={() => handleLaundry(false)}
+              >
+                취소
+              </button>
+            </div>
+          </div>
+        </div>
+      </Modal >
+    </div >
+  );
 }
 
 const Container = css`
@@ -58,13 +58,13 @@ const Container = css`
 	grid-template-columns: repeat(5, 1fr);
 	grid-template-rows: repeat(7, 1fr);
 	max-width: 100%;
-`
+`;
 
 const detailContainer = css`
 	grid-row: 1;
 	grid-column: 1;
 	width: max-content;
-`
+`;
 
 const submitBtnContainer = css`
 	display:grid;
@@ -77,7 +77,7 @@ const submitBtnContainer = css`
 	font-weight: 300;
 	text-align: center;
 	transition: 0.5s;
-`
+`;
 
 const cancelBtn = css`
 	grid-column: 4;
@@ -89,7 +89,7 @@ const cancelBtn = css`
 	border-radius: 4px;
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
-`
+`;
 
 const saveBtn = css`
 	grid-column: 3;
@@ -101,7 +101,7 @@ const saveBtn = css`
 	border-radius: 4px;
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
-`
+`;
 
 const CloseBtn = css`
 	background: #c99f9f;
@@ -116,4 +116,4 @@ const CloseBtn = css`
 	margin-left: 1rem;
 
 	cursor: pointer;
-`
+`;
