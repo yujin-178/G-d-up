@@ -77,7 +77,10 @@ export const filterSlice = createSlice({
         ...state,
         custom: removed
       };
-    }
+    },
+    resetFilter() {
+      return initialState;
+    },
   },
 });
 
@@ -88,6 +91,7 @@ export const {
   changeColorFilter,
   addCustomFilter,
   deleteCustomFilter,
+  resetFilter,
 } = filterSlice.actions;
 
 export default filterSlice.reducer;
