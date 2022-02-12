@@ -13,6 +13,7 @@ export default function CodyContainer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [codyItems, setCodyItems] = useState([]);
+  const initialSizeNum = 160;
 
   useEffect(() => {
     dispatch(setClothes('jisoon'));
@@ -29,8 +30,8 @@ export default function CodyContainer() {
     const { base64 } = response.data.data;
 
     const z_index = codyItems.length + 1;
-    const initialPosition = { x: 0, y: 0, z: z_index, m: 1, };
-    const initialSize = { width: '160px', height: '160px' };
+    const initialPosition = { x: 0, y: 0, z: z_index };
+    const initialSize = { width: initialSizeNum, height: initialSizeNum, m: 1 };
 
     setCodyItems(() => [...codyItems, {
       clothingId,
@@ -77,14 +78,12 @@ export default function CodyContainer() {
   const handleOnStop = (itemId, data) => {
     setCodyItems(codyItems.map(item => {
       if (item.clothingId === itemId) {
-        const { z, m } = item.position;
         return {
           ...item,
           position: {
+            ...item.position,
             x: data.x,
             y: data.y,
-            z,
-            m,
           }
         };
       }
@@ -94,6 +93,9 @@ export default function CodyContainer() {
   };
 
   const handleResizeStop = (itemId, ref, position) => {
+    const newSize = ref.style.width.replace('px', '')*1;
+    const m = newSize / initialSizeNum;
+
     setCodyItems(codyItems.map(item => {
       if (item.clothingId === itemId) {
         return {
@@ -103,8 +105,9 @@ export default function CodyContainer() {
             ...position,
           },
           size: {
-            width: ref.style.width,
-            height: ref.style.height,
+            width: newSize,
+            height: newSize,
+            m
           }
         };
       }

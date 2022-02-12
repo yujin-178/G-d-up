@@ -13,13 +13,13 @@ export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop,
     fd.append('imageFile', file);
 
     const itemsIncody = codyItems.map(item => {
-      const { clothingId, position } = item;
+      const { clothingId, position, size } = item;
       return {
         clothingId,
         x: position.x,
         y: position.y,
         z: position.z,
-        m: position.m,
+        m: size.m,
       };
     });
 
