@@ -13,6 +13,7 @@ import com.web.gdup.global.component.CommonComponent;
 import com.web.gdup.global.component.EcoMatching;
 import com.web.gdup.global.component.TranslationEng;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -175,6 +176,56 @@ public class ClothingServiceImpl implements ClothingService{
             result.add(map);
         }
         return result;
+    }
+
+    @Override
+    @Transactional
+    public HashMap<String, Object> getClothingBase(int clothingId) {
+        ClothingEntity clothing = clothingRepository.findById(clothingId).get();
+        ClothingDto clothingDto = buildClothingDto(clothing);
+
+        String base64Data = null;
+        try {
+            base64Data = getBase64EncodedImage(clothingDto.getImageModel().getImageUrl());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        String imgUrl = "data:image/png;base64,"+base64Data;
+        map.put("base64", imgUrl);
+        return map;
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getUserClothingTest(String userName) {
+        List<HashMap<String, Object>> result = new ArrayList<>();
+
+        List<ClothingEntity> list = clothingRepository.findAllByUserName(userName);
+        for(ClothingEntity cd : list) {
+            ClothingDto clothingDto = buildClothingDto(cd);
+            String base64Data = null;
+            try {
+                base64Data = getBase64EncodedImage(clothingDto.getImageModel().getImageUrl());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            String imgUrl = "data:image/png;base64,"+base64Data;
+
+            HashMap<String, Object> map = new HashMap<>();
+            map.put("clothing", clothingDto);
+            map.put("hashtag", clothingHashtagService.getHashtags(cd.getClothingId()));
+            map.put("washing", clothingWashingService.getWashingMethods(cd.getClothingId()));
+            map.put("base64", imgUrl);
+            result.add(map);
+        }
+        return result;
+    }
+
+    public String getBase64EncodedImage(String imageUrl) throws IOException {
+        URL url = new URL(imageUrl);
+        InputStream is = url.openStream();
+        byte[] bytes = IOUtils.toByteArray(is);
+        return Base64.encodeBase64String(bytes);
     }
 
     private Set<String> parseHashtags(String hashtag) {
