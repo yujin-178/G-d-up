@@ -3,6 +3,7 @@ import filterSlice from './slices/filterSlice';
 import clothesSlice from './slices/clothesSlice';
 import modalSlice from './slices/modalSlice';
 import laundrySlice from './slices/laundrySlice';
+import codySlice from './slices/codySlice';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
@@ -12,6 +13,7 @@ export default configureStore({
     clothesSlice,
     modalSlice,
     laundrySlice,
+    codySlice,
   },
   middleware: [thunk, logger],
 });

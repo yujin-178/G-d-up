@@ -1,9 +1,10 @@
 import React from 'react';
-// import Carousel from 'react-spring-3d-carousel';
+import Carousel from 'react-spring-3d-carousel';
+import { config } from 'react-spring';
 
 import { css } from "@emotion/react";
 
-export default function CodyPage({ navigate }) {
+export default function CodyPage({ navigate, cards, offsetRadius, showArrows, goToSlide }) {
   return (
     <div>
       <div css={container}>
@@ -13,8 +14,13 @@ export default function CodyPage({ navigate }) {
         </button>
         <div css={carousel}>
           <h3>carousel</h3>
-          {/* <Carousel 
-          /> */}
+          <Carousel 
+            slides={cards}
+            goToSlide={goToSlide}
+            offsetRadius={offsetRadius}
+            showNavigation={showArrows}
+            animationConfig={config.gentle}
+          /> 
         </div>
         <button css={backBtn} onClick={() => navigate('/dressroom')}>
           Back
@@ -48,4 +54,7 @@ const backBtn = css`
 const carousel = css`
   grid-column: 2;
   grid-row: 2;
+  width: 30%;
+  height: 500px;
+  margin: 0 auto;
 `;
