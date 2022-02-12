@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
-import { animateScroll as scroll } from 'react-scroll';
 import { v4 as uuidv4 } from 'uuid';
 
 import CodyPage from '../../components/dressroom/CodyPage';
@@ -11,6 +10,7 @@ import CodyCard from '../../components/dressroom/CodyCard';
 import {
   setgoToSlide,
   setCody,
+  setMoveScroll
 } from '../../slices/codySlice';
 
 export default function CodyContainer() {
@@ -22,10 +22,14 @@ export default function CodyContainer() {
   }, []);
 
   const cody = useSelector(state => state.codySlice);
-  const { offsetRadius, showArrows, goToSlide, codyList } = cody;
+  const { offsetRadius, showArrows, goToSlide, codyList, scrollisTop } = cody;
 
   function handlegoToSlide(value) {
     dispatch(setgoToSlide(value));
+  }
+
+  function handleMoveScroll(type) {
+    dispatch(setMoveScroll(type));
   }
 
   const cardList = codyList.map((card) => {
@@ -55,9 +59,9 @@ export default function CodyContainer() {
         offsetRadius={offsetRadius}
         showArrows={showArrows}
         handlegoToSlide={handlegoToSlide}
-        ScrolltoBottom={() => { scroll.scrollToBottom(); }}
-        ScrolltoTop={() => { scroll.scrollToTop(); }}
+        moveScroll={handleMoveScroll}
         codyList={codyList}
+        scrollisTop={scrollisTop}
       />
     </div>
   );

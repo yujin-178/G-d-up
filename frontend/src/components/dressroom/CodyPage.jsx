@@ -6,14 +6,19 @@ import { css } from "@emotion/react";
 import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
 
-export default function CodyPage({ ScrolltoTop, codyList, ScrolltoBottom, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
+export default function CodyPage({ scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
   return (
     <div>
-      <div css={container}>
+      <button css={createBtn} onClick={() => navigate('./create')}>
+        새 코디 생성하기
+      </button>
+      <button
+        css={backBtn}
+        onClick={() => navigate('/dressroom')}>
+        Back
+      </button>
+      <div css={scrollisTop ? container : displayToggle}>
         <h2>Cody</h2>
-        <button css={createBtn} onClick={() => navigate('./create')}>
-          새 코디 생성하기
-        </button>
         <div css={carousel}>
           <Carousel
             slides={cards}
@@ -39,21 +44,19 @@ export default function CodyPage({ ScrolltoTop, codyList, ScrolltoBottom, handle
           />
         </div>
         <button
-          onClick={() => ScrolltoBottom()}
+          onClick={() => moveScroll('d')}
           css={scrollBtn}
         >
           전체 보기
         </button>
-        <button
-          css={backBtn}
-          onClick={() => navigate('/dressroom')}>
-          Back
-        </button>
       </div>
-      <CodyList
-        cards={codyList}
-        ScrolltoTop={ScrolltoTop}
-      />
+      <div css={scrollisTop ? displayToggle : ''}>
+        <CodyList
+          cards={codyList}
+          moveScroll={moveScroll}
+          scrollisTop={scrollisTop}
+        />
+      </div>
     </div>
   );
 }
@@ -92,6 +95,12 @@ const container = css`
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 1fr 4fr 1fr;
   grid-row-gap: 10px;
+  transition: all 1s;
+`;
+
+const displayToggle = css`
+  visibility: hidden;
+  transition: all 1s;
 `;
 
 const createBtn = css`

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { css } from "@emotion/react";
 
-export default function CodyList({ ScrolltoTop, cards }) {
+export default function CodyList({ moveScroll, cards }) {
   return (
     <div>
       <h2>Cody</h2>
@@ -13,7 +13,7 @@ export default function CodyList({ ScrolltoTop, cards }) {
           );
         })}
         <button
-          onClick={() => ScrolltoTop()}
+          onClick={() => moveScroll('u')}
           css={scrollBtn}
         >
           갤러리
