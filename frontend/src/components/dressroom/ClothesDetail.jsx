@@ -82,6 +82,7 @@ const detailContainer = css`
   margin: 2.5rem 1rem;
   font-size: 18px;
   position: relative;
+  border-radius: 0.5rem;
 `;
 
 const clothesImage = css`

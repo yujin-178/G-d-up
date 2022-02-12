@@ -25,18 +25,17 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
               onClick={onClickModal}
               alt="추가아이콘"
             />
-            <Link to='/dressroom'>
-              <button>
-                뒤로
-              </button>
-            </Link>
           </div>
           <AddClothesContainer />
         </div>
         <ClothesDetailContainer />
       </div>
+      <Link to='/dressroom'>
+        <button css={BackBtn}>
+          Back
+        </button>
+      </Link>
     </div>
-
   );
 }
 
@@ -57,8 +56,17 @@ const Closet = css`
   width: 80%;
 `;
 
-const GridContainer = css`
-
+const BackBtn = css`
+  width: 5rem;
+  height: 3rem;
+  position: absolute;
+  left: 73rem;
+  top: 53rem;
+  background: #ecc194;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
 `;
 
 const ItemsGridWrapper = css`
@@ -71,6 +79,7 @@ const ItemsGridWrapper = css`
   grid-auto-rows: minmax(100px, auto);
   grid-auto-columns: minmax(100px, auto);
   background-color: #BFAEA4;
+  border-radius: 0.5rem;
 `;
 
 const AddIcon = css`

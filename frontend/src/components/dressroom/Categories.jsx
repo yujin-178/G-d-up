@@ -31,7 +31,7 @@ const ulStyle = css`
   background-color: #fff;
   height: 4rem;
   width: 97%;
-  border-radius: 10px;
+  border-radius: 0.7rem;
   padding: 10px;
   margin: 0;
   box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.2);
