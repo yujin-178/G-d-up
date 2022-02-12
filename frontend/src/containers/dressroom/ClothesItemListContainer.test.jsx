@@ -7,7 +7,7 @@ import { render } from "@testing-library/react";
 import ClothesItemListContainer from './ClothesItemListContainer.jsx';
 import { MemoryRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { clothesData } from '../../../fixtures/clothesList';
+import { clothesData } from '../../fixtures/clothesList';
 import { useEffect } from 'react';
 
 jest.mock('react-redux');

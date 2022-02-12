@@ -8,7 +8,7 @@ if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function LaundryModal({ saveLaundry, laundryOpen, handleLaundry, iconSelect, selectedIcon, laundryLabel }) {
+export default function LaundryModal({ images ,saveLaundry, laundryOpen, handleLaundry, iconSelect, selectedIcon, laundryLabel }) {
   return (
     <div>
       <Modal
@@ -30,6 +30,7 @@ export default function LaundryModal({ saveLaundry, laundryOpen, handleLaundry, 
                 range={laundry['range']}
                 iconSelect={iconSelect}
                 selectedIcon={selectedIcon}
+                images={images}
               />
             ))}
             <div css={submitBtnContainer}>

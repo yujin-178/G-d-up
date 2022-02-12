@@ -1,5 +1,5 @@
 import { filteredClothesSelector } from './filterSelector';
-import { clothesData } from '../fixtures/clothesList';
+import { clothesData } from './fixtures/clothesList';
 const mockStore= (category='전체', selectedSeason=[], selectedColors=[], custom=[]) => ({
   clothesSlice: {
     clothes: clothesData,
