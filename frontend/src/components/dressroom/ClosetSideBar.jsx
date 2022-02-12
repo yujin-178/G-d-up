@@ -57,11 +57,12 @@ export default function ClosetSidebar(props) {
         <ul css={colorItems}>
           {colors.map(({ name, code }, index) => {
             const isSelected = selectedColors.includes(name);
+            const colorCode = code || 'linear-gradient(to right, blue, green, yellow, pink, red)';
             return (
               <li key={index} css={menuItem}>
                 <button
                   data-testid={name}
-                  css={colorButton({ code, isSelected })}
+                  css={colorButton({ colorCode, isSelected })}
                   onClick={() => onChangeColor(name)}
                 >
                 </button>
@@ -129,8 +130,8 @@ const colorItems = css`
   list-style:none;
 `;
 
-const colorButton = ({ code, isSelected }) => css`
-  background-color: #${code};
+const colorButton = ({ colorCode, isSelected }) => css`
+  background: ${colorCode};
   height: 25px;
   width: 25px;
   cursor: pointer;
