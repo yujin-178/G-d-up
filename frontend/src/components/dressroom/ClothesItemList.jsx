@@ -4,7 +4,8 @@ import ClothesItem from './ClothesItem.jsx';
 
 import { css } from "@emotion/react";
 
-export default function ClothesItemList({ clothes, onMouseOverHandler, OnMouseLeaveHandler }) {
+export default function ClothesItemList(props) {
+  const { clothes, onMouseOverHandler, OnMouseLeaveHandler, onClickHandler } = props;
   const numbers = [];
   for (let i = 0; i < 20; i++) {
     numbers.push(null);
@@ -18,6 +19,7 @@ export default function ClothesItemList({ clothes, onMouseOverHandler, OnMouseLe
           item={clothes[idx]}
           onMouseOverHandler={onMouseOverHandler}
           OnMouseLeaveHandler={OnMouseLeaveHandler}
+          onClickHandler={onClickHandler}
         />
       )}
     </div>

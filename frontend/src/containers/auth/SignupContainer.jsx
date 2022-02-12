@@ -23,7 +23,7 @@ export default function SignupContainer() {
 
   function handleClickSubmit(event) {
     const nickname = email.slice(0, email.indexOf('@'));
-    console.log(nickname);
+    console.log(nickname, event);
     const URL = 'http://localhost:8080/account/signup';
     axios.post(URL, {
       'email': email,

@@ -1,4 +1,4 @@
-import { clothesData } from '../../fixtures/clothesList';
+import { clothesData } from '../fixtures/clothesList';
 import reducer, {
   setClothes
 } from './clothesSlice';

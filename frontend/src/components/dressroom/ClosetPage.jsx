@@ -4,6 +4,7 @@ import ClothesItemListContainer from '../../containers/dressroom/ClothesItemList
 import FilterContainer from '../../containers/dressroom/FilterContainer.jsx';
 import AddClothesContainer from '../../containers/dressroom/AddClothesContainer.jsx';
 import ClothesDetailContainer from '../../containers/dressroom/ClothesDetailContainer.jsx';
+import BackImg from '../../../public/images/add_icon.svg'; 
 
 import { css } from '@emotion/react';
 
@@ -18,7 +19,7 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
           <ClothesItemListContainer />
           <img
             css={AddIcon}
-            src="/images/add_icon.svg"
+            src={BackImg}
             width="100rem"
             onClick={onClickModal} 
             alt="추가아이콘"

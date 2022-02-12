@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react';
 import { css, Global } from '@emotion/react';
 import Modal from 'react-modal';
-import { range } from 'lodash';
 import LaundryModalContainer from '../../containers/dressroom/LaundryModalContainer';
 import ResModal from './ResModal';
 
@@ -9,7 +8,7 @@ if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
+export default function AddClothes({ images, resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
   return (
     <div>
       <Global
@@ -100,16 +99,21 @@ export default function AddClothes({ resText, isResOpen, handleResponse, saveClo
 
             <div css={laundryContainer}>
               <p css={css`width:40px;`}>세탁:</p>
-              {range(selectedLaundry.length).map((i) => (
-                <img src={`laundry/${selectedLaundry[i]}.png`} alt={i} key={i}/>
-              ))}
+              {selectedLaundry.map((i) => {
+                const image = images[i];
+                return (
+                  <img src={image} alt={i} key={i} />
+                );
+              })}
               <div css={AddBtnContainer}>
                 <button css={AddBtn}
                   onClick={() => handleLaundry(true)}>
                   +
                 </button>
               </div>
-              <LaundryModalContainer />
+              <LaundryModalContainer
+                images={images}
+              />
             </div>
 
             <div css={tag}>
