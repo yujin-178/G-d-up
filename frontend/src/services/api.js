@@ -1,4 +1,5 @@
 import axios from 'axios';
+import html2canvas from 'html2canvas';
 
 export async function fetchLogin() {
   const url = '';
@@ -14,4 +15,12 @@ export async function loadClothesByUserName(userName) {
   });
 
   return res.data.data;
+}
+
+export async function createFile(element) {
+  const canvas = await html2canvas(element);
+  const data = canvas.toDataURL("image/jpg");
+  const response = await axios.get(data, { responseType: "blob" });
+  const blob = response.data;
+  return new File([blob], "filename.jpeg");
 }
