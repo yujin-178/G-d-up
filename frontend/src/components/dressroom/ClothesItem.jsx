@@ -8,7 +8,7 @@ export default function ClothesItem(props) {
   // hover기능을 넣을지 논의 후 refactoring 예정
   const {
     item,
-    onMouseOverHandler,
+    // onMouseOverHandler,
     OnMouseLeaveHandler,
     onClickHandler,
   } = props;
