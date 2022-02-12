@@ -81,7 +81,7 @@ public class FeedServiceImpl implements FeedService {
     @Override
     public List<RecommandDto> recommendService(String tagName) {
         List<RecommandDto> listRecommand = new ArrayList<RecommandDto>();
-        List<CodyHashtagEntity> che = codyHashtagRepository.findAllByTagName(tagName);
+        List<CodyHashtagEntity> che = codyHashtagRepository.findAllByTagNameContains(tagName);
 
         System.out.println(che.size());
         System.out.println("이건 동작하나??");
