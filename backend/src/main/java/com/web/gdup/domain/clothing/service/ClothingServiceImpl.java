@@ -218,7 +218,7 @@ public class ClothingServiceImpl implements ClothingService{
         JSONObject jsonObject = (JSONObject) parser.parse(str);
         JSONArray jArray = (JSONArray) jsonObject.get("records");
         JSONObject obj = (JSONObject) jArray.get(0);
-        String whitebgUrl = (String) obj.get("_output_url_whitebg");
+        String whitebgUrl = (String) obj.get("_output_url");
         return whitebgUrl;
     }
 
@@ -282,8 +282,8 @@ public class ClothingServiceImpl implements ClothingService{
     }
 
     private void download(String spec) {
+//        String outputDir = "/home/ubuntu/backend/removeBg";
         String outputDir = "/home/ubuntu/backend/removeBg";
-//        String outputDir = "C:\\SSAFY\\removeBg";
         InputStream is = null;
         FileOutputStream os = null;
         try {

@@ -7,7 +7,7 @@ import { render } from "@testing-library/react";
 import ClosetContainer from './ClosetContainer.jsx';
 import { MemoryRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { clothesData } from '../../../fixtures/clothesList.js';
+import { clothesData } from '../../fixtures/clothesList.js';
 
 const mockStore= () => ({
   clothesSlice: {

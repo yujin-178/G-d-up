@@ -5,7 +5,7 @@
 import React from 'react';
 import { render } from "@testing-library/react";
 import { useSelector } from 'react-redux';
-import { clothesData } from '../../../fixtures/clothesList.js';
+import { clothesData } from '../../fixtures/clothesList.js';
 import ClosetPage from './ClosetPage';
 import { MemoryRouter } from 'react-router-dom';
 

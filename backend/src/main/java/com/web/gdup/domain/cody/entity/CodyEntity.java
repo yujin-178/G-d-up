@@ -1,6 +1,5 @@
 package com.web.gdup.domain.cody.entity;
 
-import com.web.gdup.domain.image.dto.ImageDto;
 import lombok.*;
 import lombok.extern.java.Log;
 
