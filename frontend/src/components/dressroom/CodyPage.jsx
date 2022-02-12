@@ -25,14 +25,14 @@ export default function CodyPage({ handlegoToSlide, navigate, cards, offsetRadiu
 
         <div css={LeftArrow}>
           <ArrowLeftSquare
-            size={20}
+            size={40}
             css={arrowStyle}
             onClick={() => { handlegoToSlide(goToSlide - 1); }}
           />
         </div>
         <div css={RightArrow}>
           <ArrowRightSquare 
-            size={20}
+            size={40}
             css={arrowStyle}
             onClick={() => { handlegoToSlide(goToSlide + 1); }}
           />
@@ -68,8 +68,8 @@ const arrowStyle = css`
 
 const container = css`
   display: grid;
-  grid-template-columns: 1fr 50rem 1fr;
-  grid-template-rows: 5rem 35rem 5rem;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 1fr 4fr 1fr;
   grid-row-gap: 10px;
 `;
 

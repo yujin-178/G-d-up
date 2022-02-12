@@ -17,7 +17,6 @@ export default function Card({ imgurl }) {
       onMouseLeave={() => setShow(false)}
     >
       <img src={imgurl} alt='codyCard' />
-      <p>내용 어쩌구...사진 어쩌구..</p>
     </animated.div>
   );
 }
@@ -26,8 +25,8 @@ const cardStyle = css`
   flex-direction: column;
   justify-content: center;
   background-color: bisque;
-  width: 16rem;
+  width: 20rem;
   height: fit-content;
-  padding: 0 2rem 2rem 2rem;
+  padding: 10px;
   border-radius: 10px;
 `;
