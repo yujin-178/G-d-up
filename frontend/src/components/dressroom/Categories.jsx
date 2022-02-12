@@ -26,11 +26,11 @@ const CategoriesNav = css`
 
 const ulStyle = css`
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   background-color: #fff;
   height: 4rem;
-  width: 100%;
-  min-width: 600px;
+  width: 97%;
   border-radius: 10px;
   padding: 10px;
   margin: 0;

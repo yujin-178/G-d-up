@@ -78,8 +78,8 @@ const detailContainer = css`
   grid-row: 1 / 3;
   background-color: #3A3D41;
   opacity: 0.8;
-  width: 40rem;
-  margin: 1rem 3rem 1rem 3rem;
+  width: 50%;
+  margin: 2.5rem 1rem;
   font-size: 18px;
   position: relative;
 `;

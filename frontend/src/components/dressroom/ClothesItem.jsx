@@ -26,9 +26,9 @@ export default function ClothesItem(props) {
 const ClothesItemBox = css`
   position: relative;
   background-color: #FFFFFF;
-  width: 7rem;
-  height: 7rem;
-  margin: 0.5rem;
+  width: 5rem;
+  height: 5rem;
+  margin: 0.4rem;
   align-self: center;
   justify-self: center;
 `;

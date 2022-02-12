@@ -31,6 +31,6 @@ const ItemListContainer = css`
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 0.5rem;
   background-color: #BFAEA4;
-  width: 100%;
+  width: 70%;
   height: 100%;
 `;

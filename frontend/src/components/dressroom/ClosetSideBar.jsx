@@ -26,7 +26,7 @@ export default function ClosetSidebar(props) {
         placeholder="태그 입력"
         onKeyPress={onKeyPress}
       />
-      <div css={toggleContainer}>
+      {/* <div css={toggleContainer}>
         <div
           data-testid="toggle"
           css={toggleBtn({ isUserItem })}
@@ -34,7 +34,7 @@ export default function ClosetSidebar(props) {
           <div css={toggleBtnCircle({ isUserItem })}></div>
         </div>
         <p css={toggleTitle}>내 옷만 보기</p>
-      </div>
+      </div> */}
       <>
         <p>🌹 season</p>
         <ul css={seasonItems}>
@@ -90,11 +90,11 @@ const sidebarStyle = css`
   grid-column: 1 / 2;
   grid-row: 2 / 3;
   position: relative;
-  width: 250px;
-  height: 95%;
+  width: 90%;
+  height: 100%;
   box-sizing: border-box;
-  margin: 1rem;
-  padding: 30px 20px;
+  margin: 1rem 1rem;
+  padding: 1rem 1rem;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.l);
   box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.2);
   font-size: 20px;
@@ -119,11 +119,11 @@ const seasonItems = css`
 
 const menuItem = css`
   font-size: 15px;
-  padding: 15px 0px;
+  padding: 0.2rem 0px;
 `;
 
 const colorItems = css`
-  padding: 0 5px;
+  padding: 0 1rem;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -132,8 +132,8 @@ const colorItems = css`
 
 const colorButton = ({ code, isSelected }) => css`
   background-color: #${code};
-  height: 25px;
-  width: 25px;
+  height: 1.3rem;
+  width: 1.3rem;
   cursor: pointer;
   border-radius: 50%;
   border: 0;
