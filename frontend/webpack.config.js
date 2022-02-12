@@ -1,10 +1,16 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const path = require('path');
 
 module.exports = {
   entry: './src/index.jsx',
   mode: 'development',
-  plugins: [new HtmlWebpackPlugin({ template: './src/index.html' })],
+  plugins: [
+    new HtmlWebpackPlugin({ 
+      template: './public/index.html' 
+    }),
+    new CleanWebpackPlugin()
+  ],
   module: {
     rules: [
       {
@@ -12,6 +18,15 @@ module.exports = {
         exclude: /node_modules/,
         use: 'babel-loader',
       },
+      {
+        test: /\.(png|svg|jpg|jpge|gif|ico)$/,
+        use: [{
+          loader: 'url-loader',
+          options: {
+            limit: 10000,
+          }
+        }],
+      }
     ],
   },
   devServer: {
@@ -22,6 +37,6 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'build'),
   }
 };
