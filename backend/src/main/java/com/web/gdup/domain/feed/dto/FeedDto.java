@@ -1,6 +1,7 @@
 package com.web.gdup.domain.feed.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.web.gdup.domain.cody.entity.CodyEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -26,8 +27,9 @@ public class FeedDto {
     @Column(updatable = false, name = "registrationdate")
     private LocalDateTime registrationDate;
 
-    @Column(name = "codyid")
-    private int codyId;
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "codyid")
+    private CodyEntity cody;
 
     @Column(name = "username")
     private String userName;

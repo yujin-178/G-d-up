@@ -1,6 +1,5 @@
 package com.web.gdup.domain.feed.service;
 
-import com.web.gdup.domain.cody.entity.CodyEntity;
 import com.web.gdup.domain.feed.dto.FeedDto;
 import com.web.gdup.domain.feed.dto.RecommandDto;
 
