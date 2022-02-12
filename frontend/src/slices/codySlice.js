@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { loadCodyByUserName } from '../services/api';
 
 const initialState = {
-  'offsetRadius' : 2,
+  'offsetRadius' : 3,
   'showArrows' : false,
   'goToSlide' : null,
   'codyList' : [],

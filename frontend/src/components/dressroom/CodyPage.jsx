@@ -3,8 +3,9 @@ import Carousel from 'react-spring-3d-carousel';
 import { config } from 'react-spring';
 
 import { css } from "@emotion/react";
+import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 
-export default function CodyPage({ navigate, cards, offsetRadius, showArrows, goToSlide }) {
+export default function CodyPage({ handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
   return (
     <div>
       <div css={container}>
@@ -13,14 +14,28 @@ export default function CodyPage({ navigate, cards, offsetRadius, showArrows, go
           새 코디 생성하기
         </button>
         <div css={carousel}>
-          <h3>carousel</h3>
-          <Carousel 
+          <Carousel
             slides={cards}
             goToSlide={goToSlide}
             offsetRadius={offsetRadius}
             showNavigation={showArrows}
             animationConfig={config.gentle}
-          /> 
+          />
+        </div>
+
+        <div css={LeftArrow}>
+          <ArrowLeftSquare
+            size={20}
+            css={arrowStyle}
+            onClick={() => { handlegoToSlide(goToSlide - 1); }}
+          />
+        </div>
+        <div css={RightArrow}>
+          <ArrowRightSquare 
+            size={20}
+            css={arrowStyle}
+            onClick={() => { handlegoToSlide(goToSlide + 1); }}
+          />
         </div>
         <button css={backBtn} onClick={() => navigate('/dressroom')}>
           Back
@@ -30,10 +45,31 @@ export default function CodyPage({ navigate, cards, offsetRadius, showArrows, go
   );
 }
 
+const LeftArrow = css`
+  display: grid;
+  grid-column: 1;
+  grid-row: 2;
+  grid-columns: repeat(7,1fr);
+  grid-rows: repeat(7,1fr);
+`;
+
+const RightArrow = css`
+  display: grid;
+  grid-column: 3;
+  grid-row: 2;
+  grid-columns: repeat(7,1fr);
+  grid-rows: repeat(7,1fr);
+`;
+
+const arrowStyle = css`
+  grid-column: 2;
+  grid-row: 2;
+`;
+
 const container = css`
   display: grid;
-  grid-template-columns: 10rem 35rem 35rem;
-  grid-template-rows: 5rem 25rem 5rem;
+  grid-template-columns: 1fr 50rem 1fr;
+  grid-template-rows: 5rem 35rem 5rem;
   grid-row-gap: 10px;
 `;
 
@@ -54,7 +90,7 @@ const backBtn = css`
 const carousel = css`
   grid-column: 2;
   grid-row: 2;
-  width: 30%;
+  width: 70%;
   height: 500px;
   margin: 0 auto;
 `;

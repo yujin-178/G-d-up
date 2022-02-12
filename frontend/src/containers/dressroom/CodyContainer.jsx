@@ -22,6 +22,10 @@ export default function CodyContainer() {
   const cody = useSelector(state => state.codySlice);
   const { offsetRadius, showArrows, goToSlide, codyList } = cody;
 
+  function handlegoToSlide(value){
+    dispatch(setgoToSlide(value));
+  }
+
   const cardList = codyList.map((card) => {
     return {
       key: uuidv4(),
@@ -48,6 +52,7 @@ export default function CodyContainer() {
         goToSlide={goToSlide}
         offsetRadius={offsetRadius}
         showArrows={showArrows}
+        handlegoToSlide={handlegoToSlide}
       />
     </div>
   );
