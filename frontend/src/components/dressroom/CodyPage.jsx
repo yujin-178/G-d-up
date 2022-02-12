@@ -4,8 +4,9 @@ import { config } from 'react-spring';
 
 import { css } from "@emotion/react";
 import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
+import CodyList from '../../components/dressroom/CodyList';
 
-export default function CodyPage({ handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
+export default function CodyPage({ ScrolltoTop, codyList, ScrolltoBottom, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
   return (
     <div>
       <div css={container}>
@@ -31,19 +32,39 @@ export default function CodyPage({ handlegoToSlide, navigate, cards, offsetRadiu
           />
         </div>
         <div css={RightArrow}>
-          <ArrowRightSquare 
+          <ArrowRightSquare
             size={40}
             css={arrowStyle}
             onClick={() => { handlegoToSlide(goToSlide + 1); }}
           />
         </div>
-        <button css={backBtn} onClick={() => navigate('/dressroom')}>
+        <button
+          onClick={() => ScrolltoBottom()}
+          css={scrollBtn}
+        >
+          전체 보기
+        </button>
+        <button
+          css={backBtn}
+          onClick={() => navigate('/dressroom')}>
           Back
         </button>
       </div>
+      <CodyList
+        cards={codyList}
+        ScrolltoTop={ScrolltoTop}
+      />
     </div>
   );
 }
+
+const scrollBtn = css`
+  width: 150px;
+  height: 30px;
+  grid-column: 2;
+  grid-row : 3;
+  justify-self: center;
+`;
 
 const LeftArrow = css`
   display: grid;
@@ -74,17 +95,19 @@ const container = css`
 `;
 
 const createBtn = css`
-  grid-column: 3;
-  grid-row: 1;
   width: 150px;
   height: 30px;
+  position: fixed;
+  top: 30px;
+  right: 50px;
 `;
 
 const backBtn = css`
-  grid-column: 3;
-  grid-row: 3;
   width: 50px;
   height: 30px;
+  position: fixed;
+  bottom: 30px;
+  right: 50px;
 `;
 
 const carousel = css`

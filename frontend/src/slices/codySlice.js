@@ -7,6 +7,7 @@ const initialState = {
   'goToSlide' : null,
   'codyList' : [],
   'codyLoading' : false,
+  'moveScroll' : false,
 };
 
 export const setCody = createAsyncThunk(
@@ -28,6 +29,13 @@ export const codySlice = createSlice({
         goToSlide
       };
     },
+    setMoveScroll(state,action) {
+      const moveScroll = action.payload;
+      return {
+        ...state,
+        moveScroll
+      };
+    }
   },
   extraReducers: {
     [setCody.pending.type] : (state) => {
@@ -48,6 +56,7 @@ export const codySlice = createSlice({
 
 export const {
   setgoToSlide,
+  setMoveScroll,
 } = codySlice.actions;
 
 export default codySlice.reducer;

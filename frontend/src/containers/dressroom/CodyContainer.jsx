@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+// import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
+import { animateScroll as scroll } from 'react-scroll';
 import { v4 as uuidv4 } from 'uuid';
 
 import CodyPage from '../../components/dressroom/CodyPage';
@@ -22,7 +24,7 @@ export default function CodyContainer() {
   const cody = useSelector(state => state.codySlice);
   const { offsetRadius, showArrows, goToSlide, codyList } = cody;
 
-  function handlegoToSlide(value){
+  function handlegoToSlide(value) {
     dispatch(setgoToSlide(value));
   }
 
@@ -53,6 +55,9 @@ export default function CodyContainer() {
         offsetRadius={offsetRadius}
         showArrows={showArrows}
         handlegoToSlide={handlegoToSlide}
+        ScrolltoBottom={() => { scroll.scrollToBottom(); }}
+        ScrolltoTop={() => { scroll.scrollToTop(); }}
+        codyList={codyList}
       />
     </div>
   );
