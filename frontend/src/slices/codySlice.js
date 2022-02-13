@@ -9,6 +9,8 @@ const initialState = {
   'codyList': [],
   'codyLoading': false,
   'scrollisTop': true,
+  'cards': [],
+  'count': 0,
 };
 
 export const setCody = createAsyncThunk(
@@ -33,7 +35,7 @@ export const codySlice = createSlice({
     setMoveScroll(state, action) {
       const type = action.payload;
       let scrollisTop = '';
-      if (type === 'u'){
+      if (type === 'u') {
         scroll.scrollToTop();
         scrollisTop = true;
       } else if (type === 'd') {
@@ -43,6 +45,15 @@ export const codySlice = createSlice({
       return {
         ...state,
         scrollisTop
+      };
+    },
+    setCards(state, action) {
+      const cards = action.payload;
+      const { count } = state;
+      return {
+        ...state,
+        cards,
+        count : count+1
       };
     }
   },
@@ -66,6 +77,7 @@ export const codySlice = createSlice({
 export const {
   setgoToSlide,
   setMoveScroll,
+  setCards,
 } = codySlice.actions;
 
 export default codySlice.reducer;
