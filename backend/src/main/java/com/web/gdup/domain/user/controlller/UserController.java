@@ -45,7 +45,7 @@ public class UserController {
         return response;
     }
 
-    @PostMapping("/singup")
+    @PostMapping("/signup")
     @ApiOperation(value = "가입하기")
     public Object signup(@Valid @RequestBody SignupRequest request){
         final  BasicResponse result = new BasicResponse();
