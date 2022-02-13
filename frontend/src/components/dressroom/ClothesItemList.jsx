@@ -12,7 +12,7 @@ export default function ClothesItemList(props) {
   }
 
   return (
-    <div css={ItemContainer}>
+    <div css={ItemListContainer}>
       {numbers.map((number, idx) =>
         <ClothesItem
           key={idx}
@@ -26,13 +26,13 @@ export default function ClothesItemList(props) {
   );
 }
 
-const ItemContainer = css`
-  grid-column: 2 / 4;
-  grid-row: 2 / 4;
+const ItemListContainer = css`
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   padding: 0.5rem;
   background-color: #BFAEA4;
-  width: 100%;
+  width: 70%;
   height: 100%;
 `;
