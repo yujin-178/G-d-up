@@ -45,7 +45,7 @@ const DressRoom = css`
   margin: 10rem auto;
   width: 85rem;
   height: 50rem;
-  background-image: url("/images/dressroombackground.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/dressroombackground.jpg");
   background-size: cover;
   background-position: center;
 `;
