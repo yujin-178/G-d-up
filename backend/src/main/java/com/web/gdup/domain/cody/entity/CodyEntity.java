@@ -1,7 +1,9 @@
 package com.web.gdup.domain.cody.entity;
 
+import com.web.gdup.domain.image.entity.ImageEntity;
 import lombok.*;
 import lombok.extern.java.Log;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 @Table(name = "cody")
 @Builder
 @Log
+@EntityListeners(AuditingEntityListener.class)
 public class CodyEntity {
     @Id
     @NonNull
@@ -32,7 +35,9 @@ public class CodyEntity {
     String userName;
     @Column(name = "secret")
     int secret;
-    @Column(name = "imageid")
-    private int imageId;
+
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "imageid")
+    private ImageEntity imageModel;
 
 }

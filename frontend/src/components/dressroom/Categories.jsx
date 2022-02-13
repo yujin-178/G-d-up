@@ -4,28 +4,34 @@ import Category from './Category.jsx';
 
 export default function Categories({ categories, selectedCategory, handleClick }) {
   return (
-    <ul css={ulStyle}>
-      {categories.map((category, index) =>(
-        <Category
-          key={index}
-          item={category}
-          isSelected={selectedCategory === category}
-          handleClick={handleClick}
-        />
-      ))}
-    </ul>
+    <div css={CategoriesNav}>
+      <ul css={ulStyle}>
+        {categories.map((category, index) => (
+          <Category
+            key={index}
+            item={category}
+            isSelected={selectedCategory === category}
+            handleClick={handleClick}
+          />
+        ))}
+      </ul>
+    </div>
   );
 }
 
-const ulStyle = css`
+const CategoriesNav = css`
   grid-column: 1 / 3;
+  margin: 1rem 1rem 0rem 1rem;
+`;
+
+const ulStyle = css`
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   background-color: #fff;
   height: 4rem;
-  width: 100%;
-  min-width: 600px;
-  border-radius: 10px;
+  width: 97%;
+  border-radius: 0.7rem;
   padding: 10px;
   margin: 0;
   box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.2);
