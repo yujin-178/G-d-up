@@ -96,16 +96,21 @@ public class FeedController {
     )
     public Object getFeeds(@RequestParam String userName){
         List<FeedDto> feeds = feedService.getAllFeed(userName);
+        List<String> whetherToPush = likeService.getWhetherToPush(feeds, userName);
         ResponseEntity response = null;
 
         if(feeds != null){
             for(FeedDto feed : feeds){
                 System.out.println(feed);
             }
+            HashMap<String,Object> map = new HashMap<>();
+            map.put("feeds", feeds);
+            map.put("whetherToPush", whetherToPush);
+
             final BasicResponse result = new BasicResponse();
             result.status = true;
             result.message = "success";
-            result.data = feeds;
+            result.data = map;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {

@@ -32,14 +32,15 @@ export default function AddClothesContainer() {
   const { imgURL, tagInfo, tagGroup } = clothes;
 
   const imgInput = useRef(null);
-  const [ imgForm, setImg ] = useState(null);
+  const [imgForm, setImg] = useState(null);
+  const [loading, setLoading] = useState(null);
 
   const config = {
     Headers: {
       'Content-Type': 'multipart/form-data',
     },
   };
-	
+
   function handleModal(value) {
     dispatch(changeisModalOpen(value));
   }
@@ -58,13 +59,15 @@ export default function AddClothesContainer() {
   }
 
   function onImgChange(event) {
+    setLoading(true);
     const formData = new FormData();
     formData.append('imageFile', event.target.files[0]);
     setImg(event.target.files[0]);
-		
+
     axios.post(`http://i6b108.p.ssafy.io:8000/clothing/background`, formData, config)
       .then((res) => {
         dispatch(setImgURL(res.data.data));
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -73,7 +76,7 @@ export default function AddClothesContainer() {
       .then((res) => {
         const userName = 'admin';
         const data = res.data.data;
-        dispatch(changeTagInfo({ data,userName }));
+        dispatch(changeTagInfo({ data, userName }));
       });
   }
 
@@ -89,12 +92,12 @@ export default function AddClothesContainer() {
     formData.append('hashtag', tagGroup.join(' '));
     formData.append('washing', selectedIcon.join(' '));
 
-    axios.post(`http://i6b108.p.ssafy.io:8000/clothing/save`, formData ,config)
-      .then((res)=> {
+    axios.post(`http://i6b108.p.ssafy.io:8000/clothing/save`, formData, config)
+      .then((res) => {
         dispatch(changeResText(res.data.message));
         dispatch(changeisResOpen(true));
       })
-      .catch((err)=>{
+      .catch((err) => {
         dispatch(changeResText(err.data.data.message));
         dispatch(changeisResOpen(true));
       });
@@ -102,8 +105,8 @@ export default function AddClothesContainer() {
 
   function importAll(r) {
     let images = {};
-    r.keys().map((item) => { 
-      images[(item.replace('./', '')).replace('.png','')] = r(item).default; 
+    r.keys().map((item) => {
+      images[(item.replace('./', '')).replace('.png', '')] = r(item).default;
     });
     return images;
   }
@@ -129,6 +132,7 @@ export default function AddClothesContainer() {
         isResOpen={isResOpen}
         resText={resText}
         images={images}
+        loading={loading}
       />
     </div>
   );

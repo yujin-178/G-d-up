@@ -99,6 +99,7 @@ public class UserController {
             final BasicResponse result = new BasicResponse();
             result.status = true;
             result.message = "success";
+            result.data = userLists;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {

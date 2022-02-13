@@ -118,9 +118,9 @@ export default function CodyContainer() {
       <h1>CodyContainer</h1>
       <button onClick={() => {
         dispatch(resetFilter());
-        navigate('/dressroom');
+        navigate('/cody');
       }}>
-        드레스룸으로 돌아가기
+        코디 목록으로 돌아가기
       </button>
       <FilterContainer />
       <ClothesItemList
