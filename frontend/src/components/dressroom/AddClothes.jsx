@@ -3,12 +3,13 @@ import { css, Global } from '@emotion/react';
 import Modal from 'react-modal';
 import LaundryModalContainer from '../../containers/dressroom/LaundryModalContainer';
 import ResModal from './ResModal';
+import ScaleLoader from 'react-spinners/ScaleLoader';
 
 if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ images, resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
+export default function AddClothes({ loading, images, resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
   return (
     <div>
       <Global
@@ -28,10 +29,26 @@ export default function AddClothes({ images, resText, isResOpen, handleResponse,
             X
           </button>
           <div css={imgContainer}>
-            <img
-              src={preview}
-              css={previewImg}
-            />
+            {loading ?
+              <div css={css`transition: 0.5s;`}>
+                <p css={css`font-family: 'KOTRAHOPE'; font-size:20px;`}> 
+                  배경 제거하는 중 ... 
+                </p>
+                <ScaleLoader
+                  color='black'
+                  loading={loading}
+                  height={130}
+                  width={20}
+                  radius={15}
+                  margin={7}
+                />
+              </div>
+              :
+              <img
+                src={preview}
+                css={previewImg}
+              />
+            }
           </div>
 
           <div css={btnContainer}>
@@ -297,12 +314,15 @@ const Container = css`
 `;
 
 const imgContainer = css`
-	grid-column: 2;
 	display: flex;
+  grid-column: 2;
 	margin-top: 5rem;
 	border: 1px solid black;
 	width: 400px;
-	height: 300px;        
+	height: 300px;  
+  justify-content: center;
+  align-items: center;      
+  transition: 0.5s;
 `;
 
 const previewImg = css`
