@@ -85,10 +85,10 @@ public class UserController {
 
 
 
-    @GetMapping("/find/follow/")
+    @GetMapping("/find/follow/{userName}")
     @ApiOperation(value = "팔로우가 가능한 유저 목록", notes = "로그인 한 유저가 구독할 수 있는 유저들의 목록을 반환한다." +
             "파라미터로 현재 로그인된 유저의 name이 필요하다.")
-    public Object findFollow(@RequestParam (required = true) final String userName){
+    public Object findFollow(@PathVariable (required = true) final String userName){
         List<String> userLists = followService.findFollow(userName);
         ResponseEntity response = null;
 
@@ -108,10 +108,10 @@ public class UserController {
         return response;
     }
 
-    @GetMapping("/find/following/")
+    @GetMapping("/find/following/{userName}")
     @ApiOperation(value = "팔로잉 유저 목록", notes = "로그인 한 유저가 구독하고 있는 유저들의 목록을 반환한다." +
             "파라미터로 현재 로그인된 유저의 name이 필요하다.")
-    public Object findFollowing(@RequestParam (required = true) final String userName){
+    public Object findFollowing(@PathVariable (required = true) final String userName){
         List<String> userLists = followService.findFollowing(userName);
         ResponseEntity response = null;
 
@@ -122,6 +122,7 @@ public class UserController {
             final BasicResponse result = new BasicResponse();
             result.status = true;
             result.message = "success";
+            result.data = userLists;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
@@ -130,10 +131,10 @@ public class UserController {
         return response;
     }
 
-    @GetMapping("/find/follower/")
+    @GetMapping("/find/follower/{userName}")
     @ApiOperation(value = "팔로워 유저 목록", notes = "로그인 한 유저를 구독하고 있는 유저들의 목록을 반환한다." +
             "파라미터로 현재 로그인된 유저의 name이 필요하다.")
-    public Object findFollower(@RequestParam (required = true) final String userName){
+    public Object findFollower(@PathVariable (required = true) final String userName){
         List<String> userLists = followService.findFollower(userName);
         ResponseEntity response = null;
 
