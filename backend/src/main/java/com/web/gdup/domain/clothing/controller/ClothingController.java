@@ -106,6 +106,26 @@ public class ClothingController {
         return response;
     }
 
+    @GetMapping("/detail/base64/{clothingId}")
+    @ApiOperation(value = "옷 상세보기")
+    public ResponseEntity getDetailTest(@PathVariable("clothingId") int clothingId) {
+        HashMap<String, Object> map = clothingService.getClothingBase(clothingId);
+        ResponseEntity response = null;
+        BasicResponse result = new BasicResponse();
+
+        if(!map.isEmpty()) {
+            result.status = true;
+            result.message = "sucess";
+            result.data = map;
+            response = new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            result.status = false;
+            result.message = "해당하는 옷이 없습니다.";
+            response = new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
+        }
+        return response;
+    }
+
     @GetMapping("/list/{userName}")
     @ApiOperation(value = "옷 리스트 - 사용자 id 필요")
     public ResponseEntity getAllClothing(@PathVariable("userName") String userName) {

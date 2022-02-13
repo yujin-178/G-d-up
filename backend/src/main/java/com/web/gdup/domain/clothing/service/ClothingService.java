@@ -17,4 +17,6 @@ public interface ClothingService {
     public HashMap<String, Object> getClothing(int id);
     public Optional<ClothingEntity> deleteClothing(int clothing_id);
     public List<HashMap<String, Object>> getUserClothing(String user_name);
+    public List<HashMap<String, Object>> getUserClothingTest(String userName);
+    public HashMap<String, Object> getClothingBase(int clothingId);
 }

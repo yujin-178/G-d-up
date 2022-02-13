@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface FeedRepository extends JpaRepository<FeedDto, Integer> {
     List<FeedDto> findByUserName(String userName);
@@ -16,6 +15,6 @@ public interface FeedRepository extends JpaRepository<FeedDto, Integer> {
             , nativeQuery = true)
     List<FeedDto> findFollowingFeeds(@Param("loginName") String userName);
 
-
+    @Query(value = "select * from feed where codyid = :codyId", nativeQuery = true)
     List<FeedDto> findAllByCodyId(int codyId);
 }
