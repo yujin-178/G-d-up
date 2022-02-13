@@ -57,7 +57,7 @@ export const codySlice = createSlice({
       });
     },
     [setCody.rejected.type]: (state, action) => {
-      state.codyLoading = true;
+      state.codyLoading = false;
       console.log(action);
     }
   }
