@@ -5,19 +5,18 @@ import { config } from 'react-spring';
 import { css } from "@emotion/react";
 import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
+import { useScrollFadeIn } from '../../hooks/useScrollFadeIn';
 
 export default function CodyPage({ scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
+  // const animatedItem = {
+  //   0: useScrollFadeIn('down', 1, 0),
+  //   1: useScrollFadeIn('down', 1, 0.2),
+  //   2: useScrollFadeIn('up', 1, 0.3),
+  // };
+
   return (
     <div>
-      <button css={createBtn} onClick={() => navigate('./create')}>
-        새 코디 생성하기
-      </button>
-      <button
-        css={backBtn}
-        onClick={() => navigate('/dressroom')}>
-        Back
-      </button>
-      <div css={scrollisTop ? container : displayToggle}>
+      <div css={container}>
         <h2>Cody</h2>
         <div css={carousel}>
           <Carousel
@@ -51,12 +50,22 @@ export default function CodyPage({ scrollisTop, moveScroll, codyList, handlegoTo
         </button>
       </div>
       <div css={scrollisTop ? displayToggle : ''}>
-        <CodyList
-          cards={codyList}
-          moveScroll={moveScroll}
-          scrollisTop={scrollisTop}
-        />
+        <div {...useScrollFadeIn('down', 1, 0)}>
+          <CodyList
+            cards={codyList}
+            moveScroll={moveScroll}
+            scrollisTop={scrollisTop}
+          />
+        </div>
       </div>
+      <button css={createBtn} onClick={() => navigate('./create')}>
+        새 코디 생성하기
+      </button>
+      <button
+        css={backBtn}
+        onClick={() => navigate('/dressroom')}>
+        Back
+      </button>
     </div>
   );
 }
@@ -96,6 +105,7 @@ const container = css`
   grid-template-rows: 1fr 4fr 1fr;
   grid-row-gap: 10px;
   transition: all 1s;
+  height: 100vh;
 `;
 
 const displayToggle = css`

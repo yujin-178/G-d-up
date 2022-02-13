@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
+import { animateScroll as scroll } from 'react-scroll';
 import { v4 as uuidv4 } from 'uuid';
 
 import CodyPage from '../../components/dressroom/CodyPage';
@@ -16,13 +17,34 @@ import {
 export default function CodyContainer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  
+  const cody = useSelector(state => state.codySlice);
+  const { offsetRadius, showArrows, goToSlide, codyList, scrollisTop } = cody;
+  
+  const [scrollPosition, setScrollPosition] = useState(0);
+  function updateScroll(){
+    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  }
+  
   useEffect(() => {
     dispatch(setCody('admin'));
   }, []);
 
-  const cody = useSelector(state => state.codySlice);
-  const { offsetRadius, showArrows, goToSlide, codyList, scrollisTop } = cody;
+  useEffect(()=>{
+    const watch = () => {
+      window.addEventListener('scroll', updateScroll);
+    };
+    watch();
+    return () => {
+      window.removeEventListener('scroll', updateScroll);
+    };
+  }, [scrollPosition]);
+  
+  if (scrollPosition === 200 && scrollisTop === true) {
+    handleMoveScroll('d');
+  } else if (scrollPosition === 800 && scrollisTop === false) {
+    handleMoveScroll('u');
+  }
 
   function handlegoToSlide(value) {
     dispatch(setgoToSlide(value));
