@@ -17,7 +17,7 @@ export default function ClothesItemListContainer() {
   const { clothes, selectedClothes } = useSelector(state => state.clothesSlice);
 
   const onMouseOverHandler = debounce(clothes => {
-    if (selectedClothes.id !== clothes.id) {
+    if (selectedClothes.clothing.clothingId !== clothes.clothing.clothingId) {
       dispatch(selectClothes(clothes));
     }
   }, 250);
