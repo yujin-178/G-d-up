@@ -24,3 +24,8 @@ export async function createFile(element) {
   const blob = response.data;
   return new File([blob], "filename.jpeg");
 }
+
+export async function loadCodyByUserName(userName) {
+  const res = await axios.get(`http://i6b108.p.ssafy.io:8000/cody/read/${userName}`);
+  return res.data;
+}

@@ -1,11 +1,13 @@
 package com.web.gdup.domain.like.service;
 
+import com.web.gdup.domain.feed.dto.FeedDto;
 import com.web.gdup.domain.like.dto.LikeDto;
 import com.web.gdup.domain.like.entity.LikeEntity;
 import com.web.gdup.domain.like.repository.LikeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,5 +45,17 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public List<String> getUsers(int feedId) {
         return likeRepository.findUsers(feedId);
+    }
+
+    @Override
+    public List<String> getWhetherToPush(List<FeedDto> feedDtoList, String userName) {
+        List<String> whetherToPush = new ArrayList<>();
+        for(FeedDto feed : feedDtoList){
+            Optional<LikeEntity> likeEntityTmp = likeRepository.findByFeedIdAndUserName(feed.getFeedId(), userName);
+            if(likeEntityTmp.isPresent()){
+                whetherToPush.add("push");
+            }else whetherToPush.add("unpush");
+        }
+        return whetherToPush;
     }
 }
