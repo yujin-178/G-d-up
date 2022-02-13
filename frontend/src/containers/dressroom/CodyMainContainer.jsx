@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
-import { animateScroll as scroll } from 'react-scroll';
+// import { animateScroll as scroll } from 'react-scroll';
 import { v4 as uuidv4 } from 'uuid';
 
 import CodyPage from '../../components/dressroom/CodyPage';
