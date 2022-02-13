@@ -85,10 +85,10 @@ public class UserController {
 
 
 
-    @GetMapping("/find/follow/")
+    @GetMapping("/find/follow/{userName}")
     @ApiOperation(value = "팔로우가 가능한 유저 목록", notes = "로그인 한 유저가 구독할 수 있는 유저들의 목록을 반환한다." +
             "파라미터로 현재 로그인된 유저의 name이 필요하다.")
-    public Object findFollow(@RequestParam (required = true) final String userName){
+    public Object findFollow(@PathVariable (required = true) final String userName){
         List<String> userLists = followService.findFollow(userName);
         ResponseEntity response = null;
 
