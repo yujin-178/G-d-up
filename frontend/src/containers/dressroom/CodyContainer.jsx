@@ -1,68 +1,139 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-// import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
-import { v4 as uuidv4 } from 'uuid';
-
-import CodyPage from '../../components/dressroom/CodyPage';
-import CodyCard from '../../components/dressroom/CodyCard';
-
-import {
-  setgoToSlide,
-  setCody,
-  setMoveScroll
-} from '../../slices/codySlice';
+import { useNavigate } from 'react-router-dom';
+import CodyCreateForm from '../../components/dressroom/CodyCreateForm';
+import { resetFilter } from '../../slices/filterSlice';
+import FilterContainer from './FilterContainer';
+import ClothesItemList from '../../components/dressroom/ClothesItemList';
+import { setClothes } from '../../slices/clothesSlice';
+import axios from 'axios';
 
 export default function CodyContainer() {
+  const { clothes } = useSelector(state => state.clothesSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [codyItems, setCodyItems] = useState([]);
 
   useEffect(() => {
-    dispatch(setCody('admin'));
+    dispatch(setClothes('jisoon'));
   }, []);
 
-  const cody = useSelector(state => state.codySlice);
-  const { offsetRadius, showArrows, goToSlide, codyList, scrollisTop } = cody;
+  const onClickHandler = async (target) => {
+    const { clothingId } = target.clothing;
 
-  function handlegoToSlide(value) {
-    dispatch(setgoToSlide(value));
-  }
+    if (codyItems.find(item => item.clothingId === clothingId)) {
+      return;
+    }
 
-  function handleMoveScroll(type) {
-    dispatch(setMoveScroll(type));
-  }
+    const response = await axios.get(`http://i6b108.p.ssafy.io:8888/clothing/test/detail/${clothingId}`);
+    const { base64 } = response.data.data;
 
-  const cardList = codyList.map((card) => {
-    return {
-      key: uuidv4(),
-      content: (
-        <CodyCard imgurl={card} />
-      )
-    };
-  });
+    const z_index = codyItems.length + 1;
+    const initialPosition = { x: 0, y: 0, z: z_index, m: 1, };
+    const initialSize = { width: '160px', height: '160px' };
 
-  const table = cardList.map((element, index) => {
-    return {
-      ...element,
-      onClick: () => dispatch(setgoToSlide(index))
-    };
-  });
+    setCodyItems(() => [...codyItems, {
+      clothingId,
+      image: base64,
+      position: initialPosition,
+      size: initialSize
+    }]);
+  };
 
-  const [cards] = useState(table);
+  const handleOnStart = (activatedItem) => {
+    const standard = activatedItem.position.z;
+
+    if (codyItems.length === standard) {
+      return;
+    }
+
+    setCodyItems(codyItems.map((item) => {
+      const { z } = item.position;
+
+      if (item.clothingId === activatedItem.clothingId) {
+        return {
+          ...item,
+          position: {
+            ...item.position,
+            z: codyItems.length
+          }
+        };
+      }
+
+      if (z > standard) {
+        return {
+          ...item,
+          position: {
+            ...item.position,
+            z: z - 1
+          }
+        };
+      }
+
+      return item;
+    }));
+  };
+
+  const handleOnStop = (itemId, data) => {
+    setCodyItems(codyItems.map(item => {
+      if (item.clothingId === itemId) {
+        const { z, m } = item.position;
+        return {
+          ...item,
+          position: {
+            x: data.x,
+            y: data.y,
+            z,
+            m,
+          }
+        };
+      }
+
+      return item;
+    }));
+  };
+
+  const handleResizeStop = (itemId, ref, position) => {
+    setCodyItems(codyItems.map(item => {
+      if (item.clothingId === itemId) {
+        return {
+          ...item,
+          position: {
+            ...item.position,
+            ...position,
+          },
+          size: {
+            width: ref.style.width,
+            height: ref.style.height,
+          }
+        };
+      }
+
+      return item;
+    }));
+  };
 
   return (
-    <div>
-      <CodyPage
-        navigate={navigate}
-        cards={cards}
-        goToSlide={goToSlide}
-        offsetRadius={offsetRadius}
-        showArrows={showArrows}
-        handlegoToSlide={handlegoToSlide}
-        moveScroll={handleMoveScroll}
-        codyList={codyList}
-        scrollisTop={scrollisTop}
+    <>
+      <h1>CodyContainer</h1>
+      <button onClick={() => {
+        dispatch(resetFilter());
+        navigate('/cody');
+      }}>
+        코디 목록으로 돌아가기
+      </button>
+      <FilterContainer />
+      <ClothesItemList
+        clothes={clothes}
+        onClickHandler={onClickHandler}
       />
-    </div>
+      <CodyCreateForm
+        clothes={clothes}
+        codyItems={codyItems}
+        handleOnStart={handleOnStart}
+        handleOnStop={handleOnStop}
+        handleResizeStop={handleResizeStop}
+      />
+    </>
   );
 }
