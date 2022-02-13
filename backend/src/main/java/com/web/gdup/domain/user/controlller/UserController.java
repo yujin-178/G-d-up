@@ -108,7 +108,7 @@ public class UserController {
         return response;
     }
 
-    @GetMapping("/find/following/")
+    @GetMapping("/find/following")
     @ApiOperation(value = "팔로잉 유저 목록", notes = "로그인 한 유저가 구독하고 있는 유저들의 목록을 반환한다." +
             "파라미터로 현재 로그인된 유저의 name이 필요하다.")
     public Object findFollowing(@RequestParam (required = true) final String userName){
@@ -122,6 +122,7 @@ public class UserController {
             final BasicResponse result = new BasicResponse();
             result.status = true;
             result.message = "success";
+            result.data = userLists;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
