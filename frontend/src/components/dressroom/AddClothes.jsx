@@ -44,10 +44,10 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
                 />
               </div>
               :
-              imgError ?
-                <div css={css`text-align:center;`}>
-                  <p>
-                    {imgError}
+              imgError.text ?
+                <div>
+                  <p css={css`color: #c99f9f ; font-weight: bold; font-size: 20px;`}>
+                    {imgError.text} !!
                   </p>
                 </div>
                 :
@@ -152,6 +152,8 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
               <button
                 css={saveBtn}
                 onClick={() => saveClothes()}
+                id="saveBtn"
+                disabled
               >
                 저장
               </button>

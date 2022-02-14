@@ -10,7 +10,7 @@ const initialState = {
   imgURL: '',
   tagGroup: [],
   resloading: false,
-  imgError: { type: false, text: '' },
+  imgError: { type: 'background', text: '' },
 };
 
 export const deleteClothesById = createAsyncThunk(
@@ -85,6 +85,7 @@ export const clothesSlice = createSlice({
         tagInfo: { 'season': '' },
         imgURL: '',
         tagGroup: [],
+        imgError: { type: 'background', text: '' },
       };
     },
     changeresloading(state, action) {

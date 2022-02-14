@@ -104,16 +104,22 @@ export default function AddClothesContainer() {
       .then((res) => {
         dispatch(setImgURL(res.data.data));
         setLoading(false);
+        document.getElementById('saveBtn').disabled = false;
       })
       .catch((err) => {
         const message = err.message;
         setLoading(false);
-        handleimgError({ type: true, text : message });
+        handleimgError({ type: 'background', text : message });
       });
     axios.post(`http://i6b108.p.ssafy.io:8000/clothing/tag`, formData, config)
       .then((res) => {
         const data = res.data.data;
         dispatch(changeTagInfo({ data, userName }));
+        document.getElementById('saveBtn').disabled = false;
+      })
+      .catch((err) => {
+        const message = err.message;
+        handleimgError({ type: 'tag', text : message });
       });
   }
 
@@ -176,7 +182,7 @@ export default function AddClothesContainer() {
         loading={loading}
         resetClothes={handleresetClothes}
         resloading={resloading}
-        imgError={imgError.text}
+        imgError={imgError}
       />
     </div>
   );
