@@ -1,7 +1,8 @@
 package com.web.gdup.domain.cody.controller;
 
-import com.web.gdup.domain.cody.dto.*;
-import com.web.gdup.domain.cody.entity.CodyEntity;
+import com.web.gdup.domain.cody.dto.CodyDtoAll;
+import com.web.gdup.domain.cody.dto.CreateCody;
+import com.web.gdup.domain.cody.dto.UpdateCody;
 import com.web.gdup.domain.cody.service.CodyServiceImpl;
 import com.web.gdup.domain.model.BasicResponse;
 import io.swagger.annotations.ApiOperation;
@@ -11,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin
 @RestController
@@ -28,15 +29,28 @@ public class CodyController {
     )
     public ResponseEntity<BasicResponse> createCody(@RequestPart(value = "imageFile") MultipartFile file, @RequestPart(value = "createCody") CreateCody cc) {
         ResponseEntity<BasicResponse> responseBody;
-
         BasicResponse result = new BasicResponse();
+        Optional<CodyDtoAll> codyDtoAll;
+        try {
+            codyDtoAll  = Optional.ofNullable(cs.addCodyItem(cc, file));
+        }catch (Exception e){
+            result.status = false;
+            result.message = "잘못된 정보 입력";
+            result.data = null;
+            responseBody =  new ResponseEntity<>(result, HttpStatus.OK);
+            return responseBody;
+        }
 
-        result.status = true;
-        result.message = "코디 생성 성공";
-        result.data = cs.addCodyItem(cc, file);
-
+        if(codyDtoAll.isPresent()) {
+            result.status = true;
+            result.message = "코디 생성 성공";
+            result.data = codyDtoAll;
+        }else{
+            result.status = false;
+            result.message = "코디 생성 실패";
+            result.data = codyDtoAll;
+        }
         responseBody =  new ResponseEntity<>(result, HttpStatus.OK);
-
         return responseBody;
     }
 

@@ -1,7 +1,10 @@
 package com.web.gdup.domain.cody.service;
 
 
-import com.web.gdup.domain.cody.dto.*;
+import com.web.gdup.domain.cody.dto.ClothingInCody;
+import com.web.gdup.domain.cody.dto.CodyDtoAll;
+import com.web.gdup.domain.cody.dto.CreateCody;
+import com.web.gdup.domain.cody.dto.UpdateCody;
 import com.web.gdup.domain.cody.entity.CodyClothingEntity;
 import com.web.gdup.domain.cody.entity.CodyEntity;
 import com.web.gdup.domain.cody.entity.CodyHashtagEntity;
@@ -162,7 +165,7 @@ public class CodyServiceImpl implements CodyService {
 
 
     @Override
-    public CodyDtoAll addCodyItem(CreateCody cc, MultipartFile file) {
+    public CodyDtoAll addCodyItem(CreateCody cc, MultipartFile file) throws Exception {
         ImageDto image = saveImage(file);
 
         int imageId = imageService.insertImage(image);
