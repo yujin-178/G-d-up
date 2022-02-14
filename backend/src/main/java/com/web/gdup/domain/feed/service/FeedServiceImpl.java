@@ -34,45 +34,37 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public FeedDto modifyFeed(FeedDto feed) {
+    public FeedDto modifyFeed(FeedDto feed) throws Exception {
 
         Optional<FeedDto> feedDto = feedRepository.findById(feed.getFeedId());
-        if (feedDto.isPresent()) {
-            feedRepository.save(feed);
-            return feed;
-        }
-        return null;
+        feedDto.orElseThrow(() -> new Exception("null"));
+
+        return feedRepository.save(feed);
     }
 
     @Override
-    public List<FeedDto> getAllFeed(String userName) {
+    public List<FeedDto> getAllFeed(String userName) throws Exception {
         List<FeedDto> feeds = feedRepository.findFollowingFeeds(userName);
-        if (feeds.size() != 0)
-            return feeds;
-        return null;
+        if (feeds.size() == 0)
+            throw new Exception("null");
+        return feeds;
     }
 
     @Override
-    public boolean insertFeed(FeedDto feed) {
+    public boolean insertFeed(FeedDto feed) throws Exception {
 
-        FeedDto feedDto = feedRepository.save(feed);
+        Optional<FeedDto> feedDto = Optional.of(feedRepository.save(feed));
+        feedDto.orElseThrow(()-> new Exception("null"));
 
-        if (feedDto != null) {
-            System.out.println(feedDto);
-            return true;
-        }
-        return false;
+        return true;
     }
 
     @Override
-    public boolean deleteFeed(int feedId) {
+    public boolean deleteFeed(int feedId) throws Exception {
 
-        Optional<FeedDto> feedDto = feedRepository.findById(feedId);
-        if (feedDto.isPresent()) {
-            feedRepository.deleteById(feedId);
-            return true;
-        }
-        return false;
+        feedRepository.deleteById(feedId);
+
+    return true;
     }
 
     @Override

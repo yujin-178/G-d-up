@@ -36,112 +36,118 @@ public class FeedController {
     private CommentService commentService;
 
     @PostMapping("/write")
-    @ApiOperation(value = "Feed 작성하기 " , notes = "새로운 피드 글을 작성한다. ")
-    public Object writeFeed(@RequestBody FeedDto feed){
-        ResponseEntity response = null;
+    @ApiOperation(value = "Feed 작성하기 ", notes = "새로운 피드 글을 작성한다. ")
+    public Object writeFeed(@RequestBody FeedDto feed) {
 
-        if(feedService.insertFeed(feed)){
-            final BasicResponse result = new BasicResponse();
-            result.status = true;
-            result.message = "success";
-            response = new ResponseEntity<>(result, HttpStatus.OK);
+        final BasicResponse result = new BasicResponse();
+        boolean ans = false;
+
+        try {
+            ans = feedService.insertFeed(feed);
+        } catch (Exception e) {
+            result.status = false;
+            result.message = "피드 생성 실패";
+            return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
-        else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        return response;
+
+        result.status = ans;
+        result.message = "success";
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PutMapping("/modify")
-    @ApiOperation(value = "Feed 수정하기 " , notes = "작성된 피드 글을 수정한다. ")
-    public Object modifyFeed(@RequestBody FeedDto feed){
+    @ApiOperation(value = "Feed 수정하기 ", notes = "작성된 피드 글을 수정한다. ")
+    public Object modifyFeed(@RequestBody FeedDto feed) {
 
-        FeedDto feedDto = feedService.modifyFeed(feed);
+        FeedDto feedDto = null;
         ResponseEntity response = null;
+        final BasicResponse result = new BasicResponse();
+        try {
+            feedDto = feedService.modifyFeed(feed);
+        } catch (Exception e) {
+            result.status = false;
+            result.message = "존재 하지 않는 피드 수정 시도";
+            result.data = null;
+            return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+        }
 
-        if(feedDto != null){
-            final BasicResponse result = new BasicResponse();
-            result.status = true;
-            result.message = "success";
-            result.data = feedDto;
-            response = new ResponseEntity<>(result, HttpStatus.OK);
-        }
-        else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        return response;
+        result.status = true;
+        result.message = "피드 수정 성공";
+        result.data = feedDto;
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{feedId}")
-    @ApiOperation(value = "Feed 지우기 " , notes = "작성한 피드를 지운다. ")
-    public Object deleteFeed(@PathVariable int feedId  ){
-        //관련 댓글도 다 사라져야함
-        ResponseEntity response = null;
-        final BasicResponse result = new BasicResponse();
+    @ApiOperation(value = "Feed 지우기 ", notes = "작성한 피드를 지운다. ")
+    public Object deleteFeed(@PathVariable int feedId) {
 
-        if(feedService.deleteFeed(feedId)){
-            result.status = true;
-            result.message = "success";
-            result.data = null;
-            response = new ResponseEntity<>(result, HttpStatus.OK);
-        }
-        else {
-            result.status = true;
+        final BasicResponse result = new BasicResponse();
+        boolean deleteFeed = false;
+
+        try {
+            deleteFeed = feedService.deleteFeed(feedId);
+        } catch (Exception e) {
+            result.status = false;
             result.message = "DB에 없는 feedid를 삭제 시도 했습니다. .";
             result.data = null;
-            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
-        return response;
+
+        result.status = deleteFeed;
+        result.message = "success";
+        result.data = null;
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/all/{userName}")
     @ApiOperation(value = "모든 피드 불러오기",
             notes = "로그인된 사용자의 팔로잉의 feed를 반환한다."
     )
-    public Object getFeeds(@PathVariable String userName){
-        List<FeedDto> feeds = feedService.getAllFeed(userName);
+    public Object getFeeds(@PathVariable String userName) {
+        List<FeedDto> feeds = null;
 
-        ResponseEntity response = null;
         final BasicResponse result = new BasicResponse();
 
-        if(feeds != null){
-            List<String> whetherToPush = likeService.getWhetherToPush(feeds, userName);
-
-            HashMap<String,Object> map = new HashMap<>();
-            map.put("feeds", feeds);
-            map.put("whetherToPush", whetherToPush);
-
-            result.status = true;
-            result.message = "success";
-            result.data = map;
-            response = new ResponseEntity<>(result, HttpStatus.OK);
-        }
-        else {
+        try {
+            feeds = feedService.getAllFeed(userName);
+        } catch (Exception e) {
             result.status = true;
             result.message = "작성된 피드가 없습니다.";
             result.data = null;
-            response = new ResponseEntity<>(result,  HttpStatus.OK);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         }
 
-        return response;
+        List<String> whetherToPush = likeService.getWhetherToPush(feeds, userName);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("feeds", feeds);
+        map.put("whetherToPush", whetherToPush);
+
+        result.status = true;
+        result.message = "success";
+        result.data = map;
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @GetMapping ("/detail/{feedId}")
+    @GetMapping("/detail/{feedId}")
     @ApiOperation(value = "선택된 피드 불러오기")
-    public Object getFeed(@PathVariable int feedId){
+    public Object getFeed(@PathVariable int feedId) {
 
         ResponseEntity response = null;
         final BasicResponse result = new BasicResponse();
 
         Optional<FeedDto> feed = feedService.getFeed(feedId);
 
-        if(feed.isPresent()){
+        if (feed.isPresent()) {
 
             int likeCnt = likeService.getLikeCnt(feedId);
             List<String> users = likeService.getUsers(feedId);
             List<CommentEntity> comments = commentService.getComments(feedId);
 
-            HashMap<String,Object> map = new HashMap<>();
+            HashMap<String, Object> map = new HashMap<>();
             map.put("feed", feed);
             map.put("likeCnt", likeCnt);
             map.put("users", users);
@@ -151,7 +157,7 @@ public class FeedController {
             result.message = "success";
             result.data = map;
             response = new ResponseEntity<>(result, HttpStatus.OK);
-        }  else {
+        } else {
             result.status = true;
             result.message = "DB에 없는 feedid를 조회했습니다.";
             result.data = null;
@@ -160,18 +166,18 @@ public class FeedController {
         return response;
     }
 
-    @GetMapping ("/like/push/{feedId}/{userName}")
+    @GetMapping("/like/push/{feedId}/{userName}")
     @ApiOperation(value = "피드 좋아요 누르기",
             notes = "좋아요 누를 피드 번호와 현재 로그인 된 유저 이름을 파라미터로 받는다. ")
-    public Object pushLike(@PathVariable int feedId, @PathVariable String userName){
+    public Object pushLike(@PathVariable int feedId, @PathVariable String userName) {
 
 
         Optional<FeedDto> feed = feedService.getFeed(feedId);
-        
+
         ResponseEntity response = null;
         final BasicResponse result = new BasicResponse();
-        
-        if(!feed.isPresent()){ // 좋아요 누를 피드가 현재 db에 없는 경우
+
+        if (!feed.isPresent()) { // 좋아요 누를 피드가 현재 db에 없는 경우
             result.status = true;
             result.message = "DB에 없는 feedid에 접근했습니다.";
             result.data = null;
@@ -180,10 +186,10 @@ public class FeedController {
             result.status = true;
             result.message = "success";
 
-            if(likeService.pushLike(feedId, userName)){
+            if (likeService.pushLike(feedId, userName)) {
                 result.data = "push";
                 response = new ResponseEntity<>(result, HttpStatus.OK);
-            }  else {
+            } else {
                 result.data = "unpush";
                 response = new ResponseEntity<>(result, HttpStatus.OK);
             }
