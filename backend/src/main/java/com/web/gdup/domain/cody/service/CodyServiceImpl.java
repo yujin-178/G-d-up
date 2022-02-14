@@ -52,10 +52,13 @@ public class CodyServiceImpl implements CodyService {
     }
 
     @Override
-    public List<CodyDtoAll> getUserCodyList(String name) {
+    public List<CodyDtoAll> getUserCodyList(String name) throws Exception {
 
         List<CodyEntity> codyEntities = codyRepository.findAllByUserName(name);
         List<CodyDtoAll> codyDtoAlls = new ArrayList<>();
+        if(codyDtoAlls.size() == 0){
+            throw new Exception("null");
+        }
         for (CodyEntity codyEntity : codyEntities) {
             List<String> codyTagList = new ArrayList<>();
             List<CodyHashtagEntity> codyHashtagEntities = codyHashtagRepository.findAllByCodyId(codyEntity.getCodyId());
@@ -64,9 +67,7 @@ public class CodyServiceImpl implements CodyService {
             }
             codyDtoAlls.add(new CodyDtoAll(codyEntity, codyTagList));
         }
-
         return codyDtoAlls;
-
     }
 
     @Override

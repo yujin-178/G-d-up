@@ -14,7 +14,7 @@ public interface CodyService {
 
     public List<CodyEntity> getAllCodyList();
 
-    public List<CodyDtoAll> getUserCodyList(String id);
+    public List<CodyDtoAll> getUserCodyList(String id) throws Exception;
 
     public int deleteCodyItem(int id);
 

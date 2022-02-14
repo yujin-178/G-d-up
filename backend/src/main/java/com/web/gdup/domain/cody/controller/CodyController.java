@@ -128,10 +128,20 @@ public class CodyController {
 
         ResponseEntity<BasicResponse> responseBody;
         BasicResponse result = new BasicResponse();
-        List<CodyDtoAll> codyDtoAlls = cs.getUserCodyList(userName);
+        List<CodyDtoAll> codyDtoAlls = null;
+        try {
+            codyDtoAlls = cs.getUserCodyList(userName);
+        }catch (Exception e){
+            result.status = false;
+            result.message = "잘못된 정보 입력";
+            result.data = null;
+
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+            return responseBody;
+        }
         if (codyDtoAlls.size() == 0) {
             result.status = true;
-            result.message = userName + "의 코디 목록은 비어 있습니다.";
+            result.message = userName + "의 코디 목록은 비어 있음";
             result.data = null;
 
             responseBody = new ResponseEntity<>(result, HttpStatus.OK);
