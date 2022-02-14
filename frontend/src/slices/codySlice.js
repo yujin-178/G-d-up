@@ -25,8 +25,8 @@ export const createCody = createAsyncThunk(
   async (codyInfo) => {
     const { canvas } = codyInfo;
     const file = await createFile(canvas);
-    await postCody({ ...codyInfo, file });
-    return codyInfo;
+    const response = await postCody({ ...codyInfo, file });
+    return response.data.data;
   }
 );
 
@@ -80,8 +80,7 @@ export const codySlice = createSlice({
     },
     [createCody.fulfilled]: (state, { payload }) => {
       state.loading = false;
-      // 백엔드에서 완성하면 추가 예정
-      //state.codyList = [...state.codyList, payload];
+      state.codyList = [...state.codyList, payload];
       state.modalType = 'POST';
     },
     [createCody.rejected]: (state) => {
