@@ -19,13 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.text.html.Option;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class CodyServiceImpl implements CodyService {
@@ -229,6 +227,9 @@ public class CodyServiceImpl implements CodyService {
                 .imageModel(ans.getImageModel())
                 .hashList(tagList)
                 .build();
+
+        Optional<CodyDtoAll> test =null ;
+        test.orElseThrow(() -> new Exception("null"));
 
         return codyDtoAll;
 
