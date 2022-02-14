@@ -5,7 +5,7 @@ import ClothesItem from './ClothesItem.jsx';
 import { css } from "@emotion/react";
 
 export default function ClothesItemList(props) {
-  const { clothes, filteredClothes, onMouseOverHandler, OnMouseLeaveHandler, onClickHandler } = props;
+  const { filteredClothes, onMouseOverHandler, OnMouseLeaveHandler, onClickHandler } = props;
   const numbers = [];
   for (let i = 0; i < 20; i++) {
     numbers.push(null);

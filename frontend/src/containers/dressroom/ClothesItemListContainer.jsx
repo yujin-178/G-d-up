@@ -15,7 +15,7 @@ export default function ClothesItemListContainer() {
     dispatch(setClothes('jisoon'));
   }, []);
 
-  const { clothes, selectedClothes } = useSelector(state => state.clothesSlice);
+  const { selectedClothes } = useSelector(state => state.clothesSlice);
   const filteredClothes = useSelector(state => filteredClothesSelector(state));
 
   const onMouseOverHandler = debounce(clothes => {
@@ -31,7 +31,6 @@ export default function ClothesItemListContainer() {
   return (
     <div>
       <ClothesItemList
-        clothes={clothes}
         filteredClothes={filteredClothes}
         onMouseOverHandler={onMouseOverHandler}
         OnMouseLeaveHandler={OnMouseLeaveHandler}
