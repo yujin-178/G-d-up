@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ loading, images, resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
+export default function AddClothes({ resetClothes, loading, images, resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
   return (
     <div>
       <Global
@@ -17,7 +17,7 @@ export default function AddClothes({ loading, images, resText, isResOpen, handle
       />
       <Modal
         isOpen={isModalOpen}
-        onRequestClose={() => modalToggle(false)}
+        onRequestClose={() => {modalToggle(false); resetClothes();}}
         closeTimeoutMS={500}
         onAfterOpen={() => { document.body.style.overflow = 'hidden'; }}
         onAfterClose={() => document.body.removeAttribute('style')}
@@ -25,14 +25,14 @@ export default function AddClothes({ loading, images, resText, isResOpen, handle
         <div css={Container}>
           <button
             css={CloseBtn}
-            onClick={() => modalToggle(false)}>
+            onClick={() => { modalToggle(false); resetClothes(); }} >
             X
           </button>
           <div css={imgContainer}>
             {loading ?
               <div css={css`transition: 0.5s;`}>
-                <p css={css`font-family: 'KOTRAHOPE'; font-size:20px;`}> 
-                  배경 제거하는 중 ... 
+                <p css={css`font-family: 'KOTRAHOPE'; font-size:20px;`}>
+                  배경 제거하는 중 ...
                 </p>
                 <ScaleLoader
                   color='black'
@@ -151,7 +151,7 @@ export default function AddClothes({ loading, images, resText, isResOpen, handle
               </button>
               <button
                 css={cancelBtn}
-                onClick={() => modalToggle(false)}
+                onClick={() => {modalToggle(false); resetClothes();}}
               >
                 취소
               </button>

@@ -8,18 +8,18 @@ if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function LaundryModal({ images ,saveLaundry, laundryOpen, handleLaundry, iconSelect, selectedIcon, laundryLabel }) {
+export default function LaundryModal({ resetlaundry ,images ,saveLaundry, laundryOpen, handleLaundry, iconSelect, selectedIcon, laundryLabel }) {
   return (
     <div>
       <Modal
         isOpen={laundryOpen}
-        onRequestClose={() => handleLaundry(false)}
+        onRequestClose={() => {handleLaundry(false); resetlaundry();}}
         closeTimeoutMS={500}
       >
         <div css={Container}>
           <button
             css={CloseBtn}
-            onClick={() => handleLaundry(false)}>
+            onClick={() => {handleLaundry(false); resetlaundry();}}>
             X
           </button>
           <div css={detailContainer}>
@@ -42,7 +42,7 @@ export default function LaundryModal({ images ,saveLaundry, laundryOpen, handleL
               </button>
               <button
                 css={cancelBtn}
-                onClick={() => handleLaundry(false)}
+                onClick={() => {handleLaundry(false); resetlaundry();}}
               >
                 취소
               </button>

@@ -12,12 +12,14 @@ import {
 
 import {
   changelaundryOpen,
+  resetlaundry,
 } from '../../slices/laundrySlice';
 
 import {
   changeTagInfo,
   setImgURL,
-  selectSeason
+  selectSeason,
+  resetClothes,
 } from '../../slices/clothesSlice';
 
 export default function AddClothesContainer() {
@@ -46,6 +48,11 @@ export default function AddClothesContainer() {
 
   function handleLaundry(value) {
     dispatch(changelaundryOpen(value));
+  }
+
+  function handleresetClothes() {
+    dispatch(resetClothes());
+    dispatch(resetlaundry());
   }
 
   function handleSeason(value) {
@@ -94,6 +101,7 @@ export default function AddClothesContainer() {
       .then((res) => {
         dispatch(changeResText(res.data.message));
         dispatch(changeisResOpen(true));
+        handleresetClothes();
       })
       .catch((err) => {
         dispatch(changeResText(err.data.data.message));
@@ -131,6 +139,7 @@ export default function AddClothesContainer() {
         resText={resText}
         images={images}
         loading={loading}
+        resetClothes={handleresetClothes}
       />
     </div>
   );

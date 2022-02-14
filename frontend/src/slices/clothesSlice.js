@@ -76,6 +76,14 @@ export const clothesSlice = createSlice({
           'season': action.payload
         }
       };
+    },
+    resetClothes(state) {
+      return {
+        ...state,
+        tagInfo : { 'season': '' },
+        imgURL: '',
+        tagGroup: [],
+      };
     }
   },
   extraReducers: {
@@ -134,6 +142,7 @@ export const {
   changeTagInfo,
   setImgURL,
   selectSeason,
+  resetClothes,
 } = clothesSlice.actions;
 
 export default clothesSlice.reducer;

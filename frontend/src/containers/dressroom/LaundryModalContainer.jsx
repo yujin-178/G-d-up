@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   changelaundryOpen,
   changeSelectedIcon,
+  resetlaundry,
 } from '../../slices/laundrySlice';
 import { range } from 'lodash';
 
@@ -35,6 +36,10 @@ export default function laundryModalContainer({ images }) {
     // 백엔드 요청 보내기
   }
 
+  function handleresetLaundry(){
+    dispatch(resetlaundry());
+  }
+
   return (
     <div>
       <LaundryModal
@@ -45,6 +50,7 @@ export default function laundryModalContainer({ images }) {
         laundryLabel={laundryLabel}
         saveLaundry={saveLaundry}
         images={images}
+        resetlaundry={handleresetLaundry}
       />
     </div>
   );
