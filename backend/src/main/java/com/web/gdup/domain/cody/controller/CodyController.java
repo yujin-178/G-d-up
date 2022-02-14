@@ -103,20 +103,24 @@ public class CodyController {
 
         ResponseEntity<BasicResponse> responseBody;
         BasicResponse result = new BasicResponse();
-        int deleteId = cs.deleteCodyItem(codyId);
-        if (deleteId == 0) {
+        int deleteId = 0;
+
+        try {
+            deleteId = cs.deleteCodyItem(codyId);
+        } catch (Exception e) {
             result.status = true;
             result.message = "코디 삭제 실패 - 존재하지 않는 코디";
-            result.data = 0;
+            result.data = null;
             responseBody = new ResponseEntity<>(result, HttpStatus.OK);
-        } else {
-            result.status = true;
-            result.message = "코디 삭제 성공";
-            result.data = codyId;
-            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+            return responseBody;
         }
-        return responseBody;
 
+        result.status = true;
+        result.message = "코디 삭제 성공";
+        result.data = deleteId;
+        responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+
+        return responseBody;
     }
 
     @GetMapping(value = "/read/{userName}")
@@ -131,7 +135,7 @@ public class CodyController {
         List<CodyDtoAll> codyDtoAlls = null;
         try {
             codyDtoAlls = cs.getUserCodyList(userName);
-        }catch (Exception e){
+        } catch (Exception e) {
             result.status = false;
             result.message = "잘못된 정보 입력";
             result.data = null;

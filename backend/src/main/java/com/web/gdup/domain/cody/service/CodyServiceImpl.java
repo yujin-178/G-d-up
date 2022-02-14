@@ -56,9 +56,9 @@ public class CodyServiceImpl implements CodyService {
 
         List<CodyEntity> codyEntities = codyRepository.findAllByUserName(name);
         List<CodyDtoAll> codyDtoAlls = new ArrayList<>();
-        if(codyDtoAlls.size() == 0){
+        if(codyDtoAlls.size() == 0)
             throw new Exception("null");
-        }
+
         for (CodyEntity codyEntity : codyEntities) {
             List<String> codyTagList = new ArrayList<>();
             List<CodyHashtagEntity> codyHashtagEntities = codyHashtagRepository.findAllByCodyId(codyEntity.getCodyId());
@@ -71,11 +71,11 @@ public class CodyServiceImpl implements CodyService {
     }
 
     @Override
-    public int deleteCodyItem(int id) {
+    public int deleteCodyItem(int id) throws Exception {
         CodyEntity tmp = codyRepository.getOne(id);
 
         if (codyRepository.deleteByCodyId(id) == 0)
-            return 0;
+            throw new Exception("null");
 
         int imageId = tmp.getImageModel().getImageId();
 
