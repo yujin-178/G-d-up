@@ -8,7 +8,7 @@ import CodyList from '../../components/dressroom/CodyList';
 
 export default function CodyPage({ scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
   return (
-    <div>
+    <div css={CodyBackground}>
       <button css={createBtn} onClick={() => navigate('/codycreate')}>
         새 코디 생성하기
       </button>
@@ -60,6 +60,13 @@ export default function CodyPage({ scrollisTop, moveScroll, codyList, handlegoTo
     </div>
   );
 }
+
+const CodyBackground = css`
+  height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/codybackground.jpg");
+  background-size: cover;
+  background-position: center;
+`;
 
 const scrollBtn = css`
   width: 150px;
