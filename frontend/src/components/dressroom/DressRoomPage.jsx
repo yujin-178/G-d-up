@@ -11,21 +11,21 @@ export default function DressRoomContainer() {
     <div css={Container}>
       <div css={DressRoom}>
         <h2 css={Title}>드레스룸</h2>
-        <div css={GridContainer}>
-          <div css={BtnItem}>
-            <Link to='/cody'>
-              <button css={Button}>
-                코디 목록으로
-              </button>
-            </Link>
-          </div>
-          <div css={BtnItem}>
-            <Link to='/closet'>
-              <button css={Button}>
-                옷장 가기
-              </button>
-            </Link>
-          </div>
+        <div css={[BtnItem, CodyBtn]}>
+          <Link to='/cody'>
+            <button css={TextButton}>
+              코디 목록으로
+            </button>
+            <img css={Btn} src="/images/codyBtn.svg" alt="코디버튼" />
+          </Link>
+        </div>
+        <div css={[BtnItem, ClosetBtn]}>
+          <Link to='/closet'>
+            <button css={TextButton}>
+              옷장 가기
+            </button>
+            <img css={Btn} src="/images/closetBtn.svg" alt="코디버튼" />
+          </Link>
         </div>
         <Link to='/'>
           <button css={BackBtn}>
@@ -39,11 +39,33 @@ export default function DressRoomContainer() {
 
 const DressRoom = css`
   display: grid;
-  grid-template-columns: 25% 50% 25%;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   height: 100vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/dressroombackground.jpg");
   background-size: cover;
   background-position: center;
+`;
+
+const BtnItem = css`
+  width: 70%;
+  height: 32%;
+  margin: 4rem 5rem;
+  background-color: #685f60;
+  opacity: 0.8;
+  grid-row: 2 / 3;
+  border-radius: 4rem;
+`;
+
+const CodyBtn = css`
+  grid-column: 2 / 3;
+`;
+
+const ClosetBtn = css`
+  grid-column: 3 / 4;
+`;
+
+const Btn = css`
+  width: 100%;
 `;
 
 const Title = css`
@@ -57,8 +79,8 @@ const Container = css`
   height: 100%;
 `;
 
-const Button = css`
-  margin: 0;
+const TextButton = css`
+  margin: 1rem 2rem;
   padding: 0.5rem 1rem;
 
   font-family: "Noto Sans KR", sans-serif;
@@ -83,6 +105,3 @@ const GridContainer = css`
   grid-template-columns: 1fr 1fr 1fr;
 `;
 
-const BtnItem = css`
-  margin: 4rem auto;
-`;
