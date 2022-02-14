@@ -160,18 +160,29 @@ public class FeedController {
     @ApiOperation(value = "피드 좋아요 누르기",
             notes = "좋아요 누를 피드 번호와 현재 로그인 된 유저 이름을 파라미터로 받는다. ")
     public Object pushLike(@PathVariable int feedId, @PathVariable String userName){
+
+
+        Optional<FeedDto> feed = feedService.getFeed(feedId);
+        
         ResponseEntity response = null;
-
         final BasicResponse result = new BasicResponse();
-        result.status = true;
-        result.message = "success";
+        
+        if(!feed.isPresent()){ // 좋아요 누를 피드가 현재 db에 없는 경우
+            result.status = true;
+            result.message = "DB에 없는 feedid에 접근했습니다.";
+            result.data = null;
+            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+        } else { // 좋아요 누를 피드가 현재 db에 있는 경우
+            result.status = true;
+            result.message = "success";
 
-        if(likeService.pushLike(feedId, userName)){
-            result.data = "push";
-            response = new ResponseEntity<>(result, HttpStatus.OK);
-        }  else {
-            result.data = "unpush";
-            response = new ResponseEntity<>(result, HttpStatus.OK);
+            if(likeService.pushLike(feedId, userName)){
+                result.data = "push";
+                response = new ResponseEntity<>(result, HttpStatus.OK);
+            }  else {
+                result.data = "unpush";
+                response = new ResponseEntity<>(result, HttpStatus.OK);
+            }
         }
         return response;
     }
