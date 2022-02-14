@@ -7,7 +7,7 @@ import { season } from '../../constants/filter';
 export default function ClothesDetailContainer() {
   const { selectedClothes } = useSelector(state => state.clothesSlice);
   const dispatch = useDispatch();
-  // todo: username과 clothes의 username이 일치하는 경우
+  // todo: username과 clothes의 username이 일치하는 경우만 삭제 가능
   const deleteHandler = clothesId => {
     dispatch(deleteClothesById(clothesId));
   };

@@ -30,7 +30,7 @@ function FilterContainer() {
     }
   };
 
-  const deleteCustomHandler = value => {
+  const deleteTagHandler = value => {
     dispatch(deleteCustomFilter(value));
   };
 
@@ -71,7 +71,7 @@ function FilterContainer() {
         onChangeSeason={seasonHandler}
         onChangeColor={colorHandler}
         customTags={custom}
-        deleteCustomHandler={deleteCustomHandler}
+        deleteTagHandler={deleteTagHandler}
         inputRef={inputRef}
         onKeyPress={onKeyPress}
       />

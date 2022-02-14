@@ -1,5 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/react';
+import TagSearchBar from './TagSearchBar';
+import Tag from './Tag';
 
 export default function ClosetSidebar(props) {
   const {
@@ -11,19 +13,15 @@ export default function ClosetSidebar(props) {
     onChangeSeason,
     onChangeColor,
     customTags,
-    deleteCustomHandler,
+    deleteTagHandler,
     inputRef,
     onKeyPress,
   } = props;
 
   return (
     <aside css={sidebarStyle}>
-      <input
-        data-testid="input"
-        ref={inputRef}
-        css={searchInputStyle}
-        type="text"
-        placeholder="태그 입력"
+      <TagSearchBar
+        inputRef={inputRef}
         onKeyPress={onKeyPress}
       />
       {/* <div css={toggleContainer}>
@@ -57,11 +55,12 @@ export default function ClosetSidebar(props) {
         <ul css={colorItems}>
           {colors.map(({ name, code }, index) => {
             const isSelected = selectedColors.includes(name);
+            const colorCode = code || 'linear-gradient(to right, blue, green, yellow, pink, red)';
             return (
               <li key={index} css={menuItem}>
                 <button
                   data-testid={name}
-                  css={colorButton({ code, isSelected })}
+                  css={colorButton({ colorCode, isSelected })}
                   onClick={() => onChangeColor(name)}
                 >
                 </button>
@@ -73,12 +72,11 @@ export default function ClosetSidebar(props) {
       <ul css={tagContainer}>
         {customTags.map((value, index) => {
           return (
-            <li key={index} css={tagItem}>
-              <p css={tagTitle}>{value}</p>
-              <button
-                css={tagDeleteBtn}
-                onClick={() => deleteCustomHandler(value)}>x</button>
-            </li>
+            <Tag
+              key={index}
+              value={value}
+              deleteTagHandler={deleteTagHandler}
+            />
           );
         })}
       </ul>
@@ -102,16 +100,6 @@ const sidebarStyle = css`
   border-radius: 0.7rem;
 `;
 
-const searchInputStyle = css`
-  height: 35px;
-  outline: 0;
-  border: 0;
-  border-radius: 5px;
-  border-bottom: 2px solid silver;
-  width: 100%;
-  font-size: 19px;
-`;
-
 const seasonItems = css`
   font-size: 15px;
   padding: 0 1px;
@@ -131,8 +119,8 @@ const colorItems = css`
   list-style:none;
 `;
 
-const colorButton = ({ code, isSelected }) => css`
-  background-color: #${code};
+const colorButton = ({ colorCode, isSelected }) => css`
+  background: ${colorCode};
   height: 1.3rem;
   width: 1.3rem;
   cursor: pointer;
@@ -189,19 +177,6 @@ const tagContainer = css`
   list-style:none;
 `;
 
-const tagItem = css`
-  position: relative;
-  display: flex;
-  background-color: white;
-  height: 25px;
-  padding: 4px;
-  border-radius: 18px;
-  font-size: 15px;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
-  margin: 5px;
-  min-width: 50px;
-`;
-
 const checkbox = css`
   vertical-align: middle;
   position: relative;
@@ -211,17 +186,4 @@ const checkbox = css`
 const checkboxTitle = css`
   display: inline-block;
   margin-left: 10px;
-`;
-
-const tagTitle = css`
-  margin: 0;
-  padding: 4px;
-  vertical-align: middle;
-`;
-
-const tagDeleteBtn = css`
-  border:none;
-  background: none;
-  padding: 0px 5px 2px 0px;
-  cursor: pointer;
 `;
