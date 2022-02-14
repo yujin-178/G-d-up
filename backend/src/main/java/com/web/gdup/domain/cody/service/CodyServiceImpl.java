@@ -72,14 +72,8 @@ public class CodyServiceImpl implements CodyService {
 
     @Override
     public int deleteCodyItem(int id) throws Exception {
-        CodyEntity tmp = codyRepository.getOne(id);
 
-        if (codyRepository.deleteByCodyId(id) == 0)
-            throw new Exception("null");
-
-        int imageId = tmp.getImageModel().getImageId();
-
-        imageRepository.deleteByImageId(imageId);
+        codyRepository.deleteById(id);
 
         return id;
     }
