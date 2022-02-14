@@ -1,8 +1,6 @@
 package com.web.gdup.domain.wordcloud.service;
 
-import com.web.gdup.domain.cody.entity.CodyHashtagEntity;
-import com.web.gdup.domain.cody.repository.CodyHashtagRepository;
-import com.web.gdup.domain.wordcloud.dto.wordDto;
+import com.web.gdup.domain.cody_hashtag.repository.CodyHashtagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

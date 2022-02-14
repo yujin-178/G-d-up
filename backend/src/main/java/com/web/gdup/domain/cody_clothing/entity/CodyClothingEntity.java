@@ -1,4 +1,4 @@
-package com.web.gdup.domain.cody.entity;
+package com.web.gdup.domain.cody_clothing.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
