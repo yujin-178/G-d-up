@@ -88,14 +88,13 @@ public class CodyServiceImpl implements CodyService {
 
         int imageId = tmp.getImageModel().getImageId();
 
-        if (ir.deleteByImageId(imageId) == 0)
-            return 0;
+        ir.deleteByImageId(imageId);
 
-        return 1;
+        return id;
     }
 
     @Override
-    public int updateCodyItem(UpdateCody uc, MultipartFile file) {
+    public CodyDtoAll updateCodyItem(UpdateCody uc, MultipartFile file) {
         System.out.println(uc.getCodyId());
         System.out.println(file.getOriginalFilename());
         CodyEntity ce = cr.getOne(uc.getCodyId());
@@ -119,6 +118,7 @@ public class CodyServiceImpl implements CodyService {
         cr.save(ce);
 
         StringTokenizer st = new StringTokenizer(uc.getCodyTag(), " ");
+        List<String> tagList = new ArrayList<>();
         while (st.hasMoreTokens()) {
             String tagTmp = st.nextToken();
             hs.findOrCreateHashtag(tagTmp);
@@ -127,6 +127,7 @@ public class CodyServiceImpl implements CodyService {
                     .registrationDate(LocalDateTime.now())
                     .tagName(tagTmp).build();
             chr.save(CHtmp);
+            tagList.add(tagTmp);
         }
 
         ccr.deleteByCodyId(ce.getCodyId());
@@ -144,8 +145,19 @@ public class CodyServiceImpl implements CodyService {
             ccr.save(cci);
         }
 
+        CodyDtoAll codyDtoAll = CodyDtoAll.builder()
+                .codyId(ce.getCodyId())
+                .codyName(ce.getCodyName())
+                .registrationDate(ce.getRegistrationDate())
+                .updateDate(ce.getUpdateDate())
+                .content(ce.getContent())
+                .userName(ce.getUserName())
+                .secret(ce.getSecret())
+                .imageModel(ce.getImageModel())
+                .hashList(tagList)
+                .build();
 
-        return 1;
+        return codyDtoAll;
     }
 
 

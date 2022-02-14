@@ -14,6 +14,6 @@ public interface CodyService {
     public List<CodyDtoAll> getUserCodyList(String id);
     public int deleteCodyItem(int id);
     public CodyDtoAll addCodyItem(CreateCody cc, MultipartFile file)  ;
-    public int updateCodyItem(UpdateCody uc, MultipartFile file);
+    public CodyDtoAll updateCodyItem(UpdateCody uc, MultipartFile file);
 
 }
