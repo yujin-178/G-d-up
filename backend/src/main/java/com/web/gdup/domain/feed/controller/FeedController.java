@@ -100,30 +100,30 @@ public class FeedController {
             notes = "로그인된 사용자의 팔로잉의 feed를 반환한다."
     )
     public Object getFeeds(@PathVariable String userName) {
-        List<FeedDto> feeds = feedService.getAllFeed(userName);
+        List<FeedDto> feeds = null;
 
-        ResponseEntity response = null;
         final BasicResponse result = new BasicResponse();
 
-        if (feeds != null) {
-            List<String> whetherToPush = likeService.getWhetherToPush(feeds, userName);
-
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("feeds", feeds);
-            map.put("whetherToPush", whetherToPush);
-
-            result.status = true;
-            result.message = "success";
-            result.data = map;
-            response = new ResponseEntity<>(result, HttpStatus.OK);
-        } else {
+        try {
+            feeds = feedService.getAllFeed(userName);
+        } catch (Exception e) {
             result.status = true;
             result.message = "작성된 피드가 없습니다.";
             result.data = null;
-            response = new ResponseEntity<>(result, HttpStatus.OK);
+            return new ResponseEntity<>(result, HttpStatus.OK);
         }
 
-        return response;
+        List<String> whetherToPush = likeService.getWhetherToPush(feeds, userName);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("feeds", feeds);
+        map.put("whetherToPush", whetherToPush);
+
+        result.status = true;
+        result.message = "success";
+        result.data = map;
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/detail/{feedId}")

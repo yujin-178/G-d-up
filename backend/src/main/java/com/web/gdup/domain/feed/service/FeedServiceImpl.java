@@ -43,11 +43,11 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public List<FeedDto> getAllFeed(String userName) {
+    public List<FeedDto> getAllFeed(String userName) throws Exception {
         List<FeedDto> feeds = feedRepository.findFollowingFeeds(userName);
-        if (feeds.size() != 0)
-            return feeds;
-        return null;
+        if (feeds.size() == 0)
+            throw new Exception("null");
+        return feeds;
     }
 
     @Override
