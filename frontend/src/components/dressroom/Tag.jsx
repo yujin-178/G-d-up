@@ -19,14 +19,15 @@ const tagItem = css`
   position: relative;
   display: flex;
   background-color: white;
-  height: 25px;
+  height: 18px;
   padding: 4px;
   border-radius: 18px;
-  font-size: 15px;
+  font-size: 10px;
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
   margin: 5px;
-  min-width: 50px;
+  min-width: 30px;
   color: grey;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 `;
 
 const tagTitle = css`
@@ -36,8 +37,10 @@ const tagTitle = css`
 `;
 
 const tagDeleteBtn = css`
-  border:none;
+  display: inline-block;
+  border: none;
   background: none;
-  padding: 0px 5px 2px 0px;
   cursor: pointer;
+  color: grey;
+  font-size: 8px;
 `;
