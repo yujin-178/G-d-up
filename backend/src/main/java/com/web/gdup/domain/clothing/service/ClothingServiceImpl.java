@@ -9,6 +9,8 @@ import com.web.gdup.domain.clothing_washing.dto.ClothingWashingDto;
 import com.web.gdup.domain.clothing_washing.service.ClothingWashingService;
 import com.web.gdup.domain.image.dto.ImageDto;
 import com.web.gdup.domain.image.service.ImageService;
+import com.web.gdup.domain.user.dto.UserDto;
+import com.web.gdup.domain.user.service.UserService;
 import com.web.gdup.global.component.CommonComponent;
 import com.web.gdup.global.component.EcoMatching;
 import com.web.gdup.global.component.TranslationEng;
@@ -41,22 +43,52 @@ public class ClothingServiceImpl implements ClothingService{
     ClothingHashtagService clothingHashtagService;
     @Autowired
     ClothingWashingService clothingWashingService;
+    @Autowired
+    UserService userService;
 
     private TranslationEng te = new TranslationEng();
     private HashMap<String, HashMap<String, String>> map = te.getTranslationEng();
 
     @Override
-    public HashMap<String, String> getTag(MultipartFile file) throws IOException {
+    public HashMap<String, String> getTag(MultipartFile file) {
         System.out.println("이미지 처리");
         String apiURL = "https://api.ximilar.com/tagging/fashion/v2/detect_tags";
 
         String strBase64 = "";
         if (file != null) {
-            strBase64 = new String(Base64.encodeBase64(file.getBytes()));
+            try {
+                strBase64 = new String(Base64.encodeBase64(file.getBytes()));
+            } catch (IOException e) {
+                new Exception();
+            }
         }
 
         HashMap<String, Object> base = new HashMap<>();
         base.put("_base64", strBase64);
+        JSONArray jArray = new JSONArray();
+        jArray.add(base);
+
+        HashMap<String, Object> record = new HashMap<>();
+        record.put("records", jArray);
+        JSONObject data = new JSONObject(record);
+        String body = data.toString();
+        System.out.println("json 완료");
+        String jsonData = apiMethod("POST", apiURL, body);
+        HashMap<String, String> result = null;
+        try {
+            result = columnParser(jsonData);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    @Override
+    public HashMap<String, String> getTagUrl(String fileUrl) {
+        String apiURL = "https://api.ximilar.com/tagging/fashion/v2/detect_tags";
+
+        HashMap<String, Object> base = new HashMap<>();
+        base.put("_url", fileUrl);
         JSONArray jArray = new JSONArray();
         jArray.add(base);
 
@@ -143,27 +175,54 @@ public class ClothingServiceImpl implements ClothingService{
         }
 
         int clothing_id = clothingRepository.save(clothing.toEntity()).getClothingId();
-        Set<String> hashtags = parseHashtags(hashtag);
-        clothingHashtagService.insertHashtags(clothing_id, hashtags);
+        if(hashtag!=null) {
+            Set<String> hashtags = parseHashtags(hashtag);
+            clothingHashtagService.insertHashtags(clothing_id, hashtags);
+        }
 
-        String[] str = washing.split(" ");
-        clothingWashingService.insertClothingWashing(clothing_id, str);
-
+        if(washing!=null) {
+            String[] str = washing.split(" ");
+            clothingWashingService.insertClothingWashing(clothing_id, str);
+        }
         return clothing_id;
     }
 
     @Override
     @Transactional
-    public HashMap<String, Object> getClothing(int clothingId) {
-        ClothingEntity clothing = clothingRepository.findById(clothingId).get();
-        ClothingDto clothingDto = buildClothingDto(clothing);
+    public HashMap<String, Object> getClothing(int clothingId) throws Exception {
+        Optional<ClothingEntity> optional = Optional.ofNullable(clothingRepository.findById(clothingId)
+                .orElseThrow(() -> new Exception()));
+
+//        ClothingEntity clothing = clothingRepository.findById(clothingId).get();
+        ClothingDto clothingDto = buildClothingDto(optional.get());
 
         List<String> hashtags = clothingHashtagService.getHashtags(clothingId);
         List<ClothingWashingDto> washing = clothingWashingService.getWashingMethods(clothingId);
         HashMap<String, Object> map = new HashMap<>();
-        map.put("clothing", clothing);
+        map.put("clothing", clothingDto);
         map.put("hashtag", hashtags);
         map.put("washing", washing);
+        return map;
+    }
+
+    @Override
+    @Transactional
+    public HashMap<String, Object> getClothingBase(int clothingId) throws Exception {
+        Optional<ClothingEntity> optional = Optional.ofNullable(clothingRepository.findById(clothingId)
+                .orElseThrow(() -> new Exception()));
+
+//        ClothingEntity clothing = clothingRepository.findById(clothingId).get();
+        ClothingDto clothingDto = buildClothingDto(optional.get());
+
+        String base64Data = null;
+        try {
+            base64Data = getBase64EncodedImage(clothingDto.getImageModel().getImageUrl());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        HashMap<String, Object> map = new HashMap<>();
+        String imgUrl = "data:image/png;base64,"+base64Data;
+        map.put("base64", imgUrl);
         return map;
     }
 
@@ -189,10 +248,21 @@ public class ClothingServiceImpl implements ClothingService{
     }
 
     @Override
-    public List<HashMap<String, Object>> getUserClothing(String userName) {
+    public List<HashMap<String, Object>> getUserClothing(String userName) throws Exception {
         List<HashMap<String, Object>> result = new ArrayList<>();
 
+        UserDto user = userService.getUserInfo(userName);
+        if(user.getUserName() == null) {
+            System.out.println("사용자 없음");
+            throw new Exception();
+        } else {
+            System.out.println(user.getUserName());
+            System.out.println(user.getEmail());
+        }
+
         List<ClothingEntity> list = clothingRepository.findAllByUserName(userName);
+
+
         for(ClothingEntity cd : list) {
             ClothingDto clothingDto = buildClothingDto(cd);
             HashMap<String, Object> map = new HashMap<>();
@@ -202,24 +272,6 @@ public class ClothingServiceImpl implements ClothingService{
             result.add(map);
         }
         return result;
-    }
-
-    @Override
-    @Transactional
-    public HashMap<String, Object> getClothingBase(int clothingId) {
-        ClothingEntity clothing = clothingRepository.findById(clothingId).get();
-        ClothingDto clothingDto = buildClothingDto(clothing);
-
-        String base64Data = null;
-        try {
-            base64Data = getBase64EncodedImage(clothingDto.getImageModel().getImageUrl());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        HashMap<String, Object> map = new HashMap<>();
-        String imgUrl = "data:image/png;base64,"+base64Data;
-        map.put("base64", imgUrl);
-        return map;
     }
 
     @Override

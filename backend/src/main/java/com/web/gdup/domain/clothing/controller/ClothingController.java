@@ -25,12 +25,48 @@ public class ClothingController {
     ClothingService clothingService;
 
     @PostMapping("/tag")
-    @ApiOperation(value = "태그 분석")
-    public ResponseEntity getTag(@RequestPart("imageFile") MultipartFile file) throws IOException  {
-        HashMap<String, String> data = clothingService.getTag(file);
+    @ApiOperation(value = "태그 분석 - 파일을 받아 분석")
+    public ResponseEntity getTag(@RequestPart("imageFile") MultipartFile file)  {
+        HashMap<String, String> data = null;
         ResponseEntity response = null;
-
         BasicResponse result = new BasicResponse();
+
+        try {
+            data = clothingService.getTag(file);
+        } catch (IOException e) {
+            result.status = false;
+            result.message = "fail";
+            response = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+            return response;
+        }
+
+        if(!data.isEmpty()) {
+            result.status = true;
+            result.message = "sucess";
+            result.data = data;
+            response = new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            result.status = false;
+            result.message = "fail";
+            response = new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return response;
+    }
+
+    @PostMapping("/tagurl")
+    @ApiOperation(value = "태그 분석 - url을 받아 분석")
+    public ResponseEntity getTagUrl(@RequestPart("imageFile") String fileUrl)  {
+        HashMap<String, String> data = null;
+        ResponseEntity response = null;
+        BasicResponse result = new BasicResponse();
+
+        if(fileUrl== null) {
+            result.status = false;
+            result.message = "파일 url이 잘못되었습니다.";
+            response = new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+        data = clothingService.getTagUrl(fileUrl);
+
         if(!data.isEmpty()) {
             result.status = true;
             result.message = "sucess";
@@ -68,7 +104,10 @@ public class ClothingController {
 
     @PostMapping(value = "/save2")
     @ApiOperation(value = "옷 저장 - 이미지 파일")
-    public ResponseEntity insertClothing(@RequestPart("imageFile") MultipartFile file, @RequestPart("clothing") ClothingDto clothing, @RequestPart("hashtag") String hashtag, @RequestPart("washing") String washing) throws IOException {
+    public ResponseEntity insertClothing(@RequestPart(value = "imageFile") MultipartFile file,
+                                         @RequestPart(value = "clothing") ClothingDto clothing,
+                                         @RequestPart(value = "hashtag", required = false) String hashtag,
+                                         @RequestPart(value = "washing", required = false) String washing) throws IOException {
         int data = clothingService.insertClothing(file, clothing, hashtag, washing);
         ResponseEntity response = null;
 
@@ -79,7 +118,7 @@ public class ClothingController {
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
             result.status = false;
-            result.message = "fail";
+            result.message = "잘못된 요청입니다.";
             response = new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
 
@@ -88,7 +127,10 @@ public class ClothingController {
 
     @PostMapping(value = "/save")
     @ApiOperation(value = "옷 저장 - 경로")
-    public ResponseEntity insertClothingTest(@RequestPart("imageFile") String fileUrl, @RequestPart("clothing") ClothingDto clothing, @RequestPart("hashtag") String hashtag, @RequestPart("washing") String washing) throws IOException {
+    public ResponseEntity insertClothingTest(@RequestPart("imageFile") String fileUrl,
+                                             @RequestPart("clothing") ClothingDto clothing,
+                                             @RequestPart(value = "hashtag", required = false) String hashtag,
+                                             @RequestPart(value = "washing", required = false) String washing) throws IOException {
         int data = clothingService.insertClothingUrl(fileUrl, clothing, hashtag, washing);
         ResponseEntity response = null;
 
@@ -109,9 +151,18 @@ public class ClothingController {
     @GetMapping("/detail/{clothingId}")
     @ApiOperation(value = "옷 상세보기")
     public ResponseEntity getClothing(@PathVariable("clothingId") int clothingId) {
-        HashMap<String, Object> map = clothingService.getClothing(clothingId);
         ResponseEntity response = null;
         BasicResponse result = new BasicResponse();
+
+        HashMap<String, Object> map = null;
+        try {
+            map = clothingService.getClothing(clothingId);
+        } catch (Exception e) {
+            result.status = false;
+            result.message = "잘못된 접근입니다.";
+            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+            return response;
+        }
 
         if(!map.isEmpty()) {
             result.status = true;
@@ -119,9 +170,9 @@ public class ClothingController {
             result.data = map;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
-            result.status = false;
+            result.status = true;
             result.message = "해당하는 옷이 없습니다.";
-            response = new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
+            response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         return response;
     }
@@ -129,9 +180,18 @@ public class ClothingController {
     @GetMapping("/detail/base64/{clothingId}")
     @ApiOperation(value = "옷 상세보기")
     public ResponseEntity getDetailTest(@PathVariable("clothingId") int clothingId) {
-        HashMap<String, Object> map = clothingService.getClothingBase(clothingId);
         ResponseEntity response = null;
         BasicResponse result = new BasicResponse();
+        HashMap<String, Object> map = null;
+
+        try {
+            map = clothingService.getClothingBase(clothingId);
+        } catch (Exception e) {
+            result.status = false;
+            result.message = "사진을 불러올 수 없습니다.";
+            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+            return response;
+        }
 
         if(!map.isEmpty()) {
             result.status = true;
@@ -139,19 +199,27 @@ public class ClothingController {
             result.data = map;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
-            result.status = false;
+            result.status = true;
             result.message = "해당하는 옷이 없습니다.";
-            response = new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
+            response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         return response;
     }
 
     @GetMapping("/list/{userName}")
     @ApiOperation(value = "옷 리스트 - 사용자 id 필요")
-    public ResponseEntity getAllClothing(@PathVariable("userName") String userName) {
-        List<HashMap<String, Object>> list = clothingService.getUserClothing(userName);
+    public ResponseEntity getAllClothing(@PathVariable(value = "userName", required = false) String userName) {
         ResponseEntity response = null;
         BasicResponse result = new BasicResponse();
+        List<HashMap<String, Object>> list = null;
+        try {
+            list = clothingService.getUserClothing(userName);
+        } catch (Exception e) {
+            result.status = false;
+            result.message = "사용자가 존재하지 않습니다.";
+            response = new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+            return response;
+        }
 
         if(!list.isEmpty()) {
             result.status = true;
@@ -159,9 +227,9 @@ public class ClothingController {
             result.data = list;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
-            result.status = false;
+            result.status = true;
             result.message = "사용자의 옷이 존재하지 않습니다.";
-            response = new ResponseEntity<>(result, HttpStatus.NO_CONTENT);
+            response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         return response;
     }
