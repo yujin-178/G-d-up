@@ -98,7 +98,7 @@ public class ClothingServiceImpl implements ClothingService{
 
         String result = apiMethod("POST", apiURL, body);
         String imageURL = urlParser(result);
-        download(imageURL);
+//        downloadBg(imageURL);
         return imageURL;
     }
 
@@ -106,6 +106,32 @@ public class ClothingServiceImpl implements ClothingService{
     @Transactional
     public int insertClothing(MultipartFile file, ClothingDto clothing, String hashtag, String washing) {
         ImageDto image = saveImage(file);
+        int imageId = imageService.insertImage(image);
+        ImageDto iDto = imageService.getImage(imageId);
+        clothing.setImageModel(iDto.toEntity());
+
+        if(clothing.getMaterial()!=null) {
+            EcoMatching ecoMatch = new EcoMatching();
+            HashMap<String, String> eco = ecoMatch.setEcoMatching();
+            clothing.setEco(eco.get(clothing.getMaterial()));
+        }
+
+        int clothing_id = clothingRepository.save(clothing.toEntity()).getClothingId();
+        Set<String> hashtags = parseHashtags(hashtag);
+        clothingHashtagService.insertHashtags(clothing_id, hashtags);
+
+        String[] str = washing.split(" ");
+        clothingWashingService.insertClothingWashing(clothing_id, str);
+
+        return clothing_id;
+    }
+
+    @Override
+    @Transactional
+    public int insertClothingUrl(String file, ClothingDto clothing, String hashtag, String washing) {
+        ImageDto image = downloadBg(file);
+        if(image == null) return 0;
+
         int imageId = imageService.insertImage(image);
         ImageDto iDto = imageService.getImage(imageId);
         clothing.setImageModel(iDto.toEntity());
@@ -330,6 +356,93 @@ public class ClothingServiceImpl implements ClothingService{
                 .imagePath(imagePath)
                 .build();
         return image;
+    }
+
+    private ImageDto downloadBg(String spec) {
+//        String outputDir = "/home/ubuntu/backend/removeBg";
+        String outputDir = "/home/ubuntu/backend/download";
+
+        InputStream is = null;
+        FileOutputStream os = null;
+        try {
+            URL url = new URL(spec);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            int responseCode = conn.getResponseCode();
+
+            System.out.println("responseCode " + responseCode);
+
+            // Status 가 200 일 때
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+
+                String originImageName = "";
+                String disposition = conn.getHeaderField("Content-Disposition");
+                String contentType = conn.getContentType();
+
+                // 일반적으로 Content-Disposition 헤더에 있지만
+                // 없을 경우 url 에서 추출해 내면 된다.
+
+                if (disposition != null) {
+                    String target = "filename=";
+                    int index = disposition.indexOf(target);
+                    if (index != -1) {
+                        originImageName = disposition.substring(index + target.length() + 1);
+                    }
+                } else {
+                    originImageName = spec.substring(spec.lastIndexOf("/") + 1);
+                }
+
+                UUID uuid = UUID.randomUUID();
+
+                String[] extension = originImageName.split("\\.");
+                System.out.println(extension[0]);
+                String image_name = uuid.toString()+"_"+System.currentTimeMillis()+"."+extension[1];
+
+                System.out.println("Content-Type = " + contentType);
+                System.out.println("Content-Disposition = " + disposition);
+                System.out.println("fileName = " + originImageName);
+
+                is = conn.getInputStream();
+                os = new FileOutputStream(new File(outputDir, image_name));
+
+                final int BUFFER_SIZE = 4096;
+                int bytesRead;
+                byte[] buffer = new byte[BUFFER_SIZE];
+                while ((bytesRead = is.read(buffer)) != -1) {
+                    os.write(buffer, 0, bytesRead);
+                }
+                os.close();
+                is.close();
+                System.out.println("File downloaded");
+                System.out.println("이걸 확인" + image_name);
+                System.out.println(originImageName);
+                String image_url = "http://i6b108.p.ssafy.io:8000/images/" + image_name;
+                String imagePath = outputDir + "/"+image_name;
+
+                ImageDto image = ImageDto.builder()
+                        .imageUrl(image_url)
+                        .newImageName(image_name)
+                        .imagePath(imagePath)
+                        .build();
+                return image;
+            } else {
+                System.out.println("No file to download. Server replied HTTP code: " + responseCode);
+            }
+            conn.disconnect();
+        } catch (Exception e) {
+            System.out.println("An error occurred while trying to download a file.");
+            e.printStackTrace();
+            try {
+                if (is != null) {
+                    is.close();
+                }
+                if (os != null) {
+                    os.close();
+                }
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        }
+        return null;
     }
 
     private void download(String spec) {

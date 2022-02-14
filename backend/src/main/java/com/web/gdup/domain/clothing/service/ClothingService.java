@@ -19,4 +19,5 @@ public interface ClothingService {
     public List<HashMap<String, Object>> getUserClothing(String user_name);
     public List<HashMap<String, Object>> getUserClothingTest(String userName);
     public HashMap<String, Object> getClothingBase(int clothingId);
+    public int insertClothingUrl(String file, ClothingDto clothing, String hashtag, String washing);
 }
