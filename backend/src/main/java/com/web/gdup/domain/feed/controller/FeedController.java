@@ -77,15 +77,19 @@ public class FeedController {
     public Object deleteFeed(@PathVariable int feedId  ){
         //관련 댓글도 다 사라져야함
         ResponseEntity response = null;
+        final BasicResponse result = new BasicResponse();
 
         if(feedService.deleteFeed(feedId)){
-            final BasicResponse result = new BasicResponse();
             result.status = true;
             result.message = "success";
+            result.data = null;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            result.status = true;
+            result.message = "DB에 없는 feedid를 삭제 시도 했습니다. .";
+            result.data = null;
+            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
         return response;
     }
