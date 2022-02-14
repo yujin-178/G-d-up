@@ -21,6 +21,7 @@ import {
   selectSeason,
   resetClothes,
   changeresloading,
+  setClothes,
 } from '../../slices/clothesSlice';
 
 export default function AddClothesContainer() {
@@ -42,6 +43,8 @@ export default function AddClothesContainer() {
       'Content-Type': 'multipart/form-data',
     },
   };
+
+  const userName = 'jisoon';
 
   function handleModal(value) {
     dispatch(changeisModalOpen(value));
@@ -84,7 +87,6 @@ export default function AddClothesContainer() {
       });
     axios.post(`http://i6b108.p.ssafy.io:8000/clothing/tag`, formData, config)
       .then((res) => {
-        const userName = 'admin';
         const data = res.data.data;
         dispatch(changeTagInfo({ data, userName }));
       });
@@ -109,6 +111,7 @@ export default function AddClothesContainer() {
         handleresloading(false);
         dispatch(changeResText(res.data.message));
         handleresetClothes();
+        dispatch(setClothes(userName));
       })
       .catch((err) => {
         handleresloading(false);
