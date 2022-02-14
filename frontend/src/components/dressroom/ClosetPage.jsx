@@ -42,9 +42,7 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
 const DressRoom = css`
   display: flex;
   justify-content: center;
-  margin: 10rem auto;
-  width: 85rem;
-  height: 50rem;
+  height: 100vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/dressroombackground.jpg");
   background-size: cover;
   background-position: center;
