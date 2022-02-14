@@ -11,6 +11,7 @@ import Modal from '../../components/dressroom/Modal';
 import Messages from '../../components/dressroom/Messages';
 import Button from '../../components/dressroom/Button';
 import { createCody, closeModal } from '../../slices/codySlice';
+import { css } from '@emotion/react';
 
 export default function CodyContainer() {
   const { modalType } = useSelector(state => state.codySlice);
@@ -42,7 +43,7 @@ export default function CodyContainer() {
           setModalProps({});
           navigate('/cody');
         },
-        onClickCancel: () =>  window.location.reload(false),
+        onClickCancel: () => window.location.reload(false),
       });
     }
   }, [modalType]);
@@ -179,27 +180,20 @@ export default function CodyContainer() {
     dispatch(createCody({ canvas, codyItems, content, isNotSecret, tags, userName: 'jisoon' }));
   };
 
+  const goBackHandler = () => {
+    dispatch(resetFilter());
+    navigate('/cody');
+  };
+
   return (
-    <>
+    <div css={container}>
       {modalType && (
         <Modal>
           <Messages message={modalProps.message} subMessage={modalProps.subMessage} />
-          <Button title={modalProps.cancelButtonTitle} onClick={modalProps.onClickCancel} color='white'/>
-          <Button title={modalProps.okButtonTitle} onClick={modalProps.onClickOk} color='#1890FF'/>
+          <Button title={modalProps.cancelButtonTitle} onClick={modalProps.onClickCancel} color='white' />
+          <Button title={modalProps.okButtonTitle} onClick={modalProps.onClickOk} color='#1890FF' />
         </Modal>
       )}
-      <h1>CodyContainer</h1>
-      <button onClick={() => {
-        dispatch(resetFilter());
-        navigate('/dressroom');
-      }}>
-        드레스룸으로 돌아가기
-      </button>
-      <FilterContainer />
-      <ClothesItemList
-        clothes={clothes}
-        onClickHandler={onClickHandler}
-      />
       <CodyCreateForm
         clothes={clothes}
         codyItems={codyItems}
@@ -215,7 +209,32 @@ export default function CodyContainer() {
         toggleIsNotSecret={toggleIsNotSecret}
         saveHandler={saveHandler}
         canvasRef={canvasRef}
+        goBackHandler={goBackHandler}
       />
-    </>
+      <div css={clothesContainer}>
+        <FilterContainer />
+        <ClothesItemList
+          clothes={clothes}
+          onClickHandler={onClickHandler}
+        />
+      </div>
+    </div>
   );
 }
+const container = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
+const clothesContainer = css`
+  position: relative;
+  width: 38%;
+  display: grid;
+  grid-template-columns: 35% 65%;
+  grid-template-rows: 15% 75%;
+  background-color: #BFAEA4;
+  border-radius: 0.5rem;
+  height: 700px;
+`;

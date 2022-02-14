@@ -3,6 +3,7 @@ import { css } from '@emotion/react';
 import CodyItem from './CodyItem';
 import TagSearchBar from './TagSearchBar';
 import Tag from './Tag';
+import Button from './Button';
 
 export default function CodyCreateForm(props) {
   const {
@@ -19,6 +20,7 @@ export default function CodyCreateForm(props) {
     isNotSecret,
     toggleIsNotSecret,
     saveHandler,
+    goBackHandler,
   } = props;
 
   return (
@@ -82,28 +84,27 @@ export default function CodyCreateForm(props) {
         name="memo"
         placeholder="내용 입력"
       />
-      <div css={css`display: flex; justify-content: space-between;`}>
-        <button
-          css={button({})}
-        >리셋
-        </button>
-        <button
-          css={button({})}
-          onClick={saveHandler}
-        >저장</button>
+      <div css={buttonGroup}>
+        <Button title='뒤로가기' onClick={goBackHandler} color={'#fff'}/>
+        <Button title='저장하기' onClick={saveHandler} color={'#00acee'}/>
       </div>
     </div>
   );
 }
 
 const form = css`
+  box-sizing: content-box;
   border: 0.5px solid grey;
-  width: 30%;
+  width: 26%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem;
+  background-color: white;
+  margin-right: 20px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 const memo = css`
@@ -112,13 +113,13 @@ const memo = css`
   resize: none;
   outline: none;
   width: 100%;
-  min-height: 100px;
+  min-height: 80px;
   margin-top: 15px;
 `;
 
 const canvas = css`
   min-width: 100%;
-  min-height: 450px;
+  min-height: 380px;
   background-color: white;
   position: relative;
   border: 1px solid grey;
@@ -162,6 +163,19 @@ const tagContainer = css`
   min-height: 44px;
 `;
 
-const button = ({ color }) => css`
-  background-color: ${color};
+const buttonGroup = css`
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  top: 1rem;
+`;
+
+const button = css`
+  padding: 5px;
+  width: 100px;
+  position: relative;
+  margin: 5px 15px;
+  position: relative;
+  top: 10px;
 `;
