@@ -65,3 +65,13 @@ export async function postCody(payload) {
   const response = await axios.post('http://i6b108.p.ssafy.io:8000/cody/create', fd, config);
   return response;
 }
+
+export async function signIn(data) {
+  const response = await axios.post(`http://i6b108.p.ssafy.io:8000/user/signup`, data);
+  return response.data;
+}
+
+export async function authLogin(data) {
+  const response = await axios.post(`http://i6b108.p.ssafy.io:8000/user/login`, data);
+  return response.data;
+}
