@@ -27,7 +27,7 @@ public class FeedDto {
     @Column(updatable = false, name = "registrationdate")
     private LocalDateTime registrationDate;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "codyid")
     private CodyEntity cody;
 
