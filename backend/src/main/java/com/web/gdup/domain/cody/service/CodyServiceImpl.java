@@ -95,68 +95,44 @@ public class CodyServiceImpl implements CodyService {
     }
 
     @Override
-    public CodyDtoAll updateCodyItem(UpdateCody uc, MultipartFile file) {
-        System.out.println(uc.getCodyId());
-        System.out.println(file.getOriginalFilename());
-        CodyEntity ce = codyRepository.getOne(uc.getCodyId());
+    public CodyDtoAll updateCodyItem(UpdateCody updateCody, MultipartFile file) throws Exception {
+        CodyEntity codyEntity = codyRepository.getOne(updateCody.getCodyId());
 
-        ImageDto imageDto = updateImage(file, ce.getImageModel().getImageId());
-        ImageDto iDto = imageService.getImage(ce.getImageModel().getImageId());
+        ImageDto imageDto = updateImage(file, codyEntity.getImageModel().getImageId());
 
-        codyHashtagRepository.deleteByCodyId(ce.getCodyId());
+        codyHashtagRepository.deleteByCodyId(codyEntity.getCodyId());
 
-        ce = CodyEntity.builder()
-                .codyId(uc.getCodyId())
-                .codyName(uc.getCodyName())
-                .registrationDate(ce.getRegistrationDate())
-                .updateDate(LocalDateTime.now())
-                .content(uc.getContent())
-                .userName(uc.getUserName())
-                .secret(uc.getSecret())
-                .imageModel(iDto.toEntity())
-                .build();
+        Optional<CodyEntity> codyEntityOptional = Optional.of(codyRepository.save(updateCody.toEntity(imageDto.toEntity())));
+        codyEntityOptional.orElseThrow(() -> new Exception("null"));
 
-        codyRepository.save(ce);
 
-        StringTokenizer st = new StringTokenizer(uc.getCodyTag(), " ");
+        StringTokenizer st = new StringTokenizer(updateCody.getCodyTag(), " ");
         List<String> tagList = new ArrayList<>();
         while (st.hasMoreTokens()) {
             String tagTmp = st.nextToken();
             hashtagService.findOrCreateHashtag(tagTmp);
-            CodyHashtagEntity CHtmp = CodyHashtagEntity.builder()
-                    .codyId(ce.getCodyId())
+            CodyHashtagEntity codyHashtagEntity = CodyHashtagEntity.builder()
+                    .codyId(codyEntityOptional.get().getCodyId())
                     .registrationDate(LocalDateTime.now())
                     .tagName(tagTmp).build();
-            codyHashtagRepository.save(CHtmp);
+            codyHashtagRepository.save(codyHashtagEntity);
             tagList.add(tagTmp);
         }
 
-        codyClothingRepository.deleteByCodyId(ce.getCodyId());
+        codyClothingRepository.deleteByCodyId(codyEntityOptional.get().getCodyId());
 
-
-        int len = uc.getClothingList().size();
-        List<ClothingInCody> cciList = uc.getClothingList();
+        int len = updateCody.getClothingList().size();
+        List<ClothingInCody> cciList = updateCody.getClothingList();
         for (int i = 0; i < len; i++) {
             ClothingInCody tmp = cciList.get(i);
             CodyClothingEntity cci = CodyClothingEntity.builder()
-                    .codyId(ce.getCodyId())
+                    .codyId(codyEntityOptional.get().getCodyId())
                     .clothingId(tmp.getClothingId())
                     .m(tmp.getM()).x(tmp.getX()).y(tmp.getY()).z(tmp.getZ()).build();
-            // 기존에 없는 새로운 값인지 확인하는 작업이 있어야 하지 않을까?
             codyClothingRepository.save(cci);
         }
 
-        CodyDtoAll codyDtoAll = CodyDtoAll.builder()
-                .codyId(ce.getCodyId())
-                .codyName(ce.getCodyName())
-                .registrationDate(ce.getRegistrationDate())
-                .updateDate(ce.getUpdateDate())
-                .content(ce.getContent())
-                .userName(ce.getUserName())
-                .secret(ce.getSecret())
-                .imageModel(ce.getImageModel())
-                .hashList(tagList)
-                .build();
+        CodyDtoAll codyDtoAll = new CodyDtoAll(codyEntityOptional.get(), tagList);
 
         return codyDtoAll;
     }
@@ -168,8 +144,6 @@ public class CodyServiceImpl implements CodyService {
 
         int imageId = imageService.insertImage(image);
         CodyEntity inputEntity = createCody.toEntity(imageService.getImage(imageId).toEntity());
-
-//        CodyEntity ans = codyRepository.save(inputEntity);
 
         Optional<CodyEntity> codyEntity = Optional.of(codyRepository.save(inputEntity));
         codyEntity.orElseThrow(() -> new Exception("null"));
