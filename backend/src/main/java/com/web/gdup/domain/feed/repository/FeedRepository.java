@@ -20,6 +20,4 @@ public interface FeedRepository extends JpaRepository<FeedDto, Integer> {
     @Query(value = "select * from feed where codyid = :codyId", nativeQuery = true)
     List<FeedDto> findAllByCodyId(int codyId);
 
-    @Transactional
-    int deleteByFeedId(int feedId);
 }
