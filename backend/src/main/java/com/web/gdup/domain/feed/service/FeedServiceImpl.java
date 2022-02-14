@@ -34,14 +34,12 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public FeedDto modifyFeed(FeedDto feed) {
+    public FeedDto modifyFeed(FeedDto feed) throws Exception {
 
         Optional<FeedDto> feedDto = feedRepository.findById(feed.getFeedId());
-        if (feedDto.isPresent()) {
-            feedRepository.save(feed);
-            return feed;
-        }
-        return null;
+        feedDto.orElseThrow(() -> new Exception("null"));
+
+        return feedRepository.save(feed);
     }
 
     @Override

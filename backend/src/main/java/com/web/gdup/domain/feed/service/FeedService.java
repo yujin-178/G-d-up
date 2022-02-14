@@ -12,6 +12,6 @@ public interface FeedService {
     List<FeedDto> getAllFeed(String userName);
     boolean insertFeed(FeedDto feed);
     boolean deleteFeed(int feedId);
-    FeedDto modifyFeed(FeedDto feed);
+    FeedDto modifyFeed(FeedDto feed) throws Exception;
     public  List<RecommandDto> recommendService (String tagName);
 }
