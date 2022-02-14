@@ -51,38 +51,45 @@ public class CommentController {
         return response;
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("/delete/{commentId}")
     @ApiOperation(value = "comment 지우기 " , notes = "작성한 댓글을 지운다. ")
-    public Object deleteComment(@RequestParam int commentId){
+    public Object deleteComment(@PathVariable int commentId){
         ResponseEntity response = null;
+        final BasicResponse result = new BasicResponse();
 
         if(commentService.deleteComment(commentId)){
-            final BasicResponse result = new BasicResponse();
+
             result.status = true;
             result.message = "success";
+            result.data = null;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            result.status = true;
+            result.message = "DB에 없는 commentid를 삭제 시도 했습니다.";
+            result.data = null;
+            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
         return response;
     }
 
-    @PutMapping("/modify")
+    @PutMapping("/modify/{commentId}/{content}")
     @ApiOperation(value = "comment 수정하기 " , notes = "작성된  댓글을 수정한다. ")
-    public Object modifyComment(@RequestParam int commentId,@RequestParam String content){
+    public Object modifyComment(@PathVariable int commentId,@PathVariable String content){
         CommentEntity comment = commentService.modifyComment(commentId, content);
         ResponseEntity response = null;
-
+        final BasicResponse result = new BasicResponse();
         if(comment != null){
-            final BasicResponse result = new BasicResponse();
             result.status = true;
             result.message = "success";
             result.data = comment;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            result.status = true;
+            result.message = "DB에 없는 commentid를 수정 시도 했습니다.";
+            result.data = null;
+            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
         return response;
     }
