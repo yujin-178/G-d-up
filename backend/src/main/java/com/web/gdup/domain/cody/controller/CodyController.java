@@ -1,6 +1,8 @@
 package com.web.gdup.domain.cody.controller;
 
+import com.web.gdup.domain.cody.dto.CodyAllList;
 import com.web.gdup.domain.cody.dto.CreateCody;
+import com.web.gdup.domain.cody.dto.CreateCodyResponse;
 import com.web.gdup.domain.cody.dto.UpdateCody;
 import com.web.gdup.domain.cody.entity.CodyEntity;
 import com.web.gdup.domain.cody.service.CodyServiceImpl;
@@ -26,18 +28,14 @@ public class CodyController {
             value = "코디 추가",
             notes = "유저의 모든 코디 목록을 보내준다."
     )
-    public ResponseEntity<String> createCody(@RequestPart(value = "imageFile") MultipartFile file, @RequestPart(value = "createCody") CreateCody cc) {
-        ResponseEntity<String> re;
+    public ResponseEntity<CreateCodyResponse> createCody(@RequestPart(value = "imageFile") MultipartFile file, @RequestPart(value = "createCody") CreateCody cc) {
+        ResponseEntity<CreateCodyResponse> responseBody;
 
         System.out.println(cc.toString());
         System.out.println(file.getOriginalFilename());
+        responseBody =  new ResponseEntity<>(cs.addCodyItem(cc, file), HttpStatus.OK);
 
-        if (cs.addCodyItem(cc, file) == 1)
-            re = new ResponseEntity<>("Cody 생성 성공", HttpStatus.OK);
-        else
-            re = new ResponseEntity<>("Cody 생성 실패", HttpStatus.BAD_REQUEST);
-
-        return re;
+        return responseBody;
     }
 
 
@@ -73,7 +71,7 @@ public class CodyController {
             value = "코디 목록 불러오기",
             notes = "특정 유저의 코디 목록 불러오기"
     )
-    public ResponseEntity<List<CodyEntity>> readCodyList(@PathVariable(name = "userName") String userName) {
+    public ResponseEntity<List<CodyAllList>> readCodyList(@PathVariable(name = "userName") String userName) {
         return new ResponseEntity(cs.getUserCodyList(userName), HttpStatus.OK);
     }
 

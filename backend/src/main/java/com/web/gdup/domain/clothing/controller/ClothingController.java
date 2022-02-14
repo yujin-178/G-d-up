@@ -66,10 +66,30 @@ public class ClothingController {
         return response;
     }
 
-    @PostMapping(value = "/save")
-    @ApiOperation(value = "옷 저장")
+    @PostMapping(value = "/save2")
+    @ApiOperation(value = "옷 저장 - 이미지 파일")
     public ResponseEntity insertClothing(@RequestPart("imageFile") MultipartFile file, @RequestPart("clothing") ClothingDto clothing, @RequestPart("hashtag") String hashtag, @RequestPart("washing") String washing) throws IOException {
         int data = clothingService.insertClothing(file, clothing, hashtag, washing);
+        ResponseEntity response = null;
+
+        BasicResponse result = new BasicResponse();
+        if(data != 0) {
+            result.status = true;
+            result.message = "sucess";
+            response = new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            result.status = false;
+            result.message = "fail";
+            response = new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
+        }
+
+        return response;
+    }
+
+    @PostMapping(value = "/save")
+    @ApiOperation(value = "옷 저장 - 경로")
+    public ResponseEntity insertClothingTest(@RequestPart("imageFile") String fileUrl, @RequestPart("clothing") ClothingDto clothing, @RequestPart("hashtag") String hashtag, @RequestPart("washing") String washing) throws IOException {
+        int data = clothingService.insertClothingUrl(fileUrl, clothing, hashtag, washing);
         ResponseEntity response = null;
 
         BasicResponse result = new BasicResponse();
