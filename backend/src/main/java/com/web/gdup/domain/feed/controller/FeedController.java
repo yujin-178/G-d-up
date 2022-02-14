@@ -82,22 +82,23 @@ public class FeedController {
     @DeleteMapping("/delete/{feedId}")
     @ApiOperation(value = "Feed 지우기 ", notes = "작성한 피드를 지운다. ")
     public Object deleteFeed(@PathVariable int feedId) {
-        //관련 댓글도 다 사라져야함
-        ResponseEntity response = null;
-        final BasicResponse result = new BasicResponse();
 
-        if (feedService.deleteFeed(feedId)) {
-            result.status = true;
-            result.message = "success";
-            result.data = null;
-            response = new ResponseEntity<>(result, HttpStatus.OK);
-        } else {
-            result.status = true;
+        final BasicResponse result = new BasicResponse();
+        boolean deleteFeed = false;
+
+        try {
+            deleteFeed = feedService.deleteFeed(feedId);
+        } catch (Exception e) {
+            result.status = false;
             result.message = "DB에 없는 feedid를 삭제 시도 했습니다. .";
             result.data = null;
-            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
-        return response;
+
+        result.status = deleteFeed;
+        result.message = "success";
+        result.data = null;
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/all/{userName}")

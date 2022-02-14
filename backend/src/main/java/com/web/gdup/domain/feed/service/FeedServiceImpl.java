@@ -60,14 +60,12 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public boolean deleteFeed(int feedId) {
+    public boolean deleteFeed(int feedId) throws Exception {
 
-        Optional<FeedDto> feedDto = feedRepository.findById(feedId);
-        if (feedDto.isPresent()) {
-            feedRepository.deleteById(feedId);
-            return true;
-        }
-        return false;
+        if(feedRepository.deleteByFeedId(feedId) == 0)
+            throw new Exception("null");
+
+    return true;
     }
 
     @Override
