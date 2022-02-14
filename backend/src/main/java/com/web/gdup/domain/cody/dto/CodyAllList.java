@@ -4,6 +4,8 @@ import com.web.gdup.domain.cody.entity.CodyEntity;
 import com.web.gdup.domain.image.entity.ImageEntity;
 import lombok.*;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -11,5 +13,5 @@ import lombok.*;
 @ToString
 public class CodyAllList {
     private CodyEntity codyEntity;
-    private ImageEntity imageEntity;
+    private List<String> hashList;
 }
