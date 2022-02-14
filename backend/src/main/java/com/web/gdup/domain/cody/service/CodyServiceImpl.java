@@ -54,29 +54,18 @@ public class CodyServiceImpl implements CodyService {
     @Override
     public List<CodyDtoAll> getUserCodyList(String name) {
 
-        List<CodyEntity> tmp = codyRepository.findAllByUserName(name);
-        List<CodyDtoAll> codyAllLists = new ArrayList<>();
-        for (CodyEntity a : tmp) {
+        List<CodyEntity> codyEntities = codyRepository.findAllByUserName(name);
+        List<CodyDtoAll> codyDtoAlls = new ArrayList<>();
+        for (CodyEntity codyEntity : codyEntities) {
             List<String> codyTagList = new ArrayList<>();
-            List<CodyHashtagEntity> tmp2 = codyHashtagRepository.findAllByCodyId(a.getCodyId());
-            for (CodyHashtagEntity b : tmp2) {
-                codyTagList.add(b.getTagName());
+            List<CodyHashtagEntity> codyHashtagEntities = codyHashtagRepository.findAllByCodyId(codyEntity.getCodyId());
+            for (CodyHashtagEntity codyHashtagEntity : codyHashtagEntities) {
+                codyTagList.add(codyHashtagEntity.getTagName());
             }
-            CodyDtoAll codyDtoAll = CodyDtoAll.builder()
-                    .codyId(a.getCodyId())
-                    .codyName(a.getCodyName())
-                    .registrationDate(a.getRegistrationDate())
-                    .updateDate(a.getUpdateDate())
-                    .content(a.getContent())
-                    .userName(a.getUserName())
-                    .secret(a.getSecret())
-                    .imageModel(a.getImageModel())
-                    .hashList(codyTagList)
-                    .build();
-            codyAllLists.add(codyDtoAll);
+            codyDtoAlls.add(new CodyDtoAll(codyEntity, codyTagList));
         }
 
-        return codyAllLists;
+        return codyDtoAlls;
 
     }
 
