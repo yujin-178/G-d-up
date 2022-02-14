@@ -35,7 +35,7 @@ export const authSlice = createSlice({
         ...state,
         category
       };
-    }
+    },
   },
   extraReducers: {
     [signin.pending]: (state) => {
@@ -46,6 +46,7 @@ export const authSlice = createSlice({
       state.isLoggedIn = true;
       state.userName = payload.userName;
       state.email = payload.email;
+      state.error = null;
     },
     [signin.rejected]: (state) => {
       state.loading = false;
@@ -59,6 +60,7 @@ export const authSlice = createSlice({
       state.isLoggedIn = true;
       state.userName = payload.userName;
       state.email = payload.email;
+      state.error = null;
     },
     [login.rejected]: (state) => {
       state.error = '아이디와 비밀번호를 확인해주세요.';

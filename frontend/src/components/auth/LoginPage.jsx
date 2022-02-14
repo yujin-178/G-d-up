@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { css } from '@emotion/react';
 
-export default function LoginPage({ emailRef, passwordRef, onClickLogin }) {
+export default function LoginPage({ emailRef, passwordRef, onClickLogin, error }) {
   return (
     <div css={LivingRoom}>
       <div css={Closet}>
@@ -11,6 +11,7 @@ export default function LoginPage({ emailRef, passwordRef, onClickLogin }) {
           <div css={Title}>
             <h1>G'd up</h1>
           </div>
+          {error && <p css={errorMessage}>{error}</p>}
           <div css={inputGroup}>
             <input
               css={inputStyle}
@@ -128,4 +129,10 @@ const BackBtn = css`
   border-radius: 4px;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%);
   cursor: pointer;
+`;
+
+const errorMessage = css`
+  position: absolute;
+  left: 32%;
+  top: 27%;
 `;

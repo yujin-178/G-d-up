@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import LoginPage from '../../components/auth/LoginPage';
 
 export default function LoginContainer() {
-  const { isLoggedIn } = useSelector(state => state.authSlice);
+  const { isLoggedIn, error } = useSelector(state => state.authSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const emailRef = useRef();
@@ -29,6 +29,7 @@ export default function LoginContainer() {
       emailRef={emailRef}
       passwordRef={passwordRef}
       onClickLogin={handleClickLogin}
+      error={error}
     />
   );
 }
