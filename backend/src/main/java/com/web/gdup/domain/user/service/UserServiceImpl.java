@@ -40,6 +40,11 @@ public class UserServiceImpl implements  UserService{
     }
 
     @Override
+    public Optional<UserEntity> getUserEntity(String targetName) {
+        return userRepository.findById(targetName);
+    }
+
+    @Override
     public boolean finUserByEmail(String email) {
         Optional<UserEntity> user = userRepository.findUserByEmail(email);
         if (user.isPresent()) return true;
