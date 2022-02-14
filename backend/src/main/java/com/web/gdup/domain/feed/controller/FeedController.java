@@ -156,10 +156,10 @@ public class FeedController {
         return response;
     }
 
-    @GetMapping ("/like/push")
+    @GetMapping ("/like/push/{feedId}/{userName}")
     @ApiOperation(value = "피드 좋아요 누르기",
             notes = "좋아요 누를 피드 번호와 현재 로그인 된 유저 이름을 파라미터로 받는다. ")
-    public Object pushLike(@RequestParam int feedId, @RequestParam String userName){
+    public Object pushLike(@PathVariable int feedId, @PathVariable String userName){
         ResponseEntity response = null;
 
         final BasicResponse result = new BasicResponse();
