@@ -160,29 +160,29 @@ const submitBtnContainer = css`
 	transition: 0.5s;
 `;
 
-const cancelBtn = css`
-	grid-column: 4;
-	margin-left: 10px;
-	background: #c99f9f;
-	padding: 0.5rem 1rem;
-	width: 4rem;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
-`;
+// const cancelBtn = css`
+// 	grid-column: 4;
+// 	margin-left: 10px;
+// 	background: #c99f9f;
+// 	padding: 0.5rem 1rem;
+// 	width: 4rem;
+// 	border: none;
+// 	border-radius: 4px;
+// 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+// 	cursor: pointer;
+// `;
 
-const saveBtn = css`
-	grid-column: 3;
-	margin-left: 40px;
-	background: #6da0cf;
-	padding: 0.5rem 1rem;
-	width: 4rem;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
-`;
+// const saveBtn = css`
+// 	grid-column: 3;
+// 	margin-left: 40px;
+// 	background: #6da0cf;
+// 	padding: 0.5rem 1rem;
+// 	width: 4rem;
+// 	border: none;
+// 	border-radius: 4px;
+// 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+// 	cursor: pointer;
+// `;
 
 const CloseBtn = css`
 	background: #c99f9f;
