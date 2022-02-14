@@ -2,14 +2,19 @@ import React from 'react';
 
 import { css } from "@emotion/react";
 
-export default function CodyList({ moveScroll, cards }) {
+export default function CodyList({ handleSelectCody, moveScroll, cards }) {
   return (
-    <div>
+    <div >
       <h2>Cody</h2>
       <div css={container}>
         {cards.map((card, index) => {
           return (
-            <img key={index} src={card} css={imgStyle} />
+            <img
+              key={index}
+              src={card.imageModel.imageUrl}
+              css={imgStyle}
+              onClick={() => handleSelectCody(index)}
+            />
           );
         })}
         <button
@@ -38,6 +43,6 @@ const scrollBtn = css`
   width: 150px;
   height: 30px;
   grid-column: 3;
-  grid-row : 6;
+  grid-row-end : -1;
   justify-self: center;
 `;

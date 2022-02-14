@@ -1,28 +1,74 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
-import { v4 as uuidv4 } from 'uuid';
-
+// import { animateScroll as scroll } from 'react-scroll';
+// import { v4 as uuidv4 } from 'uuid';
 import CodyPage from '../../components/dressroom/CodyPage';
 import CodyCard from '../../components/dressroom/CodyCard';
 
 import {
   setgoToSlide,
   setCody,
-  setMoveScroll
+  setMoveScroll,
+  setCards,
+  changeSelectCody,
 } from '../../slices/codySlice';
 
-export default function CodyContainer() {
+export default function CodyMainContainer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const cody = useSelector(state => state.codySlice);
+  const { isdetailOpen, renderCount, offsetRadius, showArrows, goToSlide, codyList, scrollisTop, cards, codyLoading } = cody;
+  // const [scrollPosition, setScrollPosition] = useState(0);
+  // function updateScroll() {
+  //   setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  // }
+
+  // if (document.getElementById('Fadeup')){
+  //   document.getElementById('Fadeup').ontransitionend = () => {
+  //     dispatch(setEnd(true));
+  //   };
+  // }
+
   useEffect(() => {
-    dispatch(setCody('admin'));
+    dispatch(setCody('jisoon'));
   }, []);
 
-  const cody = useSelector(state => state.codySlice);
-  const { offsetRadius, showArrows, goToSlide, codyList, scrollisTop } = cody;
+  let codyCard = setTimeout(() => {
+    if (codyLoading === false) {
+      const cardList = codyList.map((card) => {
+        return {
+          key: card.codyId,
+          content: (
+            <CodyCard imgurl={card.imageModel.imageUrl} />
+          )
+        };
+      });
+      const cards = cardList.map((element, index) => {
+        return {
+          ...element,
+          onClick: () => dispatch(setgoToSlide(index))
+        };
+      });
+      dispatch(setCards(cards));
+    }
+  }, 1000);
+
+  if (renderCount > 1) {
+    clearTimeout(codyCard);
+  }
+
+  // useEffect(() => {
+  //   const watch = () => {
+  //     window.addEventListener('scroll', updateScroll);
+  //   };
+  //   watch();
+  // return () => {
+  //   window.removeEventListener('scroll', updateScroll);
+  // };
+  // }, [scrollPosition]);
 
   function handlegoToSlide(value) {
     dispatch(setgoToSlide(value));
@@ -32,23 +78,16 @@ export default function CodyContainer() {
     dispatch(setMoveScroll(type));
   }
 
-  const cardList = codyList.map((card) => {
-    return {
-      key: uuidv4(),
-      content: (
-        <CodyCard imgurl={card} />
-      )
-    };
-  });
+  function handleSelectCody(value) {
+    dispatch(changeSelectCody(value));
+  }
 
-  const table = cardList.map((element, index) => {
-    return {
-      ...element,
-      onClick: () => dispatch(setgoToSlide(index))
-    };
-  });
-
-  const [cards] = useState(table);
+  // if (scrollPosition === 200 && scrollisTop === true) {
+  //   handleMoveScroll('d');
+  // }
+  // else if (scrollPosition === 800 && scrollisTop === false) {
+  //   handleMoveScroll('u');
+  // }
 
   return (
     <div>
@@ -62,6 +101,8 @@ export default function CodyContainer() {
         moveScroll={handleMoveScroll}
         codyList={codyList}
         scrollisTop={scrollisTop}
+        handleSelectCody={handleSelectCody}
+        isdetailOpen={isdetailOpen}
       />
     </div>
   );
