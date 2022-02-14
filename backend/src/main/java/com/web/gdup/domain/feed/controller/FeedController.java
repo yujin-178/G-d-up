@@ -151,7 +151,7 @@ public class FeedController {
             result.status = true;
             result.message = "DB에 없는 feedid를 조회했습니다.";
             result.data = null;
-            response = new ResponseEntity<>(result, HttpStatus.OK);
+            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
         return response;
     }
