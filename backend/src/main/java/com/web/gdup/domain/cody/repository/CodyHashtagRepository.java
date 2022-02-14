@@ -17,6 +17,6 @@ public interface CodyHashtagRepository extends JpaRepository<CodyHashtagEntity, 
             , nativeQuery = true)
     List<Object[]> getlist();
 
-
+    List<CodyHashtagEntity> findAllByCodyId(int codyId);
     List<CodyHashtagEntity> findAllByTagNameContains(String tagName);
 }

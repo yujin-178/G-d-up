@@ -1,9 +1,7 @@
 package com.web.gdup.domain.cody.service;
 
 
-import com.web.gdup.domain.cody.dto.ClothingInCody;
-import com.web.gdup.domain.cody.dto.CreateCody;
-import com.web.gdup.domain.cody.dto.UpdateCody;
+import com.web.gdup.domain.cody.dto.*;
 import com.web.gdup.domain.cody.entity.CodyClothingEntity;
 import com.web.gdup.domain.cody.entity.CodyEntity;
 import com.web.gdup.domain.cody.entity.CodyHashtagEntity;
@@ -21,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
 import java.util.UUID;
@@ -52,12 +51,20 @@ public class CodyServiceImpl implements CodyService {
     }
 
     @Override
-    public List<CodyEntity> getUserCodyList(String name) {
+    public List<CodyAllList> getUserCodyList(String name) {
 
         List<CodyEntity> tmp = cr.findAllByUserName(name);
+        List<CodyAllList> codyAllLists = new ArrayList<>();
+        for (CodyEntity a : tmp) {
+            List<String> codyTagList = new ArrayList<>();
+            List<CodyHashtagEntity> tmp2 = chr.findAllByCodyId(a.getCodyId());
+            for (CodyHashtagEntity b : tmp2) {
+                codyTagList.add(b.getTagName());
+            }
+            codyAllLists.add(new CodyAllList(a, codyTagList));
+        }
 
-
-        return tmp;
+        return codyAllLists;
 
     }
 
@@ -132,7 +139,7 @@ public class CodyServiceImpl implements CodyService {
 
 
     @Override
-    public int addCodyItem(CreateCody cc, MultipartFile file) {
+    public CreateCodyResponse addCodyItem(CreateCody cc, MultipartFile file) {
         ImageDto image = saveImage(file);
 
         int imageId = imageService.insertImage(image);
@@ -152,7 +159,9 @@ public class CodyServiceImpl implements CodyService {
 
         CodyEntity ans = cr.save(codyDto);
 
+
         StringTokenizer st = new StringTokenizer(cc.getCodyTag(), " ");
+        List<String> tagList = new ArrayList<>();
         while (st.hasMoreTokens()) {
             String tagTmp = st.nextToken();
             hs.findOrCreateHashtag(tagTmp);
@@ -161,14 +170,15 @@ public class CodyServiceImpl implements CodyService {
                     .codyId(ans.getCodyId())
                     .registrationDate(LocalDateTime.now())
                     .tagName(tagTmp).build();
+            tagList.add(tagTmp);
             chr.save(CHtmp);
         }
 
 
         if (ans != null) {
             int len = cc.getClothingList().size();
-            List<ClothingInCody> cciList = cc.getClothingList();
             for (int i = 0; i < len; i++) {
+                List<ClothingInCody> cciList = cc.getClothingList();
                 ClothingInCody tmp = cciList.get(i);
                 CodyClothingEntity cci = CodyClothingEntity.builder()
                         .codyId(ans.getCodyId())
@@ -179,12 +189,22 @@ public class CodyServiceImpl implements CodyService {
 
             }
 
-
-            return 1;
         } else {
             System.out.println("Cody 생성 실패");
-            return 0;
         }
+        CreateCodyResponse createCodyResponse = CreateCodyResponse.builder()
+                .imageEntity(ans.getImageModel())
+                .registrationTime(ans.getRegistrationDate())
+                .updateDate(ans.getUpdateDate())
+                .userName(ans.getUserName())
+                .codyName(ans.getCodyName())
+                .content(ans.getContent())
+                .secret(ans.getSecret())
+                .codyTag(tagList)
+                .build();
+
+        return createCodyResponse;
+
     }
 
     private ImageDto updateImage(MultipartFile file, int imageId) {
