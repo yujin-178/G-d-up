@@ -20,11 +20,6 @@ export default function DressRoomContainer() {
             </Link>
           </div>
           <div css={BtnItem}>
-            <button css={Button}>
-              옷 추천
-            </button>
-          </div>
-          <div css={BtnItem}>
             <Link to='/closet'>
               <button css={Button}>
                 옷장 가기
