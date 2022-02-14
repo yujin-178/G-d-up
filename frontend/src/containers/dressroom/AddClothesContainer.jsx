@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import AddClothes from '../../components/dressroom/AddClothes';
 import axios from 'axios';
+import Resizer from "react-image-file-resizer";
 import { useDispatch, useSelector } from 'react-redux';
 import { season } from '../../constants/filter';
 
@@ -22,6 +23,7 @@ import {
   resetClothes,
   changeresloading,
   setClothes,
+  changeimgError,
 } from '../../slices/clothesSlice';
 
 export default function AddClothesContainer() {
@@ -33,7 +35,7 @@ export default function AddClothesContainer() {
   const { selectedIcon } = laundry;
 
   const clothes = useSelector(state => state.clothesSlice);
-  const { imgURL, tagInfo, tagGroup, resloading } = clothes;
+  const { imgURL, tagInfo, tagGroup, resloading, imgError } = clothes;
 
   const imgInput = useRef(null);
   const [loading, setLoading] = useState(null);
@@ -45,6 +47,26 @@ export default function AddClothesContainer() {
   };
 
   const userName = 'jisoon';
+
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        300,
+        400,
+        "JPEG",
+        80,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "base64"
+      );
+    });
+
+  function handleimgError({ type, text }) {
+    dispatch(changeimgError({ type, text }));
+  }
 
   function handleModal(value) {
     dispatch(changeisModalOpen(value));
@@ -75,15 +97,18 @@ export default function AddClothesContainer() {
   function onImgChange(event) {
     setLoading(true);
     const formData = new FormData();
-    formData.append('imageFile', event.target.files[0]);
-    
+    const image = resizeFile(event.target.files[0]);
+    formData.append('imageFile', image);
+
     axios.post(`http://i6b108.p.ssafy.io:8000/clothing/background`, formData, config)
       .then((res) => {
         dispatch(setImgURL(res.data.data));
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        const message = err.message;
+        setLoading(false);
+        handleimgError({ type: true, text : message });
       });
     axios.post(`http://i6b108.p.ssafy.io:8000/clothing/tag`, formData, config)
       .then((res) => {
@@ -151,6 +176,7 @@ export default function AddClothesContainer() {
         loading={loading}
         resetClothes={handleresetClothes}
         resloading={resloading}
+        imgError={imgError.text}
       />
     </div>
   );

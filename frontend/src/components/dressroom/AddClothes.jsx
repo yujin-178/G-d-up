@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ resloading ,resetClothes, loading, images, resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
+export default function AddClothes({ imgError, resloading, resetClothes, loading, images, resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
   return (
     <div>
       <Global
@@ -17,7 +17,7 @@ export default function AddClothes({ resloading ,resetClothes, loading, images, 
       />
       <Modal
         isOpen={isModalOpen}
-        onRequestClose={() => {modalToggle(false); resetClothes();}}
+        onRequestClose={() => { modalToggle(false); resetClothes(); }}
         closeTimeoutMS={500}
         onAfterOpen={() => { document.body.style.overflow = 'hidden'; }}
         onAfterClose={() => document.body.removeAttribute('style')}
@@ -44,11 +44,17 @@ export default function AddClothes({ resloading ,resetClothes, loading, images, 
                 />
               </div>
               :
-              <img
-                src={preview}
-                css={previewImg}
-              />
-            }
+              imgError ?
+                <div css={css`text-align:center;`}>
+                  <p>
+                    {imgError}
+                  </p>
+                </div>
+                :
+                <img
+                  src={preview}
+                  css={previewImg}
+                />}
           </div>
 
           <div css={btnContainer}>
@@ -151,7 +157,7 @@ export default function AddClothes({ resloading ,resetClothes, loading, images, 
               </button>
               <button
                 css={cancelBtn}
-                onClick={() => {modalToggle(false); resetClothes();}}
+                onClick={() => { modalToggle(false); resetClothes(); }}
               >
                 취소
               </button>

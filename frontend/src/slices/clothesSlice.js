@@ -10,12 +10,13 @@ const initialState = {
   imgURL: '',
   tagGroup: [],
   resloading: false,
+  imgError: { type: false, text: '' },
 };
 
 export const deleteClothesById = createAsyncThunk(
   'clothes/deleteClothes',
   async (clothesId) => {
-  // async (clothesId, thunkAPI) => {
+    // async (clothesId, thunkAPI) => {
     // todo: api request
 
     // const response = await axiosServer({
@@ -81,7 +82,7 @@ export const clothesSlice = createSlice({
     resetClothes(state) {
       return {
         ...state,
-        tagInfo : { 'season': '' },
+        tagInfo: { 'season': '' },
         imgURL: '',
         tagGroup: [],
       };
@@ -89,7 +90,17 @@ export const clothesSlice = createSlice({
     changeresloading(state, action) {
       return {
         ...state,
-        resloading : action.payload
+        resloading: action.payload
+      };
+    },
+    changeimgError(state, action) {
+      const { type, text } = action.payload;
+      return {
+        ...state,
+        imgError: {
+          type,
+          text
+        }
       };
     }
   },
@@ -118,7 +129,7 @@ export const clothesSlice = createSlice({
       };
     },
     [deleteClothesById.pending]: (state) => {
-    // [deleteClothesById.pending]: (state, action) => {
+      // [deleteClothesById.pending]: (state, action) => {
       return {
         ...state,
         loading: true
@@ -134,7 +145,7 @@ export const clothesSlice = createSlice({
       };
     },
     [deleteClothesById.rejected]: (state) => {
-    // [deleteClothesById.rejected]: (state, action) => {
+      // [deleteClothesById.rejected]: (state, action) => {
       return {
         ...state,
         loading: false,
@@ -151,6 +162,7 @@ export const {
   selectSeason,
   resetClothes,
   changeresloading,
+  changeimgError,
 } = clothesSlice.actions;
 
 export default clothesSlice.reducer;
