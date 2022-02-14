@@ -9,7 +9,7 @@ import CodyList from '../../components/dressroom/CodyList';
 export default function CodyPage({ scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
   return (
     <div>
-      <button css={createBtn} onClick={() => navigate('./create')}>
+      <button css={createBtn} onClick={() => navigate('/codycreate')}>
         새 코디 생성하기
       </button>
       <button
