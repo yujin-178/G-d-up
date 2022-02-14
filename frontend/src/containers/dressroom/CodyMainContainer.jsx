@@ -20,7 +20,7 @@ export default function CodyMainContainer() {
   const dispatch = useDispatch();
 
   const cody = useSelector(state => state.codySlice);
-  const { isdetailOpen, renderCount, offsetRadius, showArrows, goToSlide, codyList, scrollisTop, cards, codyLoading } = cody;
+  const { selectedCody ,isdetailOpen, renderCount, offsetRadius, showArrows, goToSlide, codyList, scrollisTop, cards, codyLoading } = cody;
   // const [scrollPosition, setScrollPosition] = useState(0);
   // function updateScroll() {
   //   setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -33,7 +33,7 @@ export default function CodyMainContainer() {
   // }
 
   useEffect(() => {
-    dispatch(setCody('jisoon'));
+    dispatch(setCody('admin'));
   }, []);
 
   let codyCard = setTimeout(() => {
@@ -103,6 +103,7 @@ export default function CodyMainContainer() {
         scrollisTop={scrollisTop}
         handleSelectCody={handleSelectCody}
         isdetailOpen={isdetailOpen}
+        selectedCody={selectedCody}
       />
     </div>
   );

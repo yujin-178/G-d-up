@@ -41,7 +41,7 @@ export default function ResModal({ resloading, resText, handleResponse, isResOpe
                 <p>{resText}</p>
                 <button
                   css={saveBtn}
-                  onClick={() => handleResponse(false)}
+                  onClick={() => {handleResponse(false); window.location.reload();}}
                 >
                   확인
                 </button>

@@ -17,6 +17,8 @@ export default function CodyList({ handleSelectCody, moveScroll, cards }) {
             />
           );
         })}
+      </div>
+      <div css={btnContainer}>
         <button
           onClick={() => moveScroll('u')}
           css={scrollBtn}
@@ -39,10 +41,15 @@ const container = css`
   grid-gap: 10px;
 `;
 
+const btnContainer = css`
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+`;
+
 const scrollBtn = css`
   width: 150px;
   height: 30px;
-  grid-column: 3;
-  grid-row-end : -1;
+  grid-column:3;
   justify-self: center;
+  margin: 20px;
 `;
