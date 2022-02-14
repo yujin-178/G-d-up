@@ -122,9 +122,9 @@ public class FeedController {
         return response;
     }
 
-    @GetMapping ("/detail")
+    @GetMapping ("/detail/{feedId}")
     @ApiOperation(value = "선택된 피드 불러오기")
-    public Object getFeed(@RequestParam int feedId){
+    public Object getFeed(@PathVariable int feedId){
 
         ResponseEntity response = null;
 
