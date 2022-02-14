@@ -1,7 +1,7 @@
-package com.web.gdup.domain.cody.repository;
+package com.web.gdup.domain.cody_clothing.repository;
 
-import com.web.gdup.domain.cody.entity.CodyClothingEntity;
-import com.web.gdup.domain.cody.entity.CodyClothingPK;
+import com.web.gdup.domain.cody_clothing.entity.CodyClothingEntity;
+import com.web.gdup.domain.cody_clothing.entity.CodyClothingPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;
