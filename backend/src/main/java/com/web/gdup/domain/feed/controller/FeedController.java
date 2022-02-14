@@ -114,7 +114,7 @@ public class FeedController {
         }
         else {
             result.status = true;
-            result.message = "success";
+            result.message = "작성된 피드가 없습니다.";
             result.data = null;
             response = new ResponseEntity<>(result,  HttpStatus.OK);
         }
