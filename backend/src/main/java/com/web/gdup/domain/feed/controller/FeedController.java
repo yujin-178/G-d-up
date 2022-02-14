@@ -38,17 +38,22 @@ public class FeedController {
     @PostMapping("/write")
     @ApiOperation(value = "Feed 작성하기 ", notes = "새로운 피드 글을 작성한다. ")
     public Object writeFeed(@RequestBody FeedDto feed) {
-        ResponseEntity response = null;
 
-        if (feedService.insertFeed(feed)) {
-            final BasicResponse result = new BasicResponse();
-            result.status = true;
-            result.message = "success";
-            response = new ResponseEntity<>(result, HttpStatus.OK);
-        } else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        final BasicResponse result = new BasicResponse();
+        boolean ans = false;
+
+        try {
+            ans = feedService.insertFeed(feed);
+        } catch (Exception e) {
+            result.status = false;
+            result.message = "피드 생성 실패";
+            return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
-        return response;
+
+        result.status = ans;
+        result.message = "success";
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PutMapping("/modify")

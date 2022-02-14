@@ -10,7 +10,7 @@ public interface FeedService {
 
     Optional<FeedDto> getFeed(int feedId);
     List<FeedDto> getAllFeed(String userName) throws Exception;
-    boolean insertFeed(FeedDto feed);
+    boolean insertFeed(FeedDto feed) throws Exception;
     boolean deleteFeed(int feedId);
     FeedDto modifyFeed(FeedDto feed) throws Exception;
     public  List<RecommandDto> recommendService (String tagName);

@@ -51,15 +51,12 @@ public class FeedServiceImpl implements FeedService {
     }
 
     @Override
-    public boolean insertFeed(FeedDto feed) {
+    public boolean insertFeed(FeedDto feed) throws Exception {
 
-        FeedDto feedDto = feedRepository.save(feed);
+        Optional<FeedDto> feedDto = Optional.of(feedRepository.save(feed));
+        feedDto.orElseThrow(()-> new Exception("null"));
 
-        if (feedDto != null) {
-            System.out.println(feedDto);
-            return true;
-        }
-        return false;
+        return true;
     }
 
     @Override
