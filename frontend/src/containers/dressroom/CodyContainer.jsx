@@ -7,9 +7,13 @@ import FilterContainer from './FilterContainer';
 import ClothesItemList from '../../components/dressroom/ClothesItemList';
 import { setClothes } from '../../slices/clothesSlice';
 import axios from 'axios';
-import { createCody } from '../../slices/codySlice';
+import Modal from '../../components/dressroom/Modal';
+import Messages from '../../components/dressroom/Messages';
+import Button from '../../components/dressroom/Button';
+import { createCody, closeModal } from '../../slices/codySlice';
 
 export default function CodyContainer() {
+  const { modalType } = useSelector(state => state.codySlice);
   const { clothes } = useSelector(state => state.clothesSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -20,10 +24,28 @@ export default function CodyContainer() {
   const contentRef = useRef();
   const [isNotSecret, setIsNotSecret] = useState(true);
   const canvasRef = useRef();
+  const [modalProps, setModalProps] = useState({});
 
   useEffect(() => {
     dispatch(setClothes('jisoon'));
   }, []);
+
+  useEffect(() => {
+    if (modalType === 'POST') {
+      setModalProps({
+        message: '내 코디가 저장되었습니다.',
+        subMessage: '코디 목록으로 이동하시겠습니까?',
+        okButtonTitle: '이동',
+        cancelButtonTitle: '취소',
+        onClickOk: () => {
+          dispatch(closeModal());
+          setModalProps({});
+          navigate('/cody');
+        },
+        onClickCancel: () =>  window.location.reload(false),
+      });
+    }
+  }, [modalType]);
 
   const onClickHandler = async (target) => {
     const { clothingId } = target.clothing;
@@ -152,19 +174,26 @@ export default function CodyContainer() {
 
   const saveHandler = async (event) => {
     event.preventDefault();
-    const canvas = canvasRef.current;
     const content = contentRef.current.value;
+    const canvas = canvasRef.current;
     dispatch(createCody({ canvas, codyItems, content, isNotSecret, tags, userName: 'jisoon' }));
   };
 
   return (
     <>
+      {modalType && (
+        <Modal>
+          <Messages message={modalProps.message} subMessage={modalProps.subMessage} />
+          <Button title={modalProps.cancelButtonTitle} onClick={modalProps.onClickCancel} color='white'/>
+          <Button title={modalProps.okButtonTitle} onClick={modalProps.onClickOk} color='#1890FF'/>
+        </Modal>
+      )}
       <h1>CodyContainer</h1>
       <button onClick={() => {
         dispatch(resetFilter());
-        navigate('/cody');
+        navigate('/dressroom');
       }}>
-        코디 목록으로 돌아가기
+        드레스룸으로 돌아가기
       </button>
       <FilterContainer />
       <ClothesItemList

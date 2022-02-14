@@ -9,6 +9,7 @@ const initialState = {
   'codyList': [],
   'codyLoading': false,
   'scrollisTop': true,
+  modalType: null,
 };
 
 export const setCody = createAsyncThunk(
@@ -54,6 +55,9 @@ export const codySlice = createSlice({
         ...state,
         scrollisTop
       };
+    },
+    closeModal(state) {
+      state.modalType = null;
     }
   },
   extraReducers: {
@@ -78,6 +82,7 @@ export const codySlice = createSlice({
       state.loading = false;
       // 백엔드에서 완성하면 추가 예정
       //state.codyList = [...state.codyList, payload];
+      state.modalType = 'POST';
     },
     [createCody.rejected]: (state) => {
       state.loading = false;
@@ -88,6 +93,7 @@ export const codySlice = createSlice({
 export const {
   setgoToSlide,
   setMoveScroll,
+  closeModal,
 } = codySlice.actions;
 
 export default codySlice.reducer;
