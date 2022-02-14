@@ -127,26 +127,31 @@ public class FeedController {
     public Object getFeed(@PathVariable int feedId){
 
         ResponseEntity response = null;
+        final BasicResponse result = new BasicResponse();
 
         Optional<FeedDto> feed = feedService.getFeed(feedId);
-        int likeCnt = likeService.getLikeCnt(feedId);
-        List<String> users = likeService.getUsers(feedId);
-        List<CommentEntity> comments = commentService.getComments(feedId);
-
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("feed", feed);
-        map.put("likeCnt", likeCnt);
-        map.put("users", users);
-        map.put("comments", comments);
 
         if(feed.isPresent()){
-            final BasicResponse result = new BasicResponse();
+
+            int likeCnt = likeService.getLikeCnt(feedId);
+            List<String> users = likeService.getUsers(feedId);
+            List<CommentEntity> comments = commentService.getComments(feedId);
+
+            HashMap<String,Object> map = new HashMap<>();
+            map.put("feed", feed);
+            map.put("likeCnt", likeCnt);
+            map.put("users", users);
+            map.put("comments", comments);
+
             result.status = true;
             result.message = "success";
             result.data = map;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }  else {
-            response = new ResponseEntity<>(null, HttpStatus.OK);
+            result.status = true;
+            result.message = "DB에 없는 feedid를 조회했습니다.";
+            result.data = null;
+            response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         return response;
     }

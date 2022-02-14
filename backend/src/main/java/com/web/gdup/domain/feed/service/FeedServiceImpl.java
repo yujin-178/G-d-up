@@ -30,10 +30,7 @@ public class FeedServiceImpl implements FeedService {
 
     @Override
     public Optional<FeedDto> getFeed(int feedId) {
-        Optional<FeedDto> feedDto = feedRepository.findById(feedId);
-        if (feedDto.isPresent())
-            return feedDto;
-        return null;
+        return feedRepository.findById(feedId);
     }
 
     @Override
