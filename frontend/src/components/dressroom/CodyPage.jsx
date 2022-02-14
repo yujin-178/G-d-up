@@ -6,9 +6,8 @@ import { css } from "@emotion/react";
 import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
 import CodyDetailContainer from '../../containers/dressroom/CodyDetailContainer';
-import { useScrollFadeIn } from '../../hooks/useScrollFadeIn';
 
-export default function CodyPage({ handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
+export default function CodyPage({ isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
   // const animatedItem = {
   //   0: useScrollFadeIn('down', 1, 0),
   //   1: useScrollFadeIn('down', 1, 0.2),
@@ -17,9 +16,7 @@ export default function CodyPage({ handleSelectCody, scrollisTop, moveScroll, co
 
   return (
     <div>
-      <CodyDetailContainer
-      />
-      <div css={container}>
+      <div css={isdetailOpen ? css`display: none;` : container}>
         <h2>Cody</h2>
         <div css={carousel}>
           <Carousel
@@ -52,17 +49,31 @@ export default function CodyPage({ handleSelectCody, scrollisTop, moveScroll, co
           전체 보기
         </button>
       </div>
-      <div css={scrollisTop ? displayToggle : ''}>
-        <div {...useScrollFadeIn('down', 1, 0)}>
-          <CodyList
-            cards={codyList}
-            moveScroll={moveScroll}
-            scrollisTop={scrollisTop}
-            handleSelectCody={handleSelectCody}
-          />
+
+      {scrollisTop ?
+        <div css={Fadeup}>
+          <div>
+            <CodyList
+              cards={codyList}
+              moveScroll={moveScroll}
+              scrollisTop={scrollisTop}
+              handleSelectCody={handleSelectCody}
+            />
+          </div>
         </div>
-      </div>
-      <button css={createBtn} onClick={() => navigate('./create')}>
+        :
+        <div css={Fadein}>
+          <div>
+            <CodyList
+              cards={codyList}
+              moveScroll={moveScroll}
+              scrollisTop={scrollisTop}
+              handleSelectCody={handleSelectCody}
+            />
+          </div>
+        </div>
+      }
+      <button css={createBtn} onClick={() => navigate('/codycreate')}>
         새 코디 생성하기
       </button>
       <button
@@ -70,9 +81,30 @@ export default function CodyPage({ handleSelectCody, scrollisTop, moveScroll, co
         onClick={() => navigate('/dressroom')}>
         Back
       </button>
+      <CodyDetailContainer
+      />
+
     </div>
   );
 }
+
+const Fadeup = css`
+  transition-timing-function : cubic-bezier(0,0,0.2,1);
+  transition-property : all;
+  transition-duration : 1s;
+  transition-delay : 1s;
+  opacity : 1;
+  transform = translate3d(0, 50%, 0);
+`;
+
+const Fadein = css`
+  transition-timing-function : cubic-bezier(0,0,0.2,1);
+  transition-property : all;
+  transition-duration : 1s;
+  transition-delay : 1s;
+  opacity : 1;
+  transform = translate3d(0, -50%, 0);
+`;
 
 const scrollBtn = css`
   width: 150px;
@@ -108,13 +140,14 @@ const container = css`
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 1fr 4fr 1fr;
   grid-row-gap: 10px;
-  transition: all 1s;
   height: 100vh;
-`;
 
-const displayToggle = css`
-  visibility: hidden;
-  transition: all 1s;
+  transition-timing-function : cubic-bezier(0,0,0.2,1);
+  transition-property : all;
+  transition-duration : 1s;
+  transition-delay : 1s;
+  opacity : 1;
+  transform = translate3d(0, 50%, 0);
 `;
 
 const createBtn = css`

@@ -12,7 +12,8 @@ const initialState = {
   'cards': [],
   'renderCount': 0,
   'isdetailOpen': false,
-  'selectedCody' : ''
+  'selectedCody' : '',
+  'transitionEnd' : false,
 };
 
 export const setCody = createAsyncThunk(
@@ -38,18 +39,13 @@ export const codySlice = createSlice({
     },
     setMoveScroll(state, action) {
       const type = action.payload;
-      let scrollisTop = '';
       if (type === 'u') {
         scroll.scrollToTop();
-        scrollisTop = true;
+        state.scrollisTop = true;
       } else if (type === 'd') {
         scroll.scrollToBottom();
-        scrollisTop = false;
+        state.scrollisTop = false;
       }
-      return {
-        ...state,
-        scrollisTop
-      };
     },
     setCards(state, action) {
       const cards = action.payload;
@@ -77,6 +73,13 @@ export const codySlice = createSlice({
     changeSelectCody(state, action) {
       const index = action.payload;
       state.selectedCody = state.codyList[index];
+    },
+    setEnd(state, action) {
+      const transitionEnd = action.payload;
+      return {
+        ...state,
+        transitionEnd
+      };
     }
   },
   extraReducers: {
@@ -85,9 +88,7 @@ export const codySlice = createSlice({
     },
     [setCody.fulfilled.type]: (state, action) => {
       state.codyLoading = false;
-      state.codyList = action.payload.map((item) => {
-        return item;
-      });
+      state.codyList = action.payload;
     },
     [setCody.rejected.type]: (state, action) => {
       state.codyLoading = false;
@@ -103,6 +104,7 @@ export const {
   setisdetailOpen,
   setDetail,
   changeSelectCody,
+  setEnd,
 } = codySlice.actions;
 
 export default codySlice.reducer;

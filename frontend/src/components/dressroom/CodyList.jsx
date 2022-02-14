@@ -4,7 +4,7 @@ import { css } from "@emotion/react";
 
 export default function CodyList({ handleSelectCody, moveScroll, cards }) {
   return (
-    <div>
+    <div >
       <h2>Cody</h2>
       <div css={container}>
         {cards.map((card, index) => {
@@ -13,7 +13,7 @@ export default function CodyList({ handleSelectCody, moveScroll, cards }) {
               key={index}
               src={card.imageModel.imageUrl}
               css={imgStyle}
-              onClick={()=>handleSelectCody(index)}
+              onClick={() => handleSelectCody(index)}
             />
           );
         })}
@@ -43,6 +43,6 @@ const scrollBtn = css`
   width: 150px;
   height: 30px;
   grid-column: 3;
-  grid-row : 6;
+  grid-row-end : -1;
   justify-self: center;
 `;

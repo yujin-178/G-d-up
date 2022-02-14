@@ -12,26 +12,32 @@ import {
   setCody,
   setMoveScroll,
   setCards,
-  changeSelectCody
+  changeSelectCody,
 } from '../../slices/codySlice';
 
-export default function CodyContainer() {
+export default function CodyMainContainer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const cody = useSelector(state => state.codySlice);
-  const { renderCount, offsetRadius, showArrows, goToSlide, codyList, scrollisTop, cards, codyLoading } = cody;
+  const { isdetailOpen, renderCount, offsetRadius, showArrows, goToSlide, codyList, scrollisTop, cards, codyLoading } = cody;
+  // const [scrollPosition, setScrollPosition] = useState(0);
+  // function updateScroll() {
+  //   setScrollPosition(window.scrollY || document.documentElement.scrollTop);
+  // }
 
-  const [scrollPosition, setScrollPosition] = useState(0);
-  function updateScroll() {
-    setScrollPosition(window.scrollY || document.documentElement.scrollTop);
-  }
+  // if (document.getElementById('Fadeup')){
+  //   document.getElementById('Fadeup').ontransitionend = () => {
+  //     dispatch(setEnd(true));
+  //   };
+  // }
+
   useEffect(() => {
-    dispatch(setCody('admin'));
+    dispatch(setCody('jisoon'));
   }, []);
 
   let codyCard = setTimeout(() => {
-    if (codyLoading === false ) {
+    if (codyLoading === false) {
       const cardList = codyList.map((card) => {
         return {
           key: card.codyId,
@@ -46,29 +52,23 @@ export default function CodyContainer() {
           onClick: () => dispatch(setgoToSlide(index))
         };
       });
-      dispatch(setCards(cards));   
+      dispatch(setCards(cards));
     }
   }, 1000);
 
   if (renderCount > 1) {
     clearTimeout(codyCard);
   }
- 
-  useEffect(() => {
-    const watch = () => {
-      window.addEventListener('scroll', updateScroll);
-    };
-    watch();
-    return () => {
-      window.removeEventListener('scroll', updateScroll);
-    };
-  }, [scrollPosition]);
 
-  if (scrollPosition === 200 && scrollisTop === true) {
-    handleMoveScroll('d');
-  } else if (scrollPosition === 800 && scrollisTop === false) {
-    handleMoveScroll('u');
-  }
+  // useEffect(() => {
+  //   const watch = () => {
+  //     window.addEventListener('scroll', updateScroll);
+  //   };
+  //   watch();
+  // return () => {
+  //   window.removeEventListener('scroll', updateScroll);
+  // };
+  // }, [scrollPosition]);
 
   function handlegoToSlide(value) {
     dispatch(setgoToSlide(value));
@@ -81,6 +81,13 @@ export default function CodyContainer() {
   function handleSelectCody(value) {
     dispatch(changeSelectCody(value));
   }
+
+  // if (scrollPosition === 200 && scrollisTop === true) {
+  //   handleMoveScroll('d');
+  // }
+  // else if (scrollPosition === 800 && scrollisTop === false) {
+  //   handleMoveScroll('u');
+  // }
 
   return (
     <div>
@@ -95,6 +102,7 @@ export default function CodyContainer() {
         codyList={codyList}
         scrollisTop={scrollisTop}
         handleSelectCody={handleSelectCody}
+        isdetailOpen={isdetailOpen}
       />
     </div>
   );
