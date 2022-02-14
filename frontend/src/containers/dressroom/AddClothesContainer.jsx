@@ -20,6 +20,7 @@ import {
   setImgURL,
   selectSeason,
   resetClothes,
+  changeresloading,
 } from '../../slices/clothesSlice';
 
 export default function AddClothesContainer() {
@@ -31,7 +32,7 @@ export default function AddClothesContainer() {
   const { selectedIcon } = laundry;
 
   const clothes = useSelector(state => state.clothesSlice);
-  const { imgURL, tagInfo, tagGroup } = clothes;
+  const { imgURL, tagInfo, tagGroup, resloading } = clothes;
 
   const imgInput = useRef(null);
   const [loading, setLoading] = useState(null);
@@ -48,6 +49,10 @@ export default function AddClothesContainer() {
 
   function handleLaundry(value) {
     dispatch(changelaundryOpen(value));
+  }
+
+  function handleresloading(value) {
+    dispatch(changeresloading(value));
   }
 
   function handleresetClothes() {
@@ -86,6 +91,8 @@ export default function AddClothesContainer() {
   }
 
   function saveClothes() {
+    dispatch(changeisResOpen(true));
+    handleresloading(true);
     const config = {
       Headers: {
         'Content-Type': 'multipart/form-data',
@@ -99,13 +106,13 @@ export default function AddClothesContainer() {
 
     axios.post(`http://i6b108.p.ssafy.io:8000/clothing/save`, formData, config)
       .then((res) => {
+        handleresloading(false);
         dispatch(changeResText(res.data.message));
-        dispatch(changeisResOpen(true));
         handleresetClothes();
       })
       .catch((err) => {
+        handleresloading(false);
         dispatch(changeResText(err.data.data.message));
-        dispatch(changeisResOpen(true));
       });
   }
 
@@ -140,6 +147,7 @@ export default function AddClothesContainer() {
         images={images}
         loading={loading}
         resetClothes={handleresetClothes}
+        resloading={resloading}
       />
     </div>
   );

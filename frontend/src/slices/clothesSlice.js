@@ -9,6 +9,7 @@ const initialState = {
   tagInfo: { 'season': '' },
   imgURL: '',
   tagGroup: [],
+  resloading: false,
 };
 
 export const deleteClothesById = createAsyncThunk(
@@ -84,6 +85,12 @@ export const clothesSlice = createSlice({
         imgURL: '',
         tagGroup: [],
       };
+    },
+    changeresloading(state, action) {
+      return {
+        ...state,
+        resloading : action.payload
+      };
     }
   },
   extraReducers: {
@@ -143,6 +150,7 @@ export const {
   setImgURL,
   selectSeason,
   resetClothes,
+  changeresloading,
 } = clothesSlice.actions;
 
 export default clothesSlice.reducer;
