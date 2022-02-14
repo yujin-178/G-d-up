@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface FeedService {
 
-    Optional<FeedDto> getFeed(int feedId);
+    FeedDto getFeed(int feedId) throws Exception;
     List<FeedDto> getAllFeed(String userName) throws Exception;
     boolean insertFeed(FeedDto feed) throws Exception;
     boolean deleteFeed(int feedId) throws Exception;

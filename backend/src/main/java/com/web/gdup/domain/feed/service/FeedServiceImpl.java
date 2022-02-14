@@ -29,8 +29,13 @@ public class FeedServiceImpl implements FeedService {
     private LikeRepository likeRepository;
 
     @Override
-    public Optional<FeedDto> getFeed(int feedId) {
-        return feedRepository.findById(feedId);
+    public FeedDto getFeed(int feedId) throws Exception {
+
+        Optional<FeedDto> ans = feedRepository.findById(feedId);
+        ans.orElseThrow(() -> new Exception("null"));
+
+        return ans.get();
+
     }
 
     @Override

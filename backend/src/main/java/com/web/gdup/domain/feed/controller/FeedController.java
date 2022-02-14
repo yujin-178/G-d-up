@@ -136,65 +136,59 @@ public class FeedController {
     @ApiOperation(value = "선택된 피드 불러오기")
     public Object getFeed(@PathVariable int feedId) {
 
-        ResponseEntity response = null;
         final BasicResponse result = new BasicResponse();
-
-        Optional<FeedDto> feed = feedService.getFeed(feedId);
-
-        if (feed.isPresent()) {
-
-            int likeCnt = likeService.getLikeCnt(feedId);
-            List<String> users = likeService.getUsers(feedId);
-            List<CommentEntity> comments = commentService.getComments(feedId);
-
-            HashMap<String, Object> map = new HashMap<>();
-            map.put("feed", feed);
-            map.put("likeCnt", likeCnt);
-            map.put("users", users);
-            map.put("comments", comments);
-
-            result.status = true;
-            result.message = "success";
-            result.data = map;
-            response = new ResponseEntity<>(result, HttpStatus.OK);
-        } else {
+        FeedDto feed = null;
+        try {
+            feed = feedService.getFeed(feedId);
+        } catch (Exception e) {
             result.status = true;
             result.message = "DB에 없는 feedid를 조회했습니다.";
             result.data = null;
-            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
-        return response;
+
+        int likeCnt = likeService.getLikeCnt(feedId);
+        List<String> users = likeService.getUsers(feedId);
+        List<CommentEntity> comments = commentService.getComments(feedId);
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("feed", feed);
+        map.put("likeCnt", likeCnt);
+        map.put("users", users);
+        map.put("comments", comments);
+
+        result.status = true;
+        result.message = "success";
+        result.data = map;
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
     }
 
     @GetMapping("/like/push/{feedId}/{userName}")
     @ApiOperation(value = "피드 좋아요 누르기",
             notes = "좋아요 누를 피드 번호와 현재 로그인 된 유저 이름을 파라미터로 받는다. ")
     public Object pushLike(@PathVariable int feedId, @PathVariable String userName) {
-
-
-        Optional<FeedDto> feed = feedService.getFeed(feedId);
-
-        ResponseEntity response = null;
         final BasicResponse result = new BasicResponse();
 
-        if (!feed.isPresent()) { // 좋아요 누를 피드가 현재 db에 없는 경우
+        try {
+            FeedDto feed = feedService.getFeed(feedId);
+        } catch (Exception e) {
             result.status = true;
             result.message = "DB에 없는 feedid에 접근했습니다.";
             result.data = null;
-            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
-        } else { // 좋아요 누를 피드가 현재 db에 있는 경우
-            result.status = true;
-            result.message = "success";
-
-            if (likeService.pushLike(feedId, userName)) {
-                result.data = "push";
-                response = new ResponseEntity<>(result, HttpStatus.OK);
-            } else {
-                result.data = "unpush";
-                response = new ResponseEntity<>(result, HttpStatus.OK);
-            }
+            return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
-        return response;
+
+        result.status = true;
+        result.message = "success";
+
+        if (likeService.pushLike(feedId, userName)) {
+            result.data = "push";
+        } else {
+            result.data = "unpush";
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @GetMapping("/tag/list")
