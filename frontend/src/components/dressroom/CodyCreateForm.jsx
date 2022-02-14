@@ -1,62 +1,30 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import { useRef } from 'react';
 import CodyItem from './CodyItem';
-import axios from 'axios';
-import { createFile } from '../../services/api';
 import TagSearchBar from './TagSearchBar';
 import Tag from './Tag';
+import Button from './Button';
 
-export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop, handleResizeStop, inputRef, tags, onKeyPress, deleteTagHandler, contentRef, isNotSecret, toggleIsNotSecret }) {
-  const canvasRef = useRef();
-
-  const createCody = async (file, content, isNotSecret, tags) => {
-    const fd = new FormData();
-    fd.append('imageFile', file);
-
-    const itemsIncody = codyItems.map(item => {
-      const { clothingId, position, size } = item;
-      return {
-        clothingId,
-        x: position.x,
-        y: position.y,
-        z: position.z,
-        m: size.m,
-      };
-    });
-
-    const data = {
-      userName: 'jisoon',
-      codyName: 'name',
-      content: content,
-      secret: isNotSecret ? 0 : 1,
-      clothingList: itemsIncody,
-      codyTag: tags.join(),
-    };
-
-    fd.append('createCody', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-
-    const config = {
-      Headers: { 'Content-Type': 'multipart/form-data' },
-    };
-
-    try {
-      const response = await axios.post('http://i6b108.p.ssafy.io:8000/cody/create', fd, config);
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const saveHandler = async (event) => {
-    event.preventDefault();
-    const content = contentRef.current.value;
-    const file = await createFile(canvasRef.current);
-    createCody(file, content, isNotSecret, tags);
-  };
+export default function CodyCreateForm(props) {
+  const {
+    canvasRef,
+    codyItems,
+    handleOnStart,
+    handleOnStop,
+    handleResizeStop,
+    inputRef,
+    tags,
+    onKeyPress,
+    deleteTagHandler,
+    contentRef,
+    isNotSecret,
+    toggleIsNotSecret,
+    saveHandler,
+    goBackHandler,
+  } = props;
 
   return (
-    <form css={form}>
+    <div css={form}>
       <div
         id="canvas"
         css={canvas}
@@ -116,28 +84,27 @@ export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop,
         name="memo"
         placeholder="내용 입력"
       />
-      <div css={css`display: flex; justify-content: space-between;`}>
-        <button
-          css={button({})}
-        >리셋
-        </button>
-        <button
-          css={button({})}
-          onClick={saveHandler}
-        >저장</button>
+      <div css={buttonGroup}>
+        <Button title='뒤로가기' onClick={goBackHandler} color={'#fff'}/>
+        <Button title='저장하기' onClick={saveHandler} color={'#00acee'}/>
       </div>
-    </form>
+    </div>
   );
 }
 
 const form = css`
+  box-sizing: content-box;
   border: 0.5px solid grey;
-  width: 30%;
+  width: 26%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem;
+  background-color: white;
+  margin-right: 20px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 const memo = css`
@@ -146,13 +113,13 @@ const memo = css`
   resize: none;
   outline: none;
   width: 100%;
-  min-height: 100px;
+  min-height: 80px;
   margin-top: 15px;
 `;
 
 const canvas = css`
   min-width: 100%;
-  min-height: 450px;
+  min-height: 380px;
   background-color: white;
   position: relative;
   border: 1px solid grey;
@@ -196,6 +163,19 @@ const tagContainer = css`
   min-height: 44px;
 `;
 
-const button = ({ color }) => css`
-  background-color: ${color};
+const buttonGroup = css`
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  top: 1rem;
+`;
+
+const button = css`
+  padding: 5px;
+  width: 100px;
+  position: relative;
+  margin: 5px 15px;
+  position: relative;
+  top: 10px;
 `;

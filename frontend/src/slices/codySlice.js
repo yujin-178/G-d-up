@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loadCodyByUserName } from '../services/api';
+import { loadCodyByUserName, createFile, postCody } from '../services/api';
 import { animateScroll as scroll } from 'react-scroll';
 
 const initialState = {
@@ -9,6 +9,7 @@ const initialState = {
   'codyList': [],
   'codyLoading': false,
   'scrollisTop': true,
+  modalType: null,
 };
 
 export const setCody = createAsyncThunk(
@@ -16,6 +17,16 @@ export const setCody = createAsyncThunk(
   async (userName) => {
     const cody = await loadCodyByUserName(userName);
     return cody;
+  }
+);
+
+export const createCody = createAsyncThunk(
+  'cody/createCody',
+  async (codyInfo) => {
+    const { canvas } = codyInfo;
+    const file = await createFile(canvas);
+    const response = await postCody({ ...codyInfo, file });
+    return response.data.data;
   }
 );
 
@@ -44,6 +55,9 @@ export const codySlice = createSlice({
         ...state,
         scrollisTop
       };
+    },
+    closeModal(state) {
+      state.modalType = null;
     }
   },
   extraReducers: {
@@ -59,6 +73,18 @@ export const codySlice = createSlice({
     [setCody.rejected.type]: (state, action) => {
       state.codyLoading = false;
       console.log(action);
+    },
+
+    [createCody.pending]: (state) => {
+      state.loading = true;
+    },
+    [createCody.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      state.codyList = [...state.codyList, payload];
+      state.modalType = 'POST';
+    },
+    [createCody.rejected]: (state) => {
+      state.loading = false;
     }
   }
 });
@@ -66,6 +92,7 @@ export const codySlice = createSlice({
 export const {
   setgoToSlide,
   setMoveScroll,
+  closeModal,
 } = codySlice.actions;
 
 export default codySlice.reducer;

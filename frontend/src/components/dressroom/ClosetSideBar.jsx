@@ -5,12 +5,8 @@ import Tag from './Tag';
 
 export default function ClosetSidebar(props) {
   const {
-    season,
     colors,
     selectedColors,
-    isUserItem,
-    toggleIsUserItem,
-    onChangeSeason,
     onChangeColor,
     customTags,
     deleteTagHandler,
@@ -24,34 +20,22 @@ export default function ClosetSidebar(props) {
         inputRef={inputRef}
         onKeyPress={onKeyPress}
       />
-      {/* <div css={toggleContainer}>
-        <div
-          data-testid="toggle"
-          css={toggleBtn({ isUserItem })}
-          onClick={toggleIsUserItem}>
-          <div css={toggleBtnCircle({ isUserItem })}></div>
-        </div>
-        <p css={toggleTitle}>내 옷만 보기</p>
-      </div> */}
-      <>
-        <p>🌹 season</p>
-        <ul css={seasonItems}>
-          {season.map((item, index) => (
-            <li key={index} css={menuItem}>
-              <input
-                data-testid={item}
-                css={checkbox}
-                type="checkbox"
-                id={item}
-                onChange={(event) => onChangeSeason(event.target.checked, item)}
+      <div css={css`min-height: 25%`}>
+        <p css={title}>tag</p>
+        <ul css={tagContainer}>
+          {customTags.map((value, index) => {
+            return (
+              <Tag
+                key={index}
+                value={value}
+                deleteTagHandler={deleteTagHandler}
               />
-              <label css={checkboxTitle} htmlFor={item}>{item}</label>
-            </li>
-          ))}
+            );
+          })}
         </ul>
-      </>
+      </div>
       <>
-        <p>✨ color</p>
+        <p css={title}>color</p>
         <ul css={colorItems}>
           {colors.map(({ name, code }, index) => {
             const isSelected = selectedColors.includes(name);
@@ -69,17 +53,6 @@ export default function ClosetSidebar(props) {
           })}
         </ul>
       </>
-      <ul css={tagContainer}>
-        {customTags.map((value, index) => {
-          return (
-            <Tag
-              key={index}
-              value={value}
-              deleteTagHandler={deleteTagHandler}
-            />
-          );
-        })}
-      </ul>
     </aside >
   );
 }
@@ -89,7 +62,7 @@ const sidebarStyle = css`
   grid-row: 2 / 3;
   position: relative;
   width: 90%;
-  height: 100%;
+  height: 96%;
   box-sizing: border-box;
   margin: 1rem 1rem;
   padding: 1rem 1rem;
@@ -98,12 +71,6 @@ const sidebarStyle = css`
   font-size: 20px;
   background-color: #fff;
   border-radius: 0.7rem;
-`;
-
-const seasonItems = css`
-  font-size: 15px;
-  padding: 0 1px;
-  list-style:none
 `;
 
 const menuItem = css`
@@ -133,57 +100,17 @@ const colorButton = ({ colorCode, isSelected }) => css`
   `}
 `;
 
-const toggleContainer = css`
-  display: flex;
-  padding-top: 30px;
-`;
-
-const toggleTitle = css`
-  margin-left: 10px;
-  margin: 0;
-  padding: 5px 10px;
-`;
-
-const toggleBtn = ({ isUserItem }) => css`
-  width: 60px;
-  height: 30px;
-  background: grey;
-  border-radius: 30px;
-  transition: all 300ms ease-in-out;
-  ${isUserItem &&
-  `
-    background: #00acee;
-  `}
-`;
-
-const toggleBtnCircle = ({ isUserItem }) => css`
-  width: 30px;
-  height: 30px;
-  background-color: white;
-  border-radius: 50%;
-  transition: all 300ms ease-in-out;
-  ${isUserItem &&
-  `
-    margin-left: 50%;
-  `}
-`;
-
 const tagContainer = css`
-  width: 80%;
-  background-color: beige;
+  width: 95%;
   display: flex;
   flex-wrap: wrap;
   padding: 5px;
   list-style:none;
+  margin: 5px 0px;
+  height: 15%;
 `;
 
-const checkbox = css`
-  vertical-align: middle;
-  position: relative;
-  bottom: 0.5px;
-`;
-
-const checkboxTitle = css`
-  display: inline-block;
-  margin-left: 10px;
+const title = css`
+  font-size: 16px;
+  margin: 10px;
 `;
