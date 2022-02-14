@@ -90,31 +90,33 @@ public class FeedController {
         return response;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/all/{userName}")
     @ApiOperation(value = "모든 피드 불러오기",
             notes = "로그인된 사용자의 팔로잉의 feed를 반환한다."
     )
-    public Object getFeeds(@RequestParam String userName){
+    public Object getFeeds(@PathVariable String userName){
         List<FeedDto> feeds = feedService.getAllFeed(userName);
-        List<String> whetherToPush = likeService.getWhetherToPush(feeds, userName);
+
         ResponseEntity response = null;
+        final BasicResponse result = new BasicResponse();
 
         if(feeds != null){
-            for(FeedDto feed : feeds){
-                System.out.println(feed);
-            }
+            List<String> whetherToPush = likeService.getWhetherToPush(feeds, userName);
+
             HashMap<String,Object> map = new HashMap<>();
             map.put("feeds", feeds);
             map.put("whetherToPush", whetherToPush);
 
-            final BasicResponse result = new BasicResponse();
             result.status = true;
             result.message = "success";
             result.data = map;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            result.status = true;
+            result.message = "success";
+            result.data = null;
+            response = new ResponseEntity<>(result,  HttpStatus.OK);
         }
 
         return response;

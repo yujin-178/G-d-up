@@ -11,7 +11,7 @@ public interface FeedRepository extends JpaRepository<FeedDto, Integer> {
     List<FeedDto> findByUserName(String userName);
 
     @Query(value = "select * from feed where userName in " +
-            "(select following from follow where userName = :loginName ) "
+            "(select following from follow where userName = :loginName ) or userName = :loginName"
             , nativeQuery = true)
     List<FeedDto> findFollowingFeeds(@Param("loginName") String userName);
 
