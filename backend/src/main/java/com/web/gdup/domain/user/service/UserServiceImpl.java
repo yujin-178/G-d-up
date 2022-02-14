@@ -38,4 +38,11 @@ public class UserServiceImpl implements  UserService{
         if (user.isPresent()) return true;
         return false;
     }
+
+    @Override
+    public boolean finUserByEmail(String email) {
+        Optional<UserEntity> user = userRepository.findUserByEmail(email);
+        if (user.isPresent()) return true;
+        return false;
+    }
 }
