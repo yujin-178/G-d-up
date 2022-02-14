@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin
@@ -32,25 +33,25 @@ public class CodyController {
         BasicResponse result = new BasicResponse();
         Optional<CodyDtoAll> codyDtoAll;
         try {
-            codyDtoAll  = Optional.ofNullable(cs.addCodyItem(cc, file));
-        }catch (Exception e){
+            codyDtoAll = Optional.ofNullable(cs.addCodyItem(cc, file));
+        } catch (Exception e) {
             result.status = false;
             result.message = "잘못된 정보 입력";
             result.data = null;
-            responseBody =  new ResponseEntity<>(result, HttpStatus.OK);
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
             return responseBody;
         }
 
-        if(codyDtoAll.isPresent()) {
+        if (codyDtoAll.isPresent()) {
             result.status = true;
             result.message = "코디 생성 성공";
             result.data = codyDtoAll;
-        }else{
+        } else {
             result.status = false;
             result.message = "코디 생성 실패";
             result.data = codyDtoAll;
         }
-        responseBody =  new ResponseEntity<>(result, HttpStatus.OK);
+        responseBody = new ResponseEntity<>(result, HttpStatus.OK);
         return responseBody;
     }
 
@@ -60,18 +61,35 @@ public class CodyController {
             value = "코디 수정",
             notes = "수정된 코드 정보를 받아서 해당 코디를 수정합니다."
     )
-    public ResponseEntity<BasicResponse> updateCody(@RequestPart(value = "imageFile") MultipartFile file, @RequestPart(value = "updateCody") UpdateCody uc) {
+    public ResponseEntity<BasicResponse> updateCody(@RequestPart(value = "imageFile") MultipartFile file, @RequestPart(value = "updateCody") UpdateCody updateCody) {
 
         ResponseEntity<BasicResponse> responseBody;
 
         BasicResponse result = new BasicResponse();
+        Optional<CodyDtoAll> codyDtoAll;
 
-        result.status = true;
-        result.message = "코디 수정 성공";
-        result.data = cs.updateCodyItem(uc, file);
+        try {
+            codyDtoAll = Optional.ofNullable(cs.updateCodyItem(updateCody, file));
+        } catch (Exception e) {
+            result.status = false;
+            result.message = "잘못된 정보 입력";
+            result.data = null;
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+            return responseBody;
+        }
 
-        responseBody =  new ResponseEntity<>(result, HttpStatus.OK);
+        if (codyDtoAll.isPresent()) {
+            result.status = true;
+            result.message = "코디 수정 성공";
+            result.data = codyDtoAll;
 
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            result.status = true;
+            result.message = "코디 수정 실패";
+            result.data = null;
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+        }
         return responseBody;
 
     }
@@ -81,17 +99,22 @@ public class CodyController {
             value = "코디 삭제",
             notes = "cody_id를 받아서 해당 코디를 삭제 합니다."
     )
-    public ResponseEntity<BasicResponse> deleteCody(@PathVariable(name = "codyId") int cody_id) {
+    public ResponseEntity<BasicResponse> deleteCody(@PathVariable(name = "codyId") final int codyId) {
 
         ResponseEntity<BasicResponse> responseBody;
         BasicResponse result = new BasicResponse();
-
-        result.status = true;
-        result.message = "코디 삭제 성공";
-        result.data = cs.deleteCodyItem(cody_id) ;
-
-        responseBody =  new ResponseEntity<>(result, HttpStatus.OK);
-
+        int deleteId = cs.deleteCodyItem(codyId);
+        if (deleteId == 0) {
+            result.status = true;
+            result.message = "코디 삭제 실패 - 존재하지 않는 코디";
+            result.data = 0;
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            result.status = true;
+            result.message = "코디 삭제 성공";
+            result.data = codyId;
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+        }
         return responseBody;
 
     }
@@ -101,17 +124,24 @@ public class CodyController {
             value = "코디 목록 불러오기",
             notes = "특정 유저의 코디 목록 불러오기"
     )
-    public ResponseEntity<BasicResponse> readCodyList(@PathVariable(name = "userName") String userName) {
+    public ResponseEntity<BasicResponse> readCodyList(@PathVariable(name = "userName") final String userName) {
 
         ResponseEntity<BasicResponse> responseBody;
         BasicResponse result = new BasicResponse();
+        List<CodyDtoAll> codyDtoAlls = cs.getUserCodyList(userName);
+        if (codyDtoAlls.size() == 0) {
+            result.status = true;
+            result.message = userName + "의 코디 목록은 비어 있습니다.";
+            result.data = null;
 
-        result.status = true;
-        result.message = userName + "의 코디 목록 불러오기 성공";
-        result.data = cs.getUserCodyList(userName) ;
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            result.status = true;
+            result.message = userName + "의 코디 목록 불러오기 성공";
+            result.data = codyDtoAlls;
 
-        responseBody =  new ResponseEntity<>(result, HttpStatus.OK);
-
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+        }
         return responseBody;
     }
 
