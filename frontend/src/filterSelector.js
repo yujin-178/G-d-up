@@ -20,21 +20,6 @@ export const filteredClothesSelector = createSelector(
   getFilter,
   (clothes, { category, selectedColors, custom }) => clothes.filter(item => {
     if (category == '전체' || item.clothing.category == category) {
-
-      // todo: 차후 userSlice에서 유저 정보를 가져와서 로직 완성 예정
-      // if (isUserItem) {
-      // 	if (item.userName === '현재 로그인한 사용자 이름') {
-      // 		return true;
-      // 	}
-
-      // 	return false;
-      // }
-
-      // 시즌 제외 가능성
-      // if (!isIncluded(selectedSeason, item.season)) {
-      //   return false;
-      // }
-
       if (!isIncluded(selectedColors, item.clothing.color)) {
         return false;
       }
