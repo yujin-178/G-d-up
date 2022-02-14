@@ -19,21 +19,25 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @PostMapping("/write")
-    @ApiOperation(value = "Comment 작성하기" , notes = "새로운 댓글을 작성한다. ")
-    public Object writeComment(@RequestBody CommentDto commentDto){
-        ResponseEntity response = null;
-
-        if(commentService.insertComment(commentDto)){
-            final BasicResponse result = new BasicResponse();
-            result.status = true;
-            result.message = "SUCCESS";
-            response = new ResponseEntity<>(result, HttpStatus.OK);
-        }     else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        return response;
-    }
+//    @PostMapping("/write")
+//    @ApiOperation(value = "Comment 작성하기" , notes = "새로운 댓글을 작성한다. ")
+//    public Object writeComment(@RequestBody CommentDto commentDto){
+//        ResponseEntity response = null;
+//
+//        try {
+//            if(commentService.insertComment(commentDto)){
+//                final BasicResponse result = new BasicResponse();
+//                result.status = true;
+//                result.message = "SUCCESS";
+//                response = new ResponseEntity<>(result, HttpStatus.OK);
+//            }     else {
+//                response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return response;
+//    }
 
     @PostMapping("/write/recomment")
     @ApiOperation(value = "reComment 작성하기" , notes = "새로운 답글을 작성한다. ")
