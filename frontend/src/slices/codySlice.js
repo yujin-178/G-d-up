@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loadCodyByUserName } from '../services/api';
+import { loadCodyByUserName, createFile, postCody } from '../services/api';
 import { animateScroll as scroll } from 'react-scroll';
 
 const initialState = {
@@ -16,6 +16,16 @@ export const setCody = createAsyncThunk(
   async (userName) => {
     const cody = await loadCodyByUserName(userName);
     return cody;
+  }
+);
+
+export const createCody = createAsyncThunk(
+  'cody/createCody',
+  async (codyInfo) => {
+    const { canvas } = codyInfo;
+    const file = await createFile(canvas);
+    await postCody({ ...codyInfo, file });
+    return codyInfo;
   }
 );
 
@@ -59,6 +69,18 @@ export const codySlice = createSlice({
     [setCody.rejected.type]: (state, action) => {
       state.codyLoading = false;
       console.log(action);
+    },
+
+    [createCody.pending]: (state) => {
+      state.loading = true;
+    },
+    [createCody.fulfilled]: (state, { payload }) => {
+      state.loading = false;
+      // 백엔드에서 완성하면 추가 예정
+      //state.codyList = [...state.codyList, payload];
+    },
+    [createCody.rejected]: (state) => {
+      state.loading = false;
     }
   }
 });

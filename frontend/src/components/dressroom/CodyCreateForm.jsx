@@ -1,62 +1,28 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import { useRef } from 'react';
 import CodyItem from './CodyItem';
-import axios from 'axios';
-import { createFile } from '../../services/api';
 import TagSearchBar from './TagSearchBar';
 import Tag from './Tag';
 
-export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop, handleResizeStop, inputRef, tags, onKeyPress, deleteTagHandler, contentRef, isNotSecret, toggleIsNotSecret }) {
-  const canvasRef = useRef();
-
-  const createCody = async (file, content, isNotSecret, tags) => {
-    const fd = new FormData();
-    fd.append('imageFile', file);
-
-    const itemsIncody = codyItems.map(item => {
-      const { clothingId, position, size } = item;
-      return {
-        clothingId,
-        x: position.x,
-        y: position.y,
-        z: position.z,
-        m: size.m,
-      };
-    });
-
-    const data = {
-      userName: 'jisoon',
-      codyName: 'name',
-      content: content,
-      secret: isNotSecret ? 0 : 1,
-      clothingList: itemsIncody,
-      codyTag: tags.join(),
-    };
-
-    fd.append('createCody', new Blob([JSON.stringify(data)], { type: 'application/json' }));
-
-    const config = {
-      Headers: { 'Content-Type': 'multipart/form-data' },
-    };
-
-    try {
-      const response = await axios.post('http://i6b108.p.ssafy.io:8000/cody/create', fd, config);
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const saveHandler = async (event) => {
-    event.preventDefault();
-    const content = contentRef.current.value;
-    const file = await createFile(canvasRef.current);
-    createCody(file, content, isNotSecret, tags);
-  };
+export default function CodyCreateForm(props) {
+  const {
+    canvasRef,
+    codyItems,
+    handleOnStart,
+    handleOnStop,
+    handleResizeStop,
+    inputRef,
+    tags,
+    onKeyPress,
+    deleteTagHandler,
+    contentRef,
+    isNotSecret,
+    toggleIsNotSecret,
+    saveHandler,
+  } = props;
 
   return (
-    <form css={form}>
+    <div css={form}>
       <div
         id="canvas"
         css={canvas}
@@ -126,7 +92,7 @@ export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop,
           onClick={saveHandler}
         >저장</button>
       </div>
-    </form>
+    </div>
   );
 }
 

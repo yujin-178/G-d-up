@@ -7,6 +7,7 @@ import FilterContainer from './FilterContainer';
 import ClothesItemList from '../../components/dressroom/ClothesItemList';
 import { setClothes } from '../../slices/clothesSlice';
 import axios from 'axios';
+import { createCody } from '../../slices/codySlice';
 
 export default function CodyContainer() {
   const { clothes } = useSelector(state => state.clothesSlice);
@@ -18,6 +19,7 @@ export default function CodyContainer() {
   const inputRef = useRef();
   const contentRef = useRef();
   const [isNotSecret, setIsNotSecret] = useState(true);
+  const canvasRef = useRef();
 
   useEffect(() => {
     dispatch(setClothes('jisoon'));
@@ -121,8 +123,6 @@ export default function CodyContainer() {
   };
 
   const onKeyPress = event => {
-    event.preventDefault();
-
     if (event.key === 'Enter') {
       const value = inputRef.current.value;
 
@@ -148,6 +148,13 @@ export default function CodyContainer() {
 
   const toggleIsNotSecret = () => {
     setIsNotSecret(!isNotSecret);
+  };
+
+  const saveHandler = async (event) => {
+    event.preventDefault();
+    const canvas = canvasRef.current;
+    const content = contentRef.current.value;
+    dispatch(createCody({ canvas, codyItems, content, isNotSecret, tags, userName: 'jisoon' }));
   };
 
   return (
@@ -177,6 +184,8 @@ export default function CodyContainer() {
         contentRef={contentRef}
         isNotSecret={isNotSecret}
         toggleIsNotSecret={toggleIsNotSecret}
+        saveHandler={saveHandler}
+        canvasRef={canvasRef}
       />
     </>
   );

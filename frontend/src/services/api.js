@@ -29,3 +29,39 @@ export async function loadCodyByUserName(userName) {
   const res = await axios.get(`http://i6b108.p.ssafy.io:8000/cody/read/${userName}`);
   return res.data;
 }
+
+export async function postCody(payload) {
+  const { file, codyItems, content, isNotSecret, tags, userName } = payload;
+
+  const fd = new FormData();
+  fd.append('imageFile', file);
+
+  const itemsIncody = codyItems.map(item => {
+    const { clothingId, position, size } = item;
+    return {
+      clothingId,
+      x: position.x,
+      y: position.y,
+      z: position.z,
+      m: size.m,
+    };
+  });
+
+  const data = {
+    codyName: 'name',
+    secret: isNotSecret ? 0 : 1,
+    clothingList: itemsIncody,
+    codyTag: tags.join(),
+    userName,
+    content
+  };
+
+  fd.append('createCody', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+
+  const config = {
+    Headers: { 'Content-Type': 'multipart/form-data' },
+  };
+
+  const response = await axios.post('http://i6b108.p.ssafy.io:8000/cody/create', fd, config);
+  return response;
+}
