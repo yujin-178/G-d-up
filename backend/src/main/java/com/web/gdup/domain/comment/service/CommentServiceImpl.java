@@ -17,17 +17,14 @@ public class CommentServiceImpl implements CommentService {
     CommentRepository commentRepository;
 
     @Override
-    public boolean insertComment(CommentDto commentDto) {
+    public Optional<CommentEntity> insertComment(CommentDto commentDto) throws Exception {
 
         CommentEntity comment = commentDto.toEntity();
-
-        if(comment != null){
-            CommentEntity c = commentRepository.save(comment);
-            c.setOriginId(c.getCommentId());
-            commentRepository.save(c);
-            return true;
-        }
-        return false;
+        CommentEntity c = commentRepository.save(comment);
+        c.setOriginId(c.getCommentId());
+        Optional<CommentEntity> commentEntity = Optional.of(commentRepository.save(c));
+        commentEntity.orElseThrow(() -> new Exception("null"));
+        return commentEntity;
     }
 
     @Override

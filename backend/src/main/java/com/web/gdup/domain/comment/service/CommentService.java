@@ -5,9 +5,10 @@ import com.web.gdup.domain.comment.dto.CommentDto;
 import com.web.gdup.domain.comment.dto.ReCommentDto;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CommentService {
-    boolean insertComment(CommentDto commentDto);
+    Optional<CommentEntity> insertComment(CommentDto commentDto) throws Exception;
     boolean insertReComment(ReCommentDto reCommentDto);
     boolean deleteComment(int commentId);
     CommentEntity modifyComment(int commentId, String content);
