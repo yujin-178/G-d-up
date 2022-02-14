@@ -59,7 +59,7 @@ const ClothesItemImg = css`
   max-height: 5rem;
 `;
 
-const image = css`
-  max-height: 100%;
-  max-width: 100%;
-`;
+// const image = css`
+//   max-height: 100%;
+//   max-width: 100%;
+// `;
