@@ -58,10 +58,17 @@ public class UserController {
         ResponseEntity response = null;
 
         try {
+            if(userService.finUserByEmail(request.getEmail())){
+                result.status = false;
+                result.message = "email 중복";
+                result.data = null;
+                response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+                return response;
+            }
             UserEntity user = userService.signup(request);
             if(user == null){
                 result.status = false;
-                result.message = "뭐로 에러가 난거야?";
+                result.message = "username 중복";
                 result.data = null;
                 response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND); // 이미있는경우, NOT FOUND인가?
             } else {
