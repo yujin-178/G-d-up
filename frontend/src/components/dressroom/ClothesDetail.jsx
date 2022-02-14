@@ -8,7 +8,6 @@ export default function ClothesDetail({ selectedClothes, deleteHandler }) {
       {selectedClothes ?
         <>
           <div css={buttonGroup}>
-            <button>수정</button>
             <button onClick={() => deleteHandler(selectedClothes.clothing.clothingId)}>삭제</button>
           </div>
           <div css={imageWrapper}>
