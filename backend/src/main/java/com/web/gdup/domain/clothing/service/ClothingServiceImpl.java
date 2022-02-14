@@ -9,6 +9,7 @@ import com.web.gdup.domain.clothing_washing.dto.ClothingWashingDto;
 import com.web.gdup.domain.clothing_washing.service.ClothingWashingService;
 import com.web.gdup.domain.image.dto.ImageDto;
 import com.web.gdup.domain.image.service.ImageService;
+import com.web.gdup.domain.user.Entity.UserEntity;
 import com.web.gdup.domain.user.dto.UserDto;
 import com.web.gdup.domain.user.service.UserService;
 import com.web.gdup.global.component.CommonComponent;
@@ -251,13 +252,13 @@ public class ClothingServiceImpl implements ClothingService{
     public List<HashMap<String, Object>> getUserClothing(String userName) throws Exception {
         List<HashMap<String, Object>> result = new ArrayList<>();
 
-        UserDto user = userService.getUserInfo(userName);
-        if(user.getUserName() == null) {
+        Optional<UserEntity> user = userService.getUserEntity(userName);
+        if(!user.isPresent()) {
             System.out.println("사용자 없음");
             throw new Exception();
         } else {
-            System.out.println(user.getUserName());
-            System.out.println(user.getEmail());
+            System.out.println(user.get().getUserName());
+            System.out.println(user.get().getEmail());
         }
 
         List<ClothingEntity> list = clothingRepository.findAllByUserName(userName);

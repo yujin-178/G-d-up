@@ -9,6 +9,7 @@ public interface UserService {
     Optional<UserEntity> login(String email, String password) throws Exception;
     UserEntity signup(SignupRequest request) throws Exception;
     boolean getUserInfo(String targetName);
+    Optional<UserEntity> getUserEntity(String targetName);
     boolean finUserByEmail(String email);
 
 }
