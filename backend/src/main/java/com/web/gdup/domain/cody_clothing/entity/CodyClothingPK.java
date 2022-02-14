@@ -1,4 +1,4 @@
-package com.web.gdup.domain.cody.entity;
+package com.web.gdup.domain.cody_clothing.entity;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -12,5 +12,6 @@ public class CodyClothingPK implements Serializable {
     private int codyId;
     @Column(name = "clothingid")
     private int clothingId;
+
 
 }

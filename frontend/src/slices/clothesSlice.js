@@ -1,10 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { clothesData } from '../fixtures/clothesList';
 import { loadClothesByUserName } from '../services/api';
 
 const initialState = {
   clothes: [],
-  selectedClothes: clothesData[0],
+  selectedClothes: null,
   loading: false,
   error: null,
   tagInfo: { 'season': '' },
@@ -92,6 +91,7 @@ export const clothesSlice = createSlice({
         ...state,
         loading: false,
         clothes: action.payload,
+        selectedClothes: action.payload[0] || null,
       };
     },
     // [setClothes.rejected]: (state, action) => {

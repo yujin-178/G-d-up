@@ -1,58 +1,30 @@
 import React from 'react';
 import { css } from '@emotion/react';
-import { useRef } from 'react';
 import CodyItem from './CodyItem';
-import axios from 'axios';
-import { createFile } from '../../services/api';
+import TagSearchBar from './TagSearchBar';
+import Tag from './Tag';
+import Button from './Button';
 
-export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop, handleResizeStop }) {
-  const canvasRef = useRef();
-
-  const createCody = async (file) => {
-    const fd = new FormData();
-    fd.append('imageFile', file);
-
-    const itemsIncody = codyItems.map(item => {
-      const { clothingId, position } = item;
-      return {
-        clothingId,
-        x: position.x,
-        y: position.y,
-        z: position.z,
-        m: position.m,
-      };
-    });
-
-    const temp_data = {
-      userName: 'jisoon',
-      codyName: 'name',
-      content: 'content',
-      secret: 0,
-      clothingList: itemsIncody,
-      codyTag: '',
-    };
-
-    fd.append('createCody', new Blob([JSON.stringify(temp_data)], { type: 'application/json' }));
-
-    const config = {
-      Headers: { 'Content-Type': 'multipart/form-data' },
-    };
-
-    try {
-      const response = await axios.post('http://i6b108.p.ssafy.io:8000/cody/create', fd, config);
-      console.log(response);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+export default function CodyCreateForm(props) {
+  const {
+    canvasRef,
+    codyItems,
+    handleOnStart,
+    handleOnStop,
+    handleResizeStop,
+    inputRef,
+    tags,
+    onKeyPress,
+    deleteTagHandler,
+    contentRef,
+    isNotSecret,
+    toggleIsNotSecret,
+    saveHandler,
+    goBackHandler,
+  } = props;
 
   return (
-    <form>
-      <button onClick={async (e) => {
-        e.preventDefault();
-        const file = await createFile(canvasRef.current);
-        createCody(file);
-      }}>test</button>
+    <div css={form}>
       <div
         id="canvas"
         css={canvas}
@@ -70,50 +42,140 @@ export default function CodyCreateForm({ codyItems, handleOnStart, handleOnStop,
           );
         })}
       </div>
-      <input
-        css={tagInput}
-        type="text"
-        placeholder="제목 입력"
-      />
+      <div css={css`display: flex; justify-content: space-between; width: 100%; margin-top: 10px`}>
+        <div css={css`width: 70%`}>
+          <TagSearchBar
+            inputRef={inputRef}
+            onKeyPress={onKeyPress}
+          />
+        </div>
+        <div css={toggleContainer}>
+          <div
+            css={toggleBtn({ isNotSecret })}
+            onClick={toggleIsNotSecret}>
+            <div css={toggleBtnCircle({ isNotSecret })}></div>
+          </div>
+          {isNotSecret ?
+            <p css={css`margin-left: 10px`}> 공개 </p> :
+            <p css={css`margin-left: 10px`}> 비공개 </p>
+          }
+        </div>
+      </div>
+      <div css={tagContainer}>
+        {tags.length ?
+          tags.map((tag, index) => {
+            return (
+              <Tag
+                key={index}
+                value={tag}
+                deleteTagHandler={deleteTagHandler}
+              />
+            );
+          }) :
+          <Tag
+            value={'ex 데일리'}
+            deleteTagHandler={deleteTagHandler}
+          />
+        }
+      </div>
       <textarea
+        ref={contentRef}
         css={memo}
         name="memo"
         placeholder="내용 입력"
       />
-      <input type="text" css={searchInputStyle} />
-      <button>리셋</button>
-      <button>저장</button>
-    </form>
+      <div css={buttonGroup}>
+        <Button title='뒤로가기' onClick={goBackHandler} color={'#fff'}/>
+        <Button title='저장하기' onClick={saveHandler} color={'#00acee'}/>
+      </div>
+    </div>
   );
 }
 
-const tagInput = css`
-  outline: none;
-  display: block;
+const form = css`
+  box-sizing: content-box;
+  border: 0.5px solid grey;
+  width: 26%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 2rem 2rem;
+  background-color: white;
+  margin-right: 20px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.6);
 `;
 
 const memo = css`
   display: block;
   overflow: hidden;
-  resize:none;
+  resize: none;
   outline: none;
-`;
-
-const searchInputStyle = css`
-  display: block;
-  height: 35px;
-  outline: 0;
-  border: 0;
-  border-radius: 5px;
-  border-bottom: 2px solid silver;
-  font-size: 19px;
+  width: 100%;
+  min-height: 80px;
+  margin-top: 15px;
 `;
 
 const canvas = css`
-  min-width: 400px;
-  max-width: 500px;
-  min-height: 500px;
+  min-width: 100%;
+  min-height: 380px;
   background-color: white;
   position: relative;
   border: 1px solid grey;
+`;
+
+const toggleContainer = css`
+  display: flex;
+  padding: 2px;
+`;
+
+const toggleBtn = ({ isNotSecret }) => css`
+  width: 50px;
+  height: 25px;
+  background: grey;
+  border-radius: 30px;
+  transition: all 300ms ease-in-out;
+  margin: auto;
+  ${isNotSecret &&
+  `
+    background: #00acee;
+  `}
+`;
+
+const toggleBtnCircle = ({ isNotSecret }) => css`
+  width: 25px;
+  height: 25px;
+  background-color: white;
+  border-radius: 50%;
+  transition: all 300ms ease-in-out;
+  ${isNotSecret &&
+  `
+    margin-left: 50%;
+  `}
+`;
+
+const tagContainer = css`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  list-style:none;
+  min-height: 44px;
+`;
+
+const buttonGroup = css`
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  top: 1rem;
+`;
+
+const button = css`
+  padding: 5px;
+  width: 100px;
+  position: relative;
+  margin: 5px 15px;
+  position: relative;
+  top: 10px;
 `;

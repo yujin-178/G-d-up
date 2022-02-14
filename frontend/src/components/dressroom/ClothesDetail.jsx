@@ -1,76 +1,68 @@
 import React from 'react';
 import { css } from '@emotion/react';
 
-export default function ClothesDetail({ selectedClothes, deleteHandler, allSeason }) {
-  const {
-    id,
-    image,
-    category,
-    color,
-    material,
-    pattern,
-    season,
-    custom,
-    laundry,
-  } = selectedClothes;
+export default function ClothesDetail({ selectedClothes, deleteHandler }) {
 
   return (
     <div css={detailContainer}>
-      <div css={buttonGroup}>
-        <button>수정</button>
-        <button onClick={() => deleteHandler(id)}>삭제</button>
-      </div>
-      <img css={clothesImage} src={image} alt="image" />
-      <div>
-        <p css={clothesInfo}>옷 정보</p>
-        <div>
-          <div css={clothesInfoGroup}>
-            <p>카테고리 <span css={description}>{category}</span></p>
-            <p css={marginLeftStyle}>색상 <span css={description}>{color}</span></p>
+      {selectedClothes ?
+        <>
+          <div css={buttonGroup}>
+            <button>수정</button>
+            <button onClick={() => deleteHandler(selectedClothes.clothing.clothingId)}>삭제</button>
           </div>
-        </div>
-        <div css={clothesInfoGroup}>
-          <p>소재 <span css={description}>{material}</span></p>
-          <p css={marginLeftStyle}>패턴 <span css={description}>{pattern}</span></p>
-        </div>
-        <div css={clothesInfoGroup}>
-          <p>계절</p>
-          <ul css={ulStyle}>
-            {allSeason.map((item, index) => {
-              const isMatched = item === season;
-              return (
-                <li css={liStyle({ isMatched })} key={index}>
-                  <p css={itemTitle}>{item}</p>
+          <div css={imageWrapper}>
+            <img css={clothesImage} src={selectedClothes.clothing.imageModel.imageUrl} alt="image" />
+          </div>
+          <div>
+            <p css={clothesInfo}>옷 정보</p>
+            <div>
+              <div css={clothesInfoGroup}>
+                <p>카테고리 <span css={description}>{selectedClothes.clothing.category}</span></p>
+                <p css={marginLeftStyle}>색상 <span css={description}>{selectedClothes.clothing.color}</span></p>
+              </div>
+            </div>
+            <div css={clothesInfoGroup}>
+              <p>소재 <span css={description}>{selectedClothes.clothing.material}</span></p>
+              <p css={marginLeftStyle}>패턴 <span css={description}>{selectedClothes.clothing.pattern || '없음'}</span></p>
+            </div>
+            <div css={clothesInfoGroup}>
+              <p>태그</p>
+              <ul css={ulStyle}>{selectedClothes.hashtag.map((item, index) => (
+                <li css={tagItem} key={index}>
+                  {item}
                 </li>
-              );
-            })}
-          </ul>
+              ))}</ul>
+            </div>
+            <div css={clothesInfoGroup}>
+              <p>세탁법</p>
+              <ul>
+                {selectedClothes.washing.map((item, index) => <p key={index}>{item.washingMethod.method}</p>)}
+              </ul>
+            </div>
+          </div>
+        </> :
+        <div css={message}>
+          <p>현재 보유한 옷이 없습니다. </p>
+          <p>+ 아이콘을 눌러 새로운 옷을 추가해보세요.</p>
         </div>
-        <div css={clothesInfoGroup}>
-          <p>태그</p>
-          <ul css={ulStyle}>{custom.map((item, index) => (
-            <li css={tagItem} key={index}>
-              {item}
-            </li>
-          ))}</ul>
-        </div>
-        <div css={clothesInfoGroup}>
-          <p>세탁법 <span css={description}>{laundry}</span></p>
-        </div>
-      </div>
+      }
     </div>
   );
 }
 
-const liStyle = ({ isMatched }) => css`
-  background-color: #e2e2e2;
-  width: 3.8rem;
-  height: 2rem;
+const message = css`
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   text-align: center;
-    ${isMatched &&
-    `
-      background-color: #00acee;
-    `}
+  color: white;
+  font-size: 20px;
+  font-weight: lighter;
+  width: 100%;
 `;
 
 const detailContainer = css`
@@ -85,10 +77,13 @@ const detailContainer = css`
   border-radius: 0.5rem;
 `;
 
+const imageWrapper = css`
+  height: 20rem;
+`;
+
 const clothesImage = css`
-  width: 40%;
   display: block;
-  padding: 40px 10px;
+  width: 200px;
   margin: auto;
 `;
 
@@ -133,11 +128,6 @@ const tagItem = css`
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
   margin: 5px;
   min-width: 50px;
-`;
-
-const itemTitle = css`
-  margin: auto;
-  padding: 10%;
 `;
 
 const buttonGroup = css`

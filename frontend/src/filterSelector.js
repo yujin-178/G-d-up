@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 
-const getClothes = state => state.clothesSlice.clothes; // 현재는 mock data
+const getClothes = state => state.clothesSlice.clothes;
 const getFilter = state => state.filterSlice;
 
 const isIncluded = (filterArray, target) => {
@@ -18,24 +18,9 @@ const isIncluded = (filterArray, target) => {
 export const filteredClothesSelector = createSelector(
   getClothes,
   getFilter,
-  (clothes, { category, selectedSeason, selectedColors, custom }) => clothes.filter(item => {
-
-    if (category == '전체' || item.category == category) {
-
-      // todo: 차후 userSlice에서 유저 정보를 가져와서 로직 완성 예정
-      // if (isUserItem) {
-      // 	if (item.userName === '현재 로그인한 사용자 이름') {
-      // 		return true;
-      // 	}
-
-      // 	return false;
-      // }
-
-      if (!isIncluded(selectedSeason, item.season)) {
-        return false;
-      }
-
-      if (!isIncluded(selectedColors, item.color)) {
+  (clothes, { category, selectedColors, custom }) => clothes.filter(item => {
+    if (category == '전체' || item.clothing.category == category) {
+      if (!isIncluded(selectedColors, item.clothing.color)) {
         return false;
       }
 
@@ -43,9 +28,9 @@ export const filteredClothesSelector = createSelector(
         return true;
       }
 
-      const clothesCustomTag = item.custom;
+      const clothesCustomTag = item.hashtag;
       for (let i = 0; i < custom.length; i++) {
-        if (!clothesCustomTag.includes(custom[i])) {
+        if (!clothesCustomTag.includes(`#${custom[i]}`)) {
           return false;
         }
       }

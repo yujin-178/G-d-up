@@ -19,7 +19,7 @@ export default function App() {
       <Route path="/closet" element={<ClosetContainer />} />
       <Route path="/cloth" element={<AddClothesContainer />} />
       <Route path="/cody" element={<CodyMainContainer />} />
-      <Route path="/cody/create" element={<CodyContainer />} />
+      <Route path="/codycreate" element={<CodyContainer />} />
     </Routes>
   );
 }

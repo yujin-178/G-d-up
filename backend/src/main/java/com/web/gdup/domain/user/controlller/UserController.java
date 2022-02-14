@@ -2,6 +2,7 @@ package com.web.gdup.domain.user.controlller;
 
 import com.web.gdup.domain.follow.service.FollowService;
 import com.web.gdup.domain.model.BasicResponse;
+import com.web.gdup.domain.user.Entity.UserEntity;
 import com.web.gdup.domain.user.dto.SignupRequest;
 import com.web.gdup.domain.user.dto.UserDto;
 import com.web.gdup.domain.user.service.UserService;
@@ -26,21 +27,25 @@ public class UserController {
     @Autowired
     private FollowService followService;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     @ApiOperation(value = "로그인", notes = "로그인을 위해 이메일과 패스워드를 입력받는다.")
-    public Object login(@RequestParam(required = true) final String email,
-                        @RequestParam(required = true) final String password){
-        Optional<UserDto> user = userService.login(email, password);
-        ResponseEntity response = null;
+    public Object login(@RequestBody UserDto userDto){
+        Optional<UserEntity> user = null;
 
-        if(user.isPresent()){
-            final BasicResponse result = new BasicResponse();
+        ResponseEntity response = null;
+        final BasicResponse result = new BasicResponse();
+
+        try {
+            user = userService.login(userDto.getEmail(), userDto.getPassword());
             result.status = true;
             result.message = "success";
+            result.data = user;
             response = new ResponseEntity<>(result, HttpStatus.OK);
-        }
-        else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            result.status = true;
+            result.message = "로그인 에러 입니다. 다시 시도해 주세요.";
+            result.data = null;
+            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
         return response;
     }
@@ -48,37 +53,47 @@ public class UserController {
     @PostMapping("/signup")
     @ApiOperation(value = "가입하기")
     public Object signup(@Valid @RequestBody SignupRequest request){
+
         final  BasicResponse result = new BasicResponse();
         ResponseEntity response = null;
 
-        if(userService.signup(request)){
-            result.status = true;
-            result.message = "SUCCESS";
-            response = new ResponseEntity<>(result, HttpStatus.OK);
-        }
-        else {
-            result.status = false;
-            result.message = "FAIL";
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND); // 이미있는경우, NOT FOUND인가?
+        try {
+            UserEntity user = userService.signup(request);
+            if(user == null){
+                result.status = false;
+                result.message = "뭐로 에러가 난거야?";
+                result.data = null;
+                response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND); // 이미있는경우, NOT FOUND인가?
+            } else {
+                result.status = true;
+                result.message = "success";
+                result.data = user;
+                response = new ResponseEntity<>(result, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+
         }
         return response;
     }
 
-    @GetMapping("/info")
+    @GetMapping("/info/{targetName}")
     @ApiOperation(value = "타 사용자 상세보기", notes = "타 사용자의 정보(introduction)를 반환한다." +
             "파라미터로 타켓 유저의 name이 필요하다.")
-    public Object getUserInfo(@RequestParam String targetName){
-        UserDto user = userService.getUserInfo(targetName);
-        ResponseEntity response = null;
+    public Object getUserInfo(@PathVariable String targetName){
 
-        if(user != null){
-            final BasicResponse result = new BasicResponse();
+        ResponseEntity response = null;
+        final BasicResponse result = new BasicResponse();
+
+        if(userService.getUserInfo(targetName)){
             result.status = true;
-            result.message = "success";
-            result.data = user.getIntroduction();
+            result.message = "해당 유저 존재";
+            result.data = true;
             response = new ResponseEntity<>(result, HttpStatus.OK);
         } else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            result.status = true;
+            result.message = "해당 유저 없음";
+            result.data = false;
+            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
         return response;
     }

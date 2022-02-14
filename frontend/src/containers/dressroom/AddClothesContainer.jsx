@@ -32,7 +32,6 @@ export default function AddClothesContainer() {
   const { imgURL, tagInfo, tagGroup } = clothes;
 
   const imgInput = useRef(null);
-  const [imgForm, setImg] = useState(null);
   const [loading, setLoading] = useState(null);
 
   const config = {
@@ -62,8 +61,7 @@ export default function AddClothesContainer() {
     setLoading(true);
     const formData = new FormData();
     formData.append('imageFile', event.target.files[0]);
-    setImg(event.target.files[0]);
-
+    
     axios.post(`http://i6b108.p.ssafy.io:8000/clothing/background`, formData, config)
       .then((res) => {
         dispatch(setImgURL(res.data.data));
@@ -87,7 +85,7 @@ export default function AddClothesContainer() {
       },
     };
     const formData = new FormData();
-    formData.append('imageFile', imgForm);
+    formData.append('imageFile', imgURL);
     formData.append('clothing', new Blob([JSON.stringify(tagInfo)], { type: 'application/json' }));
     formData.append('hashtag', tagGroup.join(' '));
     formData.append('washing', selectedIcon.join(' '));

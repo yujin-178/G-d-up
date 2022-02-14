@@ -20,13 +20,14 @@ export default function Item({ item, handleOnStart, handleOnStop, handleResizeSt
       maxWidth={300}
       maxHeight={300}
       bounds="parent"
-      css={itemInCanvas({ image, width, height, z })}
+      lockAspectRatio={1}
+      css={itemInCanvas({ image, z })}
     >
     </Rnd>
   );
 }
 
-const itemInCanvas = ({ image, width, height, z }) => css`
+const itemInCanvas = ({ image, z }) => css`
   background-color: transparent;
   background-position: center center;
   position: absolute;
@@ -34,7 +35,5 @@ const itemInCanvas = ({ image, width, height, z }) => css`
   background-size: contain;
   background-repeat: no-repeat;
   border: 1px solid grey;
-  width: ${width};
-  height: ${height};
   z-index: ${z};
 `;

@@ -3,29 +3,31 @@ import React from 'react';
 import { css } from '@emotion/react';
 
 export default function ClothesItem(props) {
-  // 현재는 만약 onClickHandler를 받는다면 cody관련 로직
-  // mouseOver와 mouseLeave는 clohesDetail 관련 로직
-  // hover기능을 넣을지 논의 후 refactoring 예정
   const {
     item,
-    // onMouseOverHandler,
+    onMouseOverHandler,
     OnMouseLeaveHandler,
     onClickHandler,
   } = props;
 
   return (
-    <div 
-      css={ClothesItemBox}
-      onClick={() => onClickHandler(item)}
-    >
+    <div css={ClothesItemBox}>
       <div css={ClothesItemImgDiv}>
-        {item && (
+        {(item && onMouseOverHandler) && (
           <img
             css={ClothesItemImg}
             width="100%"
             src={item.clothing.imageModel.imageUrl}
-            // onMouseOver={() => onMouseOverHandler(item)}
+            onMouseOver={() => onMouseOverHandler(item)}
             onMouseLeave={OnMouseLeaveHandler}
+          />
+        )}
+        {(item && onClickHandler) && (
+          <img
+            css={ClothesItemImg}
+            width="100%"
+            src={item.clothing.imageModel.imageUrl}
+            onClick={() => onClickHandler(item)}
           />
         )}
       </div>

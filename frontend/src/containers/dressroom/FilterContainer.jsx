@@ -4,8 +4,6 @@ import Categories from '../../components/dressroom/Categories';
 import ClosetSideBar from '../../components/dressroom/ClosetSideBar.jsx';
 import {
   changeCategoryFilter,
-  changeIsUserItemFilter,
-  changeSeasonFilter,
   changeColorFilter,
   addCustomFilter,
   deleteCustomFilter,
@@ -16,7 +14,7 @@ function FilterContainer() {
   const inputRef = useRef();
   const dispatch = useDispatch();
   const filter = useSelector(state => state.filterSlice);
-  const { category, isUserItem, selectedColors, custom } = filter;
+  const { category, selectedColors, custom } = filter;
 
   const onKeyPress = event => {
     if (event.key === 'Enter') {
@@ -30,7 +28,7 @@ function FilterContainer() {
     }
   };
 
-  const deleteCustomHandler = value => {
+  const deleteTagHandler = value => {
     dispatch(deleteCustomFilter(value));
   };
 
@@ -38,17 +36,6 @@ function FilterContainer() {
     if (category !== categoryName) {
       dispatch(changeCategoryFilter(categoryName));
     }
-  };
-
-  const userToggleHandler = () => {
-    dispatch(changeIsUserItemFilter());
-  };
-
-  const seasonHandler = (isChecked, season) => {
-    dispatch(changeSeasonFilter({
-      isChecked,
-      season
-    }));
   };
 
   const colorHandler = color => {
@@ -66,12 +53,9 @@ function FilterContainer() {
         season={season}
         colors={colors}
         selectedColors={selectedColors}
-        isUserItem={isUserItem}
-        toggleIsUserItem={userToggleHandler}
-        onChangeSeason={seasonHandler}
         onChangeColor={colorHandler}
         customTags={custom}
-        deleteCustomHandler={deleteCustomHandler}
+        deleteTagHandler={deleteTagHandler}
         inputRef={inputRef}
         onKeyPress={onKeyPress}
       />

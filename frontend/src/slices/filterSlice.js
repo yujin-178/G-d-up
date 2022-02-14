@@ -2,8 +2,6 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   'category': '전체',
-  'isUserItem': false,
-  'selectedSeason': [],
   'selectedColors': [],
   'custom': [],
 };
@@ -17,29 +15,6 @@ export const filterSlice = createSlice({
       return {
         ...state,
         category
-      };
-    },
-    changeIsUserItemFilter(state) {
-      return {
-        ...state,
-        isUserItem: !state.isUserItem
-      };
-    },
-    changeSeasonFilter(state, action) {
-      const { isChecked, season } = action.payload;
-      const { selectedSeason } = state;
-
-      if (isChecked) {
-        return {
-          ...state,
-          selectedSeason: [...selectedSeason, season]
-        };
-      }
-
-      const removed = selectedSeason.filter(item => item !== season);
-      return {
-        ...state,
-        selectedSeason: removed
       };
     },
     changeColorFilter(state, action) {
@@ -86,8 +61,6 @@ export const filterSlice = createSlice({
 
 export const {
   changeCategoryFilter,
-  changeIsUserItemFilter,
-  changeSeasonFilter,
   changeColorFilter,
   addCustomFilter,
   deleteCustomFilter,

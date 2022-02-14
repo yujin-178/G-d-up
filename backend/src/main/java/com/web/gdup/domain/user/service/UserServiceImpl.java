@@ -1,7 +1,7 @@
 package com.web.gdup.domain.user.service;
 
+import com.web.gdup.domain.user.Entity.UserEntity;
 import com.web.gdup.domain.user.dto.SignupRequest;
-import com.web.gdup.domain.user.dto.UserDto;
 import com.web.gdup.domain.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,28 +15,27 @@ public class UserServiceImpl implements  UserService{
     private UserRepository userRepository;
 
     @Override
-    public Optional<UserDto> login(String email, String password) {
-        Optional<UserDto> user = userRepository.findUserByEmailAndPassword(email, password);
-        System.out.println(user);
+    public Optional<UserEntity> login(String email, String password) throws Exception {
+        Optional<UserEntity> user = userRepository.findUserByEmailAndPassword(email, password);
+        user.orElseThrow(()-> new Exception("null"));
         return user;
     }
 
     @Override
-    public boolean signup(SignupRequest request) {
+    public UserEntity signup(SignupRequest request){
 
-        Optional<UserDto> user = userRepository.findById(request.getUserName());
-
+        Optional<UserEntity> user = userRepository.findById(request.getUserName());
+        UserEntity newUser = null;
         if(!user.isPresent()){ // 해당 유저네임으로 가입된 사람들이 없기 때문에, 진행 가능
-            System.out.println("회원가입 진행 가능");
-            userRepository.save(new UserDto(request.getUserName(), request.getPassword(), request.getEmail()));
-            return  true;
+            newUser = userRepository.save(new UserEntity(request.getUserName(), request.getPassword(), request.getEmail()));
         }
-        System.out.println("이미 있다.");
-        return false;
+        return newUser;
     }
 
     @Override
-    public UserDto  getUserInfo(String targetName) {
-       return userRepository.getOne(targetName);
+    public boolean getUserInfo(String targetName) {
+        Optional<UserEntity> user = userRepository.findById(targetName);
+        if (user.isPresent()) return true;
+        return false;
     }
 }
