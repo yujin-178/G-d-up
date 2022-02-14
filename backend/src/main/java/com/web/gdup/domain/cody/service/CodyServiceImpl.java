@@ -5,11 +5,11 @@ import com.web.gdup.domain.cody.dto.ClothingInCody;
 import com.web.gdup.domain.cody.dto.CodyDtoAll;
 import com.web.gdup.domain.cody.dto.CreateCody;
 import com.web.gdup.domain.cody.dto.UpdateCody;
-import com.web.gdup.domain.cody.entity.CodyClothingEntity;
+import com.web.gdup.domain.cody_clothing.entity.CodyClothingEntity;
 import com.web.gdup.domain.cody.entity.CodyEntity;
-import com.web.gdup.domain.cody.entity.CodyHashtagEntity;
-import com.web.gdup.domain.cody.repository.CodyClothingRepository;
-import com.web.gdup.domain.cody.repository.CodyHashtagRepository;
+import com.web.gdup.domain.cody_hashtag.entity.CodyHashtagEntity;
+import com.web.gdup.domain.cody_clothing.repository.CodyClothingRepository;
+import com.web.gdup.domain.cody_hashtag.repository.CodyHashtagRepository;
 import com.web.gdup.domain.cody.repository.CodyRepository;
 import com.web.gdup.domain.hashtag.service.HashtagService;
 import com.web.gdup.domain.image.dto.ImageDto;
@@ -22,213 +22,148 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class CodyServiceImpl implements CodyService {
     @Autowired
-    private CodyRepository cr;
+    private CodyRepository codyRepository;
 
     @Autowired
-    private HashtagService hs;
+    private HashtagService hashtagService;
 
     @Autowired
-    private CodyClothingRepository ccr;
+    private CodyClothingRepository codyClothingRepository;
 
     @Autowired
     private ImageService imageService;
 
     @Autowired
-    private CodyHashtagRepository chr;
+    private ImageRepository imageRepository;
 
     @Autowired
-    private ImageRepository ir;
+    private CodyHashtagRepository codyHashtagRepository;
 
     @Override
     public List<CodyEntity> getAllCodyList() {
 
-        return cr.findAll();
+        return codyRepository.findAll();
+
     }
 
     @Override
-    public List<CodyDtoAll> getUserCodyList(String name) {
+    public List<CodyDtoAll> getUserCodyList(String name) throws Exception {
 
-        List<CodyEntity> tmp = cr.findAllByUserName(name);
-        List<CodyDtoAll> codyAllLists = new ArrayList<>();
-        for (CodyEntity a : tmp) {
+        List<CodyEntity> codyEntities = codyRepository.findAllByUserName(name);
+        List<CodyDtoAll> codyDtoAlls = new ArrayList<>();
+        if(codyDtoAlls.size() == 0)
+            throw new Exception("null");
+
+        for (CodyEntity codyEntity : codyEntities) {
             List<String> codyTagList = new ArrayList<>();
-            List<CodyHashtagEntity> tmp2 = chr.findAllByCodyId(a.getCodyId());
-            for (CodyHashtagEntity b : tmp2) {
-                codyTagList.add(b.getTagName());
+            List<CodyHashtagEntity> codyHashtagEntities = codyHashtagRepository.findAllByCodyId(codyEntity.getCodyId());
+            for (CodyHashtagEntity codyHashtagEntity : codyHashtagEntities) {
+                codyTagList.add(codyHashtagEntity.getTagName());
             }
-            CodyDtoAll codyDtoAll = CodyDtoAll.builder()
-                    .codyId(a.getCodyId())
-                    .codyName(a.getCodyName())
-                    .registrationDate(a.getRegistrationDate())
-                    .updateDate(a.getUpdateDate())
-                    .content(a.getContent())
-                    .userName(a.getUserName())
-                    .secret(a.getSecret())
-                    .imageModel(a.getImageModel())
-                    .hashList(codyTagList)
-                    .build();
-            codyAllLists.add(codyDtoAll);
+            codyDtoAlls.add(new CodyDtoAll(codyEntity, codyTagList));
         }
-
-        return codyAllLists;
-
+        return codyDtoAlls;
     }
 
     @Override
-    public int deleteCodyItem(int id) {
-        CodyEntity tmp = cr.getOne(id);
+    public int deleteCodyItem(int id) throws Exception {
+        CodyEntity tmp = codyRepository.getOne(id);
 
-        if (cr.deleteByCodyId(id) == 0)
-            return 0;
+        if (codyRepository.deleteByCodyId(id) == 0)
+            throw new Exception("null");
 
         int imageId = tmp.getImageModel().getImageId();
 
-        ir.deleteByImageId(imageId);
+        imageRepository.deleteByImageId(imageId);
 
         return id;
     }
 
     @Override
-    public CodyDtoAll updateCodyItem(UpdateCody uc, MultipartFile file) {
-        System.out.println(uc.getCodyId());
-        System.out.println(file.getOriginalFilename());
-        CodyEntity ce = cr.getOne(uc.getCodyId());
+    public CodyDtoAll updateCodyItem(UpdateCody updateCody, MultipartFile file) throws Exception {
+        CodyEntity codyEntity = codyRepository.getOne(updateCody.getCodyId());
 
-        ImageDto imageDto = updateImage(file, ce.getImageModel().getImageId());
-        ImageDto iDto = imageService.getImage(ce.getImageModel().getImageId());
+        ImageDto imageDto = updateImage(file, codyEntity.getImageModel().getImageId());
 
-        chr.deleteByCodyId(ce.getCodyId());
+        codyHashtagRepository.deleteByCodyId(codyEntity.getCodyId());
 
-        ce = CodyEntity.builder()
-                .codyId(uc.getCodyId())
-                .codyName(uc.getCodyName())
-                .registrationDate(ce.getRegistrationDate())
-                .updateDate(LocalDateTime.now())
-                .content(uc.getContent())
-                .userName(uc.getUserName())
-                .secret(uc.getSecret())
-                .imageModel(iDto.toEntity())
-                .build();
+        Optional<CodyEntity> codyEntityOptional = Optional.of(codyRepository.save(updateCody.toEntity(imageDto.toEntity())));
+        codyEntityOptional.orElseThrow(() -> new Exception("null"));
 
-        cr.save(ce);
 
-        StringTokenizer st = new StringTokenizer(uc.getCodyTag(), " ");
+        StringTokenizer st = new StringTokenizer(updateCody.getCodyTag(), " ");
         List<String> tagList = new ArrayList<>();
         while (st.hasMoreTokens()) {
             String tagTmp = st.nextToken();
-            hs.findOrCreateHashtag(tagTmp);
-            CodyHashtagEntity CHtmp = CodyHashtagEntity.builder()
-                    .codyId(ce.getCodyId())
+            hashtagService.findOrCreateHashtag(tagTmp);
+            CodyHashtagEntity codyHashtagEntity = CodyHashtagEntity.builder()
+                    .codyId(codyEntityOptional.get().getCodyId())
                     .registrationDate(LocalDateTime.now())
                     .tagName(tagTmp).build();
-            chr.save(CHtmp);
+            codyHashtagRepository.save(codyHashtagEntity);
             tagList.add(tagTmp);
         }
 
-        ccr.deleteByCodyId(ce.getCodyId());
+        codyClothingRepository.deleteByCodyId(codyEntityOptional.get().getCodyId());
 
-
-        int len = uc.getClothingList().size();
-        List<ClothingInCody> cciList = uc.getClothingList();
+        int len = updateCody.getClothingList().size();
+        List<ClothingInCody> cciList = updateCody.getClothingList();
         for (int i = 0; i < len; i++) {
             ClothingInCody tmp = cciList.get(i);
             CodyClothingEntity cci = CodyClothingEntity.builder()
-                    .codyId(ce.getCodyId())
+                    .codyId(codyEntityOptional.get().getCodyId())
                     .clothingId(tmp.getClothingId())
                     .m(tmp.getM()).x(tmp.getX()).y(tmp.getY()).z(tmp.getZ()).build();
-            // 기존에 없는 새로운 값인지 확인하는 작업이 있어야 하지 않을까?
-            ccr.save(cci);
+            codyClothingRepository.save(cci);
         }
 
-        CodyDtoAll codyDtoAll = CodyDtoAll.builder()
-                .codyId(ce.getCodyId())
-                .codyName(ce.getCodyName())
-                .registrationDate(ce.getRegistrationDate())
-                .updateDate(ce.getUpdateDate())
-                .content(ce.getContent())
-                .userName(ce.getUserName())
-                .secret(ce.getSecret())
-                .imageModel(ce.getImageModel())
-                .hashList(tagList)
-                .build();
+        CodyDtoAll codyDtoAll = new CodyDtoAll(codyEntityOptional.get(), tagList);
 
         return codyDtoAll;
     }
 
 
     @Override
-    public CodyDtoAll addCodyItem(CreateCody cc, MultipartFile file) throws Exception {
+    public CodyDtoAll addCodyItem(CreateCody createCody, MultipartFile file) throws Exception {
         ImageDto image = saveImage(file);
 
         int imageId = imageService.insertImage(image);
-        ImageDto iDto = imageService.getImage(imageId);
+        CodyEntity inputEntity = createCody.toEntity(imageService.getImage(imageId).toEntity());
 
+        Optional<CodyEntity> codyEntity = Optional.of(codyRepository.save(inputEntity));
+        codyEntity.orElseThrow(() -> new Exception("null"));
 
-        CodyEntity codyDto = CodyEntity.builder()
-                .userName(cc.getUserName())
-                .content(cc.getContent())
-                .codyName(cc.getCodyName())
-                .secret(cc.getSecret())
-                .updateDate(LocalDateTime.now())
-                .registrationDate(LocalDateTime.now())
-                .imageModel(iDto.toEntity())
-                .build();
-
-
-        CodyEntity ans = cr.save(codyDto);
-
-
-        StringTokenizer st = new StringTokenizer(cc.getCodyTag(), " ");
+        StringTokenizer st = new StringTokenizer(createCody.getCodyTag(), " ");
         List<String> tagList = new ArrayList<>();
         while (st.hasMoreTokens()) {
             String tagTmp = st.nextToken();
-            hs.findOrCreateHashtag(tagTmp);
-            System.out.println(LocalDateTime.now());
-            CodyHashtagEntity CHtmp = CodyHashtagEntity.builder()
-                    .codyId(ans.getCodyId())
+            hashtagService.findOrCreateHashtag(tagTmp);
+            CodyHashtagEntity codyHashtagEntity = CodyHashtagEntity.builder()
+                    .codyId(codyEntity.get().getCodyId())
                     .registrationDate(LocalDateTime.now())
                     .tagName(tagTmp).build();
             tagList.add(tagTmp);
-            chr.save(CHtmp);
+            codyHashtagRepository.save(codyHashtagEntity);
         }
 
 
-        if (ans != null) {
-            int len = cc.getClothingList().size();
-            for (int i = 0; i < len; i++) {
-                List<ClothingInCody> cciList = cc.getClothingList();
-                ClothingInCody tmp = cciList.get(i);
-                CodyClothingEntity cci = CodyClothingEntity.builder()
-                        .codyId(ans.getCodyId())
-                        .clothingId(tmp.getClothingId())
-                        .m(tmp.getM()).x(tmp.getX()).y(tmp.getY()).z(tmp.getZ()).build();
-                // 기존에 없는 새로운 값인지 확인하는 작업이 있어야 하지 않을까?
-                ccr.save(cci);
-
-            }
-
-        } else {
-            System.out.println("Cody 생성 실패");
+        int len = createCody.getClothingList().size();
+        for (int i = 0; i < len; i++) {
+            List<ClothingInCody> cciList = createCody.getClothingList();
+            ClothingInCody tmp = cciList.get(i);
+            CodyClothingEntity cci = CodyClothingEntity.builder()
+                    .codyId(codyEntity.get().getCodyId())
+                    .clothingId(tmp.getClothingId())
+                    .m(tmp.getM()).x(tmp.getX()).y(tmp.getY()).z(tmp.getZ()).build();
+            codyClothingRepository.save(cci);
         }
-        CodyDtoAll codyDtoAll = CodyDtoAll.builder()
-                .codyId(ans.getCodyId())
-                .codyName(ans.getCodyName())
-                .registrationDate(ans.getRegistrationDate())
-                .updateDate(ans.getUpdateDate())
-                .content(ans.getContent())
-                .userName(ans.getUserName())
-                .secret(ans.getSecret())
-                .imageModel(ans.getImageModel())
-                .hashList(tagList)
-                .build();
+
+        CodyDtoAll codyDtoAll = new CodyDtoAll(codyEntity.get(), tagList);
 
         return codyDtoAll;
 

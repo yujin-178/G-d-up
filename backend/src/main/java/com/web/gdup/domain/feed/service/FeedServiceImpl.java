@@ -1,8 +1,8 @@
 package com.web.gdup.domain.feed.service;
 
 import com.web.gdup.domain.cody.entity.CodyEntity;
-import com.web.gdup.domain.cody.entity.CodyHashtagEntity;
-import com.web.gdup.domain.cody.repository.CodyHashtagRepository;
+import com.web.gdup.domain.cody_hashtag.entity.CodyHashtagEntity;
+import com.web.gdup.domain.cody_hashtag.repository.CodyHashtagRepository;
 import com.web.gdup.domain.cody.repository.CodyRepository;
 import com.web.gdup.domain.feed.dto.FeedDto;
 import com.web.gdup.domain.feed.dto.RecommandDto;
