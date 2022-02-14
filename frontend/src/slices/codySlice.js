@@ -10,7 +10,9 @@ const initialState = {
   'codyLoading': false,
   'scrollisTop': true,
   'cards': [],
-  'count': 0,
+  'renderCount': 0,
+  'isdetailOpen': false,
+  'selectedCody' : ''
 };
 
 export const setCody = createAsyncThunk(
@@ -27,10 +29,12 @@ export const codySlice = createSlice({
   reducers: {
     setgoToSlide(state, action) {
       const goToSlide = action.payload;
-      return {
-        ...state,
-        goToSlide
-      };
+      if (state.goToSlide === goToSlide) {
+        state.isdetailOpen = true;
+        state.selectedCody = state.codyList[goToSlide];
+      } else {
+        state.goToSlide = goToSlide;
+      }
     },
     setMoveScroll(state, action) {
       const type = action.payload;
@@ -49,12 +53,30 @@ export const codySlice = createSlice({
     },
     setCards(state, action) {
       const cards = action.payload;
-      const { count } = state;
+      const { renderCount } = state;
       return {
         ...state,
         cards,
-        count : count+1
+        renderCount : renderCount+1
       };
+    },
+    setisdetailOpen(state, action){
+      const isdetailOpen = action.payload;
+      return {
+        ...state,
+        isdetailOpen
+      };
+    },
+    setDetail(state, action) {
+      const currentDetail = action.payload;
+      return {
+        ...state,
+        currentDetail
+      };
+    },
+    changeSelectCody(state, action) {
+      const index = action.payload;
+      state.selectedCody = state.codyList[index];
     }
   },
   extraReducers: {
@@ -64,7 +86,7 @@ export const codySlice = createSlice({
     [setCody.fulfilled.type]: (state, action) => {
       state.codyLoading = false;
       state.codyList = action.payload.map((item) => {
-        return item.imageModel.imageUrl;
+        return item;
       });
     },
     [setCody.rejected.type]: (state, action) => {
@@ -78,6 +100,9 @@ export const {
   setgoToSlide,
   setMoveScroll,
   setCards,
+  setisdetailOpen,
+  setDetail,
+  changeSelectCody,
 } = codySlice.actions;
 
 export default codySlice.reducer;
