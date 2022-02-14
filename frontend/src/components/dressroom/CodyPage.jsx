@@ -16,7 +16,7 @@ export default function CodyPage({ isdetailOpen, handleSelectCody, scrollisTop, 
 
   return (
     <div>
-      <div css={isdetailOpen ? css`display: none;` : container}>
+      <div css={isdetailOpen ? css`visibility: hidden;` : container}>
         <h2>Cody</h2>
         <div css={carousel}>
           <Carousel
@@ -50,29 +50,17 @@ export default function CodyPage({ isdetailOpen, handleSelectCody, scrollisTop, 
         </button>
       </div>
 
-      {scrollisTop ?
-        <div css={Fadeup}>
-          <div>
-            <CodyList
-              cards={codyList}
-              moveScroll={moveScroll}
-              scrollisTop={scrollisTop}
-              handleSelectCody={handleSelectCody}
-            />
-          </div>
+      <div css={scrollisTop ? Fadeup : Fadein} id="fade">
+        <div>
+          <CodyList
+            cards={codyList}
+            moveScroll={moveScroll}
+            scrollisTop={scrollisTop}
+            handleSelectCody={handleSelectCody}
+          />
         </div>
-        :
-        <div css={Fadein}>
-          <div>
-            <CodyList
-              cards={codyList}
-              moveScroll={moveScroll}
-              scrollisTop={scrollisTop}
-              handleSelectCody={handleSelectCody}
-            />
-          </div>
-        </div>
-      }
+      </div>
+
       <button css={createBtn} onClick={() => navigate('/codycreate')}>
         새 코디 생성하기
       </button>
