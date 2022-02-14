@@ -51,17 +51,28 @@ public class CodyServiceImpl implements CodyService {
     }
 
     @Override
-    public List<CodyAllList> getUserCodyList(String name) {
+    public List<CodyDtoAll> getUserCodyList(String name) {
 
         List<CodyEntity> tmp = cr.findAllByUserName(name);
-        List<CodyAllList> codyAllLists = new ArrayList<>();
+        List<CodyDtoAll> codyAllLists = new ArrayList<>();
         for (CodyEntity a : tmp) {
             List<String> codyTagList = new ArrayList<>();
             List<CodyHashtagEntity> tmp2 = chr.findAllByCodyId(a.getCodyId());
             for (CodyHashtagEntity b : tmp2) {
                 codyTagList.add(b.getTagName());
             }
-            codyAllLists.add(new CodyAllList(a, codyTagList));
+            CodyDtoAll codyDtoAll = CodyDtoAll.builder()
+                    .codyId(a.getCodyId())
+                    .codyName(a.getCodyName())
+                    .registrationDate(a.getRegistrationDate())
+                    .updateDate(a.getUpdateDate())
+                    .content(a.getContent())
+                    .userName(a.getUserName())
+                    .secret(a.getSecret())
+                    .imageModel(a.getImageModel())
+                    .hashList(codyTagList)
+                    .build();
+            codyAllLists.add(codyDtoAll);
         }
 
         return codyAllLists;
@@ -139,7 +150,7 @@ public class CodyServiceImpl implements CodyService {
 
 
     @Override
-    public CreateCodyResponse addCodyItem(CreateCody cc, MultipartFile file) {
+    public CodyDtoAll addCodyItem(CreateCody cc, MultipartFile file) {
         ImageDto image = saveImage(file);
 
         int imageId = imageService.insertImage(image);
@@ -192,18 +203,19 @@ public class CodyServiceImpl implements CodyService {
         } else {
             System.out.println("Cody 생성 실패");
         }
-        CreateCodyResponse createCodyResponse = CreateCodyResponse.builder()
-                .imageEntity(ans.getImageModel())
-                .registrationTime(ans.getRegistrationDate())
-                .updateDate(ans.getUpdateDate())
-                .userName(ans.getUserName())
+        CodyDtoAll codyDtoAll = CodyDtoAll.builder()
+                .codyId(ans.getCodyId())
                 .codyName(ans.getCodyName())
+                .registrationDate(ans.getRegistrationDate())
+                .updateDate(ans.getUpdateDate())
                 .content(ans.getContent())
+                .userName(ans.getUserName())
                 .secret(ans.getSecret())
-                .codyTag(tagList)
+                .imageModel(ans.getImageModel())
+                .hashList(tagList)
                 .build();
 
-        return createCodyResponse;
+        return codyDtoAll;
 
     }
 

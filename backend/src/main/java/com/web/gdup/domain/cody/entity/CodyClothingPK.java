@@ -13,4 +13,5 @@ public class CodyClothingPK implements Serializable {
     @Column(name = "clothingid")
     private int clothingId;
 
+
 }

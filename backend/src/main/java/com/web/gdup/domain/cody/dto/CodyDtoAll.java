@@ -12,15 +12,15 @@ import java.util.List;
 @Setter
 @ToString
 @Builder
-public class CreateCodyResponse {
-
-    private String userName;
+public class CodyDtoAll {
+    private int codyId;
     private String codyName;
-    private String content;
-    private int secret;
-    private List<String> codyTag;
-    private ImageEntity imageEntity;
-    private LocalDateTime registrationTime;
+    private LocalDateTime registrationDate;
     private LocalDateTime updateDate;
+    private String content;
+    private String userName;
+    private int secret;
+    private ImageEntity imageModel;
+    private List<String> hashList;
 
 }
