@@ -11,7 +11,8 @@ export default function FriendsModal({
   onChangeSearchUser,
   followers,
   followings,
-  searchedUsers
+  searchedUsers,
+  searchUserInput,
 }) {
   return (
     <Modal css={FriendsModalStyle} isOpen={isOpen}>
@@ -26,7 +27,7 @@ export default function FriendsModal({
             placeholder='친구이름을 입력하세요'
             onChange={onChangeSearchUser}
           />
-          {searchedUsers.length === 0 &&
+          {searchedUsers.length === 0  && searchUserInput.length === 0 &&
             <div>
               {usersToFollow.map((user, idx) =>
                 <li css={ListStyle} key={idx}>

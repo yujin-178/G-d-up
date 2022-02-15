@@ -26,7 +26,13 @@ export default function FriendsModalContainer({ isOpen }) {
     dispatch(setFollowings(userName));
   }, []);
 
-  const { usersToFollow, followers, followings, searchedUsers } = useSelector(state => state.friendsSlice);
+  const { 
+    usersToFollow,
+    followers,
+    followings,
+    searchUserInput,
+    searchedUsers
+  } = useSelector(state => state.friendsSlice);
 
   function handleClickFollow(idx) {
     const following = usersToFollow[idx];
@@ -50,6 +56,7 @@ export default function FriendsModalContainer({ isOpen }) {
       followers={followers}
       followings={followings}
       searchedUsers={searchedUsers}
+      searchUserInput={searchUserInput}
       onClickFollow={handleClickFollow}
       onClickUnfollow={handleClickUnfollow}
       onChangeSearchUser={handleChangeSearchUser}
