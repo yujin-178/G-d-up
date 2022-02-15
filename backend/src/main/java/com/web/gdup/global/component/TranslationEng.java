@@ -95,7 +95,7 @@ public class TranslationEng {
         Neckline.put("bow", "보타이");
         Neckline.put("collar", "칼라");
         Neckline.put("cowl", "카울");
-        Neckline.put("crew", "승무원");
+        Neckline.put("crew", "크루넥");
         Neckline.put("hooded", "후드");
         Neckline.put("low cut", "로우 컷");
         Neckline.put("off shoulder", "오프숄더");
