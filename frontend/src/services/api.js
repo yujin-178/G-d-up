@@ -85,3 +85,8 @@ export async function loadFollowers(userName) {
   const response = await axios.get(`http://i6b108.p.ssafy.io:8000/user/find/follower/${userName}`);
   return response.data.data;
 }
+
+export async function loadFollowings(userName) {
+  const response = await axios.get(`http://i6b108.p.ssafy.io:8000/user/find/following/${userName}`);
+  return response.data.data;
+}
