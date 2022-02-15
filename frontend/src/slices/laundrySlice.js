@@ -26,12 +26,19 @@ export const laundrySlice = createSlice({
         laundryOpen
       };
     },
+    resetlaundry(state) {
+      return {
+        ...state,
+        selectedIcon : [],
+      };
+    }
   },
 });
 
 export const {
   changeSelectedIcon,
   changelaundryOpen,
+  resetlaundry,
 } = laundrySlice.actions;
 
 export default laundrySlice.reducer;
