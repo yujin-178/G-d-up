@@ -24,7 +24,6 @@ export default function FriendsModal({ isOpen, usersToFollow, onClickModalClose,
             {followers.map((user, idx) =>
               <li css={ListStyle} key={idx}>
                 {user}
-                <button css={[FollowItem, UnfollowBtn]}> 언팔로우 </button>
               </li>
             )}
           </div>
@@ -33,6 +32,7 @@ export default function FriendsModal({ isOpen, usersToFollow, onClickModalClose,
             {followings.map((user, idx) =>
               <li css={ListStyle} key={idx}>
                 {user}
+                <button css={[FollowItem, UnfollowBtn]}> 언팔로우 </button>
               </li>
             )}
           </div>
