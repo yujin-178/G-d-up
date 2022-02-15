@@ -1,18 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { act } from 'react-dom/test-utils';
-import { 
-  loadUsersToFollow, 
-  loadFollowers, 
-  loadFollowings, 
+import {
+  loadUsersToFollow,
+  loadFollowers,
+  loadFollowings,
   requestFollow,
   requestUnfollow,
 } from '../services/api';
 
 const initialState = {
   isOpen: false,
-  usersToFollow: ['팔로우 가능한 사용자가 없습니다.'],
-  followers: ['팔로워가 없습니다.'],
-  followings: ['팔로잉하는 사람이 없습니다.'],
+  usersToFollow: [],
+  followers: [],
+  followings: [],
+  searchUserInput: '',
+  searchedUsers: [],
 };
 
 export const setUsersToFollow = createAsyncThunk(
@@ -88,6 +90,21 @@ export const friendsSlice = createSlice({
         isOpen: action.payload,
       };
     },
+    setSearchResult(state, action) {
+      if (action.payload.length) {
+        return ({
+          ...state,
+          searchedUsers: state.usersToFollow.filter(user => {
+            const len = action.payload.length;
+            action.payload === user.slice(len, user.length);
+          }),
+        });
+      }
+      return ({
+        ...state,
+        searchedUsers: state.usersToFollow,
+      });
+    }
   },
   extraReducers: {
     [setUsersToFollow.pending]: extraReducerPending(),
