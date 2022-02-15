@@ -92,7 +92,7 @@ const DressroomBtn = css`
     left:0;
     bottom:0;
   }
-  &:hover:before, &:hover:after {
+  &:hover:before, &:hover:after: {
     width:100%;
     transition:800ms ease all;
   }
