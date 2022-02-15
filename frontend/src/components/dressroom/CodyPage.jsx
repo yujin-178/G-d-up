@@ -3,6 +3,8 @@ import Carousel from 'react-spring-3d-carousel';
 import { config } from 'react-spring';
 
 import { css } from "@emotion/react";
+import CodyBackgroundImg from  '../../../public/codybackground.jpg';
+
 import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
 import CodyDetailContainer from '../../containers/dressroom/CodyDetailContainer';
@@ -86,7 +88,7 @@ export default function CodyPage({ selectedCody, isdetailOpen, handleSelectCody,
 
 const CodyBackground = css`
   height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/codybackground.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${CodyBackgroundImg});
   background-size: cover;
   background-position: center;
 `;
