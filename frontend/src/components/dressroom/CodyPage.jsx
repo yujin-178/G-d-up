@@ -18,15 +18,19 @@ export default function CodyPage({ selectedCody, isdetailOpen, handleSelectCody,
     <div css={CodyBackground}>
       <div css={isdetailOpen ? css`visibility: hidden;` : container}>
         <h2>Cody</h2>
-        <div css={carousel}>
-          <Carousel
-            slides={cards}
-            goToSlide={goToSlide}
-            offsetRadius={offsetRadius}
-            showNavigation={showArrows}
-            animationConfig={config.gentle}
-          />
-        </div>
+        {cards ?
+          <div css={carousel}>
+            <Carousel
+              slides={cards}
+              goToSlide={goToSlide}
+              offsetRadius={offsetRadius}
+              showNavigation={showArrows}
+              animationConfig={config.gentle}
+            />
+          </div>
+          :
+          ''
+        }
 
         <div css={LeftArrow}>
           <ArrowLeftSquare
