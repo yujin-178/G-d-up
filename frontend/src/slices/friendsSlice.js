@@ -1,5 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { loadUsersToFollow, loadFollowers, loadFollowings, requestFollow } from '../services/api';
+import { 
+  loadUsersToFollow, 
+  loadFollowers, 
+  loadFollowings, 
+  requestFollow 
+} from '../services/api';
 
 const initialState = {
   isOpen: false,

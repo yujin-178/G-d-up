@@ -1,6 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsOpen, setUsersToFollow, setFollowers, setFollowings, followUser } from '../../slices/friendsSlice';
+import { 
+  setIsOpen, 
+  setUsersToFollow, 
+  setFollowers, 
+  setFollowings, 
+  followUser 
+} from '../../slices/friendsSlice';
 import FriendsModal from '../../components/dressroom/FriendsModal';
 
 const userName = 'admin';

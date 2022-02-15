@@ -21,7 +21,10 @@ export default function FriendsModal({
           {usersToFollow.map((user, idx) =>
             <li css={ListStyle} key={idx}>
               {user}
-              <button css={FollowItem} onClick={() => onClickFollow(idx)}> 팔로우 </button>
+              <button 
+                css={FollowItem} 
+                onClick={() => onClickFollow(idx)}
+              > 팔로우 </button>
             </li>
           )}
         </div>
