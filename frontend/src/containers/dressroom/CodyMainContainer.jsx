@@ -32,9 +32,10 @@ export default function CodyMainContainer() {
   //     dispatch(setEnd(true));
   //   };
   // }
+  const userName = JSON.parse(localStorage.getItem('userInfo')).username;
 
   useEffect(() => {
-    dispatch(setCody('jisoon'));
+    dispatch(setCody(userName));
   }, []);
 
   let codyCard = setTimeout(() => {

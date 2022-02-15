@@ -12,9 +12,6 @@ export const DressRoom = css`
 export const BackBtn = css`
   width: 5rem;
   height: 3rem;
-  position: absolute;
-  left: 73rem;
-  top: 53rem;
   background: #ecc194;
 	border: none;
 	border-radius: 4px;

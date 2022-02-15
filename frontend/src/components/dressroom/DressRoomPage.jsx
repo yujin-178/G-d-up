@@ -26,13 +26,15 @@ export default function DressRoomPage() {
 
   const { isOpen } = useSelector(state => state.friendsSlice);
 
+  const userName = JSON.parse(localStorage.getItem('userInfo')).username;
+
   return (
     <div css={Container}>
       <div css={DressRoom}>
+        <h2 css={Title}>{userName}'s 드레스룸</h2>
         <FriendsModal
           isOpen={isOpen}
         />
-        <h2 css={Title}>드레스룸</h2>
         <div css={friendsBtnDiv}>
           <PeopleFill
             css={FriendsBtn}
@@ -40,44 +42,65 @@ export default function DressRoomPage() {
             onRequestClose={HandleRequestClose}
           />
         </div>
-        <div css={[BtnItem, CodyBtn]}>
-          <Link to='/cody'>
-            <button css={TextButton}>
-              코디 목록으로
+        <div css={contentContainer}>
+          <div css={[BtnItem, CodyBtn]}>
+            <Link to='/cody'>
+              <button css={TextButton}>
+                코디 목록으로
+              </button>
+              <img css={Btn} src={codyImg} alt="코디버튼" />
+            </Link>
+          </div>
+          <div css={[BtnItem, ClosetBtn]}>
+            <Link to='/closet'>
+              <button css={TextButton}>
+                옷장 가기
+              </button>
+              <img css={Btn} src={closetImg} alt="코디버튼" />
+            </Link>
+          </div>
+        </div>
+        <div css={BackBtnContainer}>
+          <Link to='/'>
+            <button css={BackBtn}>
+              뒤로
             </button>
-            <img css={Btn} src={codyImg} alt="코디버튼" />
           </Link>
         </div>
-        <div css={[BtnItem, ClosetBtn]}>
-          <Link to='/closet'>
-            <button css={TextButton}>
-              옷장 가기
-            </button>
-            <img css={Btn} src={closetImg} alt="코디버튼" />
-          </Link>
-        </div>
-        <Link to='/'>
-          <button css={BackBtn}>
-            뒤로
-          </button>
-        </Link>
       </div>
     </div>
   );
 }
 
+const BackBtnContainer = css`
+  display: flex;
+  grid-row: 3;
+  grid-column: 1;
+  justify-content: end;
+  margin-right: 50px;
+  align-items: center;
+`;
+
 const DressRoom = css`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   height: 100vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${dressroomBackground});
   background-size: cover;
   background-position: center;
 `;
 
+const contentContainer = css`
+  display: grid;
+  grid-row: 2;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+`;
+
 const friendsBtnDiv = css`
   grid-column: 1 / 2;
   grid-row: 3 / 4;
+  display: flex;
+  align-items: center;
 `;
 
 const FriendsBtn = css`
@@ -112,8 +135,10 @@ const Btn = css`
 
 const Title = css`
   padding: 2rem 0 0 0;
-  text-align: center;
   font-size: 50px;
+  margin-left: 30px;
+  color: #f2f2f2;
+  text-align : center;
 `;
 
 const Container = css`

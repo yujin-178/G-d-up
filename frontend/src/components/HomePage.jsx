@@ -3,9 +3,15 @@ import { Link } from 'react-router-dom';
 import { css, keyframes } from '@emotion/react';
 import { HouseUser } from '@emotion-icons/fa-solid/HouseUser';
 import { Login } from '@emotion-icons/material-sharp/Login';
+import { Logout } from '@emotion-icons/material-sharp/Logout';
 import homeBackground from '../../public/images/homebackground.jpg';
 
 export default function HomePage() {
+  function logout() {
+    localStorage.removeItem('userInfo'); 
+    location.reload();
+  }
+
   return (
     <div>
       <div css={LivingRoom}>
@@ -18,12 +24,22 @@ export default function HomePage() {
           </div>
         </div>
         <div css={FlexContainer}>
-          <Link to='/login' css={FlexItem}>
-            <Login css={SignInStyle} />
-          </Link>
-          <Link to='/signup' css={FlexItem}>
-            <HouseUser css={SignUpStyle} />
-          </Link>
+          {localStorage.getItem('userInfo') ?
+            <button
+              css={css`background-color:transparent; border:none; cursor:pointer;`}
+              onClick={logout}>
+              <Logout css={[FlexItem, SignInStyle]} />
+            </button>
+            :
+            <div>
+              <Link to='/login' css={FlexItem}>
+                <Login css={SignInStyle} />
+              </Link>
+              <Link to='/signup' css={FlexItem}>
+                <HouseUser css={SignUpStyle} />
+              </Link>
+            </div>
+          }
         </div>
         <div css={BlankDiv}>
         </div>

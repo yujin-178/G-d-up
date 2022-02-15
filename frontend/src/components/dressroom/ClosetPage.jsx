@@ -29,15 +29,24 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
           <AddClothesContainer />
         </div>
         <ClothesDetailContainer />
+        <div css={BackBtnContainer}>
+          <Link to='/dressroom'>
+            <button css={BackBtn}>
+              Back
+            </button>
+          </Link>
+        </div>
       </div>
-      <Link to='/dressroom'>
-        <button css={BackBtn}>
-          Back
-        </button>
-      </Link>
     </div>
   );
 }
+
+const BackBtnContainer = css`
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  margin-bottom : 20px;
+`;
 
 const DressRoom = css`
   display: flex;
@@ -57,9 +66,6 @@ const Closet = css`
 const BackBtn = css`
   width: 5rem;
   height: 3rem;
-  position: absolute;
-  left: 73rem;
-  top: 53rem;
   background: #ecc194;
 	border: none;
 	border-radius: 4px;

@@ -29,8 +29,10 @@ export default function CodyContainer() {
   const [modalProps, setModalProps] = useState({});
   const [activatedItemId, setActivatedItemId] = useState(null);
 
+  const userName = JSON.parse(localStorage.getItem('userInfo')).username;
+  
   useEffect(() => {
-    dispatch(setClothes('admin'));
+    dispatch(setClothes(userName));
   }, []);
 
   useEffect(() => {
@@ -194,7 +196,7 @@ export default function CodyContainer() {
     event.preventDefault();
     const content = contentRef.current.value;
     const canvas = canvasRef.current;
-    dispatch(createCody({ canvas, codyItems, content, isNotSecret, tags, userName: 'admin' }));
+    dispatch(createCody({ canvas, codyItems, content, isNotSecret, tags, userName }));
   };
 
   const goBackHandler = () => {
