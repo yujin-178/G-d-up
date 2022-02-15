@@ -3,6 +3,9 @@ import FriendsModal from './FriendsModal';
 import { Link } from 'react-router-dom';
 
 import { css } from "@emotion/react";
+import dressroomBackground from '../../../public/images/dressroombackground.jpg';
+import codyImg from '../../../public/images/codyBtn.svg';
+import closetImg from '../../../public/images/closetBtn.svg';
 
 import { BackBtn } from '../dressRoomCss';
 import { PeopleFill } from '@emotion-icons/bootstrap/PeopleFill';
@@ -42,7 +45,7 @@ export default function DressRoomPage() {
             <button css={TextButton}>
               코디 목록으로
             </button>
-            <img css={Btn} src="/images/codyBtn.svg" alt="코디버튼" />
+            <img css={Btn} src={codyImg} alt="코디버튼" />
           </Link>
         </div>
         <div css={[BtnItem, ClosetBtn]}>
@@ -50,7 +53,7 @@ export default function DressRoomPage() {
             <button css={TextButton}>
               옷장 가기
             </button>
-            <img css={Btn} src="/images/closetBtn.svg" alt="코디버튼" />
+            <img css={Btn} src={closetImg} alt="코디버튼" />
           </Link>
         </div>
         <Link to='/'>
@@ -67,7 +70,7 @@ const DressRoom = css`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/dressroombackground.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${dressroomBackground});
   background-size: cover;
   background-position: center;
 `;

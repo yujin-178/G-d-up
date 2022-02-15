@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { css, keyframes } from '@emotion/react';
 import { HouseUser } from '@emotion-icons/fa-solid/HouseUser';
 import { Login } from '@emotion-icons/material-sharp/Login';
+import homeBackground from '../../public/images/homebackground.jpg';
 
 export default function HomePage() {
   return (
@@ -35,7 +36,7 @@ const LivingRoom = css`
   display: grid;
   grid-template-columns: 25% 50% 25%;
   height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/homebackground.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${homeBackground});
   background-size: cover;
   background-position: center;
 `;
