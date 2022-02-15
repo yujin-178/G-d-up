@@ -8,7 +8,7 @@ import BackImg from '../../../public/images/add_icon.svg';
 
 import { css } from '@emotion/react';
 
-export default function ClosetPage({ onClickModal, filteredClothes }) {
+export default function ClosetPage({ onClickModal, filteredClothes, goBackHandler }) {
   console.log(filteredClothes);
 
   return (
@@ -30,11 +30,12 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
         </div>
         <ClothesDetailContainer />
       </div>
-      <Link to='/dressroom'>
-        <button css={BackBtn}>
-          Back
-        </button>
-      </Link>
+      <button
+        css={BackBtn}
+        onClick={goBackHandler}
+      >
+        Back
+      </button>
     </div>
   );
 }
