@@ -92,18 +92,24 @@ export const friendsSlice = createSlice({
     },
     setSearchResult(state, action) {
       if (action.payload.length) {
-        return ({
+        console.log(`있어요!${action.payload}`);
+        return {
           ...state,
           searchedUsers: state.usersToFollow.filter(user => {
             const len = action.payload.length;
-            action.payload === user.slice(len, user.length);
+            return(
+              action.payload === user.slice(len, user.length)
+            );
           }),
+        };
+      }
+      else {
+        console.log('없어요!!');
+        return ({
+          ...state,
+          searchedUsers: [],
         });
       }
-      return ({
-        ...state,
-        searchedUsers: state.usersToFollow,
-      });
     }
   },
   extraReducers: {
@@ -156,6 +162,6 @@ export const friendsSlice = createSlice({
   },
 });
 
-export const { setIsOpen, setFollowing } = friendsSlice.actions;
+export const { setIsOpen, setSearchResult, setFollowing } = friendsSlice.actions;
 
 export default friendsSlice.reducer;

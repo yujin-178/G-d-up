@@ -10,7 +10,8 @@ export default function FriendsModal({
   onClickUnfollow,
   onChangeSearchUser,
   followers,
-  followings
+  followings,
+  searchedUsers
 }) {
   return (
     <Modal css={FriendsModalStyle} isOpen={isOpen}>
@@ -20,22 +21,39 @@ export default function FriendsModal({
       <div css={GridWrapper}>
         <div css={UsersToFollow}>
           <h2>팔로우가능한사람</h2>
-          <input 
-            type="text" 
+          <input
+            type="text"
             placeholder='친구이름을 입력하세요'
             onChange={onChangeSearchUser}
           />
-          {usersToFollow.map((user, idx) =>
-            <li css={ListStyle} key={idx}>
-              {user}
-              <button
-                css={FollowItem}
-                onClick={() => onClickFollow(idx)}
-              >
-                팔로우 
-              </button>
-            </li>
-          )}
+          <div>
+            <h3>전체유저</h3>
+            {usersToFollow.map((user, idx) =>
+              <li css={ListStyle} key={idx}>
+                {user}
+                <button
+                  css={FollowItem}
+                  onClick={() => onClickFollow(idx)}
+                >
+                  팔로우
+                </button>
+              </li>
+            )}
+          </div>
+          <div>
+            <h3>검색된 유저</h3>
+            {searchedUsers.map((user, idx) =>
+              <li css={ListStyle} key={idx}>
+                {user}
+                <button
+                  css={FollowItem}
+                  onClick={() => onClickFollow(idx)}
+                >
+                  팔로우
+                </button>
+              </li>
+            )}
+          </div>
         </div>
         <div css={FollowerFollowing}>
           <div>
