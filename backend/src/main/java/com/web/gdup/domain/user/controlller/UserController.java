@@ -234,16 +234,17 @@ public class UserController {
     public Object follow(@RequestParam (required = true) final String userName, @RequestParam(required = true) final String following){
 
         ResponseEntity response = null;
+        final BasicResponse result = new BasicResponse();
 
         if(followService.follow(userName,following)){
-            final BasicResponse result = new BasicResponse();
             result.status = true;
             result.message = "success";
-
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            result.status = false;
+            result.message = "이미 follow 상태입니다.";
+            response = new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
         return response;
     }
@@ -253,15 +254,17 @@ public class UserController {
             "파라미터로 현재 로그인된 유저의 name 과 팔로우 하고자 하는 유저의 name이 필요하다.")
     public Object unfollow(@RequestParam (required = true) final String userName, @RequestParam(required = true) final String following){
         ResponseEntity response = null;
+        final BasicResponse result = new BasicResponse();
 
         if(followService.unfollow(userName,following)){
-            final BasicResponse result = new BasicResponse();
             result.status = true;
             result.message = "success";
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
-            response = new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            result.status = false;
+            result.message = "이미 unfollow 상태입니다.";
+            response = new ResponseEntity<>(result, HttpStatus.BAD_REQUEST);
         }
         return response;
     }

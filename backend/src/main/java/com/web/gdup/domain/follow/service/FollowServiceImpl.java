@@ -61,13 +61,10 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public boolean unfollow(String userName, String following) {
-//        Optional<FollowDto> follow  = followRepository.findFollowDtoByUserNameAndFollowing(userName, following);
+        Optional<FollowDto> follow  = followRepository.findFollowDtoByUserNameAndFollowing(userName, following);
 
-        FollowId followId = new FollowId(userName,following);
-        FollowDto follow = followRepository.getOne(followId);
-
-        if(follow != null){
-            followRepository.delete(follow);
+        if(follow.isPresent()){
+            followRepository.delete(follow.get());
             return true;
         }
         return false;

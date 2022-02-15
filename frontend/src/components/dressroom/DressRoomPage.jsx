@@ -1,5 +1,5 @@
 import React from 'react';
-import FriendsModal from './FriendsModal';
+import FriendsModalContainer from '../../containers/dressroom/FriendsModalContainer';
 import { Link } from 'react-router-dom';
 
 import { css } from "@emotion/react";
@@ -9,35 +9,22 @@ import closetImg from '../../../public/images/closetBtn.svg';
 
 import { BackBtn } from '../dressRoomCss';
 import { PeopleFill } from '@emotion-icons/bootstrap/PeopleFill';
-import { useDispatch, useSelector } from 'react-redux';
-import { setIsOpen } from '../../slices/friendsSlice';
+import { useSelector } from 'react-redux';
 
-export default function DressRoomPage() {
-  const dispatch = useDispatch();
-
-  function handleClickModal() {
-    dispatch(setIsOpen(true));
-  }
-
-  function HandleRequestClose() {
-    dispatch(setIsOpen(false));
-    console.log('닫아!');
-  }
+export default function DressRoomPage({ onClickModalOpen }) {
 
   const { isOpen } = useSelector(state => state.friendsSlice);
-
   return (
     <div css={Container}>
       <div css={DressRoom}>
-        <FriendsModal
+        <FriendsModalContainer
           isOpen={isOpen}
         />
         <h2 css={Title}>드레스룸</h2>
         <div css={friendsBtnDiv}>
           <PeopleFill
             css={FriendsBtn}
-            onClick={handleClickModal}
-            onRequestClose={HandleRequestClose}
+            onClick={onClickModalOpen}
           />
         </div>
         <div css={[BtnItem, CodyBtn]}>

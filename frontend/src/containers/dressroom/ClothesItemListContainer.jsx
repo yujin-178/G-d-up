@@ -7,6 +7,7 @@ import { setClothes, selectClothes } from '../../slices/clothesSlice';
 import { debounce } from "lodash";
 import { useEffect } from 'react';
 import { filteredClothesSelector } from '../../filterSelector';
+import { css } from "@emotion/react";
 
 export default function ClothesItemListContainer() {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export default function ClothesItemListContainer() {
   };
 
   return (
-    <div>
+    <div css={ImageContainer}>
       <ClothesItemList
         filteredClothes={filteredClothes}
         onMouseOverHandler={onMouseOverHandler}
@@ -38,3 +39,8 @@ export default function ClothesItemListContainer() {
     </div>
   );
 }
+
+const ImageContainer = css`
+ height: 100%;
+ width: 100%;
+`;
