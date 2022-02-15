@@ -13,6 +13,7 @@ import {
   setMoveScroll,
   setCards,
   changeSelectCody,
+  setisdetailOpen
 } from '../../slices/codySlice';
 
 export default function CodyMainContainer() {
@@ -87,6 +88,10 @@ export default function CodyMainContainer() {
     dispatch(changeSelectCody(value));
   }
 
+  function handleDetailOpen(value) {
+    dispatch(setisdetailOpen(value));
+  }
+
   // if (scrollPosition === 200 && scrollisTop === true) {
   //   handleMoveScroll('d');
   // }
@@ -109,6 +114,7 @@ export default function CodyMainContainer() {
         handleSelectCody={handleSelectCody}
         isdetailOpen={isdetailOpen}
         selectedCody={selectedCody}
+        setisdetailOpen={handleDetailOpen}
       />
     </div>
   );

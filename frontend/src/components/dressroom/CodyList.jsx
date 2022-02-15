@@ -2,7 +2,7 @@ import React from 'react';
 
 import { css } from "@emotion/react";
 
-export default function CodyList({ handleSelectCody, moveScroll, cards }) {
+export default function CodyList({ setisdetailOpen, handleSelectCody, moveScroll, cards }) {
   return (
     <div >
       <h2>Cody</h2>
@@ -15,7 +15,7 @@ export default function CodyList({ handleSelectCody, moveScroll, cards }) {
                 key={index}
                 src={card.imageModel.imageUrl}
                 css={imgStyle}
-                onClick={() => handleSelectCody(index)}
+                onClick={() => {handleSelectCody(index); setisdetailOpen(true);}}
               />
             );
           })}
