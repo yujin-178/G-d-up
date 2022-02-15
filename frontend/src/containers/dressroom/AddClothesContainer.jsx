@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import AddClothes from '../../components/dressroom/AddClothes';
 import axios from 'axios';
-import Resizer from "react-image-file-resizer";
 import { useDispatch, useSelector } from 'react-redux';
 import { season } from '../../constants/filter';
 
@@ -46,23 +45,7 @@ export default function AddClothesContainer() {
     },
   };
 
-  const userName = 'jisoon';
-
-  const resizeFile = (file) =>
-    new Promise((resolve) => {
-      Resizer.imageFileResizer(
-        file,
-        300,
-        400,
-        "JPEG",
-        80,
-        0,
-        (uri) => {
-          resolve(uri);
-        },
-        "base64"
-      );
-    });
+  const userName = 'admin';
 
   function handleimgError({ type, text }) {
     dispatch(changeimgError({ type, text }));
@@ -97,8 +80,7 @@ export default function AddClothesContainer() {
   function onImgChange(event) {
     setLoading(true);
     const formData = new FormData();
-    const image = resizeFile(event.target.files[0]);
-    formData.append('imageFile', image);
+    formData.append('imageFile', event.target.files[0]);
 
     axios.post(`http://i6b108.p.ssafy.io:8000/clothing/background`, formData, config)
       .then((res) => {
