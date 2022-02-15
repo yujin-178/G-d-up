@@ -1,50 +1,60 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  changeEmailField,
-  changePasswordField,
-} from '../../actions';
+import { signin } from '../../slices/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 import SignupPage from '../../components/auth/SignupPage';
 
-import axios from 'axios';
-
 export default function SignupContainer() {
+  const { isLoggedIn } = useSelector(state => state.authSlice);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { email, password } = useSelector((state) => state);
+  const emailRef = useRef();
+  const userNameRef = useRef();
+  const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
 
-  function handleChangeEmail(event) {
-    dispatch(changeEmailField(event.target.value));
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn]);
 
-  function handleChangePassword(event) {
-    dispatch(changePasswordField(event.target.value));
-  }
+  const handleClickSubmit = () => {
+    const email = emailRef.current.value;
+    if (!email) {
+      return alert('이메일을 입력해 주세요');
+    }
 
-  function handleClickSubmit(event) {
-    const nickname = email.slice(0, email.indexOf('@'));
-    console.log(nickname, event);
-    const URL = 'http://localhost:8080/account/signup';
-    axios.post(URL, {
-      'email': email,
-      'nickname': nickname,
-      'password': password,
-    })
-      .then(res => {
-        console.log(res.data.data);
-      });
-    
-    console.log(email);
-    console.log(password);
+    const userName = userNameRef.current.value;
+    if (!userName) {
+      return alert('이름을 입력해 주세요');
+    }
 
-    console.log(email);
-    console.log(password);
-  }
+    const password = passwordRef.current.value;
+    if (!password) {
+      return alert('비밀번호를 입력해 주세요');
+    }
+
+    const reg = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if(!reg.test(password)) {
+      return alert("비밀번호는 문자 및 숫자 혼합 8자 이상으로 이루어져야 합니다.");
+    }
+
+    const passwordConfirm = passwordConfirmRef.current.value;
+    if (password !== passwordConfirm) {
+      return alert('비밀번호가 일치하지 않습니다.');
+    }
+
+    dispatch(signin({ email, userName, password }));
+  };
 
   return (
     <SignupPage
-      onChangeEmail={handleChangeEmail}
-      onChangePassword={handleChangePassword}
+      emailRef={emailRef}
+      userNameRef={userNameRef}
+      passwordRef={passwordRef}
+      passwordConfirmRef={passwordConfirmRef}
       onClickSubmit={handleClickSubmit}
     />
   );

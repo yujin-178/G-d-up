@@ -12,10 +12,11 @@ import Messages from '../../components/dressroom/Messages';
 import Button from '../../components/dressroom/Button';
 import { createCody, closeModal } from '../../slices/codySlice';
 import { css } from '@emotion/react';
+import { filteredClothesSelector } from '../../filterSelector';
 
 export default function CodyContainer() {
   const { modalType } = useSelector(state => state.codySlice);
-  const { clothes } = useSelector(state => state.clothesSlice);
+  const filteredClothes = useSelector(state => filteredClothesSelector(state));
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [codyItems, setCodyItems] = useState([]);
@@ -195,7 +196,6 @@ export default function CodyContainer() {
         </Modal>
       )}
       <CodyCreateForm
-        clothes={clothes}
         codyItems={codyItems}
         handleOnStart={handleOnStart}
         handleOnStop={handleOnStop}
@@ -214,7 +214,7 @@ export default function CodyContainer() {
       <div css={clothesContainer}>
         <FilterContainer />
         <ClothesItemList
-          clothes={clothes}
+          filteredClothes={filteredClothes}
           onClickHandler={onClickHandler}
         />
       </div>

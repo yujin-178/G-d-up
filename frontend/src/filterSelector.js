@@ -18,8 +18,12 @@ const isIncluded = (filterArray, target) => {
 export const filteredClothesSelector = createSelector(
   getClothes,
   getFilter,
-  (clothes, { category, selectedColors, custom }) => clothes.filter(item => {
+  (clothes, { category, selectedSeason, selectedColors, custom }) => clothes.filter(item => {
     if (category == '전체' || item.clothing.category == category) {
+      if (!isIncluded(selectedSeason, item.clothing.season)) {
+        return false;
+      }
+
       if (!isIncluded(selectedColors, item.clothing.color)) {
         return false;
       }
