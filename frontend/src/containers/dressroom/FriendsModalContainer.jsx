@@ -37,6 +37,10 @@ export default function FriendsModalContainer({ isOpen }) {
     dispatch(unfollowUser({ unfollowing, userName }));
   }
 
+  function handleChangeSearchUser() {
+    console.log('변경!');
+  }
+
   return (
     <FriendsModal
       isOpen={isOpen}
@@ -46,6 +50,7 @@ export default function FriendsModalContainer({ isOpen }) {
       followings={followings}
       onClickFollow={handleClickFollow}
       onClickUnfollow={handleClickUnfollow}
+      onChangeSearchUser={handleChangeSearchUser}
     />
   );
 }

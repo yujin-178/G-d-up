@@ -8,6 +8,7 @@ export default function FriendsModal({
   onClickModalClose,
   onClickFollow,
   onClickUnfollow,
+  onChangeSearchUser,
   followers,
   followings
 }) {
@@ -19,6 +20,11 @@ export default function FriendsModal({
       <div css={GridWrapper}>
         <div css={UsersToFollow}>
           <h2>팔로우가능한사람</h2>
+          <input 
+            type="text" 
+            placeholder='친구이름을 입력하세요'
+            onChange={onChangeSearchUser}
+          />
           {usersToFollow.map((user, idx) =>
             <li css={ListStyle} key={idx}>
               {user}
@@ -56,9 +62,6 @@ export default function FriendsModal({
           </div>
         </div>
       </div>
-
-      {/* <input type="text" placeholder='친구이름을 입력하세요'/> */}
-
     </Modal >
   );
 }
