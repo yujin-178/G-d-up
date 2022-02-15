@@ -9,20 +9,9 @@ import closetImg from '../../../public/images/closetBtn.svg';
 
 import { BackBtn } from '../dressRoomCss';
 import { PeopleFill } from '@emotion-icons/bootstrap/PeopleFill';
-import { useDispatch, useSelector } from 'react-redux';
-import { setIsOpen } from '../../slices/friendsSlice';
+import { useSelector } from 'react-redux';
 
-export default function DressRoomPage() {
-  const dispatch = useDispatch();
-
-  function handleClickModal() {
-    dispatch(setIsOpen(true));
-  }
-
-  function HandleRequestClose() {
-    dispatch(setIsOpen(false));
-    console.log('닫아!');
-  }
+export default function DressRoomPage({ onClickModalOpen }) {
 
   const { isOpen } = useSelector(state => state.friendsSlice);
 
@@ -36,7 +25,7 @@ export default function DressRoomPage() {
         <div css={friendsBtnDiv}>
           <PeopleFill
             css={FriendsBtn}
-            onClick={handleClickModal}
+            onClickModalOpen={onClickModalOpen}
             onRequestClose={HandleRequestClose}
           />
         </div>

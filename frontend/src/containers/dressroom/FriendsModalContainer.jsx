@@ -9,7 +9,6 @@ export default function FriendsModalContainer({ isOpen }) {
   const dispatch = useDispatch();
 
   function handleClickModalClose() {
-    console.log('모달닫아');
     dispatch(setIsOpen(false));
   }
 
