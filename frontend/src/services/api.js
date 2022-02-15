@@ -104,6 +104,16 @@ export async function requestFollow(following, userName) {
   await axios.get('http://i6b108.p.ssafy.io:8000/user/follow', config);
 }
 
+export async function requestUnfollow(unfollowing, userName) {
+  const config = {
+    params: {
+      following: unfollowing,
+      userName,
+    },
+  };
+  await axios.get('http://i6b108.p.ssafy.io:8000/user/unfollow', config);
+}
+
 export async function deleteClothes(clothingId) {
   await axios.delete(`http://i6b108.p.ssafy.io:8000/clothing/${clothingId}`);
 }

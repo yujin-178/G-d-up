@@ -3,7 +3,8 @@ import {
   loadUsersToFollow, 
   loadFollowers, 
   loadFollowings, 
-  requestFollow 
+  requestFollow,
+  requestUnfollow,
 } from '../services/api';
 
 const initialState = {
@@ -43,7 +44,14 @@ export const followUser = createAsyncThunk(
   async ({ following, userName }) => {
     await requestFollow(following, userName);
   }
-); 
+);
+
+export const unfollowUser = createAsyncThunk(
+  'friends/unfollowUser',
+  async ({ unfollowing, userName }) => {
+    await requestUnfollow(unfollowing, userName);
+  }
+);
 
 function extraReducerPending() {
   return (
@@ -120,6 +128,14 @@ export const friendsSlice = createSlice({
       };
     },
     [followUser.rejected]: extraReducerRejected(),
+
+    [unfollowUser.pending]: extraReducerPending(),
+    [unfollowUser.fulfilled]: (state) => {
+      return {
+        ...state,
+      };
+    },
+    [unfollowUser.rejected]: extraReducerRejected(),
   },
 });
 

@@ -5,7 +5,8 @@ import {
   setUsersToFollow, 
   setFollowers, 
   setFollowings, 
-  followUser 
+  followUser,
+  unfollowUser,
 } from '../../slices/friendsSlice';
 import FriendsModal from '../../components/dressroom/FriendsModal';
 
@@ -31,6 +32,11 @@ export default function FriendsModalContainer({ isOpen }) {
     dispatch(followUser({ following, userName }));
   }
 
+  function handleClickUnfollow(idx) {
+    const unfollowing = followers[idx];
+    dispatch(unfollowUser({ unfollowing, userName }));
+  }
+
   return (
     <FriendsModal
       isOpen={isOpen}
@@ -39,6 +45,7 @@ export default function FriendsModalContainer({ isOpen }) {
       followers={followers}
       followings={followings}
       onClickFollow={handleClickFollow}
+      onClickUnfollow={handleClickUnfollow}
     />
   );
 }
