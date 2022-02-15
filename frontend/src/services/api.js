@@ -27,7 +27,10 @@ export async function createFile(element) {
 
 export async function loadCodyByUserName(userName) {
   const res = await axios.get(`http://i6b108.p.ssafy.io:8000/cody/read/${userName}`);
-  return res.data.data;
+  const cody = res.data.data.sort(function (a,b) {
+    return a.updateDate > b.updateDate ? -1 : a.updateDate < b.updateDate ? 1 : 0;
+  });
+  return cody;
 }
 
 export async function postCody(payload) {
@@ -76,17 +79,6 @@ export async function authLogin(data) {
   return response.data;
 }
 
-export async function loadUsersToFollow(userName) {
-  const response = await axios.get(`http://i6b108.p.ssafy.io:8000/user/find/follow/${userName}`);
-  return response.data.data;
-}
-
-export async function loadFollowers(userName) {
-  const response = await axios.get(`http://i6b108.p.ssafy.io:8000/user/find/follower/${userName}`);
-  return response.data.data;
-}
-
-export async function loadFollowings(userName) {
-  const response = await axios.get(`http://i6b108.p.ssafy.io:8000/user/find/following/${userName}`);
-  return response.data.data;
+export async function deleteClothes(clothingId) {
+  await axios.delete(`http://i6b108.p.ssafy.io:8000/clothing/${clothingId}`);
 }

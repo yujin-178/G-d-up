@@ -50,7 +50,7 @@ export const authSlice = createSlice({
     },
     [signin.rejected]: (state) => {
       state.loading = false;
-      state.error = '회원가입에 실패했습니다.';
+      state.error = '이미 존재하는 회원입니다.';
     },
     [login.pending]: (state) => {
       state.loading = true;
