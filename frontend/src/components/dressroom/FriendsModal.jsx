@@ -24,7 +24,7 @@ export default function FriendsModal({ isOpen, usersToFollow, onClickModalClose,
             {followers.map((user, idx) =>
               <li css={ListStyle} key={idx}>
                 {user}
-                <button css={FollowItem}> 언팔로우 </button>
+                <button css={[FollowItem, UnfollowBtn]}> 언팔로우 </button>
               </li>
             )}
           </div>
@@ -58,7 +58,17 @@ const CloseBtn = css`
 `;
 
 const FollowItem = css`
-  margin: 0 1rem;
+  width: 4rem;
+  height: 1.3rem;
+  background: #ecc194;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+`;
+
+const UnfollowBtn = css`
+  width: 5rem;
 `;
 
 const GridWrapper = css`
@@ -67,11 +77,13 @@ const GridWrapper = css`
 `;
 
 const ListStyle = css`
+  padding: 0.5 10rem;
+  margin: 0.7rem auto;
   list-style: none;
   display: flex;
   justify-content: space-between;
   width: 70%;
-  margin: 0.5rem auto;
+  background-color: beige;
 `;
 
 const UsersToFollow = css`
