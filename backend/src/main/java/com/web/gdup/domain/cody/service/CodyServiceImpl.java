@@ -56,7 +56,7 @@ public class CodyServiceImpl implements CodyService {
 
         List<CodyEntity> codyEntities = codyRepository.findAllByUserName(name);
         List<CodyDtoAll> codyDtoAlls = new ArrayList<>();
-        if(codyDtoAlls.size() == 0)
+        if(codyEntities.size() == 0)
             throw new Exception("null");
 
         for (CodyEntity codyEntity : codyEntities) {
