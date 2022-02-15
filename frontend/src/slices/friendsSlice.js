@@ -6,6 +6,7 @@ const initialState = {
   usersToFollow: ['팔로우 가능한 사용자가 없습니다.'],
   followers: ['팔로워가 없습니다.'],
   followings: ['팔로잉하는 사람이 없습니다.'],
+  following: '',
 };
 
 export const setUsersToFollow = createAsyncThunk(
@@ -65,6 +66,12 @@ export const friendsSlice = createSlice({
         isOpen: action.payload,
       };
     },
+    setFollowing(state, action) {
+      return {
+        ...state,
+        following: action.payload,
+      };
+    }
   },
   extraReducers: {
     [setUsersToFollow.pending]: extraReducerPending(),
@@ -96,6 +103,6 @@ export const friendsSlice = createSlice({
   },
 });
 
-export const { setIsOpen } = friendsSlice.actions;
+export const { setIsOpen, setFollowing } = friendsSlice.actions;
 
 export default friendsSlice.reducer;

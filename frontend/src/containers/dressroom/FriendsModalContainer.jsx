@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsOpen, setUsersToFollow, setFollowers, setFollowings } from '../../slices/friendsSlice';
+import { setIsOpen, setUsersToFollow, setFollowers, setFollowings, setFollowing } from '../../slices/friendsSlice';
 import FriendsModal from '../../components/dressroom/FriendsModal';
 
 const userName = 'admin';
@@ -12,10 +12,6 @@ export default function FriendsModalContainer({ isOpen }) {
     dispatch(setIsOpen(false));
   }
 
-  function handleClickFollow() {
-    console.log('클릭@!');
-  }
-
   useEffect(() => {
     dispatch(setUsersToFollow(userName));
     dispatch(setFollowers(userName));
@@ -24,7 +20,11 @@ export default function FriendsModalContainer({ isOpen }) {
 
   const { usersToFollow, followers, followings } = useSelector(state => state.friendsSlice);
 
-  console.log(`usersToFollow is ${usersToFollow}`);
+  function handleClickFollow(idx) {
+    const following = usersToFollow[idx];
+    console.log(following);
+  }
+
   return (
     <FriendsModal
       isOpen={isOpen}
