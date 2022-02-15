@@ -7,6 +7,7 @@ import {
   setFollowings, 
   followUser,
   unfollowUser,
+  setSearchResult,
 } from '../../slices/friendsSlice';
 import FriendsModal from '../../components/dressroom/FriendsModal';
 
@@ -25,7 +26,13 @@ export default function FriendsModalContainer({ isOpen }) {
     dispatch(setFollowings(userName));
   }, []);
 
-  const { usersToFollow, followers, followings } = useSelector(state => state.friendsSlice);
+  const { 
+    usersToFollow,
+    followers,
+    followings,
+    searchUserInput,
+    searchedUsers
+  } = useSelector(state => state.friendsSlice);
 
   function handleClickFollow(idx) {
     const following = usersToFollow[idx];
@@ -37,6 +44,10 @@ export default function FriendsModalContainer({ isOpen }) {
     dispatch(unfollowUser({ unfollowing, userName }));
   }
 
+  function handleChangeSearchUser(e) {
+    dispatch(setSearchResult(e.target.value));
+  }
+
   return (
     <FriendsModal
       isOpen={isOpen}
@@ -44,8 +55,11 @@ export default function FriendsModalContainer({ isOpen }) {
       onClickModalClose={handleClickModalClose}
       followers={followers}
       followings={followings}
+      searchedUsers={searchedUsers}
+      searchUserInput={searchUserInput}
       onClickFollow={handleClickFollow}
       onClickUnfollow={handleClickUnfollow}
+      onChangeSearchUser={handleChangeSearchUser}
     />
   );
 }
