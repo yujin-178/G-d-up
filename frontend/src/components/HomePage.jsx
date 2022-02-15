@@ -4,102 +4,17 @@ import { css, keyframes } from '@emotion/react';
 import { HouseUser } from '@emotion-icons/fa-solid/HouseUser';
 import { Login } from '@emotion-icons/material-sharp/Login';
 
-function DressRoomBtn() {
-  return (
-    <div css={Div}>
-      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" css={Goo}>
-        <defs>
-          <filter id="goo">
-            <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
-            <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo" />
-            <feComposite in="SourceGraphic" in2="goo" />
-          </filter>
-        </defs>
-      </svg>
-
-      <span css={ButtonBubbleContainer}>
-        <Link to='/dressroom' css={[Button, ButtonBubble]}>
-          <p css={GoText}>go to get dressed up</p>
-        </Link>
-        <span css={ButtonBubbleEffectContainer}>
-          <span css={[Circle, TopLeft]}></span>
-          <span css={[Circle, TopLeft]}></span>
-          <span css={[Circle, TopLeft]}></span>
-
-          <span css={[Button, EffectButton]}></span>
-
-          <span css={[Circle, BottomRight]}></span>
-          <span css={[Circle, BottomRight]}></span>
-          <span css={[Circle, BottomRight]}></span>
-        </span>
-      </span>
-    </div>
-  );
-}
-
-const Div = css`
-  display: block;
-  height: 100%;
-`;
-
-const Goo = css`
-  position: absolute;
-  visibility: hidden;
-  width: 1px;
-  height: 1px;
-`;
-
-const ButtonBubbleContainer = css`
-  top: 50%;
-  margin-top: -25px;
-`;
-
-const Button = css`
-`;
-
-const ButtonBubble = css`
-`;
-
-const ButtonBubbleEffectContainer = css`
-`;
-
-const Circle = css`
-`;
-
-const TopLeft = css`
-`;
-
-const EffectButton = css`
-`;
-
-const BottomRight = css`
-`;
-
-const HueRotate = keyframes`
-  from {
-    -webkit-filter: hue-rotate(0);
-    -moz-filter: hue-rotate(0);
-    -ms-filter: hue-rotate(0);
-    filter: hue-rotate(0);
-  }
-  to {
-    -webkit-filter: hue-rotate(360deg);
-    -moz-filter: hue-rotate(360deg);
-    -ms-filter: hue-rotate(360deg);
-    filter: hue-rotate(360deg);
-  }
-`;
-
 export default function HomePage() {
   return (
     <div>
       <div css={LivingRoom}>
         <div css={Title}>
           <h1>G'd up</h1>
-          <Link to='/dressroom'>
-            <DressRoomBtn />
-            <p css={GoText}>go to get dressed up</p>
-          </Link>
+          <div css={BtnBody}>
+            <Link to='/dressroom'>
+              <button css={DressroomBtn}>Go to get dressed up!</button>
+            </Link>
+          </div>
         </div>
         <div css={FlexContainer}>
           <Link to='/login' css={FlexItem}>
@@ -132,6 +47,55 @@ const Title = css`
   color: white;
   font-size: 5rem;
   margin: 0rem;
+`;
+
+const BtnBody = css`
+  text-align:center;
+  &:before {
+    content:'';
+    height:100%;
+    display:inline-block;
+    vertical-align:middle;
+  }
+`;
+
+const DressroomBtn = css`
+  background:#1AAB8A;
+  color:#fff;
+  border:none;
+  position:relative;
+  height:60px;
+  font-size: 0.3em;
+  padding:0 2em;
+  cursor:pointer;
+  transition:800ms ease all;
+  outline:none;
+
+  &:hover {
+    background:#fff;
+    color:#1AAB8A;
+  }
+
+  &:before, &:after: {
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: #1AAB8A;
+    transition:400ms ease all;
+  }
+  &:after {
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  &:hover:before, &:hover:after {
+    width:100%;
+    transition:800ms ease all;
+  }
 `;
 
 const GoText = css`
