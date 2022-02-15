@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -229,6 +230,7 @@ public class ClothingController {
         } else {
             result.status = true;
             result.message = "사용자의 옷이 존재하지 않습니다.";
+            result.data = new ArrayList<HashMap<String, Object>>();
             response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         return response;
