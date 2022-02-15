@@ -3,7 +3,7 @@ import Carousel from 'react-spring-3d-carousel';
 import { config } from 'react-spring';
 
 import { css } from "@emotion/react";
-import CodyBackgroundImg from  '../../../public/codybackground.jpg';
+import CodyBackgroundImg from  '../../../public/images/codybackground.jpg';
 
 import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
