@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { css, keyframes } from '@emotion/react';
+import { css } from '@emotion/react';
 import { HouseUser } from '@emotion-icons/fa-solid/HouseUser';
 import { Login } from '@emotion-icons/material-sharp/Login';
 import { Logout } from '@emotion-icons/material-sharp/Logout';
@@ -16,7 +16,7 @@ export default function HomePage() {
     <div>
       <div css={LivingRoom}>
         <div css={Title}>
-          <h1>G'd up</h1>
+          <h1>{`G'd up`}</h1>
           <div css={BtnBody}>
             <Link to='/dressroom'>
               <button css={DressroomBtn}>Go to get dressed up!</button>
@@ -115,10 +115,10 @@ const DressroomBtn = css`
   }
 `;
 
-const GoText = css`
-  margin: 0rem;
-  font-size: 2rem;
-`;
+// const GoText = css`
+//   margin: 0rem;
+//   font-size: 2rem;
+// `;
 
 const FlexContainer = css`
   grid-column: 3 / 4;

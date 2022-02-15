@@ -31,7 +31,7 @@ export default function DressRoomPage() {
   return (
     <div css={Container}>
       <div css={DressRoom}>
-        <h2 css={Title}>{userName}'s 드레스룸</h2>
+        <h2 css={Title}>{`${userName}'s 드레스룸`}</h2>
         <FriendsModal
           isOpen={isOpen}
         />
@@ -164,10 +164,4 @@ const TextButton = css`
 	border-radius: 4px;
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
-`;
-
-const GridContainer = css`
-  display: grid;
-  justify-content: space-between;
-  grid-template-columns: 1fr 1fr 1fr;
 `;
