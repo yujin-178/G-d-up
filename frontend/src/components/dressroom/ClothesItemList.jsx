@@ -31,8 +31,7 @@ const ItemListContainer = css`
   grid-row: 2 / 3;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  padding: 0.5 0.5 1rem;
   background-color: #BFAEA4;
-  width: 98%;
+  width: 100%;
   height: 100%;
 `;

@@ -15,7 +15,7 @@ export default function ClosetPage({ onClickModal, filteredClothes, goBackHandle
       <div css={Closet}>
         <div css={ItemsGridWrapper}>
           <FilterContainer />
-          <div>
+          <div css={ItemListStyle}>
             <ClothesItemListContainer />
             <img
               css={AddIcon}
@@ -52,14 +52,17 @@ const Closet = css`
   display: flex;
   justify-content: center;
   width: 80%;
+  height: 80%;
+  vertical-align: middle;
+  margin-top: 3%;
 `;
 
 const BackBtn = css`
   width: 5rem;
   height: 3rem;
   position: absolute;
-  left: 73rem;
-  top: 53rem;
+  left: 100.6rem;
+  top: 55.4rem;
   background: #ecc194;
 	border: none;
 	border-radius: 4px;
@@ -69,11 +72,12 @@ const BackBtn = css`
 
 const ItemsGridWrapper = css`
   position: relative;
-  width: 80%;
-  height: 90%;
+  width: 62%;
+  height: 100%;
   margin: 2.5rem auto;
 	display: grid;
-  grid-template-columns: 33% 67%;
+  grid-template-columns: 30% 70%;
+  grid-template-rows: 12% 88%;
   grid-auto-rows: minmax(100px, auto);
   grid-auto-columns: minmax(100px, auto);
   background-color: #BFAEA4;
@@ -82,9 +86,18 @@ const ItemsGridWrapper = css`
 
 const AddIcon = css`
   position: relative;
-  left: 20rem;
-  bottom: 4rem;
+  left: 32rem;
+  bottom: 6rem;
   &:hover {
-    bottom: 4.3rem;
+    bottom: 6.3rem;
   }
+`;
+
+const ItemListStyle = css`
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
+  position: relative;
+  width: 90%;
+  height: 96%;
+  margin: 1rem 1rem;
 `;

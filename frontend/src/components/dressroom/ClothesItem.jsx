@@ -38,8 +38,8 @@ export default function ClothesItem(props) {
 const ClothesItemBox = css`
   position: relative;
   background-color: #FFFFFF;
-  width: 5.2rem;
-  height: 5.2rem;
+  width: 100px;
+  height: 100px;
   margin: 0.45rem;
   align-self: center;
   justify-self: center;
@@ -51,7 +51,8 @@ const ClothesItemImgDiv = css`
   display: table-cell;
   text-align: center;
   vertical-align: middle;
-
+  height: 100%;
+  weight: 100%;
 `;
 
 const ClothesItemImg = css`
