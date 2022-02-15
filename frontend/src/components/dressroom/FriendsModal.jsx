@@ -7,26 +7,27 @@ export default function FriendsModal({ isOpen, usersToFollow, onClickModalClose,
     <Modal css={FriendsModalStyle} isOpen={isOpen}>
       <div css={GridWrapper}>
         <div css={UsersToFollow}>
-          팔로우가능한사람
+          <h2>팔로우가능한사람</h2>
           {usersToFollow.map((user, idx) =>
-            <li key={idx}>
+            <li css={ListStyle} key={idx}>
               {user}
             </li>
           )}
         </div>
         <div css={FollowerFollowing}>
           <div>
-            팔로워
+            <h2>팔로워</h2>
+
             {followers.map((user, idx) =>
-              <li key={idx}>
+              <li css={ListStyle} key={idx}>
                 {user}
               </li>
             )}
           </div>
           <div>
-            팔로잉
+            <h2>팔로잉</h2>
             {followings.map((user, idx) =>
-              <li key={idx}>
+              <li css={ListStyle} key={idx}>
                 {user}
               </li>
             )}
@@ -52,6 +53,10 @@ const FriendsModalStyle = css`
 const GridWrapper = css`
   display: grid;
   grid-template-columns: 50% 50%;
+`;
+
+const ListStyle = css`
+  list-style: none;
 `;
 
 const UsersToFollow = css`
