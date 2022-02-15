@@ -2,10 +2,11 @@ import React from 'react';
 import { css } from '@emotion/react';
 import { Rnd } from 'react-rnd';
 
-export default function Item({ item, handleOnStart, handleOnStop, handleResizeStop }) {
+export default function Item({ item, handleOnStart, handleOnStop, handleResizeStop, isActivated, deleteCodyItem }) {
   const { clothingId, image, position, size } = item;
   const { x, y, z } = position;
   const { width, height } = size;
+  const border = isActivated ? '1px dashed grey' : 'none';
 
   return (
     <Rnd
@@ -21,19 +22,21 @@ export default function Item({ item, handleOnStart, handleOnStop, handleResizeSt
       maxHeight={300}
       bounds="parent"
       lockAspectRatio={1}
-      css={itemInCanvas({ image, z })}
+      css={itemInCanvas({ image, z, border })}
+      onDoubleClick={() => deleteCodyItem(item.clothingId)}
     >
     </Rnd>
   );
 }
 
-const itemInCanvas = ({ image, z }) => css`
+const itemInCanvas = ({ image, z, border }) => css`
   background-color: transparent;
   background-position: center center;
   position: absolute;
   background-image: url(${image});
   background-size: contain;
   background-repeat: no-repeat;
-  border: 1px solid grey;
+  border: ${border};
   z-index: ${z};
+
 `;

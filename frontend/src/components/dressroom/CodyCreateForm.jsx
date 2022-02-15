@@ -21,6 +21,8 @@ export default function CodyCreateForm(props) {
     toggleIsNotSecret,
     saveHandler,
     goBackHandler,
+    activatedItemId,
+    deleteCodyItem,
   } = props;
 
   return (
@@ -38,6 +40,8 @@ export default function CodyCreateForm(props) {
               handleOnStart={handleOnStart}
               handleOnStop={handleOnStop}
               handleResizeStop={handleResizeStop}
+              isActivated={activatedItemId === item.clothingId}
+              deleteCodyItem={deleteCodyItem}
             />
           );
         })}
@@ -169,13 +173,4 @@ const buttonGroup = css`
   justify-content: space-between;
   position: relative;
   top: 1rem;
-`;
-
-const button = css`
-  padding: 5px;
-  width: 100px;
-  position: relative;
-  margin: 5px 15px;
-  position: relative;
-  top: 10px;
 `;

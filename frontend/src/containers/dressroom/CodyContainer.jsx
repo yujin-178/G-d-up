@@ -27,9 +27,10 @@ export default function CodyContainer() {
   const [isNotSecret, setIsNotSecret] = useState(true);
   const canvasRef = useRef();
   const [modalProps, setModalProps] = useState({});
+  const [activatedItemId, setActivatedItemId] = useState(null);
 
   useEffect(() => {
-    dispatch(setClothes('jisoon'));
+    dispatch(setClothes('admin'));
   }, []);
 
   useEffect(() => {
@@ -44,8 +45,16 @@ export default function CodyContainer() {
           setModalProps({});
           navigate('/cody');
         },
-        onClickCancel: () => window.location.reload(false),
+        onClickCancel: () => {
+          dispatch(closeModal());
+          setModalProps({});
+          setCodyItems([]);
+          setTags([]);
+          setIsNotSecret(true);
+          contentRef.current.value = '';
+        },
       });
+      return;
     }
   }, [modalType]);
 
@@ -72,6 +81,10 @@ export default function CodyContainer() {
   };
 
   const handleOnStart = (activatedItem) => {
+    if (activatedItem.clothingId !== activatedItemId) {
+      setActivatedItemId(activatedItem.clothingId);
+    }
+
     const standard = activatedItem.position.z;
 
     if (codyItems.length === standard) {
@@ -120,6 +133,7 @@ export default function CodyContainer() {
 
       return item;
     }));
+    setActivatedItemId(null);
   };
 
   const handleResizeStop = (itemId, ref, position) => {
@@ -144,6 +158,7 @@ export default function CodyContainer() {
 
       return item;
     }));
+    setActivatedItemId(null);
   };
 
   const onKeyPress = event => {
@@ -178,12 +193,16 @@ export default function CodyContainer() {
     event.preventDefault();
     const content = contentRef.current.value;
     const canvas = canvasRef.current;
-    dispatch(createCody({ canvas, codyItems, content, isNotSecret, tags, userName: 'jisoon' }));
+    dispatch(createCody({ canvas, codyItems, content, isNotSecret, tags, userName: 'admin' }));
   };
 
   const goBackHandler = () => {
     dispatch(resetFilter());
     navigate('/cody');
+  };
+
+  const deleteCodyItem = (itemId) => {
+    setCodyItems(codyItems.filter(item => item.clothingId !== itemId));
   };
 
   return (
@@ -210,6 +229,8 @@ export default function CodyContainer() {
         saveHandler={saveHandler}
         canvasRef={canvasRef}
         goBackHandler={goBackHandler}
+        activatedItemId={activatedItemId}
+        deleteCodyItem={deleteCodyItem}
       />
       <div css={clothesContainer}>
         <FilterContainer />
