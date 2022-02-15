@@ -45,7 +45,7 @@ export default function AddClothesContainer() {
     },
   };
 
-  const userName = 'admin';
+  const userName = 'jisoon';
 
   function handleimgError({ type, text }) {
     dispatch(changeimgError({ type, text }));

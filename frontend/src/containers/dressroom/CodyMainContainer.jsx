@@ -34,7 +34,7 @@ export default function CodyMainContainer() {
   // }
 
   useEffect(() => {
-    dispatch(setCody('admin'));
+    dispatch(setCody('jisoon'));
   }, []);
 
   let codyCard = setTimeout(() => {

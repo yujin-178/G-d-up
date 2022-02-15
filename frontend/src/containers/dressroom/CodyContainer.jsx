@@ -42,6 +42,7 @@ export default function CodyContainer() {
           dispatch(closeModal());
           setModalProps({});
           navigate('/cody');
+          location.reload();
         },
         onClickCancel: () => window.location.reload(false),
       });
@@ -183,6 +184,7 @@ export default function CodyContainer() {
   const goBackHandler = () => {
     dispatch(resetFilter());
     navigate('/cody');
+    location.reload();
   };
 
   return (
