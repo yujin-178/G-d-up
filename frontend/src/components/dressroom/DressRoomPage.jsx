@@ -1,5 +1,5 @@
 import React from 'react';
-import FriendsModal from './FriendsModal';
+import FriendsModalContainer from '../../containers/dressroom/FriendsModalContainer';
 import { Link } from 'react-router-dom';
 
 import { css } from "@emotion/react";
@@ -29,8 +29,8 @@ export default function DressRoomPage() {
   return (
     <div css={Container}>
       <div css={DressRoom}>
-        <FriendsModal
-          isOpen={isOpen}
+        <FriendsModalContainer
+          isOpen={isOpen}     
         />
         <h2 css={Title}>드레스룸</h2>
         <div css={friendsBtnDiv}>

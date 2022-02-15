@@ -1,19 +1,23 @@
 import React from 'react';
 import Modal from 'react-modal';
-import { useDispatch } from 'react-redux';
-import { setIsOpen } from '../../slices/friendsSlice';
+import { css } from '@emotion/react';
 
-export default function FriendsModal({ isOpen }) {
-  const dispatch = useDispatch();
-
-  function handleClickSetIsopen() {
-    dispatch(setIsOpen(false));
-  }
-
+export default function FriendsModal(props) {
+  const { isOpen, usersToFollow, onClickModalClose } = props;
+  console.log(props);
   return (
-    <Modal isOpen={isOpen}>
+    <Modal css={FriendsModalStyle} isOpen={isOpen}>
+      팔로우가능한사람 {usersToFollow}
       This is Modal
-      <button onClick={handleClickSetIsopen}>X</button>
+      <button onClick={onClickModalClose}>X</button>
     </Modal>
   );
 }
+
+const FriendsModalStyle = css`
+  margin: 7% auto;
+  width: 50%;
+  height: 70vh;
+  background-color: #fefefe;
+  opacity: 0.8;
+`;

@@ -75,3 +75,8 @@ export async function authLogin(data) {
   const response = await axios.post(`http://i6b108.p.ssafy.io:8000/user/login`, data);
   return response.data;
 }
+
+export async function loadUsersToFollow(userName) {
+  const response = await axios.get(`http://i6b108.p.ssafy.io:8000/user/find/follow/${userName}`)
+  return response.data.data;
+}
