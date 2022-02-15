@@ -52,6 +52,7 @@ export const unfollowUser = createAsyncThunk(
   'friends/unfollowUser',
   async ({ unfollowing, userName }) => {
     await requestUnfollow(unfollowing, userName);
+    return unfollowing;
   }
 );
 
@@ -134,9 +135,11 @@ export const friendsSlice = createSlice({
     [followUser.rejected]: extraReducerRejected(),
 
     [unfollowUser.pending]: extraReducerPending(),
-    [unfollowUser.fulfilled]: (state) => {
+    [unfollowUser.fulfilled]: (state, action) => {
       return {
         ...state,
+        followings: state.followings.filter(user => user != action.payload),
+        usersToFollow: [...state.usersToFollow, action.payload],
       };
     },
     [unfollowUser.rejected]: extraReducerRejected(),
