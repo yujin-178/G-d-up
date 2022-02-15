@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { act } from 'react-dom/test-utils';
 import { 
   loadUsersToFollow, 
   loadFollowers, 
@@ -43,6 +44,7 @@ export const followUser = createAsyncThunk(
   'friends/followUser',
   async ({ following, userName }) => {
     await requestFollow(following, userName);
+    return following;
   }
 );
 
@@ -122,9 +124,11 @@ export const friendsSlice = createSlice({
     [setFollowings.rejected]: extraReducerRejected(),
 
     [followUser.pending]: extraReducerPending(),
-    [followUser.fulfilled]: (state) => {
+    [followUser.fulfilled]: (state, action) => {
       return {
         ...state,
+        usersToFollow: state.usersToFollow.filter(user => user != action.payload),
+        followings: [...state.followings, action.payload],
       };
     },
     [followUser.rejected]: extraReducerRejected(),
