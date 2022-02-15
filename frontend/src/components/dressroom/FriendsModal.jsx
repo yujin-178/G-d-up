@@ -26,34 +26,38 @@ export default function FriendsModal({
             placeholder='친구이름을 입력하세요'
             onChange={onChangeSearchUser}
           />
-          <div>
-            <h3>전체유저</h3>
-            {usersToFollow.map((user, idx) =>
-              <li css={ListStyle} key={idx}>
-                {user}
-                <button
-                  css={FollowItem}
-                  onClick={() => onClickFollow(idx)}
-                >
-                  팔로우
-                </button>
-              </li>
-            )}
-          </div>
-          <div>
-            <h3>검색된 유저</h3>
-            {searchedUsers.map((user, idx) =>
-              <li css={ListStyle} key={idx}>
-                {user}
-                <button
-                  css={FollowItem}
-                  onClick={() => onClickFollow(idx)}
-                >
-                  팔로우
-                </button>
-              </li>
-            )}
-          </div>
+          {searchedUsers.length === 0 &&
+            <div>
+              <h3>전체유저</h3>
+              {usersToFollow.map((user, idx) =>
+                <li css={ListStyle} key={idx}>
+                  {user}
+                  <button
+                    css={FollowItem}
+                    onClick={() => onClickFollow(idx)}
+                  >
+                    팔로우
+                  </button>
+                </li>
+              )}
+            </div>
+          }
+          {searchedUsers.length > 0 &&
+            <div>
+              <h3>검색된 유저</h3>
+              {searchedUsers.map((user, idx) =>
+                <li css={ListStyle} key={idx}>
+                  {user}
+                  <button
+                    css={FollowItem}
+                    onClick={() => onClickFollow(idx)}
+                  >
+                    팔로우
+                  </button>
+                </li>
+              )}
+            </div>
+          }
         </div>
         <div css={FollowerFollowing}>
           <div>
