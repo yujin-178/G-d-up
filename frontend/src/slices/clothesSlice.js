@@ -87,11 +87,13 @@ export const clothesSlice = createSlice({
       };
     },
     [setClothes.fulfilled]: (state, action) => {
+      const clothes = action.payload ? action.payload : [];
+      const selectedClothes = clothes.length ? clothes[0] : null;
       return {
         ...state,
         loading: false,
-        clothes: action.payload,
-        selectedClothes: action.payload[0] || null,
+        clothes: clothes,
+        selectedClothes: selectedClothes,
       };
     },
     // [setClothes.rejected]: (state, action) => {
@@ -99,7 +101,7 @@ export const clothesSlice = createSlice({
       return {
         ...state,
         loading: false,
-        error: '오류가 발생했습니다.'
+        error: '존재하지 않는 사용자입니다.'
       };
     },
     [deleteClothesById.pending]: (state) => {
