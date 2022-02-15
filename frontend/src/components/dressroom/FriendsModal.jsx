@@ -8,8 +8,11 @@ export default function FriendsModal({
   onClickModalClose,
   onClickFollow,
   onClickUnfollow,
+  onChangeSearchUser,
   followers,
-  followings
+  followings,
+  searchedUsers,
+  searchUserInput,
 }) {
   return (
     <Modal css={FriendsModalStyle} isOpen={isOpen}>
@@ -19,17 +22,41 @@ export default function FriendsModal({
       <div css={GridWrapper}>
         <div css={UsersToFollow}>
           <h2>팔로우가능한사람</h2>
-          {usersToFollow.map((user, idx) =>
-            <li css={ListStyle} key={idx}>
-              {user}
-              <button
-                css={FollowItem}
-                onClick={() => onClickFollow(idx)}
-              >
-                팔로우 
-              </button>
-            </li>
-          )}
+          <input
+            type="text"
+            placeholder='친구이름을 입력하세요'
+            onChange={onChangeSearchUser}
+          />
+          {searchedUsers.length === 0  && searchUserInput.length === 0 &&
+            <div>
+              {usersToFollow.map((user, idx) =>
+                <li css={ListStyle} key={idx}>
+                  {user}
+                  <button
+                    css={FollowItem}
+                    onClick={() => onClickFollow(idx)}
+                  >
+                    팔로우
+                  </button>
+                </li>
+              )}
+            </div>
+          }
+          {searchedUsers.length > 0 &&
+            <div>
+              {searchedUsers.map((user, idx) =>
+                <li css={ListStyle} key={idx}>
+                  {user}
+                  <button
+                    css={FollowItem}
+                    onClick={() => onClickFollow(idx)}
+                  >
+                    팔로우
+                  </button>
+                </li>
+              )}
+            </div>
+          }
         </div>
         <div css={FollowerFollowing}>
           <div>
@@ -56,9 +83,6 @@ export default function FriendsModal({
           </div>
         </div>
       </div>
-
-      {/* <input type="text" placeholder='친구이름을 입력하세요'/> */}
-
     </Modal >
   );
 }
