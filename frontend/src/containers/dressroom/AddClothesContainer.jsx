@@ -12,12 +12,17 @@ import {
 
 import {
   changelaundryOpen,
+  resetlaundry,
 } from '../../slices/laundrySlice';
 
 import {
   changeTagInfo,
   setImgURL,
-  selectSeason
+  selectSeason,
+  resetClothes,
+  changeresloading,
+  setClothes,
+  changeimgError,
 } from '../../slices/clothesSlice';
 
 export default function AddClothesContainer() {
@@ -29,7 +34,7 @@ export default function AddClothesContainer() {
   const { selectedIcon } = laundry;
 
   const clothes = useSelector(state => state.clothesSlice);
-  const { imgURL, tagInfo, tagGroup } = clothes;
+  const { imgURL, tagInfo, tagGroup, resloading, imgError } = clothes;
 
   const imgInput = useRef(null);
   const [loading, setLoading] = useState(null);
@@ -40,12 +45,27 @@ export default function AddClothesContainer() {
     },
   };
 
+  const userName = 'admin';
+
+  function handleimgError({ type, text }) {
+    dispatch(changeimgError({ type, text }));
+  }
+
   function handleModal(value) {
     dispatch(changeisModalOpen(value));
   }
 
   function handleLaundry(value) {
     dispatch(changelaundryOpen(value));
+  }
+
+  function handleresloading(value) {
+    dispatch(changeresloading(value));
+  }
+
+  function handleresetClothes() {
+    dispatch(resetClothes());
+    dispatch(resetlaundry());
   }
 
   function handleSeason(value) {
@@ -61,24 +81,33 @@ export default function AddClothesContainer() {
     setLoading(true);
     const formData = new FormData();
     formData.append('imageFile', event.target.files[0]);
-    
+
     axios.post(`http://i6b108.p.ssafy.io:8000/clothing/background`, formData, config)
       .then((res) => {
         dispatch(setImgURL(res.data.data));
         setLoading(false);
+        document.getElementById('saveBtn').disabled = false;
       })
       .catch((err) => {
-        console.log(err);
+        const message = err.message;
+        setLoading(false);
+        handleimgError({ type: 'background', text : message });
       });
     axios.post(`http://i6b108.p.ssafy.io:8000/clothing/tag`, formData, config)
       .then((res) => {
-        const userName = 'admin';
         const data = res.data.data;
         dispatch(changeTagInfo({ data, userName }));
+        document.getElementById('saveBtn').disabled = false;
+      })
+      .catch((err) => {
+        const message = err.message;
+        handleimgError({ type: 'tag', text : message });
       });
   }
 
   function saveClothes() {
+    dispatch(changeisResOpen(true));
+    handleresloading(true);
     const config = {
       Headers: {
         'Content-Type': 'multipart/form-data',
@@ -92,12 +121,14 @@ export default function AddClothesContainer() {
 
     axios.post(`http://i6b108.p.ssafy.io:8000/clothing/save`, formData, config)
       .then((res) => {
+        handleresloading(false);
         dispatch(changeResText(res.data.message));
-        dispatch(changeisResOpen(true));
+        handleresetClothes();
+        dispatch(setClothes(userName));
       })
       .catch((err) => {
+        handleresloading(false);
         dispatch(changeResText(err.data.data.message));
-        dispatch(changeisResOpen(true));
       });
   }
 
@@ -131,6 +162,9 @@ export default function AddClothesContainer() {
         resText={resText}
         images={images}
         loading={loading}
+        resetClothes={handleresetClothes}
+        resloading={resloading}
+        imgError={imgError}
       />
     </div>
   );

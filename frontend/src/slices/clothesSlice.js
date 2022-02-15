@@ -9,12 +9,14 @@ const initialState = {
   tagInfo: { 'season': '' },
   imgURL: '',
   tagGroup: [],
+  resloading: false,
+  imgError: { type: 'background', text: '' },
 };
 
 export const deleteClothesById = createAsyncThunk(
   'clothes/deleteClothes',
   async (clothesId) => {
-  // async (clothesId, thunkAPI) => {
+    // async (clothesId, thunkAPI) => {
     // todo: api request
 
     // const response = await axiosServer({
@@ -76,6 +78,31 @@ export const clothesSlice = createSlice({
           'season': action.payload
         }
       };
+    },
+    resetClothes(state) {
+      return {
+        ...state,
+        tagInfo: { 'season': '' },
+        imgURL: '',
+        tagGroup: [],
+        imgError: { type: 'background', text: '' },
+      };
+    },
+    changeresloading(state, action) {
+      return {
+        ...state,
+        resloading: action.payload
+      };
+    },
+    changeimgError(state, action) {
+      const { type, text } = action.payload;
+      return {
+        ...state,
+        imgError: {
+          type,
+          text
+        }
+      };
     }
   },
   extraReducers: {
@@ -87,11 +114,13 @@ export const clothesSlice = createSlice({
       };
     },
     [setClothes.fulfilled]: (state, action) => {
+      const clothes = action.payload ? action.payload : [];
+      const selectedClothes = clothes.length ? clothes[0] : null;
       return {
         ...state,
         loading: false,
-        clothes: action.payload,
-        selectedClothes: action.payload[0] || null,
+        clothes: clothes,
+        selectedClothes: selectedClothes,
       };
     },
     // [setClothes.rejected]: (state, action) => {
@@ -99,11 +128,11 @@ export const clothesSlice = createSlice({
       return {
         ...state,
         loading: false,
-        error: '오류가 발생했습니다.'
+        error: '존재하지 않는 사용자입니다.'
       };
     },
     [deleteClothesById.pending]: (state) => {
-    // [deleteClothesById.pending]: (state, action) => {
+      // [deleteClothesById.pending]: (state, action) => {
       return {
         ...state,
         loading: true
@@ -119,7 +148,7 @@ export const clothesSlice = createSlice({
       };
     },
     [deleteClothesById.rejected]: (state) => {
-    // [deleteClothesById.rejected]: (state, action) => {
+      // [deleteClothesById.rejected]: (state, action) => {
       return {
         ...state,
         loading: false,
@@ -134,6 +163,9 @@ export const {
   changeTagInfo,
   setImgURL,
   selectSeason,
+  resetClothes,
+  changeresloading,
+  changeimgError,
 } = clothesSlice.actions;
 
 export default clothesSlice.reducer;

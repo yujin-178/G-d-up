@@ -1,43 +1,35 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  changeEmailField,
-  changePasswordField,
-} from '../../actions';
+import { login } from '../../slices/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 import LoginPage from '../../components/auth/LoginPage';
 
-import axios from 'axios';
-
 export default function LoginContainer() {
+  const { isLoggedIn, error } = useSelector(state => state.authSlice);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { email, password } = useSelector((state) => state);
+  const emailRef = useRef();
+  const passwordRef = useRef();
 
-  function handleChangeEmail(event) {
-    dispatch(changeEmailField(event.target.value));
-  }
-
-  function handleChangePassword(event) {
-    dispatch(changePasswordField(event.target.value));
-  }
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate('/');
+    }
+  }, [isLoggedIn]);
 
   function handleClickLogin() {
-    const URL = `http://localhost:8080/account/login?email=${email}&password=${password}`;
-
-    axios.get(URL)
-      .then(res => {
-        console.log('login ' + res.data.data);
-      });
-    
-    console.log(email);
-    console.log(password);
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+    dispatch(login({ email, password }));
   }
 
   return (
     <LoginPage
-      onChangeEmail={handleChangeEmail}
-      onChangePassword={handleChangePassword}
+      emailRef={emailRef}
+      passwordRef={passwordRef}
       onClickLogin={handleClickLogin}
+      error={error}
     />
   );
 }

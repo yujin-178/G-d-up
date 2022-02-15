@@ -1,12 +1,13 @@
 import React from 'react';
 import { css } from '@emotion/react';
 import Modal from 'react-modal';
+import ClimbingBoxLoader from 'react-spinners/ClimbingBoxLoader';
 
 if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function ResModal({ resText, handleResponse, isResOpen }) {
+export default function ResModal({ resloading, resText, handleResponse, isResOpen }) {
   return (
     <div>
       <Modal
@@ -17,25 +18,52 @@ export default function ResModal({ resText, handleResponse, isResOpen }) {
           content: {
             position: 'relative',
             width: '25%',
-            height: '20%',
+            height: '25%',
           }
         }}
       >
         <div css={Container}>
           <div>
-            <p>{resText}</p>
-            <button
-              css={saveBtn}
-              onClick={() => handleResponse(false)}
-            >
-							확인
-            </button>
+            {resloading ?
+              <div css={loading}>
+                <ClimbingBoxLoader
+                  color='black'
+                  loading={resloading}
+                  size={15}
+                  css={loading}
+                />
+                <p css={loadingText}>
+                  옷장에 옷 넣는 중 ...
+                </p>
+              </div>
+              :
+              <div>
+                <p>{resText}</p>
+                <button
+                  css={saveBtn}
+                  onClick={() => {handleResponse(false); window.location.reload();}}
+                >
+                  확인
+                </button>
+              </div>
+            }
           </div>
         </div>
       </Modal >
     </div >
   );
 }
+
+const loading = css`
+  display: grid;
+  grid-template-rows: 5rem 2rem;
+  margin-bottom: 10px;
+`;
+
+const loadingText = css`
+  font-family: 'KOTRAHOPE'; 
+  font-size:20px; 
+`;
 
 const Container = css`
   display: grid;

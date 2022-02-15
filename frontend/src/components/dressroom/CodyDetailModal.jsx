@@ -2,15 +2,16 @@ import React from 'react';
 import { css, Global } from '@emotion/react';
 import Modal from 'react-modal';
 import { Tags } from '@emotion-icons/fa-solid/Tags';
+import ResModal from './ResModal';
 
 if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function CodyDetailModal({ selectedCody, isdetailOpen, handleCodyDetailOpen }) {
+export default function CodyDetailModal({ handleResponse, isResOpen, resText, deleteCody, handleCodyEdit, iscodyEdit, selectedCody, isdetailOpen, handleCodyDetailOpen }) {
   return (
     <div>
-      <Global 
+      <Global
         styles={modalClass}
       />
       <Modal
@@ -19,6 +20,12 @@ export default function CodyDetailModal({ selectedCody, isdetailOpen, handleCody
         closeTimeoutMS={500}
         onAfterOpen={() => { document.body.style.overflow = 'hidden'; }}
         onAfterClose={() => document.body.removeAttribute('style')}
+        style={{
+          content: {
+            backgroundColor: '#7c8186',
+            opacity: '80%',
+          }
+        }}
       >
         <div css={Container}>
           <button
@@ -26,44 +33,124 @@ export default function CodyDetailModal({ selectedCody, isdetailOpen, handleCody
             onClick={() => handleCodyDetailOpen(false)}>
             X
           </button>
-
-          <div css={inputContainer}>
-            <input
-              type="text"
-              label='태그'
-              placeholder='태그는 총 10개까지 입력 가능합니다.'
-              css={inputTag}
-              id='taginput'
+          <div css={imgContainer}>
+            <img
+              src={selectedCody.imageModel.imageUrl}
+              alt={selectedCody.codyName}
+              css={codyImg}
             />
-            <label htmlFor="taginput" css={inputLabel}>
-              <Tags size={20} />
-            </label>
           </div>
-          <div css={toggleContainer}>
-            <div
-              data-testid="toggle"
-              css={selectedCody.secret === 0 ? toggleBtn : toggleXBtn}
-            >
-              <div css={selectedCody.secret === 0 ? toggleBtnCircle : toggleXBtnCircle}></div>
+
+          {iscodyEdit ?
+            <div css={inputContainer}>
+              <input
+                type="text"
+                label='태그'
+                placeholder='태그는 총 10개까지 입력 가능합니다.'
+                css={inputTag}
+                id='taginput'
+              />
+              <label htmlFor="taginput" css={inputLabel}>
+                <Tags size={20} />
+              </label>
             </div>
-            <p css={toggleTitle}>공개 여부</p>
+            :
+            <div css={tag}>
+              {selectedCody.hashList.map((item, index) => (
+                <div css={tagItem} key={index}>
+                  {item}
+                </div>
+              ))}
+            </div>
+
+          }
+          <div css={toggleContainer}>
+            {iscodyEdit ?
+              <div>
+                <div
+                  data-testid="toggle"
+                  css={selectedCody.secret === 0 ? toggleBtn : toggleXBtn}
+                >
+                  <div css={selectedCody.secret === 0 ? toggleBtnCircle : toggleXBtnCircle}></div>
+                </div>
+                <p css={toggleTitle}>공개 여부</p>
+              </div>
+              :
+              <div>
+                {selectedCody.secret === 0 ?
+                  <div>
+                    공개
+                  </div>
+                  :
+                  <div>
+                    비공개
+                  </div>
+                }
+              </div>
+            }
           </div>
 
           <div css={contentContainer}>
             {selectedCody.content}
           </div>
-
           <div css={submitBtnContainer}>
-
+            <button
+              css={editBtn}
+              onClick={() => handleCodyEdit(true)}
+            >
+              수정
+            </button>
+            <button
+              css={delBtn}
+              onClick={() => deleteCody(selectedCody.codyId)}
+            >
+              삭제
+            </button>
           </div>
+          <ResModal
+            isResOpen={isResOpen}
+            resText={resText}
+            handleResponse={handleResponse}
+          />
         </div>
       </Modal >
     </div >
   );
 }
 
-const inputTag = css`
+const Container = css`
+  display: grid;
+	grid-template-columns: 350px 1fr;
+	grid-template-rows: repeat(4,1fr);
+	max-width: 100%;
+  grid-row: 3;
+  grid-column: 1;
+  margin: 20px;
+`;
+
+const imgContainer = css`
+  grid-row : 1;
+  grid-column: 1;
+  height: fit-content;
+`;
+
+const codyImg = css`
   position: relative;
+  justify-content: center;
+  align-items:center;
+  width: 285px;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
+`;
+const inputContainer = css`
+  grid-row: 2;
+  grid-column : 1;
+  width: max-content;
+  display: grid;
+  margin: 5px;
+`;
+
+const inputTag = css`
+  display: inline-block;
   width: 18rem;
   height: 35px;
   outline: 0;
@@ -72,40 +159,59 @@ const inputTag = css`
   border-bottom: 2px solid silver;
   font-size: 15px;
   padding-left: 25px;
+  grid-column: 1;
+  grid-row: 1;
 `;
 
 const inputLabel = css`
-  position:absolute;
-  top: 25px;
-  left: 20px;
-  
-
-`;
-
-const Container = css`
-  display: grid;
-	grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: repeat(7, 1fr);
-	max-width: 100%;
-`;
-
-const inputContainer = css`
-  grid-row: 1;
   grid-column: 1;
-  width: max-content;
+  grid-row: 1;
+  margin-top: 5px;
+`;
+
+const tag = css`
+  grid-row: 2;
+  grid-column : 1;
+  display: flex;
+  flex-wrap: wrap;
+  margin : 5px;
+  width: fit-content;
+`;
+
+const tagItem = css`
+  display: flex;
+	justify-content: center;
+  align-items: center;
+  margin: 3px;
+
+  background-color: #faefe8;
+  height: 25px;
+	width : max-content;
+  padding: 4px;
+  border-radius: 18px;
+
+  font-size: 13px;
+  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
+  min-width: 50px;
 `;
 
 const contentContainer = css`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: repeat(7, 1fr);
+  grid-row: 3;
+  grid-column: 1;
+  color: #f2f2f2;
+  border: 1px solid black;
+  padding: 5px;
+  font-size: 23px;
+  height: 100px;
 `;
 
 const toggleContainer = css`
   display: flex;
-  padding-top: 30px;
-  grid-row:3;
-  grid-column: 1;
+  grid-row:2;
+  grid-column: 2;
+  color:#f2f2f2;
+  margin:10px;
 `;
 
 const toggleTitle = css`
@@ -158,31 +264,33 @@ const submitBtnContainer = css`
 	font-weight: 300;
 	text-align: center;
 	transition: 0.5s;
+  grid-row: 4;
 `;
 
-// const cancelBtn = css`
-// 	grid-column: 4;
-// 	margin-left: 10px;
-// 	background: #c99f9f;
-// 	padding: 0.5rem 1rem;
-// 	width: 4rem;
-// 	border: none;
-// 	border-radius: 4px;
-// 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-// 	cursor: pointer;
-// `;
+const delBtn = css`
+	grid-column: 4;
+	margin-left: 10px;
+	background: #c99f9f;
+	padding: 0.5rem 1rem;
+	width: 4rem;
+  height: 2rem;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+`;
 
-// const saveBtn = css`
-// 	grid-column: 3;
-// 	margin-left: 40px;
-// 	background: #6da0cf;
-// 	padding: 0.5rem 1rem;
-// 	width: 4rem;
-// 	border: none;
-// 	border-radius: 4px;
-// 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-// 	cursor: pointer;
-// `;
+const editBtn = css`
+	grid-column: 3;
+	background: #6da0cf;
+	padding: 0.5rem 1rem;
+	width: 4rem;
+  height: 2rem;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+`;
 
 const CloseBtn = css`
 	background: #c99f9f;
@@ -193,8 +301,6 @@ const CloseBtn = css`
 	width : 1.5rem;
 	grid-column: 5;
 	grid-row: 1;
-	margin-top : 1rem;
-	margin-left: 1rem;
 
 	cursor: pointer;
 `;

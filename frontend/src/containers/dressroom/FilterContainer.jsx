@@ -4,6 +4,7 @@ import Categories from '../../components/dressroom/Categories';
 import ClosetSideBar from '../../components/dressroom/ClosetSideBar.jsx';
 import {
   changeCategoryFilter,
+  changeSeasonFilter,
   changeColorFilter,
   addCustomFilter,
   deleteCustomFilter,
@@ -38,6 +39,13 @@ function FilterContainer() {
     }
   };
 
+  const seasonHandler = (isChecked, season) => {
+    dispatch(changeSeasonFilter({
+      isChecked,
+      season
+    }));
+  };
+
   const colorHandler = color => {
     dispatch(changeColorFilter(color));
   };
@@ -52,6 +60,7 @@ function FilterContainer() {
       <ClosetSideBar
         season={season}
         colors={colors}
+        onChangeSeason={seasonHandler}
         selectedColors={selectedColors}
         onChangeColor={colorHandler}
         customTags={custom}
