@@ -2,7 +2,14 @@ import React from 'react';
 import Modal from 'react-modal';
 import { css } from '@emotion/react';
 
-export default function FriendsModal({ isOpen, usersToFollow, onClickModalClose, followers, followings }) {
+export default function FriendsModal({ 
+  isOpen,
+  usersToFollow,
+  onClickModalClose,
+  onClickFollow,
+  followers,
+  followings
+}) {
   return (
     <Modal css={FriendsModalStyle} isOpen={isOpen}>
       <div css={CloseBtn}>
@@ -14,7 +21,7 @@ export default function FriendsModal({ isOpen, usersToFollow, onClickModalClose,
           {usersToFollow.map((user, idx) =>
             <li css={ListStyle} key={idx}>
               {user}
-              <button css={FollowItem}> 팔로우 </button>
+              <button css={FollowItem} onClick={onClickFollow}> 팔로우 </button>
             </li>
           )}
         </div>

@@ -12,6 +12,10 @@ export default function FriendsModalContainer({ isOpen }) {
     dispatch(setIsOpen(false));
   }
 
+  function handleClickFollow() {
+    console.log('클릭@!');
+  }
+
   useEffect(() => {
     dispatch(setUsersToFollow(userName));
     dispatch(setFollowers(userName));
@@ -28,6 +32,7 @@ export default function FriendsModalContainer({ isOpen }) {
       onClickModalClose={handleClickModalClose}
       followers={followers}
       followings={followings}
+      onClickFollow={handleClickFollow}
     />
   );
 }
