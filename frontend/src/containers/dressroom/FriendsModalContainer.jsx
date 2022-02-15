@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setIsOpen, setUsersToFollow, setFollowers, setFollowings, setFollowing } from '../../slices/friendsSlice';
+import { setIsOpen, setUsersToFollow, setFollowers, setFollowings, followUser } from '../../slices/friendsSlice';
 import FriendsModal from '../../components/dressroom/FriendsModal';
 
 const userName = 'admin';
@@ -22,7 +22,7 @@ export default function FriendsModalContainer({ isOpen }) {
 
   function handleClickFollow(idx) {
     const following = usersToFollow[idx];
-    console.log(following);
+    dispatch(followUser({ following, userName }));
   }
 
   return (

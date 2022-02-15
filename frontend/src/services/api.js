@@ -94,6 +94,16 @@ export async function loadFollowings(userName) {
   return response.data.data;
 }
 
+export async function requestFollow(following, userName) {
+  const config = {
+    params: {
+      following,
+      userName,
+    },
+  };
+  await axios.get('http://i6b108.p.ssafy.io:8000/user/follow', config);
+}
+
 export async function deleteClothes(clothingId) {
   await axios.delete(`http://i6b108.p.ssafy.io:8000/clothing/${clothingId}`);
 }
