@@ -2,13 +2,15 @@ import React from 'react';
 import Modal from 'react-modal';
 import { css } from '@emotion/react';
 
-export default function FriendsModal(props) {
-  const { isOpen, usersToFollow, onClickModalClose } = props;
-  console.log(props);
+export default function FriendsModal( { isOpen, usersToFollow, onClickModalClose, followers }) {
   return (
     <Modal css={FriendsModalStyle} isOpen={isOpen}>
-      팔로우가능한사람 {usersToFollow}
-      This is Modal
+      <div>
+        팔로우가능한사람 {usersToFollow}
+      </div>
+      <div>
+        팔로워 {followers}
+      </div>
       <button onClick={onClickModalClose}>X</button>
     </Modal>
   );

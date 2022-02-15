@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { loadUsersToFollow } from '../services/api';
+import { loadUsersToFollow, loadFollowers } from '../services/api';
 
 const initialState = {
   isOpen: false,
-  usersToFollow: ['dd'],
+  usersToFollow: ['팔로우 가능한 사용자가 없습니다.'],
+  followers: ['팔로워가 없습니다.'],
 };
 
 export const setUsersToFollow = createAsyncThunk(
@@ -13,6 +14,37 @@ export const setUsersToFollow = createAsyncThunk(
     return usersToFollow;
   }
 );
+
+export const setFollowers = createAsyncThunk(
+  'friends/setFollowers',
+  async (userName) => {
+    const followers = await loadFollowers(userName);
+    return followers;
+  }
+);
+
+function extraReducerPending() {
+  return (
+    (state) => {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+  );
+}
+
+function extraReducerRejected() {
+  return (
+    (state) => {
+      return {
+        ...state,
+        loading: false,
+        error: '오류가 발생했습니다.',
+      };
+    }
+  );
+}
 
 export const friendsSlice = createSlice({
   name: 'friends',
@@ -26,25 +58,23 @@ export const friendsSlice = createSlice({
     },
   },
   extraReducers: {
-    [setUsersToFollow.pending]: (state) => {
-      return {
-        ...state,
-        loading: true,
-      };
-    },
+    [setUsersToFollow.pending]: extraReducerPending(),
     [setUsersToFollow.fulfilled]: (state, action) => {
       return {
         ...state,
         usersToFollow: action.payload,
       };
     },
-    [setUsersToFollow.rejected]: (state) => {
+    [setUsersToFollow.rejected]: extraReducerRejected(),
+
+    [setFollowers.pending]: extraReducerPending(),
+    [setFollowers.fulfilled]: (state, action) => {
       return {
         ...state,
-        loading: false,
-        error: '오류가 발생했습니다.',
+        followers: action.payload,
       };
     },
+    [setFollowers.rejected]: extraReducerRejected(),
   },
 });
 

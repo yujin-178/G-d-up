@@ -14,19 +14,17 @@ import { useSelector } from 'react-redux';
 export default function DressRoomPage({ onClickModalOpen }) {
 
   const { isOpen } = useSelector(state => state.friendsSlice);
-
   return (
     <div css={Container}>
       <div css={DressRoom}>
         <FriendsModalContainer
-          isOpen={isOpen}     
+          isOpen={isOpen}
         />
         <h2 css={Title}>드레스룸</h2>
         <div css={friendsBtnDiv}>
           <PeopleFill
             css={FriendsBtn}
-            onClickModalOpen={onClickModalOpen}
-            onRequestClose={HandleRequestClose}
+            onClick={onClickModalOpen}
           />
         </div>
         <div css={[BtnItem, CodyBtn]}>

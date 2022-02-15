@@ -77,6 +77,11 @@ export async function authLogin(data) {
 }
 
 export async function loadUsersToFollow(userName) {
-  const response = await axios.get(`http://i6b108.p.ssafy.io:8000/user/find/follow/${userName}`)
+  const response = await axios.get(`http://i6b108.p.ssafy.io:8000/user/find/follow/${userName}`);
+  return response.data.data;
+}
+
+export async function loadFollowers(userName) {
+  const response = await axios.get(`http://i6b108.p.ssafy.io:8000/user/find/follower/${userName}`);
   return response.data.data;
 }

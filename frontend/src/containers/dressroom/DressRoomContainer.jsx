@@ -8,6 +8,7 @@ export default function DressRoomContainer() {
   const dispatch = useDispatch();
 
   function handleClickModalOpen() {
+    console.log('클릭!');
     dispatch(setIsOpen(true));
   }
 
