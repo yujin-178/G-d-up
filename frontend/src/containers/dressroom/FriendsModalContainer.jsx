@@ -33,7 +33,7 @@ export default function FriendsModalContainer({ isOpen }) {
   }
 
   function handleClickUnfollow(idx) {
-    const unfollowing = followers[idx];
+    const unfollowing = followings[idx];
     dispatch(unfollowUser({ unfollowing, userName }));
   }
 
