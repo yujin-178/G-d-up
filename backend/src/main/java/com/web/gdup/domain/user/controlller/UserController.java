@@ -161,7 +161,7 @@ public class UserController {
             result.status = false;
             result.message = "가입하지 않은 유저가 입력되었습니다. ";
             result.data = null;
-            return new ResponseEntity<>(result, HttpStatus.OK);
+            return new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
         }
 
         if(userLists.size() >= 0 ){
@@ -171,7 +171,7 @@ public class UserController {
             result.status = true;
             result.message = "success";
             result.data = userLists;
-            response = new ResponseEntity<>(result, HttpStatus.NOT_FOUND);
+            response = new ResponseEntity<>(result, HttpStatus.OK);
         }
         else {
             result.status = true;
