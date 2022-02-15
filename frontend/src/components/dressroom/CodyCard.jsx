@@ -27,6 +27,7 @@ const cardStyle = css`
   background-color: bisque;
   width: 20rem;
   height: fit-content;
+  min-height: 20rem;
   padding: 10px;
   border-radius: 10px;
 `;

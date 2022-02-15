@@ -5,19 +5,18 @@ import { config } from 'react-spring';
 import { css } from "@emotion/react";
 import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
+import CodyDetailContainer from '../../containers/dressroom/CodyDetailContainer';
 
-export default function CodyPage({ scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
+export default function CodyPage({ isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
+  // const animatedItem = {
+  //   0: useScrollFadeIn('down', 1, 0),
+  //   1: useScrollFadeIn('down', 1, 0.2),
+  //   2: useScrollFadeIn('up', 1, 0.3),
+  // };
+
   return (
     <div css={CodyBackground}>
-      <button css={createBtn} onClick={() => navigate('/codycreate')}>
-        새 코디 생성하기
-      </button>
-      <button
-        css={backBtn}
-        onClick={() => navigate('/dressroom')}>
-        Back
-      </button>
-      <div css={scrollisTop ? container : displayToggle}>
+      <div css={isdetailOpen ? css`visibility: hidden;` : container}>
         <h2>Cody</h2>
         <div css={carousel}>
           <Carousel
@@ -50,13 +49,29 @@ export default function CodyPage({ scrollisTop, moveScroll, codyList, handlegoTo
           전체 보기
         </button>
       </div>
-      <div css={scrollisTop ? displayToggle : ''}>
-        <CodyList
-          cards={codyList}
-          moveScroll={moveScroll}
-          scrollisTop={scrollisTop}
-        />
+
+      <div css={scrollisTop ? Fadeup : Fadein} id="fade">
+        <div>
+          <CodyList
+            cards={codyList}
+            moveScroll={moveScroll}
+            scrollisTop={scrollisTop}
+            handleSelectCody={handleSelectCody}
+          />
+        </div>
       </div>
+
+      <button css={createBtn} onClick={() => navigate('/codycreate')}>
+        새 코디 생성하기
+      </button>
+      <button
+        css={backBtn}
+        onClick={() => navigate('/dressroom')}>
+        Back
+      </button>
+      <CodyDetailContainer
+      />
+
     </div>
   );
 }
@@ -66,6 +81,24 @@ const CodyBackground = css`
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/codybackground.jpg");
   background-size: cover;
   background-position: center;
+`;
+
+const Fadeup = css`
+  transition-timing-function : cubic-bezier(0,0,0.2,1);
+  transition-property : all;
+  transition-duration : 1s;
+  transition-delay : 1s;
+  opacity : 1;
+  transform = translate3d(0, 50%, 0);
+`;
+
+const Fadein = css`
+  transition-timing-function : cubic-bezier(0,0,0.2,1);
+  transition-property : all;
+  transition-duration : 1s;
+  transition-delay : 1s;
+  opacity : 1;
+  transform = translate3d(0, -50%, 0);
 `;
 
 const scrollBtn = css`
@@ -102,12 +135,14 @@ const container = css`
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 1fr 4fr 1fr;
   grid-row-gap: 10px;
-  transition: all 1s;
-`;
+  height: 100vh;
 
-const displayToggle = css`
-  visibility: hidden;
-  transition: all 1s;
+  transition-timing-function : cubic-bezier(0,0,0.2,1);
+  transition-property : all;
+  transition-duration : 1s;
+  transition-delay : 1s;
+  opacity : 1;
+  transform = translate3d(0, 50%, 0);
 `;
 
 const createBtn = css`
