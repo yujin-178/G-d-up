@@ -9,7 +9,7 @@ export default function LoginPage({ emailRef, passwordRef, onClickLogin, error }
         <div css={ItemsGridWrapper}>
           <br/>
           <div css={Title}>
-            <h1>G'd up</h1>
+            <h1>{`G'd up`}</h1>
           </div>
           {error && <p css={errorMessage}>{error}</p>}
           <div css={inputGroup}>

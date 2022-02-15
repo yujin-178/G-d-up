@@ -12,8 +12,10 @@ import { css } from "@emotion/react";
 export default function ClothesItemListContainer() {
   const dispatch = useDispatch();
 
+  const userName = JSON.parse(localStorage.getItem('userInfo')).username;
+
   useEffect(() => {
-    dispatch(setClothes('jisoon'));
+    dispatch(setClothes(userName));
   }, []);
 
   const { selectedClothes } = useSelector(state => state.clothesSlice);

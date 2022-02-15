@@ -47,6 +47,7 @@ export const authSlice = createSlice({
       state.userName = payload.userName;
       state.email = payload.email;
       state.error = null;
+      localStorage.setItem("userInfo", JSON.stringify({ username: `${payload.userName}` }));
     },
     [signin.rejected]: (state) => {
       state.loading = false;
@@ -61,6 +62,7 @@ export const authSlice = createSlice({
       state.userName = payload.userName;
       state.email = payload.email;
       state.error = null;
+      localStorage.setItem("userInfo", JSON.stringify({ username: `${payload.userName}` }));
     },
     [login.rejected]: (state) => {
       state.error = '아이디와 비밀번호를 확인해주세요.';

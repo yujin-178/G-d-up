@@ -28,16 +28,27 @@ export default function ClosetPage({ onClickModal, filteredClothes, goBackHandle
           <AddClothesContainer />
         </div>
         <ClothesDetailContainer />
+        <div css={BackBtnContainer}>
+          <Link to='/dressroom'>
+            <button
+              css={BackBtn}
+              onClick={goBackHandler}
+            >
+              Back
+            </button>
+          </Link>
+        </div>
       </div>
-      <button
-        css={BackBtn}
-        onClick={goBackHandler}
-      >
-        Back
-      </button>
-    </div>
+    </div >
   );
 }
+
+const BackBtnContainer = css`
+  display: flex;
+  align-items: end;
+  justify-content: end;
+  margin-bottom : 20px;
+`;
 
 const DressRoom = css`
   display: flex;
@@ -60,9 +71,12 @@ const Closet = css`
 const BackBtn = css`
   width: 5rem;
   height: 3rem;
+<<<<<<< HEAD
   position: absolute;
   left: 100.6rem;
   top: 55.4rem;
+=======
+>>>>>>> jyj
   background: #ecc194;
 	border: none;
 	border-radius: 4px;
