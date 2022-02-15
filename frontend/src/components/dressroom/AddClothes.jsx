@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import LaundryModalContainer from '../../containers/dressroom/LaundryModalContainer';
 import ResModal from './ResModal';
 import ScaleLoader from 'react-spinners/ScaleLoader';
+import { isNull } from 'lodash';
 
 if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
@@ -21,13 +22,21 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
         closeTimeoutMS={500}
         onAfterOpen={() => { document.body.style.overflow = 'hidden'; }}
         onAfterClose={() => document.body.removeAttribute('style')}
+        style={{
+          overlay: {
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+          },
+          content: {
+            borderRadius: '10px',
+            outline: 'none',
+            overflowY: 'auto',
+            padding: '16px',
+            width: '50%',
+            border: 'none',
+          }
+        }}
       >
-        <div css={Container}>
-          <button
-            css={CloseBtn}
-            onClick={() => { modalToggle(false); resetClothes(); }} >
-            X
-          </button>
+        <div css={css`position: relative;`}>
           <div css={imgContainer}>
             {loading ?
               <div css={css`transition: 0.5s;`}>
@@ -70,43 +79,58 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
               css={inputBtn}
               onClick={() => imgInput.click()}
             >
-              업로드
+              Upload
             </button>
           </div>
-          <div css={detailContainer}>
-            <h3>옷 정보</h3>
-            <div css={detail}>
-              <p>카테고리 :</p>
-              <div css={valueStyle}>
-                <Fragment>
-                  {tagInfo['subcategory'] ?
-                    tagInfo['category'] + ">" + tagInfo['subcategory']
-                    : tagInfo['category']
-                  }
-                </Fragment>
+          <div>
+            <br/>
+
+            <div>
+              <div css={css`display: grid; grid-template-columns: 40px 360px;`}>
+                <p css={label}>종류</p>
+                <div css={valueStyle}>
+                  <Fragment>
+                    {tagInfo['subcategory'] ?
+                      tagInfo['category'] + ">" + tagInfo['subcategory']
+                      : tagInfo['category']
+                    }
+                  </Fragment>
+                </div>
               </div>
-              <p css={css`grid-column:1;`}>
-                색상 :
-              </p>
-              <div css={valueStyle}>
-                {tagInfo['color']}
-              </div>
-              <p css={css`grid-column:3; margin-left:10px;`}>
-                소재 :
-              </p>
-              <div css={valueStyle2}>
-                {tagInfo['material']}
-              </div>
-              <p>
-                패턴 :
-              </p>
-              <div css={valueStyle}>
-                {tagInfo['pattern']}
+
+              <div css={css`display: grid; grid-template-columns: 1fr 1fr;`}>
+                <div css={css`display: grid; grid-template-columns: 40px 160px`}>
+                  <p css={label}> 색상 </p>
+                  <div css={valueStyle2}>
+                    {tagInfo['color']}
+                  </div>
+                </div>
+
+                <div css={css`display: grid; grid-template-columns: 40px 160px`}>
+                  <p css={label}> 소재 </p>
+                  <div css={valueStyle2}>
+                    {tagInfo['material']}
+                  </div>
+                </div>
+
+                <div css={css`display: grid; grid-template-columns: 40px 160px`}>
+                  <p css={label}> 패턴 </p>
+                  <div css={valueStyle2}>
+                    { isNull(tagInfo['pattern']) ? '없음' : ''}
+                  </div>
+                </div>
+
+                <div css={css`display: grid; grid-template-columns: 40px 160px`}>
+                  <p css={label}> 핏 </p>
+                  <div css={valueStyle2}>
+                    { isNull(tagInfo['fit']) ? '없음' : ''}
+                  </div>
+                </div>
               </div>
             </div>
 
             <div css={season}>
-              <p>계절 : </p>
+              <p css={css`position: relative; top: 11px`}> 계절 </p>
               {allSeason.map((item, index) => {
                 const seasonMatched = item === tagInfo['season'];
                 return (
@@ -121,31 +145,32 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
             </div>
 
             <div css={laundryContainer}>
-              <p css={css`width:40px;`}>세탁:</p>
+              <p css={css`position: relative`}>세탁
+                <button css={AddBtn}
+                  onClick={() => handleLaundry(true)}>
+                    +
+                </button>
+              </p>
               {selectedLaundry.map((i) => {
                 const image = images[i];
                 return (
-                  <img src={image} alt={i} key={i} />
+                  <img css={css`width: 60px; height: 60px;`} src={image} alt={i} key={i} />
                 );
               })}
-              <div css={AddBtnContainer}>
-                <button css={AddBtn}
-                  onClick={() => handleLaundry(true)}>
-                  +
-                </button>
-              </div>
               <LaundryModalContainer
                 images={images}
               />
             </div>
 
-            <div css={tag}>
-              <p>태그 : </p>
-              {tagGroup.map((item, index) => (
-                <div css={tagItem} key={index}>
-                  {item}
-                </div>
-              ))}
+            <div css={css`display: flex;`}>
+              <p>태그</p>
+              <div css={tagsGroup}>
+                {tagGroup.map((item, index) => (
+                  <div css={tagItem} key={index}>
+                    {item}
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div css={submitBtnContainer}>
@@ -153,7 +178,6 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
                 css={saveBtn}
                 onClick={() => saveClothes()}
                 id="saveBtn"
-                disabled
               >
                 저장
               </button>
@@ -177,30 +201,38 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
   );
 }
 
+const label = css`
+  margin-right: 10px;
+`;
+
 const valueStyle = css`
-	border: 1px solid;
-	height: 35px;
-	display: inline-block;
-	grid-column:2;
-	width: max-content;
+	border: 1px solid #C0C0C0;
+  border-radius: 10px;
+	height: 30px;
 	min-width: 80%;
-	padding : 5px;
-	text-align: center;
-	display: flex;
-	justify-content: center;
-  align-items: center;
+  left: 10px;
+  font-size: 15px;
+  padding: 5px;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
 `;
 
 const valueStyle2 = css`
-	border: 1px solid;
-	height: 35px;
-	display: inline-block;
-	grid-column:4;
-	width: max-content;
-	min-width: 80%;
-	display: flex;
-	justify-content: center;
-  align-items: center;
+  border: 1px solid #C0C0C0;
+  border-radius: 10px;
+  height: 30px;
+  min-width: 60%;
+  left: 10px;
+  font-size: 15px;
+  padding: 5px;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
 `;
 
 const tagItem = css`
@@ -220,118 +252,110 @@ const tagItem = css`
   min-width: 50px;
 `;
 
-const tag = css`
-	display: grid;
-	grid-template-columns: 100px 1fr 1fr 1fr 1fr;
-`;
-
 const season = css`
-	display: grid;
-	grid-template-columns: repeat(5,1fr);
+  display: grid;
+  grid-template-columns: 50px 1fr 1fr 1fr 1fr;
 `;
 
 const liStyle = ({ seasonMatched }) => css`
-  background-color: #e2e2e2;
-  width: 3.8rem;
-  height: 2rem;
+  background-color: rgb(242, 241, 240);
+  width: 4.5rem;
+  height: 2.5rem;
 	display: flex;
 	justify-content: center;
   align-items: center;
 	cursor: pointer;
+  color: grey;
     ${seasonMatched &&
   `
-      background-color: #00acee;
-    `}
-`;
-
-const AddBtnContainer = css`
-	display: flex;
-	align-items : center;
-	margin-left: 20px;
+    background-color: #4EBBFA;
+    color: rgb(242, 242, 242);
+  `}
+  border-radius: 8px;
+  transition: 0.5s;
+  &:hover {
+    color: rgb(242, 241, 240);
+    background: #4EBBFA;
+  }
+	border: none;
 `;
 
 const AddBtn = css`
-	width: 30px;
-	height: 25px;
-	background: #ecc194;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  position: absolute;
+	width: 1.2rem;
+	height: 1.2rem;
+	background: #008000;
+	color: white;
+  border: none;
+	border-radius: 50%;
 	cursor: pointer;
+  left: 30px;
+  top: -10px;
 `;
 
 const laundryContainer = css`
 	display: grid;
-	grid-template-columns: repeat(5, 0.5fr);
 	margin-top: 10px;
 	margin-bottom: 10px;
+  grid-template-columns: repeat(6, 0.5fr);
 `;
 
 const submitBtnContainer = css`
-	display:grid;F
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-
 	margin: 1.5rem;
-
 	font-family: "Noto Sans KR", sans-serif;
 	font-size: 1rem;
 	font-weight: 300;
-	text-align: center;
-	transition: 0.5s;
+  display: flex;
+  justify-content: space-evenly;
+  padding-bottom: 4rem;
 `;
 
 const cancelBtn = css`
-	grid-column: 4;
-
-	background: #c99f9f;
+	background: rgb(191, 191, 189)
+  color: rgb(242, 241, 240);
 	padding: 0.5rem 1rem;
-	width: 4rem;
+	width: 6rem;
 	border: none;
 	border-radius: 4px;
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
+  transition: 0.5s;
+  &:hover {
+    color: rgb(242, 241, 240);
+    background: rgb(191, 191, 189)
+  }
+	border: none;
+	border-radius: 8px;
 `;
 
 const saveBtn = css`
-	grid-column: 2;
-
-	background: #6da0cf;
+  background: #4EBBFA;
+  color: rgb(242, 241, 240);
 	padding: 0.5rem 1rem;
-	width: 4rem;
+	width: 6rem;
 	border: none;
 	border-radius: 4px;
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
-`;
-
-const detailContainer = css`
-	grid-row: 3;
-	grid-column: 2;
-	grid-gap: 10px;
-`;
-
-const detail = css`
-	display: grid;
-	grid-template-columns: 80px 1fr 70px 1fr;
-	align-items: center;
-`;
-
-const Container = css`
-  display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-template-rows: repeat(7, 1fr);
+  transition: 0.5s;
+  &:hover {
+    color: #4EBBFA;
+    background: rgb(242, 241, 240)
+  }
+	border: none;
+	border-radius: 8px;
 `;
 
 const imgContainer = css`
 	display: flex;
-  grid-column: 2;
 	margin-top: 5rem;
-	border: 1px solid black;
+	border: 1px solid #d3d3d3;
 	width: 400px;
-	height: 300px;  
+	height: 300px;
   justify-content: center;
-  align-items: center;      
+  align-items: center;
   transition: 0.5s;
+  box-shadow: 2px 2px 1px rgba(1, 1, 2, 0.1);
 `;
 
 const previewImg = css`
@@ -358,7 +382,14 @@ const inputTag = css`
 `;
 
 const inputBtn = css`
-	background: #6da0cf;
+	background: #4EBBFA;
+  color: white;
+  font-weight: bold;
+
+  &:hover {
+    color: #4EBBFA;
+    background: rgb(242, 241, 240)
+  }
 
 	margin: 0;
 	padding: 0.5rem 1rem;
@@ -373,31 +404,26 @@ const inputBtn = css`
 	width: 8rem;
 
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 
 	cursor: pointer;
 
 	transition: 0.5s;
 
 	border: none;
-	border-radius: 4px;
+	border-radius: 8px;
 
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
 `;
 
-const CloseBtn = css`
-	background: #c99f9f;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),  0 2px 4px -1px rgba(0, 0, 0, 0.06);
-	height: 1.5rem;
-	grid-column: 4;
-	grid-row: 1;
-	margin-top : 1rem;
-	margin-right: 1rem;
-
-	cursor: pointer;
+const tagsGroup = css`
+  width: 85%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin-left: 10px;
+  margin-top: 4px;
 `;
 
 const modalClass = css`
@@ -456,7 +482,6 @@ const modalClass = css`
 .ReactModal__Content--after-open {
 	width: 50%;
 	height: 80%;
-	grid-column:4;
 	background-color: #f2f2f2;
 	justify-content: center;
 }
