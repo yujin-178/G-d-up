@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, current } from '@reduxjs/toolkit';
 import { act } from 'react-dom/test-utils';
 import {
   loadUsersToFollow,
@@ -95,10 +95,10 @@ export const friendsSlice = createSlice({
         console.log(`있어요!${action.payload}`);
         return {
           ...state,
-          searchedUsers: state.usersToFollow.filter(user => {
+          searchedUsers: current(state).usersToFollow.filter(user => {
             const len = action.payload.length;
-            return(
-              action.payload === user.slice(len, user.length)
+            return (
+              action.payload === user.slice(0, len)
             );
           }),
         };
