@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setClothes, selectClothes } from '../../slices/clothesSlice';
 import { debounce } from "lodash";
 import { useEffect } from 'react';
+import { filteredClothesSelector } from '../../filterSelector';
 
 export default function ClothesItemListContainer() {
   const dispatch = useDispatch();
@@ -14,7 +15,8 @@ export default function ClothesItemListContainer() {
     dispatch(setClothes('jisoon'));
   }, []);
 
-  const { clothes, selectedClothes } = useSelector(state => state.clothesSlice);
+  const { selectedClothes } = useSelector(state => state.clothesSlice);
+  const filteredClothes = useSelector(state => filteredClothesSelector(state));
 
   const onMouseOverHandler = debounce(clothes => {
     if (selectedClothes.clothing.clothingId !== clothes.clothing.clothingId) {
@@ -29,7 +31,7 @@ export default function ClothesItemListContainer() {
   return (
     <div>
       <ClothesItemList
-        clothes={clothes}
+        filteredClothes={filteredClothes}
         onMouseOverHandler={onMouseOverHandler}
         OnMouseLeaveHandler={OnMouseLeaveHandler}
       />

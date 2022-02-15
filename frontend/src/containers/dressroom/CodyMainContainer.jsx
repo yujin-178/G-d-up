@@ -20,7 +20,7 @@ export default function CodyMainContainer() {
   const dispatch = useDispatch();
 
   const cody = useSelector(state => state.codySlice);
-  const { isdetailOpen, renderCount, offsetRadius, showArrows, goToSlide, codyList, scrollisTop, cards, codyLoading } = cody;
+  const { selectedCody, isdetailOpen, renderCount, offsetRadius, showArrows, goToSlide, codyList, scrollisTop, cards, codyLoading } = cody;
   // const [scrollPosition, setScrollPosition] = useState(0);
   // function updateScroll() {
   //   setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -33,26 +33,31 @@ export default function CodyMainContainer() {
   // }
 
   useEffect(() => {
-    dispatch(setCody('jisoon'));
+    dispatch(setCody('admin'));
   }, []);
 
   let codyCard = setTimeout(() => {
     if (codyLoading === false) {
-      const cardList = codyList.map((card) => {
-        return {
-          key: card.codyId,
-          content: (
-            <CodyCard imgurl={card.imageModel.imageUrl} />
-          )
-        };
-      });
-      const cards = cardList.map((element, index) => {
-        return {
-          ...element,
-          onClick: () => dispatch(setgoToSlide(index))
-        };
-      });
-      dispatch(setCards(cards));
+      if (codyList) {
+        const cardList = codyList.map((card) => {
+          return {
+            key: card.codyId,
+            content: (
+              <CodyCard imgurl={card.imageModel.imageUrl} />
+            )
+          };
+        });
+        const cards = cardList.map((element, index) => {
+          return {
+            ...element,
+            onClick: () => dispatch(setgoToSlide(index))
+          };
+        });
+        dispatch(setCards(cards));
+      } else {
+        const cards = [];
+        dispatch(setCards(cards));
+      }
     }
   }, 1000);
 
@@ -103,6 +108,7 @@ export default function CodyMainContainer() {
         scrollisTop={scrollisTop}
         handleSelectCody={handleSelectCody}
         isdetailOpen={isdetailOpen}
+        selectedCody={selectedCody}
       />
     </div>
   );

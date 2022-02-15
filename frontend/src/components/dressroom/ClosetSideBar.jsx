@@ -5,8 +5,10 @@ import Tag from './Tag';
 
 export default function ClosetSidebar(props) {
   const {
+    season,
     colors,
     selectedColors,
+    onChangeSeason,
     onChangeColor,
     customTags,
     deleteTagHandler,
@@ -20,22 +22,25 @@ export default function ClosetSidebar(props) {
         inputRef={inputRef}
         onKeyPress={onKeyPress}
       />
-      <div css={css`min-height: 25%`}>
-        <p css={title}>tag</p>
-        <ul css={tagContainer}>
-          {customTags.map((value, index) => {
-            return (
-              <Tag
-                key={index}
-                value={value}
-                deleteTagHandler={deleteTagHandler}
-              />
-            );
-          })}
-        </ul>
-      </div>
       <>
-        <p css={title}>color</p>
+        <p css={title}>🌹 season</p>
+        <ul css={seasonItems}>
+          {season.map((item, index) => (
+            <li key={index} css={menuItem}>
+              <input
+                data-testid={item}
+                css={checkbox}
+                type="checkbox"
+                id={item}
+                onChange={(event) => onChangeSeason(event.target.checked, item)}
+              />
+              <label css={checkboxTitle} htmlFor={item}>{item}</label>
+            </li>
+          ))}
+        </ul>
+      </>
+      <>
+        <p css={title}>🌹 color</p>
         <ul css={colorItems}>
           {colors.map(({ name, code }, index) => {
             const isSelected = selectedColors.includes(name);
@@ -53,6 +58,19 @@ export default function ClosetSidebar(props) {
           })}
         </ul>
       </>
+      <div css={css`min-height: 25%`}>
+        <ul css={tagContainer}>
+          {customTags.map((value, index) => {
+            return (
+              <Tag
+                key={index}
+                value={value}
+                deleteTagHandler={deleteTagHandler}
+              />
+            );
+          })}
+        </ul>
+      </div>
     </aside >
   );
 }
@@ -76,6 +94,12 @@ const sidebarStyle = css`
 const menuItem = css`
   font-size: 15px;
   padding: 0.2rem 0px;
+`;
+
+const seasonItems = css`
+  font-size: 15px;
+  padding: 0 1px;
+  list-style:none
 `;
 
 const colorItems = css`
@@ -113,4 +137,15 @@ const tagContainer = css`
 const title = css`
   font-size: 16px;
   margin: 10px;
+`;
+
+const checkbox = css`
+  vertical-align: middle;
+  position: relative;
+  bottom: 0.5px;
+`;
+
+const checkboxTitle = css`
+  display: inline-block;
+  margin-left: 10px;
 `;

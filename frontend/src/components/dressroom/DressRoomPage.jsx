@@ -1,16 +1,42 @@
 import React from 'react';
-
+import FriendsModal from './FriendsModal';
 import { Link } from 'react-router-dom';
 
 import { css } from "@emotion/react";
 
 import { BackBtn } from '../dressRoomCss';
+import { PeopleFill } from '@emotion-icons/bootstrap/PeopleFill';
+import { useDispatch, useSelector } from 'react-redux';
+import { setIsOpen } from '../../slices/friendsSlice';
 
-export default function DressRoomContainer() {
+export default function DressRoomPage() {
+  const dispatch = useDispatch();
+
+  function handleClickModal() {
+    dispatch(setIsOpen(true));
+  }
+
+  function HandleRequestClose() {
+    dispatch(setIsOpen(false));
+    console.log('닫아!');
+  }
+
+  const { isOpen } = useSelector(state => state.friendsSlice);
+
   return (
     <div css={Container}>
       <div css={DressRoom}>
+        <FriendsModal
+          isOpen={isOpen}
+        />
         <h2 css={Title}>드레스룸</h2>
+        <div css={friendsBtnDiv}>
+          <PeopleFill
+            css={FriendsBtn}
+            onClick={handleClickModal}
+            onRequestClose={HandleRequestClose}
+          />
+        </div>
         <div css={[BtnItem, CodyBtn]}>
           <Link to='/cody'>
             <button css={TextButton}>
@@ -44,6 +70,19 @@ const DressRoom = css`
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/dressroombackground.jpg");
   background-size: cover;
   background-position: center;
+`;
+
+const friendsBtnDiv = css`
+  grid-column: 1 / 2;
+  grid-row: 3 / 4;
+`;
+
+const FriendsBtn = css`
+  position: relative;
+  margin: 1rem 5rem;
+  color: #fefefe;
+  width: 5rem;
+  cursor: pointer;
 `;
 
 const BtnItem = css`
@@ -80,7 +119,7 @@ const Container = css`
 `;
 
 const TextButton = css`
-  margin: 1rem 2rem;
+  margin: 3rem 1rem 2rem 3rem;
   padding: 0.5rem 1rem;
 
   font-family: "Noto Sans KR", sans-serif;
@@ -104,4 +143,3 @@ const GridContainer = css`
   justify-content: space-between;
   grid-template-columns: 1fr 1fr 1fr;
 `;
-

@@ -7,7 +7,7 @@ import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
 import CodyDetailContainer from '../../containers/dressroom/CodyDetailContainer';
 
-export default function CodyPage({ isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
+export default function CodyPage({ selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
   // const animatedItem = {
   //   0: useScrollFadeIn('down', 1, 0),
   //   1: useScrollFadeIn('down', 1, 0.2),
@@ -18,15 +18,19 @@ export default function CodyPage({ isdetailOpen, handleSelectCody, scrollisTop, 
     <div css={CodyBackground}>
       <div css={isdetailOpen ? css`visibility: hidden;` : container}>
         <h2>Cody</h2>
-        <div css={carousel}>
-          <Carousel
-            slides={cards}
-            goToSlide={goToSlide}
-            offsetRadius={offsetRadius}
-            showNavigation={showArrows}
-            animationConfig={config.gentle}
-          />
-        </div>
+        {cards ?
+          <div css={carousel}>
+            <Carousel
+              slides={cards}
+              goToSlide={goToSlide}
+              offsetRadius={offsetRadius}
+              showNavigation={showArrows}
+              animationConfig={config.gentle}
+            />
+          </div>
+          :
+          ''
+        }
 
         <div css={LeftArrow}>
           <ArrowLeftSquare
@@ -69,8 +73,12 @@ export default function CodyPage({ isdetailOpen, handleSelectCody, scrollisTop, 
         onClick={() => navigate('/dressroom')}>
         Back
       </button>
-      <CodyDetailContainer
-      />
+      {selectedCody ?
+        <CodyDetailContainer
+        />
+        :
+        ''
+      }
 
     </div>
   );

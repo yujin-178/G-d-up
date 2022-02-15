@@ -15,6 +15,7 @@ const initialState = {
   'isdetailOpen': false,
   'selectedCody' : '',
   'transitionEnd' : false,
+  'iscodyEdit' : false,
 };
 
 export const setCody = createAsyncThunk(
@@ -94,7 +95,10 @@ export const codySlice = createSlice({
     },
     closeModal(state) {
       state.modalType = null;
-    }
+    },
+    changeCodyEdit(state, action) {
+      state.iscodyEdit = action.payload;
+    },
   },
   extraReducers: {
     [setCody.pending.type]: (state) => {
@@ -119,7 +123,7 @@ export const codySlice = createSlice({
     },
     [createCody.rejected]: (state) => {
       state.loading = false;
-    }
+    },
   }
 });
 
@@ -132,6 +136,7 @@ export const {
   setDetail,
   changeSelectCody,
   setEnd,
+  changeCodyEdit,
 } = codySlice.actions;
 
 export default codySlice.reducer;
