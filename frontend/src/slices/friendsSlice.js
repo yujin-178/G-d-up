@@ -1,11 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { loadUsersToFollow, loadFollowers, loadFollowings } from '../services/api';
+import { act } from 'react-dom/test-utils';
+import { 
+  loadUsersToFollow, 
+  loadFollowers, 
+  loadFollowings, 
+  requestFollow,
+  requestUnfollow,
+} from '../services/api';
 
 const initialState = {
   isOpen: false,
   usersToFollow: ['팔로우 가능한 사용자가 없습니다.'],
   followers: ['팔로워가 없습니다.'],
   followings: ['팔로잉하는 사람이 없습니다.'],
+  following: '',
 };
 
 export const setUsersToFollow = createAsyncThunk(
@@ -29,6 +37,22 @@ export const setFollowings = createAsyncThunk(
   async (userName) => {
     const followings = await loadFollowings(userName);
     return followings;
+  }
+);
+
+export const followUser = createAsyncThunk(
+  'friends/followUser',
+  async ({ following, userName }) => {
+    await requestFollow(following, userName);
+    return following;
+  }
+);
+
+export const unfollowUser = createAsyncThunk(
+  'friends/unfollowUser',
+  async ({ unfollowing, userName }) => {
+    await requestUnfollow(unfollowing, userName);
+    return unfollowing;
   }
 );
 
@@ -65,6 +89,12 @@ export const friendsSlice = createSlice({
         isOpen: action.payload,
       };
     },
+    setFollowing(state, action) {
+      return {
+        ...state,
+        following: action.payload,
+      };
+    }
   },
   extraReducers: {
     [setUsersToFollow.pending]: extraReducerPending(),
@@ -93,9 +123,29 @@ export const friendsSlice = createSlice({
       };
     },
     [setFollowings.rejected]: extraReducerRejected(),
+
+    [followUser.pending]: extraReducerPending(),
+    [followUser.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        usersToFollow: state.usersToFollow.filter(user => user != action.payload),
+        followings: [...state.followings, action.payload],
+      };
+    },
+    [followUser.rejected]: extraReducerRejected(),
+
+    [unfollowUser.pending]: extraReducerPending(),
+    [unfollowUser.fulfilled]: (state, action) => {
+      return {
+        ...state,
+        followings: state.followings.filter(user => user != action.payload),
+        usersToFollow: [...state.usersToFollow, action.payload],
+      };
+    },
+    [unfollowUser.rejected]: extraReducerRejected(),
   },
 });
 
-export const { setIsOpen } = friendsSlice.actions;
+export const { setIsOpen, setFollowing } = friendsSlice.actions;
 
 export default friendsSlice.reducer;

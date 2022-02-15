@@ -45,7 +45,7 @@ export default function AddClothesContainer() {
     },
   };
 
-  const userName = 'jisoon';
+  const userName = JSON.parse(localStorage.getItem('userInfo')).username;
 
   function handleimgError({ type, text }) {
     dispatch(changeimgError({ type, text }));

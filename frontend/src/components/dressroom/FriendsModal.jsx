@@ -2,7 +2,15 @@ import React from 'react';
 import Modal from 'react-modal';
 import { css } from '@emotion/react';
 
-export default function FriendsModal({ isOpen, usersToFollow, onClickModalClose, followers, followings }) {
+export default function FriendsModal({
+  isOpen,
+  usersToFollow,
+  onClickModalClose,
+  onClickFollow,
+  onClickUnfollow,
+  followers,
+  followings
+}) {
   return (
     <Modal css={FriendsModalStyle} isOpen={isOpen}>
       <div css={CloseBtn}>
@@ -14,7 +22,12 @@ export default function FriendsModal({ isOpen, usersToFollow, onClickModalClose,
           {usersToFollow.map((user, idx) =>
             <li css={ListStyle} key={idx}>
               {user}
-              <button css={FollowItem}> 팔로우 </button>
+              <button
+                css={FollowItem}
+                onClick={() => onClickFollow(idx)}
+              >
+                팔로우 
+              </button>
             </li>
           )}
         </div>
@@ -32,7 +45,12 @@ export default function FriendsModal({ isOpen, usersToFollow, onClickModalClose,
             {followings.map((user, idx) =>
               <li css={ListStyle} key={idx}>
                 {user}
-                <button css={[FollowItem, UnfollowBtn]}> 언팔로우 </button>
+                <button
+                  css={[FollowItem, UnfollowBtn]}
+                  onClick={() => onClickUnfollow(idx)}
+                >
+                  언팔로우
+                </button>
               </li>
             )}
           </div>
@@ -41,7 +59,7 @@ export default function FriendsModal({ isOpen, usersToFollow, onClickModalClose,
 
       {/* <input type="text" placeholder='친구이름을 입력하세요'/> */}
 
-    </Modal>
+    </Modal >
   );
 }
 
