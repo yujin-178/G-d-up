@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loadClothesByUserName } from '../services/api';
+import { loadClothesByUserName, deleteClothes } from '../services/api';
 
 const initialState = {
   clothes: [],
@@ -16,13 +16,7 @@ const initialState = {
 export const deleteClothesById = createAsyncThunk(
   'clothes/deleteClothes',
   async (clothesId) => {
-    // async (clothesId, thunkAPI) => {
-    // todo: api request
-
-    // const response = await axiosServer({
-    //   method: 'delete',
-    //   url: `clothes/${clothesId}/`,
-    // });
+    await deleteClothes(clothesId);
     return clothesId;
   }
 );
@@ -132,23 +126,23 @@ export const clothesSlice = createSlice({
       };
     },
     [deleteClothesById.pending]: (state) => {
-      // [deleteClothesById.pending]: (state, action) => {
       return {
         ...state,
         loading: true
       };
     },
     [deleteClothesById.fulfilled]: (state, { payload }) => {
-      const deleted = state.clothes.filter(item => item.id !== payload);
+      console.log('deleted Clothes Id', payload);
+      const deleted = state.clothes.filter(item => item.clothing.clothingId !== payload);
+      const selectedClothes = deleted.length ? deleted[0] : null;
       return {
         ...state,
         loading: false,
         clothes: deleted,
-        selectedClothes: deleted[0],
+        selectedClothes: selectedClothes,
       };
     },
     [deleteClothesById.rejected]: (state) => {
-      // [deleteClothesById.rejected]: (state, action) => {
       return {
         ...state,
         loading: false,

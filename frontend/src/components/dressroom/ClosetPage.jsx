@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import ClothesItemListContainer from '../../containers/dressroom/ClothesItemListContainer';
 import FilterContainer from '../../containers/dressroom/FilterContainer.jsx';
 import AddClothesContainer from '../../containers/dressroom/AddClothesContainer.jsx';
@@ -8,7 +7,7 @@ import BackImg from '../../../public/images/add_icon.svg';
 
 import { css } from '@emotion/react';
 
-export default function ClosetPage({ onClickModal, filteredClothes }) {
+export default function ClosetPage({ onClickModal, filteredClothes, goBackHandler }) {
   console.log(filteredClothes);
 
   return (
@@ -30,11 +29,12 @@ export default function ClosetPage({ onClickModal, filteredClothes }) {
         </div>
         <ClothesDetailContainer />
       </div>
-      <Link to='/dressroom'>
-        <button css={BackBtn}>
-          Back
-        </button>
-      </Link>
+      <button
+        css={BackBtn}
+        onClick={goBackHandler}
+      >
+        Back
+      </button>
     </div>
   );
 }

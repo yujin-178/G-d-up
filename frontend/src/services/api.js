@@ -78,3 +78,7 @@ export async function authLogin(data) {
   const response = await axios.post(`http://i6b108.p.ssafy.io:8000/user/login`, data);
   return response.data;
 }
+
+export async function deleteClothes(clothingId) {
+  await axios.delete(`http://i6b108.p.ssafy.io:8000/clothing/${clothingId}`);
+}
