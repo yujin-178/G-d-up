@@ -153,7 +153,6 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
                 css={saveBtn}
                 onClick={() => saveClothes()}
                 id="saveBtn"
-                disabled
               >
                 저장
               </button>

@@ -45,7 +45,7 @@ export default function AddClothesContainer() {
     },
   };
 
-  const userName = 'admin';
+  const userName = 'jisoon';
 
   function handleimgError({ type, text }) {
     dispatch(changeimgError({ type, text }));
@@ -91,7 +91,7 @@ export default function AddClothesContainer() {
       .catch((err) => {
         const message = err.message;
         setLoading(false);
-        handleimgError({ type: 'background', text : message });
+        handleimgError({ type: 'background', text: message });
       });
     axios.post(`http://i6b108.p.ssafy.io:8000/clothing/tag`, formData, config)
       .then((res) => {
@@ -101,35 +101,39 @@ export default function AddClothesContainer() {
       })
       .catch((err) => {
         const message = err.message;
-        handleimgError({ type: 'tag', text : message });
+        handleimgError({ type: 'tag', text: message });
       });
   }
 
   function saveClothes() {
     dispatch(changeisResOpen(true));
-    handleresloading(true);
-    const config = {
-      Headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    };
-    const formData = new FormData();
-    formData.append('imageFile', imgURL);
-    formData.append('clothing', new Blob([JSON.stringify(tagInfo)], { type: 'application/json' }));
-    formData.append('hashtag', tagGroup.join(' '));
-    formData.append('washing', selectedIcon.join(' '));
+    if (tagInfo && imgURL) {
+      handleresloading(true);
+      const config = {
+        Headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+      const formData = new FormData();
+      formData.append('imageFile', imgURL);
+      formData.append('clothing', new Blob([JSON.stringify(tagInfo)], { type: 'application/json' }));
+      formData.append('hashtag', tagGroup.join(' '));
+      formData.append('washing', selectedIcon.join(' '));
 
-    axios.post(`http://i6b108.p.ssafy.io:8000/clothing/save`, formData, config)
-      .then((res) => {
-        handleresloading(false);
-        dispatch(changeResText(res.data.message));
-        handleresetClothes();
-        dispatch(setClothes(userName));
-      })
-      .catch((err) => {
-        handleresloading(false);
-        dispatch(changeResText(err.data.data.message));
-      });
+      axios.post(`http://i6b108.p.ssafy.io:8000/clothing/save`, formData, config)
+        .then((res) => {
+          handleresloading(false);
+          dispatch(changeResText(res.data.message));
+          handleresetClothes();
+          dispatch(setClothes(userName));
+        })
+        .catch((err) => {
+          handleresloading(false);
+          dispatch(changeResText(err.data.data.message));
+        });
+    } else {
+      dispatch(changeResText('내용을 입력해주세요'));
+    }
   }
 
   function importAll(r) {
