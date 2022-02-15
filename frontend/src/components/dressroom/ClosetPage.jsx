@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import ClothesItemListContainer from '../../containers/dressroom/ClothesItemListContainer';
 import FilterContainer from '../../containers/dressroom/FilterContainer.jsx';
 import AddClothesContainer from '../../containers/dressroom/AddClothesContainer.jsx';
