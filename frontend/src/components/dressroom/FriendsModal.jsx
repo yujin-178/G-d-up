@@ -28,7 +28,6 @@ export default function FriendsModal({
           />
           {searchedUsers.length === 0 &&
             <div>
-              <h3>전체유저</h3>
               {usersToFollow.map((user, idx) =>
                 <li css={ListStyle} key={idx}>
                   {user}
@@ -44,7 +43,6 @@ export default function FriendsModal({
           }
           {searchedUsers.length > 0 &&
             <div>
-              <h3>검색된 유저</h3>
               {searchedUsers.map((user, idx) =>
                 <li css={ListStyle} key={idx}>
                   {user}

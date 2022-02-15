@@ -92,9 +92,9 @@ export const friendsSlice = createSlice({
     },
     setSearchResult(state, action) {
       if (action.payload.length) {
-        console.log(`있어요!${action.payload}`);
         return {
           ...state,
+          searchUserInput: action.payload,
           searchedUsers: current(state).usersToFollow.filter(user => {
             const len = action.payload.length;
             return (
@@ -104,9 +104,9 @@ export const friendsSlice = createSlice({
         };
       }
       else {
-        console.log('없어요!!');
         return ({
           ...state,
+          searchUserInput: action.payload,
           searchedUsers: [],
         });
       }
