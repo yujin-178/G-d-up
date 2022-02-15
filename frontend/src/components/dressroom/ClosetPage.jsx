@@ -6,6 +6,7 @@ import ClothesDetailContainer from '../../containers/dressroom/ClothesDetailCont
 import BackImg from '../../../public/images/add_icon.svg';
 
 import { css } from '@emotion/react';
+import { Link } from 'react-router-dom';
 
 export default function ClosetPage({ onClickModal, filteredClothes, goBackHandler }) {
   console.log(filteredClothes);
