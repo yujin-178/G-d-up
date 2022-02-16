@@ -3,20 +3,18 @@ import { css } from '@emotion/react';
 
 export default function FollowingForm({ followings, onClickUnfollow, onClickGoToFollowing }) {
   return (
-    <div>
-      <div css={FollowerFollowing}>
-        {followings.map((user, idx) =>
-          <li css={[ListStyle, FollowListStyle]} key={idx}>
-            <span css={SpanStyle} onClick={() => onClickGoToFollowing(idx)}>{user}</span>
-            <button
-              css={[FollowItem, UnfollowBtn]}
-              onClick={() => onClickUnfollow(idx)}
-            >
-              언팔로우
-            </button>
-          </li>
-        )}
-      </div>
+    <div css={FollowerFollowing}>
+      {followings.map((user, idx) =>
+        <li css={[ListStyle, FollowListStyle]} key={idx}>
+          <span css={SpanStyle} onClick={() => onClickGoToFollowing(idx)}>{user}</span>
+          <button
+            css={[FollowItem, UnfollowBtn]}
+            onClick={() => onClickUnfollow(idx)}
+          >
+            언팔로우
+          </button>
+        </li>
+      )}
     </div>
   );
 }

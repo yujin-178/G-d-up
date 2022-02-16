@@ -3,17 +3,15 @@ import { css } from '@emotion/react';
 
 export default function FollowerForm({ followers, onClickGoToFollower }) {
   return (
-    <div>
-      <div css={Follower}>
-        {followers.map((user, idx) =>
-          <li css={[ListStyle, FollowListStyle]}
-            key={idx}
-            onClick={() => onClickGoToFollower(idx)}
-          >
-            {user}
-          </li>
-        )}
-      </div>
+    <div css={Follower}>
+      {followers.map((user, idx) =>
+        <li css={[ListStyle, FollowListStyle]}
+          key={idx}
+          onClick={() => onClickGoToFollower(idx)}
+        >
+          {user}
+        </li>
+      )}
     </div>
   );
 }
