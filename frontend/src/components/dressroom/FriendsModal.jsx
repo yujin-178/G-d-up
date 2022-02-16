@@ -27,10 +27,12 @@ export default function FriendsModal({
   const obj = {
     0: <FollowerForm
       followers={followers}
+      onClickGoToFollower={onClickGoToFollower}
     />,
     1: <FollowingForm
       followings={followings}
       onClickUnfollow={onClickUnfollow}
+      onClickGoToFollowing={onClickGoToFollowing}
     />,
   };
 
