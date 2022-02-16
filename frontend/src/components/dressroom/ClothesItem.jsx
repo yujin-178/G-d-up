@@ -45,6 +45,7 @@ const ClothesItemBox = css`
   justify-self: center;
   border-radius: 0.4rem;
   display: table;
+  cursor: pointer;
 `;
 
 const ClothesItemImgDiv = css`

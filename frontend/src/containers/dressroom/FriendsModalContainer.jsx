@@ -52,13 +52,14 @@ export default function FriendsModalContainer({ isOpen }) {
     const friendName = followings[idx];
     localStorage.setItem("friendName", `${friendName}` );
     dispatch(setUserName(friendName));
-
+    isOpen = false;
   }
 
   function handleClickGoToFollower(idx) {
     const friendName = followers[idx];
     localStorage.setItem("friendName", `${friendName}` );
     dispatch(setUserName(friendName));
+    isOpen = false;
   }
 
   return (
