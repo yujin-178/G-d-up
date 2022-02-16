@@ -21,7 +21,7 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
         onRequestClose={() => { modalToggle(false); resetClothes(); }}
         closeTimeoutMS={500}
         onAfterOpen={() => { document.body.style.overflow = 'hidden'; }}
-        onAfterClose={() => document.body.removeAttribute('style')}
+        onAfterClose={() =>{ document.body.style.overflow = 'auto'; }}
         style={{
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.75)',
