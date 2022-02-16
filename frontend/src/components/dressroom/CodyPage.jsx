@@ -9,7 +9,7 @@ import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
 import CodyDetailContainer from '../../containers/dressroom/CodyDetailContainer';
 
-export default function CodyPage({ filterCody, tagDelete ,tagFilter ,tagRef, onKeyPress ,setisdetailOpen, selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide, userName, isLoggedInUser }) {
+export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onKeyPress, setisdetailOpen, selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide, userName, isLoggedInUser }) {
   // const animatedItem = {
   //   0: useScrollFadeIn('down', 1, 0),
   //   1: useScrollFadeIn('down', 1, 0.2),
@@ -78,15 +78,16 @@ export default function CodyPage({ filterCody, tagDelete ,tagFilter ,tagRef, onK
       }
 
       <button css={createBtn({ isLoggedInUser })} onClick={() => navigate('/codycreate')}>
-            새 코디 생성
+        새 코디 생성
       </button>
       <button
         css={backBtn}
         onClick={() => navigate('/dressroom')}>
-            Back
+        Back
       </button>
       {selectedCody ?
-        <CodyDetailContainer
+        < CodyDetailContainer
+          isLoggedInUser={isLoggedInUser}
         />
         :
         ''
