@@ -39,7 +39,7 @@ export default function LoginPage({ emailRef, passwordRef, onClickLogin, error }
           </p>
         </div>
         <Link to='/'>
-          <button css={BackBtn}>
+          <button css={BackBtn} className="hvr-fade">
             뒤로
           </button>
         </Link>
@@ -119,15 +119,16 @@ const LoginBtn = css`
 `;
 
 const BackBtn = css`
-  width: 5rem;
-  height: 3rem;
   position: absolute;
   left: 75.6rem;
   top: 44.3rem;
-  background: #ecc194;
-  border: none;
-  border-radius: 4px;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%);
+
+  width: 90px;
+  height: 40px;
+  background-color: white;
+  color: white;
+  border: 1.5px solid white;
+  background-color: #2E2E2E;
   cursor: pointer;
 `;
 
