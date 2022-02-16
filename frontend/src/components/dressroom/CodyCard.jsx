@@ -21,10 +21,12 @@ export default function Card({ imgurl }) {
   );
 }
 const cardStyle = css`
+  border : 5px solid;
+  border-color: #685f60;
+  background-color: white;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: #685f60;
   width: 240px;
   height: 305px;
   padding: 10px;

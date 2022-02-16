@@ -9,7 +9,7 @@ import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
 import CodyDetailContainer from '../../containers/dressroom/CodyDetailContainer';
 
-export default function CodyPage({ setisdetailOpen, selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
+export default function CodyPage({ filterCody, tagDelete ,tagFilter ,tagRef, onKeyPress ,setisdetailOpen, selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
   // const animatedItem = {
   //   0: useScrollFadeIn('down', 1, 0),
   //   1: useScrollFadeIn('down', 1, 0.2),
@@ -63,11 +63,15 @@ export default function CodyPage({ setisdetailOpen, selectedCody, isdetailOpen, 
           <div css={scrollisTop ? Fadeup : Fadein} id="fade">
             <div>
               <CodyList
-                cards={codyList}
+                cards={filterCody}
                 moveScroll={moveScroll}
                 scrollisTop={scrollisTop}
                 handleSelectCody={handleSelectCody}
                 setisdetailOpen={setisdetailOpen}
+                tagRef={tagRef}
+                onKeyPress={onKeyPress}
+                tagFilter={tagFilter}
+                tagDelete={tagDelete}
               />
             </div>
         </div>
