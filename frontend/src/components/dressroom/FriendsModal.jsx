@@ -1,6 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { css } from '@emotion/react';
+import UsersToFollowForm from './UsersToFollowForm';
+import FollowerForm from './FollowerForm';
+import FollowingForm from './FollowingForm';
+import '../TabCss.css';
+import xSymbol from '../../../public/images/xSymbol.png';
+
+// tab 참고 https://catalin.red/dist/uploads/2012/01/css3-jquery-folder-tabs.html
 
 export default function FriendsModal({
   isOpen,
@@ -16,79 +23,47 @@ export default function FriendsModal({
   searchedUsers,
   searchUserInput,
 }) {
+
+  const obj = {
+    0: <FollowerForm
+      followers={followers}
+    />,
+    1: <FollowingForm
+      followings={followings}
+      onClickUnfollow={onClickUnfollow}
+    />,
+  };
+
+  const [activeId, setActiveId] = useState(0);
+
+  const clickHandler = (id) => setActiveId(id);
+
   return (
     <Modal css={FriendsModalStyle} isOpen={isOpen}>
-      <div css={CloseBtn}>
-        <button onClick={onClickModalClose}>X</button>
-      </div>
-      <div css={GridWrapper}>
-        <div css={UsersToFollow}>
-          <h2>팔로우가능한사람</h2>
-          <input
-            type="text"
-            placeholder='친구이름을 입력하세요'
-            onChange={onChangeSearchUser}
-          />
-          {searchedUsers.length === 0 && searchUserInput.length === 0 &&
-            <div>
-              {usersToFollow.map((user, idx) =>
-                <li css={ListStyle} key={idx}>
-                  {user}
-                  <button
-                    css={FollowItem}
-                    onClick={() => onClickFollow(idx)}
-                  >
-                    팔로우
-                  </button>
-                </li>
-              )}
-            </div>
-          }
-          {searchedUsers.length > 0 &&
-            <div>
-              {searchedUsers.map((user, idx) =>
-                <li css={ListStyle} key={idx}>
-                  {user}
-                  <button
-                    css={FollowItem}
-                    onClick={() => onClickFollow(idx)}
-                  >
-                    팔로우
-                  </button>
-                </li>
-              )}
-            </div>
-          }
+      <div css={mainDiv}>
+        <div css={CloseBtn}>
+          <img css={CloseBtnImg} src={xSymbol} onClick={onClickModalClose}></img>
         </div>
-        <div css={FollowerFollowing}>
-          <div>
-            <h2>팔로워</h2>
-            {followers.map((user, idx) =>
-              <li
-                css={[ListStyle, FollowListStyle]}
-                key={idx}
-                onClick={() => onClickGoToFollower(idx)}
-              >
-                {user}
-              </li>
-            )}
+        <div css={inBox}>
+          <div css={FriendsModalTitle}>
+            <h2>친구 목록</h2>
           </div>
-          <div>
-            <h2>팔로잉</h2>
-            {followings.map((user, idx) =>
-              <li
-                css={[ListStyle, FollowListStyle]}
-                key={idx}
-              >
-                <span css={SpanStyle} onClick={() => onClickGoToFollowing(idx)}>{user}</span>
-                <button
-                  css={[FollowItem, UnfollowBtn]}
-                  onClick={() => onClickUnfollow(idx)}
-                >
-                  언팔로우
-                </button>
-              </li>
-            )}
+          <div css={GridWrapper}>
+            <UsersToFollowForm
+              css={UsersToFollowStyle}
+              onChangeSearchUser={onChangeSearchUser}
+              searchedUsers={searchedUsers}
+              searchUserInput={searchUserInput}
+              usersToFollow={usersToFollow}
+              onClickFollow={onClickFollow}
+            />
+            <div>
+              <ul id="tabs">
+                <li id={activeId === 0 ? "current" : "after"} onClick={() => clickHandler(0)}><a href="#" name="tab1">팔로워</a></li>
+                <li onClick={() => clickHandler(1)}><a href="#" name="tab2">팔로잉</a></li>
+              </ul>
+              <div css={contentArea}>{obj[activeId]}</div>
+            </div>
           </div>
         </div>
       </div>
@@ -99,27 +74,30 @@ export default function FriendsModal({
 const FriendsModalStyle = css`
   margin: 7% auto;
   width: 50%;
-  height: 70vh;
+  height: 70%;
   background-color: #fefefe;
-  opacity: 0.8;
+  opacity: 0.9;
+`;
+
+const FriendsModalTitle = css`
+  margin: 2rem 1rem 2rem 1rem;
+  text-align: center;
+  padding: 0;
 `;
 
 const CloseBtn = css`
-  margin: 1rem 1rem 1rem 10rem,
+  text-align: right;
+  height: 5%;
 `;
 
-const FollowItem = css`
-  width: 4rem;
-  height: 1.3rem;
-  background: #ecc194;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
+const CloseBtnImg = css`
+  padding: 1%;
+  cursor:pointer;
 `;
 
-const UnfollowBtn = css`
-  width: 5rem;
+const UsersToFollowStyle = css`
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
 `;
 
 const GridWrapper = css`
@@ -127,37 +105,19 @@ const GridWrapper = css`
   grid-template-columns: 50% 50%;
 `;
 
-const ListStyle = css`
-  padding: 0.5 10rem;
-  margin: 0.7rem auto;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  width: 70%;
-  background-color: beige;
-  cursor: pointer;
+const inBox = css`
+  padding: 2%;
+  height: 100%;
 `;
 
-const FollowListStyle = css`
-  &:hover {
-    background-color: #E6B36D;
-  }
+const mainDiv = css`
+  background-color: #fefefe;
+  height: 70%;
 `;
 
-const SpanStyle = css`
-  width: 80%;
-`;
-
-const UsersToFollow = css`
-  margin: 1rem;
-  padding: 1rem;
-  grid-column: 1 / 2;
-  text-align: center;
-`;
-
-const FollowerFollowing = css`
-  margin: 1rem;
-  padding: 1rem;
+const contentArea = css`
+  background-color: #fefefe;
+  height:100%;
   grid-column: 2 / 3;
-  text-align: center;
+  grid-row: 2 / 3;
 `;
