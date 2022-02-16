@@ -137,7 +137,7 @@ const clothesImage = css`
 `;
 
 const clothesInfo = css`
-  font-size: 22px;
+  font-size: 18px;
   margin: 0 2rem;
   margin-bottom: 2%;
 `;
@@ -173,13 +173,15 @@ const tagItem = css`
   color: black;
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
   min-width: 50px;
-`;
+  padding: 2px 2.5px;
+  margin-top: 8px;
+  `;
 
 const tag = css`
   margin-top: 1%;
   width: 100%;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 `;
 
 const buttonGroup = css`

@@ -9,6 +9,8 @@ import { useEffect } from 'react';
 import { filteredClothesSelector } from '../../filterSelector';
 import { css } from "@emotion/react";
 
+import { changeisModalOpen } from '../../slices/modalSlice';
+
 export default function ClothesItemListContainer() {
   const dispatch = useDispatch();
   const { userName } = useSelector(state => state.clothesSlice);
@@ -25,6 +27,7 @@ export default function ClothesItemListContainer() {
 
   const { selectedClothes } = useSelector(state => state.clothesSlice);
   const filteredClothes = useSelector(state => filteredClothesSelector(state));
+  const loggedInUser = useSelector(state => state.authSlice.userName);
 
   const onMouseOverHandler = debounce(clothes => {
     if (selectedClothes.clothing.clothingId !== clothes.clothing.clothingId) {
@@ -36,12 +39,18 @@ export default function ClothesItemListContainer() {
     onMouseOverHandler.cancel();
   };
 
+  function handleClickModal() {
+    dispatch(changeisModalOpen(true));
+  }
+
   return (
     <div css={ImageContainer}>
       <ClothesItemList
         filteredClothes={filteredClothes}
         onMouseOverHandler={onMouseOverHandler}
         OnMouseLeaveHandler={OnMouseLeaveHandler}
+        onClickModal={handleClickModal}
+        isLoggedInUser={loggedInUser === userName}
       />
     </div>
   );
