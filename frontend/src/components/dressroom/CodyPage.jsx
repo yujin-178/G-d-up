@@ -73,6 +73,7 @@ export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onK
               tagFilter={tagFilter}
               tagDelete={tagDelete}
               isLoggedInUser={isLoggedInUser}
+              userName={userName}
             />
           </div>
         </div>

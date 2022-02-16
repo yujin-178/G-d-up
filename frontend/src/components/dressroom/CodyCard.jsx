@@ -3,7 +3,7 @@ import { useSpring, animated } from 'react-spring';
 
 import { css } from "@emotion/react";
 
-export default function Card({ imgurl }) {
+export default function Card({ imgurl, card }) {
   const [show, setShow] = useState(false);
   const props3 = useSpring({
     transform: show ? "scale(1.03)" : "scale(1)",
@@ -17,22 +17,38 @@ export default function Card({ imgurl }) {
       onMouseLeave={() => setShow(false)}
     >
       <img src={imgurl} alt='codyCard' css={imgStyle} />
+      {card ?
+        <div css={content}>{card.content}</div>
+        :
+        <div css={content}>내용 없음</div>
+      }
     </animated.div>
   );
 }
 const cardStyle = css`
-  border : 5px solid;
+  border : 2px solid;
   border-color: #685f60;
   background-color: white;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  width: 240px;
-  height: 305px;
+  align-items: center;
+  width: 200px;
+  height: 330px;
   padding: 10px;
-  border-radius: 10px;
 `;
 
 const imgStyle = css`
-  max-height: 90%;
+  margin-top: 20px;
+  width: 90%
+`;
+
+const content = css`
+  padding: 15px;
+  font-size: 23px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 150px;
+  height: 20px;
+  font-family: 'BBTreeCB';
 `;

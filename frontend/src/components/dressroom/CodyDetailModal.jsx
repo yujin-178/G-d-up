@@ -19,7 +19,7 @@ export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResO
         onRequestClose={() => handleCodyDetailOpen(false)}
         closeTimeoutMS={500}
         onAfterOpen={() => { document.body.style.overflow = 'hidden'; }}
-        onAfterClose={() => document.body.removeAttribute('style')}
+        onAfterClose={() =>{ document.body.style.overflow = 'auto'; }}
         style={{
           content: {
             backgroundColor: '#7c8186',

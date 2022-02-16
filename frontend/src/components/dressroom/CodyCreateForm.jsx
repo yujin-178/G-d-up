@@ -127,12 +127,11 @@ const memo = css`
 `;
 
 const canvas = css`
-  min-width: 100%;
-  min-height: 380px;
+  width: 270px;
+  height: 370px;
   background-color: rgb(242, 241, 240);
   position: relative;
   border: 1px solid rgb(153, 153, 153);
-  border-radius: 8px;
   opacity: 1;
 `;
 

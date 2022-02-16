@@ -79,7 +79,7 @@ export default function CodyMainContainer() {
           return {
             key: card.codyId,
             content: (
-              <CodyCard imgurl={card.imageModel.imageUrl} />
+              <CodyCard imgurl={card.imageModel.imageUrl} card={card} />
             )
           };
         });
