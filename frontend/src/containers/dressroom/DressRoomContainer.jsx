@@ -26,10 +26,16 @@ export default function DressRoomContainer() {
     dispatch(setUserName(userName));
   }, []);
 
+  function handleClickToMyDressRoom() {
+    dispatch(setUserName(loginedUser));
+  }
+
   return (
     <DressRoomPage
       onClickModalOpen={handleClickModalOpen}
+      onClickToMyDressRoom={handleClickToMyDressRoom}
       userName={userName}
+      isMyRoom={loginedUser === userName}
     />
   );
 }
