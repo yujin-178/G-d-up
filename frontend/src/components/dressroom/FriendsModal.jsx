@@ -18,6 +18,7 @@ export default function FriendsModal({
   onChangeSearchUser,
   onClickGoToFollowing,
   onClickGoToFollower,
+  modalToggle,
   followers,
   followings,
   searchedUsers,
@@ -41,7 +42,11 @@ export default function FriendsModal({
   const clickHandler = (id) => setActiveId(id);
 
   return (
-    <Modal css={FriendsModalStyle} isOpen={isOpen}>
+    <Modal
+      css={FriendsModalStyle}
+      isOpen={isOpen}
+      onRequestClose={() => modalToggle(false)}
+    >
       <div css={mainDiv}>
         <div css={CloseBtn}>
           <img css={CloseBtnImg} src={xSymbol} onClick={onClickModalClose}></img>
@@ -76,7 +81,7 @@ const UsersToFollowStyle = css`
   padding: 1rem;
   text-align: center;
   width: 40%;
-  height: 100%;
+  height: 95%;
   background-color: #fefefe;
 `;
 

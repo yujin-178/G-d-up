@@ -53,7 +53,7 @@ const LivingRoom = css`
   display: grid;
   grid-template-columns: 25% 50% 25%;
   height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${homeBackground});
+  background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url(${homeBackground});
   background-size: cover;
   background-position: center;
 `;
