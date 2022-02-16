@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import Modal from 'react-modal';
 import { css } from '@emotion/react';
 import UsersToFollowForm from './UsersToFollowForm';
-import FollowerFollowingForm from './FollowerFollowingForm';
+import FollowerForm from './FollowerForm';
+import FollowingForm from './FollowingForm';
 import '../TabCss.css';
 import xSymbol from '../../../public/images/xSymbol.png';
 
@@ -24,16 +25,13 @@ export default function FriendsModal({
 }) {
 
   const obj = {
-    0: <UsersToFollowForm
-      onChangeSearchUser={onChangeSearchUser}
-      searchedUsers={searchedUsers}
-      searchUserInput={searchUserInput}
-      usersToFollow={usersToFollow}
-      onClickFollow={onClickFollow} />,
-    1: <FollowerFollowingForm
+    0: <FollowerForm
       followers={followers}
+    />,
+    1: <FollowingForm
       followings={followings}
-      onClickUnfollow={onClickUnfollow} />,
+      onClickUnfollow={onClickUnfollow}
+    />,
   };
 
   const [activeId, setActiveId] = useState(0);
@@ -47,11 +45,26 @@ export default function FriendsModal({
           <img css={CloseBtnImg} src={xSymbol} onClick={onClickModalClose}></img>
         </div>
         <div css={inBox}>
-          <ul id="tabs">
-            <li id={activeId === 0 ? "current" : "after"} onClick={() => clickHandler(0)}><a href="#" name="tab1">팔로우가능한사람</a></li>
-            <li onClick={() => clickHandler(1)}><a href="#" name="tab2">팔로워 & 팔로잉</a></li>
-          </ul>
-          <div css={contentArea}>{obj[activeId]}</div>
+          <div css={FriendsModalTitle}>
+            <h2>친구 목록</h2>
+          </div>
+          <div css={GridWrapper}>
+            <UsersToFollowForm
+              css={UsersToFollowStyle}
+              onChangeSearchUser={onChangeSearchUser}
+              searchedUsers={searchedUsers}
+              searchUserInput={searchUserInput}
+              usersToFollow={usersToFollow}
+              onClickFollow={onClickFollow}
+            />
+            <div>
+              <ul id="tabs">
+                <li id={activeId === 0 ? "current" : "after"} onClick={() => clickHandler(0)}><a href="#" name="tab1">팔로워</a></li>
+                <li onClick={() => clickHandler(1)}><a href="#" name="tab2">팔로잉</a></li>
+              </ul>
+              <div css={contentArea}>{obj[activeId]}</div>
+            </div>
+          </div>
         </div>
       </div>
     </Modal >
@@ -62,8 +75,14 @@ const FriendsModalStyle = css`
   margin: 7% auto;
   width: 50%;
   height: 70%;
-  background-color: #BFAEA4;
+  background-color: #fefefe;
   opacity: 0.9;
+`;
+
+const FriendsModalTitle = css`
+  margin: 2rem 1rem 2rem 1rem;
+  text-align: center;
+  padding: 0;
 `;
 
 const CloseBtn = css`
@@ -76,18 +95,9 @@ const CloseBtnImg = css`
   cursor:pointer;
 `;
 
-const FollowItem = css`
-  width: 4rem;
-  height: 1.3rem;
-  background: #ecc194;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
-`;
-
-const UnfollowBtn = css`
-  width: 5rem;
+const UsersToFollowStyle = css`
+  grid-column: 1 / 2;
+  grid-row: 1 / 3;
 `;
 
 const GridWrapper = css`
@@ -95,52 +105,19 @@ const GridWrapper = css`
   grid-template-columns: 50% 50%;
 `;
 
-const ListStyle = css`
-  padding: 0.5 10rem;
-  margin: 0.7rem auto;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  width: 70%;
-  background-color: beige;
-  cursor: pointer;
-`;
-
-const FollowListStyle = css`
-  &:hover {
-    background-color: #E6B36D;
-  }
-`;
-
-const SpanStyle = css`
-  width: 80%;
-`;
-
-const UsersToFollow = css`
-  margin: 1rem;
-  padding: 1rem;
-  grid-column: 1 / 2;
-  text-align: center;
-`;
-
-const FollowerFollowing = css`
-  margin: 1rem;
-  padding: 1rem;
-  grid-column: 2 / 3;
-  text-align: center;
-`;
-
 const inBox = css`
   padding: 2%;
-  height: 90%;
+  height: 100%;
 `;
 
 const mainDiv = css`
-  // background-color: beige;
-  height: 100%;
+  background-color: #fefefe;
+  height: 70%;
 `;
 
 const contentArea = css`
   background-color: #fefefe;
-  height:90%;
+  height:100%;
+  grid-column: 2 / 3;
+  grid-row: 2 / 3;
 `;

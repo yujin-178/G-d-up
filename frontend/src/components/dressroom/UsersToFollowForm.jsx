@@ -2,49 +2,49 @@ import React from "react";
 import { css } from '@emotion/react';
 import searchImg from '../../../public/images/search.png';
 
-export default function UsersToFollowForm({onChangeSearchUser, searchedUsers, searchUserInput, usersToFollow, onClickFollow}) {
-    return (
-        <div css={UsersToFollowStyle}>
-          <input
-            css = {InputStyle}
-            type="text"
-            placeholder='친구 이름을 입력하세요.'
-            onChange={onChangeSearchUser}
-          />
-          <div css ={ScrollStyle}>
-            {searchedUsers.length === 0  && searchUserInput.length === 0 &&
-                <div css ={ScrollStyle}>
-                {usersToFollow.map((user, idx) =>
-                    <li css={ListStyle} key={idx}>
-                    {user}
-                    <button
-                        css={FollowItem}
-                        onClick={() => onClickFollow(idx)}
-                    >
-                        팔로우
-                    </button>
-                    </li>
-                )}
-                </div>
-            }
-            {searchedUsers.length > 0 &&
-                <div css ={ScrollStyle}>
-                {searchedUsers.map((user, idx) =>
-                    <li css={ListStyle} key={idx}>
-                    {user}
-                    <button
-                        css={FollowItem}
-                        onClick={() => onClickFollow(idx)}
-                    >
-                        팔로우
-                    </button>
-                    </li>
-                )}
-                </div>
-            }
+export default function UsersToFollowForm({ onChangeSearchUser, searchedUsers, searchUserInput, usersToFollow, onClickFollow }) {
+  return (
+    <div css={UsersToFollowStyle}>
+      <input
+        css={InputStyle}
+        type="text"
+        placeholder='친구 이름을 입력하세요.'
+        onChange={onChangeSearchUser}
+      />
+      <div css={ScrollStyle}>
+        {searchedUsers.length === 0 && searchUserInput.length === 0 &&
+          <div css={ScrollStyle}>
+            {usersToFollow.map((user, idx) =>
+              <li css={ListStyle} key={idx}>
+                {user}
+                <button
+                  css={FollowItem}
+                  onClick={() => onClickFollow(idx)}
+                >
+                  팔로우
+                </button>
+              </li>
+            )}
           </div>
-        </div>
-    );
+        }
+        {searchedUsers.length > 0 &&
+          <div css={ScrollStyle}>
+            {searchedUsers.map((user, idx) =>
+              <li css={ListStyle} key={idx}>
+                {user}
+                <button
+                  css={FollowItem}
+                  onClick={() => onClickFollow(idx)}
+                >
+                  팔로우
+                </button>
+              </li>
+            )}
+          </div>
+        }
+      </div>
+    </div>
+  );
 }
 
 const FollowItem = css`
@@ -56,7 +56,6 @@ const FollowItem = css`
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
 `;
-
 
 const ListStyle = css`
   padding: 0.5 10rem;
