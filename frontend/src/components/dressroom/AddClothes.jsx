@@ -203,6 +203,7 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
 
 const label = css`
   margin-right: 10px;
+  font-size: 15px;
 `;
 
 const valueStyle = css`

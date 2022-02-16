@@ -15,10 +15,6 @@ export default function DressRoomPage({ onClickModalOpen, onClickToMyDressRoom, 
 
   const { isOpen } = useSelector(state => state.friendsSlice);
 
-  // if (localStorage.getItem('userInfo')){
-  //   userName = JSON.parse(localStorage.getItem('userInfo')).username;
-  // }
-
   return (
     <div css={Container}>
       <div css={DressRoom}>
