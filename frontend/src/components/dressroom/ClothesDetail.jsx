@@ -1,7 +1,7 @@
 import React from 'react';
 import { css } from '@emotion/react';
 
-export default function ClothesDetail({ selectedClothes, deleteHandler }) {
+export default function ClothesDetail({ selectedClothes, deleteHandler, isLoggedInUser, userName }) {
 
   return (
     <div css={detailContainer}>
@@ -27,13 +27,13 @@ export default function ClothesDetail({ selectedClothes, deleteHandler }) {
             </div>
             <div css={clothesInfoGroup}>
               <p><strong>태그</strong>
-              <div css={tag}>
-                {selectedClothes.hashtag.map((item, index) => (
-                  <div css={tagItem} key={index}>
-                    {item}
-                  </div>
-                ))}
-                {/* <div css={tag}>
+                <div css={tag}>
+                  {selectedClothes.hashtag.map((item, index) => (
+                    <div css={tagItem} key={index}>
+                      {item}
+                    </div>
+                  ))}
+                  {/* <div css={tag}>
                   <ul css={tagItem}>{selectedClothes.hashtag.map((item, index) => (
                     // <li css={tagItem} key={index}>
                     <li key={index}>
@@ -41,24 +41,31 @@ export default function ClothesDetail({ selectedClothes, deleteHandler }) {
                     </li>
                   ))}</ul>
                 </div> */}
-              </div>
+                </div>
               </p>
             </div>
             <div css={clothesInfoGroup}>
               <p><strong>세탁법</strong>
-              <span css={description}>
-              {/* <ul> */}
-                {selectedClothes.washing.map((item, index) => <p key={index}>{item.washingMethod.method}</p>)}
-              {/* </ul> */}
-              </span>
+                <span css={description}>
+                  {/* <ul> */}
+                  {selectedClothes.washing.map((item, index) => <p key={index}>{item.washingMethod.method}</p>)}
+                  {/* </ul> */}
+                </span>
               </p>
             </div>
           </div>
         </> :
-        <div css={message}>
-          <p>현재 보유한 옷이 없습니다. </p>
-          <p>+ 아이콘을 눌러 새로운 옷을 추가해보세요.</p>
-        </div>
+        <>
+          {isLoggedInUser ? (
+            <div css={message}>
+              <p>현재 보유한 옷이 없습니다. </p>
+              <p>+ 아이콘을 눌러 새로운 옷을 추가해보세요.</p>
+            </div>) : (
+            <div css={message}>
+              <p>{userName}님이 보유한 옷이 없습니다.</p>
+            </div>
+          )}
+        </>
       }
     </div>
   );
@@ -204,12 +211,16 @@ const infoWrapper = css`
   text-align: left;
 `;
 
-const delBtn = css`
+const delBtn = ({ isLoggedInUser }) => css`
   width: 3rem;
   height: 1.5rem;
   background: #ecc194;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  ${!isLoggedInUser &&
+  `
+    display: none;
+  `}
 `;
