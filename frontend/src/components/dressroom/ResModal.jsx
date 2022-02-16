@@ -16,9 +16,10 @@ export default function ResModal({ resloading, resText, handleResponse, isResOpe
         closeTimeoutMS={500}
         style={{
           content: {
-            position: 'relative',
-            width: '25%',
-            height: '25%',
+            width: '22%',
+            height: '20%',
+            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+            marginTop: '5rem',
           }
         }}
       >
@@ -38,7 +39,7 @@ export default function ResModal({ resloading, resText, handleResponse, isResOpe
               </div>
               :
               <div>
-                <p>{resText}</p>
+                <p css={css`font-size: 18px;`}>{resText}</p>
                 <button
                   css={saveBtn}
                   onClick={() => {handleResponse(false); window.location.reload();}}
@@ -76,18 +77,25 @@ const Container = css`
 const saveBtn = css`
 	grid-column: 3;
 	background: #6da0cf;
-	padding: 0.5rem 1rem;
-	width: 4rem;
+	padding: 0.6rem 1rem;
+	width: 6rem;
 	border: none;
-	border-radius: 4px;
+	border-radius: 8px;
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
 
-	margin: 1.5rem;
+	margin-top: 2rem;
 
 	font-family: "Noto Sans KR", sans-serif;
 	font-size: 1rem;
 	font-weight: 300;
 	text-align: center;
 	transition: 0.5s;
+
+  background: #4EBBFA;
+  color: rgb(242, 241, 240);
+  &:hover {
+    color: #4EBBFA;
+    background: rgb(242, 241, 240)
+  }
 `;

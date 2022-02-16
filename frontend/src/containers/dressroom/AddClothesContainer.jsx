@@ -123,16 +123,16 @@ export default function AddClothesContainer() {
       axios.post(`http://i6b108.p.ssafy.io:8000/clothing/save`, formData, config)
         .then((res) => {
           handleresloading(false);
-          dispatch(changeResText(res.data.message));
+          dispatch(changeResText('성공적으로 저장되었습니다.'));
           handleresetClothes();
           dispatch(setClothes(userName));
         })
         .catch((err) => {
           handleresloading(false);
-          dispatch(changeResText(err.data.data.message));
+          dispatch(changeResText('오류가 발생했습니다. 다시 시도해주세요.'));
         });
     } else {
-      dispatch(changeResText('내용을 입력해주세요'));
+      dispatch(changeResText('내용을 입력해주세요.'));
     }
   }
 
