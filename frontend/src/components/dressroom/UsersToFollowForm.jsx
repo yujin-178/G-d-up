@@ -47,6 +47,14 @@ export default function UsersToFollowForm({ onChangeSearchUser, searchedUsers, s
   );
 }
 
+const UsersToFollowStyle = css`
+  padding: 1rem;
+  text-align: center;
+  width: 40%;
+  height: 95%;
+  background-color: #fefefe;
+`;
+
 const FollowItem = css`
   width: 4rem;
   height: 1.3rem;
@@ -67,14 +75,8 @@ const ListStyle = css`
   background-color: beige;
 `;
 
-const UsersToFollowStyle = css`
-  padding: 1rem;
-  text-align: center;
-  height: 95%;
-`;
-
 const InputStyle = css`
-  width: 50%;
+  width: 70%;
   box-sizing: border-box;
   border: 2px solid #ccc;
   border-radius: 4px;

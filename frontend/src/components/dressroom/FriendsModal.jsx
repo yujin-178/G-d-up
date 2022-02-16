@@ -47,12 +47,11 @@ export default function FriendsModal({
           <img css={CloseBtnImg} src={xSymbol} onClick={onClickModalClose}></img>
         </div>
         <div css={inBox}>
-          <div css={FriendsModalTitle}>
-            <h2>친구 목록</h2>
+          <div css={FriendsModalTitleDiv}>
+            <h2 css={FriendsModalTitle}>친구 목록</h2>
           </div>
-          <div css={GridWrapper}>
+          <div css={FlexWrapper}>
             <UsersToFollowForm
-              css={UsersToFollowStyle}
               onChangeSearchUser={onChangeSearchUser}
               searchedUsers={searchedUsers}
               searchUserInput={searchUserInput}
@@ -86,13 +85,17 @@ const mainDiv = css`
   height: 70%;
 `;
 
-const FriendsModalTitle = css`
-  margin: 2rem 1rem 2rem 1rem;
+const FriendsModalTitleDiv = css`
+  margin: 1rem 1rem 2rem 1rem;
   text-align: center;
   padding: 0;
-  color: #CAE7FA;
-  font-weight: 100;
-  font-size: 1.2rem;
+`;
+
+const FriendsModalTitle = css`
+  color: #fefefe;
+  font-weight: 400;
+  font-size: 2.75rem;
+  margin: 0.3rem 0;
 `;
 
 const CloseBtn = css`
@@ -105,14 +108,9 @@ const CloseBtnImg = css`
   cursor:pointer;
 `;
 
-const UsersToFollowStyle = css`
-  grid-column: 1 / 2;
-  grid-row: 1 / 3;
-`;
-
-const GridWrapper = css`
-  display: grid;
-  grid-template-columns: 50% 50%;
+const FlexWrapper = css`
+  display: flex;
+  justify-content: space-around;
 `;
 
 const inBox = css`
@@ -122,7 +120,7 @@ const inBox = css`
 
 const contentArea = css`
   background-color: #fefefe;
-  height:100%;
+  height: 90%;
   grid-column: 2 / 3;
   grid-row: 2 / 3;
 `;
