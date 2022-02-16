@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { loadClothesByUserName, deleteClothes } from '../services/api';
 
 const initialState = {
+  userName: '익명',
   clothes: [],
   selectedClothes: null,
   loading: false,
@@ -34,6 +35,12 @@ export const clothesSlice = createSlice({
   name: 'clothes',
   initialState,
   reducers: {
+    setUserName(state, action) {
+      return {
+        ...state,
+        userName: action.payload,
+      };
+    },
     selectClothes(state, action) {
       return {
         ...state,
@@ -153,6 +160,7 @@ export const clothesSlice = createSlice({
 });
 
 export const {
+  setUserName,
   selectClothes,
   changeTagInfo,
   setImgURL,

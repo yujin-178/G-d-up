@@ -11,15 +11,15 @@ import { BackBtn } from '../dressRoomCss';
 import { PeopleFill } from '@emotion-icons/bootstrap/PeopleFill';
 import { useSelector } from 'react-redux';
 
-export default function DressRoomPage({ onClickModalOpen }) {
+export default function DressRoomPage({ onClickModalOpen, userName }) {
 
   const { isOpen } = useSelector(state => state.friendsSlice);
 
-  let userName = '익명';
+  userName = userName ? userName : '익명';
 
   if (localStorage.getItem('userInfo')){
     userName = JSON.parse(localStorage.getItem('userInfo')).username;
-  } 
+  }
   
   return (
     <div css={Container}>

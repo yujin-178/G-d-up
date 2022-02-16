@@ -1,7 +1,7 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setIsOpen } from '../../slices/friendsSlice';
-
+import { setUserName } from '../../slices/clothesSlice';
 import DressRoomPage from '../../components/dressroom/DressRoomPage';
 
 export default function DressRoomContainer() {
@@ -12,9 +12,16 @@ export default function DressRoomContainer() {
     dispatch(setIsOpen(true));
   }
 
+  const loginedUser = JSON.parse(localStorage.getItem('userInfo')).username;
+
+  dispatch(setUserName(loginedUser));
+
+  const { userName } = useSelector(state => state.clothesSlice);
+
   return (
     <DressRoomPage
       onClickModalOpen={handleClickModalOpen}
+      userName={userName}
     />
   );
 }
