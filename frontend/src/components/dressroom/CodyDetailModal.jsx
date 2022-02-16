@@ -16,7 +16,7 @@ export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResO
       />
       <Modal
         isOpen={isdetailOpen}
-        onRequestClose={() => handleCodyDetailOpen(false)}
+        onRequestClose={() => {handleCodyDetailOpen(false); handleCodyEdit(false);}}
         closeTimeoutMS={500}
         onAfterOpen={() => { document.body.style.overflow = 'hidden'; }}
         onAfterClose={() =>{ document.body.style.overflow = 'auto'; }}
@@ -32,7 +32,7 @@ export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResO
         <div css={Container}>
           <button
             css={CloseBtn}
-            onClick={() => handleCodyDetailOpen(false)}>
+            onClick={() => {handleCodyDetailOpen(false); handleCodyEdit(false);}}>
             X
           </button>
           <div css={imgContainer}>
