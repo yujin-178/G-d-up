@@ -6,6 +6,7 @@ import { css } from "@emotion/react";
 import dressroomBackground from '../../../public/images/dressroombackground.jpg';
 import codyImg from '../../../public/images/codyBtn.svg';
 import closetImg from '../../../public/images/closetBtn.svg';
+import '../../css/hover.css';
 
 import { BackBtn } from '../dressRoomCss';
 import { PeopleFill } from '@emotion-icons/bootstrap/PeopleFill';
@@ -29,22 +30,18 @@ export default function DressRoomPage({ onClickModalOpen, onClickToMyDressRoom, 
           />
         </div>
         <div css={contentContainer}>
-          <div css={[BtnItem, CodyBtn]}>
-            <Link to='/cody'>
-              <button css={TextButton}>
-                코디 목록으로
-              </button>
-              <img css={Btn} src={codyImg} alt="코디버튼" />
-            </Link>
-          </div>
-          <div css={[BtnItem, ClosetBtn]}>
-            <Link to='/closet'>
-              <button css={TextButton}>
-                옷장 가기
-              </button>
-              <img css={Btn} src={closetImg} alt="코디버튼" />
-            </Link>
-          </div>
+          <Link to='/cody' className={'hvr-bob'} css={[BtnDiv, CodyBtnDiv, LinkStyle]}>
+            <div css={BtnItem}>
+              <p css={BtnText}>코디 목록으로</p>
+              <img css={[BtnImg, CodyBtnImg]} src={codyImg} alt="코디버튼" />
+            </div>
+          </Link>
+          <Link to='/closet' className={'hvr-bob'} css={[BtnDiv, ClosetBtnDiv, LinkStyle]}>
+            <div css={BtnItem}>
+              <p css={BtnText}>옷장 가기</p>
+              <img css={BtnImg} src={closetImg} alt="옷장버튼" />
+            </div>
+          </Link>
         </div>
         <div css={BackBtnContainer}>
           {!isMyRoom &&
@@ -84,7 +81,13 @@ const DressRoom = css`
 const contentContainer = css`
   display: grid;
   grid-row: 2;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: minmax(10rem, 25%) 1fr 1fr minmax(10rem, 25%);
+  grid-column-gap: 3.5%;
+`;
+
+const LinkStyle = css`
+  text-decoration: none;
+  text-align: center;
 `;
 
 const friendsBtnDiv = css`
@@ -92,6 +95,41 @@ const friendsBtnDiv = css`
   grid-row: 3 / 4;
   display: flex;
   align-items: center;
+`;
+
+const BtnDiv = css`
+  margin: 5% auto;
+  padding: 2% 5% 5% 5%;
+  width: 75%;
+  height: 100%;
+  background-color: #4682B4;
+  cursor: pointer;
+  &: hover {
+    border: 0.35rem solid #7DDAD5;
+  }
+`;
+
+const CodyBtnDiv = css`
+  grid-column: 2 / 3;
+`;
+
+const ClosetBtnDiv = css`
+  grid-column: 3 / 4;
+`;
+
+const BtnItem = css`
+  width: 90%;
+  height: 90%;
+  margin: 1% auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+const BtnText = css`
+  color: #fefefe;
+  font-size: 2rem;
+  font-weight: 450;
 `;
 
 const FriendsBtn = css`
@@ -102,26 +140,16 @@ const FriendsBtn = css`
   cursor: pointer;
 `;
 
-const BtnItem = css`
-  width: 70%;
-  height: 32%;
-  margin: 4rem 5rem;
-  background-color: #685f60;
-  opacity: 0.8;
-  grid-row: 2 / 3;
-  border-radius: 4rem;
+const BtnImg = css`
+  width: 90%;
+  height: 70%;
+  margin: 2%;
 `;
 
-const CodyBtn = css`
-  grid-column: 2 / 3;
-`;
-
-const ClosetBtn = css`
-  grid-column: 3 / 4;
-`;
-
-const Btn = css`
-  width: 100%;
+const CodyBtnImg = css`
+  width: 90%;
+  height: 70%;
+  margin: 9% 2% 2% 2%;
 `;
 
 const Title = css`
@@ -135,24 +163,4 @@ const Title = css`
 const Container = css`
   display: grid;
   height: 100%;
-`;
-
-const TextButton = css`
-  margin: 3rem 1rem 2rem 3rem;
-  padding: 0.5rem 1rem;
-
-  font-family: "Noto Sans KR", sans-serif;
-  font-size: 1rem;
-  font-weight: 400;
-  text-align: center;
-  text-decoration: none;
-
-  display: inline-block;
-  width: auto;
-
-  background: #e0e0e0;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
 `;

@@ -137,6 +137,9 @@ const Container = css`
 const imgContainer = css`
   grid-row : 1;
   grid-column: 1;
+  height: 380px;
+  width: 360px; 
+  background-color: #f2f2f2;
   height: fit-content;
 `;
 
@@ -144,7 +147,6 @@ const codyImg = css`
   position: relative;
   justify-content: center;
   align-items:center;
-  width: 285px;
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
 `;
 const inputContainer = css`

@@ -3,12 +3,13 @@ import CodyCard from './CodyCard';
 import TagSearchBar from './TagSearchBar';
 import Tag from './Tag';
 
-import { css } from "@emotion/react";
+import { css, Global } from "@emotion/react";
 import CodyBackgroundImg from '../../../public/images/codybackground.jpg';
 
 export default function CodyList({ isLoggedInUser, tagDelete, tagFilter, tagRef, onKeyPress, setisdetailOpen, handleSelectCody, moveScroll, cards }) {
   return (
     <div css={listContainer}>
+      <Global style={listStyle} />
       <h2 css={title}>Cody</h2>
       <div css={searchBar}>
         <TagSearchBar
@@ -64,7 +65,7 @@ export default function CodyList({ isLoggedInUser, tagDelete, tagFilter, tagRef,
           onClick={() => moveScroll('u')}
           css={scrollBtn}
         >
-          갤러리
+          슬라이드로 보기
         </button>
       </div>
     </div>
@@ -120,6 +121,11 @@ const container = css`
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 10px;
   grid-row: 3;
+  overflow:scroll;
+  height: 70vh;
+  margin: 10px;
+  padding: 10px;
+  width: 95vw;
 `;
 
 const btnContainer = css`
@@ -137,4 +143,14 @@ const scrollBtn = css`
   justify-content: center;
   align-items: center;
   margin: 20px;
+
+  background: #c99f9f;
+  border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+`;
+
+const listStyle = css`
+
 `;
