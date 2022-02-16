@@ -6,7 +6,7 @@ import Tag from './Tag';
 import { css } from "@emotion/react";
 import CodyBackgroundImg from '../../../public/images/codybackground.jpg';
 
-export default function CodyList({ tagDelete ,tagFilter, tagRef, onKeyPress, setisdetailOpen, handleSelectCody, moveScroll, cards }) {
+export default function CodyList({ isLoggedInUser, tagDelete, tagFilter, tagRef, onKeyPress, setisdetailOpen, handleSelectCody, moveScroll, cards }) {
   return (
     <div css={listContainer}>
       <h2 css={title}>Cody</h2>
@@ -26,7 +26,7 @@ export default function CodyList({ tagDelete ,tagFilter, tagRef, onKeyPress, set
                 />
               );
             }) :
-            <Tag 
+            <Tag
               value={'ex. 데일리'}
               deleteTagHandler={tagDelete}
             />
@@ -51,7 +51,11 @@ export default function CodyList({ tagDelete ,tagFilter, tagRef, onKeyPress, set
         :
         <div css={message}>
           <p>{tagFilter.length >= 1 ? '일치하는 결과가 없습니다..' : '아직 완성한 코디가 없습니다..'}</p>
-          <p>우측 상단의 코디 생성하기 버튼을 눌러 나만의 코디를 완성해보세요! </p>
+          {isLoggedInUser ?
+            <p>우측 상단의 코디 생성하기 버튼을 눌러 나만의 코디를 완성해보세요! </p>
+            :
+            ''
+          }
         </div>
       }
 
