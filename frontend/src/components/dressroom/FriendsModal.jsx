@@ -58,7 +58,7 @@ export default function FriendsModal({
               usersToFollow={usersToFollow}
               onClickFollow={onClickFollow}
             />
-            <div>
+            <div css={UsersToFollowStyle}>
               <ul id="tabs">
                 <li id={activeId === 0 ? "current" : "after"} onClick={() => clickHandler(0)}><a href="#" name="tab1">팔로워</a></li>
                 <li onClick={() => clickHandler(1)}><a href="#" name="tab2">팔로잉</a></li>
@@ -71,6 +71,14 @@ export default function FriendsModal({
     </Modal >
   );
 }
+
+const UsersToFollowStyle = css`
+  padding: 1rem;
+  text-align: center;
+  width: 40%;
+  height: 100%;
+  background-color: #fefefe;
+`;
 
 const FriendsModalStyle = css`
   margin: 7% auto;
@@ -111,6 +119,7 @@ const CloseBtnImg = css`
 const FlexWrapper = css`
   display: flex;
   justify-content: space-around;
+  height: 100%;
 `;
 
 const inBox = css`
