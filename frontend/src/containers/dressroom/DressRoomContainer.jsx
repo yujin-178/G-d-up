@@ -14,11 +14,17 @@ export default function DressRoomContainer() {
 
   const loginedUser = JSON.parse(localStorage.getItem('userInfo')).username;
 
-  useEffect(() => {
-    dispatch(setUserName(loginedUser));
-  }, []);
+  let { userName } = useSelector(state => state.clothesSlice);
+  
+  console.log(loginedUser);
+  if (loginedUser.length === 0) {
+    console.log('로그인 되지 않았습니다');
+    userName = '익명';
+  }
 
-  const { userName } = useSelector(state => state.clothesSlice);
+  useEffect(() => {
+    dispatch(setUserName(userName));
+  }, []);
 
   return (
     <DressRoomPage
