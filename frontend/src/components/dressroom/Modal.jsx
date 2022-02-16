@@ -3,10 +3,10 @@ import { css } from '@emotion/react';
 
 export default function Modal({ children }) {
   useEffect(() => {
-    document.body.style.cssText = 'height: 100vh; overflow: hidden;';
+    document.body.style.cssText = 'margin: 0; padding: 0; height: 100vh; overflow: hidden;';
 
     return () => {
-      document.body.style.cssText = '';
+      document.body.style.cssText = 'margin: 0; padding: 0; overflow: auto;';
     };
   }, []);
 
