@@ -8,7 +8,7 @@ import homeBackground from '../../public/images/homebackground.jpg';
 
 export default function HomePage() {
   function logout() {
-    localStorage.removeItem('userInfo'); 
+    localStorage.removeItem('userInfo');
     localStorage.removeItem('friendName');
     location.reload();
   }
@@ -27,7 +27,7 @@ export default function HomePage() {
         <div css={FlexContainer}>
           {localStorage.getItem('userInfo') ?
             <button
-              css={css`background-color:transparent; border:none; cursor:pointer;`}
+              css={css`background-color:transparent; border:none; cursor:pointer; position: absolute;`}
               onClick={logout}>
               <Logout css={[FlexItem, SignInStyle]} />
             </button>
@@ -122,6 +122,7 @@ const DressroomBtn = css`
 // `;
 
 const FlexContainer = css`
+  position: relative;
   grid-column: 3 / 4;
   display: flex;
   justify-content: end;
