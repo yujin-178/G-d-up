@@ -23,7 +23,9 @@ export default function CodyDetailModal({ handleResponse, isResOpen, resText, de
         style={{
           content: {
             backgroundColor: '#7c8186',
-            opacity: '80%',
+          },
+          overlay: {
+            backgroundColor: 'rgba(0,0,0,0.7)',
           }
         }}
       >
@@ -359,8 +361,8 @@ const modalClass = css`
 }
 
 .ReactModal__Content--after-open {
-	width: 50%;
-	height: 80%;
+	width: 40%;
+	height: 70%;
 	grid-column:4;
 	background-color: #f2f2f2;
 	justify-content: center;

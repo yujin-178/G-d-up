@@ -9,6 +9,8 @@ export default function FriendsModal({
   onClickFollow,
   onClickUnfollow,
   onChangeSearchUser,
+  onClickGoToFollowing,
+  onClickGoToFollower,
   followers,
   followings,
   searchedUsers,
@@ -27,7 +29,7 @@ export default function FriendsModal({
             placeholder='친구이름을 입력하세요'
             onChange={onChangeSearchUser}
           />
-          {searchedUsers.length === 0  && searchUserInput.length === 0 &&
+          {searchedUsers.length === 0 && searchUserInput.length === 0 &&
             <div>
               {usersToFollow.map((user, idx) =>
                 <li css={ListStyle} key={idx}>
@@ -62,7 +64,11 @@ export default function FriendsModal({
           <div>
             <h2>팔로워</h2>
             {followers.map((user, idx) =>
-              <li css={ListStyle} key={idx}>
+              <li
+                css={[ListStyle, FollowListStyle]}
+                key={idx}
+                onClick={() => onClickGoToFollower(idx)}
+              >
                 {user}
               </li>
             )}
@@ -70,8 +76,11 @@ export default function FriendsModal({
           <div>
             <h2>팔로잉</h2>
             {followings.map((user, idx) =>
-              <li css={ListStyle} key={idx}>
-                {user}
+              <li
+                css={[ListStyle, FollowListStyle]}
+                key={idx}
+              >
+                <span css={SpanStyle} onClick={() => onClickGoToFollowing(idx)}>{user}</span>
                 <button
                   css={[FollowItem, UnfollowBtn]}
                   onClick={() => onClickUnfollow(idx)}
@@ -126,6 +135,17 @@ const ListStyle = css`
   justify-content: space-between;
   width: 70%;
   background-color: beige;
+  cursor: pointer;
+`;
+
+const FollowListStyle = css`
+  &:hover {
+    background-color: #E6B36D;
+  }
+`;
+
+const SpanStyle = css`
+  width: 80%;
 `;
 
 const UsersToFollow = css`
