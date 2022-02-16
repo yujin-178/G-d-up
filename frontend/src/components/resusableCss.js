@@ -19,6 +19,11 @@ export const ListStyle = css`
   background-color: #fefefe;
   color: #3B3532;
   cursor: pointer;
+  &:hover {
+    background-color: #BFAEA4;
+    opacity: 0.8;
+    color: #fefefe;
+  }
 `;
 
 export const Hr = css`

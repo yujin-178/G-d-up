@@ -7,7 +7,7 @@ export default function FollowerForm({ followers, onClickGoToFollower }) {
     <div css={Follower}>
       {followers.map((user, idx) =>
         <>
-          <li css={[ListStyle, FollowListStyle]}
+          <li css={[ListStyle]}
             key={idx}
             onClick={() => onClickGoToFollower(idx)}
           >
@@ -19,12 +19,6 @@ export default function FollowerForm({ followers, onClickGoToFollower }) {
     </div>
   );
 }
-
-const FollowListStyle = css`
-  &:hover {
-    background-color: #E6B36D;
-  }
-`;
 
 const Follower = css`
   padding: 1rem;
