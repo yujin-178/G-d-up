@@ -89,7 +89,7 @@ const tags = css`
 
 const BackImg = css`
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${CodyBackgroundImg});
   background-size: cover;
   background-position: center;

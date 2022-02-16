@@ -19,7 +19,7 @@ const tagItem = css`
   position: relative;
   display: flex;
   background-color: white;
-  padding: 4px 5px;
+  padding: 8px 3px;
   border-radius: 18px;
   font-size: 13px;
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);

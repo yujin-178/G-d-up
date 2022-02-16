@@ -46,8 +46,8 @@ export default function CodyCreateForm(props) {
           );
         })}
       </div>
-      <div css={css`display: flex; justify-content: space-between; width: 100%; margin-top: 10px`}>
-        <div css={css`width: 200px; margin-top: 5px;`}>
+      <div css={css`display: flex; justify-content: space-between; width: 100%; margin-top: 10px; margin-left: 2rem;`}>
+        <div css={css`width: 13.5rem; margin-top: 6px;`}>
           <TagSearchBar
             inputRef={inputRef}
             onKeyPress={onKeyPress}
@@ -99,7 +99,7 @@ export default function CodyCreateForm(props) {
 const form = css`
   box-sizing: content-box;
   border: 0.5px solid grey;
-  width: 30%;
+  width: 24rem;
   height: 73%;
   display: flex;
   flex-direction: column;
@@ -116,8 +116,8 @@ const memo = css`
   overflow: hidden;
   resize: none;
   outline: none;
-  width: 100%;
-  min-height: 80px;
+  width: 22rem;
+  min-height: 100px;
   margin-top: 15px;
   background-color: rgb(242, 241, 240);
   border: 1px solid rgb(153, 153, 153);
@@ -135,6 +135,8 @@ const canvas = css`
 const toggleContainer = css`
   display: flex;
   padding: 2px;
+  margin-top: 2px;
+  margin-right: 1.5rem;
 `;
 
 const toggleBtn = ({ isNotSecret }) => css`
@@ -164,7 +166,7 @@ const toggleBtnCircle = ({ isNotSecret }) => css`
 `;
 
 const tagContainer = css`
-  width: 100%;
+  width: 95%;
   display: flex;
   flex-wrap: wrap;
   list-style:none;
@@ -172,7 +174,7 @@ const tagContainer = css`
 `;
 
 const buttonGroup = css`
-  width: 50%;
+  width: 55%;
   display: flex;
   justify-content: space-between;
   position: relative;
