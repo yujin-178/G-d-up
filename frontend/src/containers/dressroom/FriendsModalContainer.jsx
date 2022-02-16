@@ -52,7 +52,7 @@ export default function FriendsModalContainer({ isOpen }) {
   function handleClickGoToFollowing(idx) {
     const userName = followings[idx];
     console.log(userName);
-    // dispatch(setUserName(userName));
+    dispatch(setUserName(userName));
   }
 
   function handleClickGoToFollower(idx) {

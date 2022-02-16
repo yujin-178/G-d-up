@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setIsOpen } from '../../slices/friendsSlice';
 import { setUserName } from '../../slices/clothesSlice';
@@ -14,7 +14,9 @@ export default function DressRoomContainer() {
 
   const loginedUser = JSON.parse(localStorage.getItem('userInfo')).username;
 
-  dispatch(setUserName(loginedUser));
+  useEffect(() => {
+    dispatch(setUserName(loginedUser));
+  }, []);
 
   const { userName } = useSelector(state => state.clothesSlice);
 
