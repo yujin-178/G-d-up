@@ -21,7 +21,7 @@ export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onK
       {scrollisTop ?
         <div css={CodyBackground}>
           <div css={isdetailOpen ? css`visibility: hidden;` : container}>
-            <h2>{userName}님의 코디</h2>
+            <h2 css={Title}>{userName}님의 코디</h2>
             {cards ?
               <div css={carousel}>
                 <Carousel
@@ -72,6 +72,7 @@ export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onK
               onKeyPress={onKeyPress}
               tagFilter={tagFilter}
               tagDelete={tagDelete}
+              isLoggedInUser={isLoggedInUser}
             />
           </div>
         </div>
@@ -95,6 +96,16 @@ export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onK
     </div>
   );
 }
+
+const Title = css`
+  padding: 2rem 0 0 0;
+  font-size: 50px;
+  margin: 0px;
+  color: #f2f2f2;
+  text-align : center;
+  grid-row : 1;
+  grid-column: 2;
+`;
 
 const CodyBackground = css`
   height: 100vh;

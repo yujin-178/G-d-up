@@ -18,7 +18,7 @@ export default function DressRoomPage({ onClickModalOpen, onClickToMyDressRoom, 
   return (
     <div css={Container}>
       <div css={DressRoom}>
-        <h2 css={Title}>{`${userName}'s 드레스룸`}</h2>
+        <h2 css={Title}>{`${userName}님의 드레스룸`}</h2>
         <FriendsModalContainer
           isOpen={isOpen}
         />

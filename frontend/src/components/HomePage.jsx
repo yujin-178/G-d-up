@@ -9,6 +9,7 @@ import homeBackground from '../../public/images/homebackground.jpg';
 export default function HomePage() {
   function logout() {
     localStorage.removeItem('userInfo'); 
+    localStorage.removeItem('friendName');
     location.reload();
   }
 
