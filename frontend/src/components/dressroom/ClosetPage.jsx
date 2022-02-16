@@ -5,6 +5,7 @@ import AddClothesContainer from '../../containers/dressroom/AddClothesContainer.
 import ClothesDetailContainer from '../../containers/dressroom/ClothesDetailContainer.jsx';
 
 import { css } from '@emotion/react';
+import dressroomBackground from "../../../public/images/dressroombackground.jpg";
 
 import { Link } from 'react-router-dom';
 
@@ -48,7 +49,7 @@ const DressRoom = css`
   display: flex;
   justify-content: center;
   height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/dressroombackground.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url(${dressroomBackground});
   background-size: cover;
   background-position: center;
 `;
