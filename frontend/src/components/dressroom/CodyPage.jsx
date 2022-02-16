@@ -9,7 +9,7 @@ import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
 import CodyDetailContainer from '../../containers/dressroom/CodyDetailContainer';
 
-export default function CodyPage({ filterCody, tagDelete ,tagFilter ,tagRef, onKeyPress ,setisdetailOpen, selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
+export default function CodyPage({ filterCody, tagDelete ,tagFilter ,tagRef, onKeyPress ,setisdetailOpen, selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide, userName, isLoggedInUser }) {
   // const animatedItem = {
   //   0: useScrollFadeIn('down', 1, 0),
   //   1: useScrollFadeIn('down', 1, 0.2),
@@ -21,7 +21,7 @@ export default function CodyPage({ filterCody, tagDelete ,tagFilter ,tagRef, onK
       {scrollisTop ?
         <div css={CodyBackground}>
           <div css={isdetailOpen ? css`visibility: hidden;` : container}>
-            <h2>Cody</h2>
+            <h2>{userName}님의 코디</h2>
             {cards ?
               <div css={carousel}>
                 <Carousel
@@ -57,41 +57,41 @@ export default function CodyPage({ filterCody, tagDelete ,tagFilter ,tagRef, onK
               전체 보기
             </button>
           </div>
-          </div>
-          :
-
-          <div css={scrollisTop ? Fadeup : Fadein} id="fade">
-            <div>
-              <CodyList
-                cards={filterCody}
-                moveScroll={moveScroll}
-                scrollisTop={scrollisTop}
-                handleSelectCody={handleSelectCody}
-                setisdetailOpen={setisdetailOpen}
-                tagRef={tagRef}
-                onKeyPress={onKeyPress}
-                tagFilter={tagFilter}
-                tagDelete={tagDelete}
-              />
-            </div>
         </div>
-}
+        :
 
-          <button css={createBtn} onClick={() => navigate('/codycreate')}>
-            새 코디 생성
-          </button>
-          <button
-            css={backBtn}
-            onClick={() => navigate('/dressroom')}>
-            Back
-          </button>
-          {selectedCody ?
-            <CodyDetailContainer
+        <div css={scrollisTop ? Fadeup : Fadein} id="fade">
+          <div>
+            <CodyList
+              cards={filterCody}
+              moveScroll={moveScroll}
+              scrollisTop={scrollisTop}
+              handleSelectCody={handleSelectCody}
+              setisdetailOpen={setisdetailOpen}
+              tagRef={tagRef}
+              onKeyPress={onKeyPress}
+              tagFilter={tagFilter}
+              tagDelete={tagDelete}
             />
-            :
-            ''
-          }
+          </div>
         </div>
+      }
+
+      <button css={createBtn({ isLoggedInUser })} onClick={() => navigate('/codycreate')}>
+            새 코디 생성
+      </button>
+      <button
+        css={backBtn}
+        onClick={() => navigate('/dressroom')}>
+            Back
+      </button>
+      {selectedCody ?
+        <CodyDetailContainer
+        />
+        :
+        ''
+      }
+    </div>
   );
 }
 
@@ -172,7 +172,7 @@ const container = css`
   transform = translate3d(0, 50%, 0);
 `;
 
-const createBtn = css`
+const createBtn = ({ isLoggedInUser }) => css`
   width: 150px;
   height: 30px;
   position: fixed;
@@ -180,12 +180,16 @@ const createBtn = css`
   right: 50px;
 
   background: #c99f9f;
-	width: 8rem;
+  width: 8rem;
   height: 2rem;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  ${!isLoggedInUser &&
+  `
+    display: none;
+  `}
 `;
 
 const backBtn = css`
