@@ -46,12 +46,17 @@ export default function DressRoomPage({ onClickModalOpen, onClickToMyDressRoom, 
         <div css={BackBtnContainer}>
           {!isMyRoom &&
             <div>
-              <button onClick={onClickToMyDressRoom}>내 드레스룸으로</button>
+              <button onClick={onClickToMyDressRoom}
+                css={toMyDress}
+                className="hvr-fade"
+              >
+                My DressRoom
+              </button>
             </div>
           }
           <Link to='/'>
-            <button css={BackBtn}>
-              뒤로
+            <button css={BackBtn} className="hvr-fade">
+              Back
             </button>
           </Link>
         </div>
@@ -59,6 +64,19 @@ export default function DressRoomPage({ onClickModalOpen, onClickToMyDressRoom, 
     </div>
   );
 }
+
+const toMyDress = css`
+  position: absolute;
+  right: 200px;
+  bottom: 35px;
+  width: 90px;
+  height: 40px;
+  background-color: white;
+  color: white;
+  border: 1.5px solid white;
+  background-color: #2E2E2E;
+  cursor: pointer;
+`;
 
 const BackBtnContainer = css`
   display: flex;
@@ -98,8 +116,11 @@ const friendsBtnDiv = css`
 `;
 
 const FriendsBtn = css`
-  position: relative;
-  margin: 1rem 5rem;
+  position: absolute;
+  left: 50px;
+  bottom: 35px;
+
+  margin-left : 5rem;
   color: #fefefe;
   width: 5rem;
   cursor: pointer;

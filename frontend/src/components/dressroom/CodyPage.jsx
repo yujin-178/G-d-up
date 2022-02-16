@@ -41,6 +41,7 @@ export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onK
                 size={40}
                 css={arrowStyle}
                 onClick={() => { handlegoToSlide(goToSlide - 1); }}
+                className="hvr-fade"
               />
             </div>
             <div css={RightArrow}>
@@ -48,13 +49,15 @@ export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onK
                 size={40}
                 css={arrowStyle}
                 onClick={() => { handlegoToSlide(goToSlide + 1); }}
+                className="hvr-fade"
               />
             </div>
             <button
               onClick={() => moveScroll('d')}
               css={scrollBtn}
+              className="hvr-fade"
             >
-              갤러리
+              Gallery
             </button>
           </div>
         </div>
@@ -79,14 +82,14 @@ export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onK
         </div>
       }
 
-      <button css={createBtn({ isLoggedInUser })} onClick={() => navigate('/codycreate')}>
-        새 코디 생성
+      <button css={createBtn({ isLoggedInUser })} onClick={() => navigate('/codycreate')} className='hvr-fade'>
+        Create
       </button>
       <button
-        css={backBtn}
-        onClick={() => navigate('/dressroom')}>
-        Back
-      </button>
+        css={backButton}
+        onClick={() => navigate('/dressroom')}
+        className='hvr-fade'
+      > Back </button>
       {selectedCody ?
         < CodyDetailContainer
           isLoggedInUser={isLoggedInUser}
@@ -134,17 +137,19 @@ const Fadein = css`
 `;
 
 const scrollBtn = css`
+  width: 90px;
+  height: 40px;
+  background-color: white;
+  color: white;
+  border: 1.5px solid white;
+  background-color: #2E2E2E;
+  cursor: pointer;
+
   grid-column: 2;
   grid-row : 3;
   justify-self: center;
 
-  background: #c99f9f;
-	width: 8rem;
-  height: 2rem;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
+  
 `;
 
 const LeftArrow = css`
@@ -168,6 +173,7 @@ const RightArrow = css`
 const arrowStyle = css`
   grid-column: 2;
   grid-row: 2;
+  cursor: pointer;
 `;
 
 const container = css`
@@ -186,18 +192,15 @@ const container = css`
 `;
 
 const createBtn = ({ isLoggedInUser }) => css`
-  width: 150px;
-  height: 30px;
-  position: fixed;
-  top: 30px;
+  position: absolute;
   right: 50px;
-
-  background: #c99f9f;
-  width: 8rem;
-  height: 2rem;
-  border: none;
-  border-radius: 4px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  top: 30px;
+  width: 90px;
+  height: 40px;
+  background-color: white;
+  color: white;
+  border: 1.5px solid white;
+  background-color: #2E2E2E;
   cursor: pointer;
   ${!isLoggedInUser &&
   `
@@ -205,19 +208,17 @@ const createBtn = ({ isLoggedInUser }) => css`
   `}
 `;
 
-const backBtn = css`
-  position: fixed;
-  bottom: 30px;
+const backButton = css`
+  position: absolute;
   right: 50px;
-
-  background: #c99f9f;
-	padding: 0.5rem 1rem;
-	width: 4rem;
-  height: 2rem;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
+  bottom: 35px;
+  width: 90px;
+  height: 40px;
+  background-color: white;
+  color: white;
+  border: 1.5px solid white;
+  background-color: #2E2E2E;
+  cursor: pointer;
 `;
 
 const carousel = css`
@@ -226,4 +227,5 @@ const carousel = css`
   width: 70%;
   height: 500px;
   margin: 0 auto;
+  cursor: pointer;
 `;
