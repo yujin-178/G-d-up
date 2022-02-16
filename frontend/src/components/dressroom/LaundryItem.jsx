@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 export default function LaundryItem({ images, kind, range, iconSelect, selectedIcon }) {
   return (
     <div>
-      <h3>{kind}</h3>
+      <p css={label}>{kind}</p>
       <div css={detail}>
         {range.map((i) => {
           const select = selectedIcon.includes(i);
@@ -33,6 +33,10 @@ const imgStyle = ({ select }) => css`
 
 const detail = css`
 	display: grid;
-	grid-template-columns: repeat(7,1fr);
+	grid-template-columns: repeat(8,1fr);
 	grid-gap : 10px;
+`;
+
+const label = css`
+  margin-bottom: 10px;
 `;
