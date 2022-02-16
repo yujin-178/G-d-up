@@ -22,7 +22,7 @@ const tagItem = css`
   height: 18px;
   padding: 4px;
   border-radius: 18px;
-  font-size: 10px;
+  font-size: 13px;
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
   margin: 5px;
   min-width: 30px;
@@ -32,7 +32,7 @@ const tagItem = css`
 
 const tagTitle = css`
   margin: 0;
-  padding: 4px;
+  padding-left: 4px;
   vertical-align: middle;
 `;
 

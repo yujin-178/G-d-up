@@ -24,4 +24,5 @@ const searchInputStyle = css`
   width: 100%;
   font-size: 15px;
   background-color: rgb(242, 241, 240);
+  padding-left: 10px;
 `;
