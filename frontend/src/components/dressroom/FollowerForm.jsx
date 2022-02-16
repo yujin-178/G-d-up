@@ -1,31 +1,24 @@
 import React from "react";
 import { css } from '@emotion/react';
+import { ListStyle, Hr } from '../resusableCss';
 
 export default function FollowerForm({ followers, onClickGoToFollower }) {
   return (
     <div css={Follower}>
       {followers.map((user, idx) =>
-        <li css={[ListStyle, FollowListStyle]}
-          key={idx}
-          onClick={() => onClickGoToFollower(idx)}
-        >
-          {user}
-        </li>
+        <>
+          <li css={[ListStyle, FollowListStyle]}
+            key={idx}
+            onClick={() => onClickGoToFollower(idx)}
+          >
+            {user}
+          </li>
+          <hr css={Hr}/>
+        </>
       )}
     </div>
   );
 }
-
-const ListStyle = css`
-  padding: 0.5 10rem;
-  margin: 0.7rem auto;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  width: 70%;
-  background-color: beige;
-  cursor: pointer;
-`;
 
 const FollowListStyle = css`
   &:hover {

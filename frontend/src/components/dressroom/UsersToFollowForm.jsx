@@ -1,5 +1,6 @@
 import React from "react";
 import { css } from '@emotion/react';
+import { ListStyle, Hr } from '../resusableCss';
 import searchImg from '../../../public/images/search.png';
 
 export default function UsersToFollowForm({ onChangeSearchUser, searchedUsers, searchUserInput, usersToFollow, onClickFollow }) {
@@ -15,15 +16,18 @@ export default function UsersToFollowForm({ onChangeSearchUser, searchedUsers, s
         {searchedUsers.length === 0 && searchUserInput.length === 0 &&
           <div css={ScrollStyle}>
             {usersToFollow.map((user, idx) =>
-              <li css={ListStyle} key={idx}>
-                {user}
-                <button
-                  css={FollowItem}
-                  onClick={() => onClickFollow(idx)}
-                >
-                  팔로우
-                </button>
-              </li>
+              <>
+                <li css={ListStyle} key={idx}>
+                  {user}
+                  <button
+                    css={FollowItem}
+                    onClick={() => onClickFollow(idx)}
+                  >
+                    팔로우
+                  </button>
+                </li>
+                <hr css={Hr}/>
+              </>
             )}
           </div>
         }
@@ -65,21 +69,10 @@ const FollowItem = css`
 	cursor: pointer;
 `;
 
-const ListStyle = css`
-  padding: 0.5 10rem;
-  margin: 0.7rem auto;
-  list-style: none;
-  display: flex;
-  justify-content: space-between;
-  width: 70%;
-  background-color: beige;
-`;
-
 const InputStyle = css`
   width: 70%;
   box-sizing: border-box;
   border: 2px solid #ccc;
-  border-radius: 4px;
   font-size: 16px;
   background-color: white;
   background-image: url(${searchImg});

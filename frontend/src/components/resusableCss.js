@@ -8,3 +8,20 @@ export const LivingRoom = css`
   background-size: cover;
   background-position: center;
 `;
+
+export const ListStyle = css`
+  padding: 0.5 10rem;
+  margin: 0.7rem auto;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  background-color: #fefefe;
+  color: #3B3532;
+  cursor: pointer;
+`;
+
+export const Hr = css`
+  width: 70%;
+  color: #BFAEA4;
+`;
