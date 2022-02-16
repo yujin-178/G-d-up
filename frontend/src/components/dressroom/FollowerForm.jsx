@@ -1,12 +1,15 @@
 import React from "react";
 import { css } from '@emotion/react';
 
-export default function FollowerForm({ followers }) {
+export default function FollowerForm({ followers, onClickGoToFollower }) {
   return (
     <div css={container}>
       <div css={UsersToFollow}>
         {followers.map((user, idx) =>
-          <li css={ListStyle} key={idx}>
+          <li css={[ListStyle, FollowListStyle]}
+            key={idx}
+            onClick={() => onClickGoToFollower(idx)}
+          >
             {user}
           </li>
         )}
@@ -23,6 +26,13 @@ const ListStyle = css`
   justify-content: space-between;
   width: 70%;
   background-color: beige;
+  cursor: pointer;
+`;
+
+const FollowListStyle = css`
+  &:hover {
+    background-color: #E6B36D;
+  }
 `;
 
 const UsersToFollow = css`
