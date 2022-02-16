@@ -75,7 +75,7 @@ export default function DressRoomPage({ onClickModalOpen, onClickToMyDressRoom, 
 
 const toMyDress = css`
   position: absolute;
-  right: 200px;
+  right: 18rem;
   bottom: 35px;
   width: 90px;
   height: 40px;

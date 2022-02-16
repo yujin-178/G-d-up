@@ -50,6 +50,9 @@ export default function CodyMainContainer() {
     } else if (userName !== '익명') {
       dispatch(setCody(userName));
     } else if (loggedInUser) {
+      if (userName === '익명'){
+        dispatch(setUserName(loggedInUser));
+      } 
       dispatch(setCody(loggedInUser));
     }
   }, []);

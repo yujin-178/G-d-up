@@ -22,7 +22,9 @@ export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResO
         onAfterClose={() =>{ document.body.style.overflow = 'auto'; }}
         style={{
           content: {
-            backgroundColor: '#7c8186',
+            backgroundColor: '#2E2E2E',
+            width: '28rem',
+            padding: '2rem 1rem 2rem'
           },
           overlay: {
             backgroundColor: 'rgba(0,0,0,0.7)',
@@ -31,6 +33,7 @@ export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResO
       >
         <div css={Container}>
           <button
+            className='hvr-fade'
             css={CloseBtn}
             onClick={() => {handleCodyDetailOpen(false); handleCodyEdit(false);}}>
             X
@@ -95,15 +98,18 @@ export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResO
           <div css={contentContainer}>
             {selectedCody.content}
           </div>
+
           {isLoggedInUser ?
             <div css={submitBtnContainer}>
               <button
+                className="hvr-fade"
                 css={editBtn}
                 onClick={() => handleCodyEdit(true)}
               >
                 수정
               </button>
               <button
+                className='hvr-fade'
                 css={delBtn}
                 onClick={() => deleteCody(selectedCody.codyId)}
               >
@@ -126,7 +132,7 @@ export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResO
 
 const Container = css`
   display: grid;
-	grid-template-columns: 350px 1fr;
+	grid-template-columns: 330px 1fr;
 	grid-template-rows: repeat(4,1fr);
 	max-width: 100%;
   grid-row: 3;
@@ -182,6 +188,7 @@ const tag = css`
   flex-wrap: wrap;
   margin-bottom : 15px;
   margin-top: 10px;
+  margin-left: 2rem;
   width: fit-content;
 `;
 
@@ -206,8 +213,12 @@ const contentContainer = css`
   display: grid;
   grid-row: 3;
   grid-column: 1;
-  color: #f2f2f2;
-  border: 1px solid black;
+  background-color: rgb(242, 241, 240);
+  border: 1px solid rgb(153, 153, 153);
+
+  width: 18rem;
+  margin-left: 2rem;
+
   padding: 5px;
   font-size: 18px;
   height: 100px;
@@ -295,37 +306,37 @@ const submitBtnContainer = css`
 const delBtn = css`
 	grid-column: 4;
 	margin-left: 10px;
-	background: #c99f9f;
-	padding: 0.5rem 1rem;
-	width: 4rem;
-  height: 2rem;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
+
+	width: 90px;
+  height: 40px;
+  color: white;
+  border: 1.5px solid white;
+  background-color: #771138;
+  cursor: pointer;
 `;
 
 const editBtn = css`
 	grid-column: 3;
-	background: #6da0cf;
-	padding: 0.5rem 1rem;
-	width: 4rem;
-  height: 2rem;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
+	width: 90px;
+  height: 40px;
+  color: white;
+  border: 1.5px solid white;
+  background-color: #0067a3;
+  cursor: pointer;
 `;
 
 const CloseBtn = css`
-	background: #c99f9f;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),  0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  background-color: white;
+  color: white;
+  border: 1.5px solid white;
+  background-color: #2E2E2E;
+
 	height: 1.5rem;
 	width : 1.5rem;
-	grid-column: 5;
-	grid-row: 1;
+
+  position: absolute;
+	top: 2rem;
+  right: 2.5rem;
 
 	cursor: pointer;
 `;
