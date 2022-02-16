@@ -12,20 +12,19 @@ import {
 import { setUserName } from '../../slices/clothesSlice';
 import FriendsModal from '../../components/dressroom/FriendsModal';
 
-const userName = 'admin';
-
 export default function FriendsModalContainer({ isOpen }) {
+  const { userName } = useSelector(state => state.authSlice);
   const dispatch = useDispatch();
-
-  function handleClickModalClose() {
-    dispatch(setIsOpen(false));
-  }
-
+  
   useEffect(() => {
     dispatch(setUsersToFollow(userName));
     dispatch(setFollowers(userName));
     dispatch(setFollowings(userName));
   }, []);
+  
+  function handleClickModalClose() {
+    dispatch(setIsOpen(false));
+  }
 
   const { 
     usersToFollow,
@@ -50,15 +49,16 @@ export default function FriendsModalContainer({ isOpen }) {
   }
 
   function handleClickGoToFollowing(idx) {
-    const userName = followings[idx];
-    console.log(userName);
-    dispatch(setUserName(userName));
+    const friendName = followings[idx];
+    localStorage.setItem("friendName", `${friendName}` );
+    dispatch(setUserName(friendName));
+
   }
 
   function handleClickGoToFollower(idx) {
-    const userName = followers[idx];
-    console.log(userName);
-    dispatch(setUserName(userName));
+    const friendName = followings[idx];
+    localStorage.setItem("friendName", `${friendName}` );
+    dispatch(setUserName(friendName));
   }
 
   return (
