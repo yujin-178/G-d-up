@@ -22,7 +22,7 @@ export default function Categories({ categories, selectedCategory, handleClick }
 const CategoriesNav = css`
   grid-column: 1 / 3;
   margin: 1rem 1rem 0rem 1rem;
-  z-index: 1;
+  z-index: 0;
 `;
 
 const ulStyle = css`
