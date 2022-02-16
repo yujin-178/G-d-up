@@ -1,28 +1,56 @@
 import React from 'react';
+import CodyCard from './CodyCard';
+import TagSearchBar from './TagSearchBar';
+import Tag from './Tag';
 
 import { css } from "@emotion/react";
+import CodyBackgroundImg from '../../../public/images/codybackground.jpg';
 
-export default function CodyList({ setisdetailOpen, handleSelectCody, moveScroll, cards }) {
+export default function CodyList({ tagDelete ,tagFilter, tagRef, onKeyPress, setisdetailOpen, handleSelectCody, moveScroll, cards }) {
   return (
-    <div >
-      <h2>Cody</h2>
-
-      {cards ?
+    <div css={listContainer}>
+      <h2 css={title}>Cody</h2>
+      <div css={searchBar}>
+        <TagSearchBar
+          inputRef={tagRef}
+          onKeyPress={onKeyPress}
+        />
+        <div css={tags}>
+          {tagFilter.length ?
+            tagFilter.map((tag, index) => {
+              return (
+                <Tag
+                  key={index}
+                  value={tag}
+                  deleteTagHandler={tagDelete}
+                />
+              );
+            }) :
+            <Tag 
+              value={'ex. 데일리'}
+              deleteTagHandler={tagDelete}
+            />
+          }
+        </div>
+      </div>
+      {cards.length >= 1 ?
         <div css={container}>
           {cards.map((card, index) => {
             return (
-              <img
+              <div
                 key={index}
-                src={card.imageModel.imageUrl}
-                css={imgStyle}
-                onClick={() => {handleSelectCody(index); setisdetailOpen(true);}}
-              />
+                onClick={() => { handleSelectCody(index); setisdetailOpen(true); }}
+              >
+                <CodyCard
+                  imgurl={card.imageModel.imageUrl}
+                />
+              </div>
             );
           })}
         </div>
         :
         <div css={message}>
-          <p>아직 완성한 코디가 없습니다..</p>
+          <p>{tagFilter.length >= 1 ? '일치하는 결과가 없습니다..' : '아직 완성한 코디가 없습니다..'}</p>
           <p>우측 상단의 코디 생성하기 버튼을 눌러 나만의 코디를 완성해보세요! </p>
         </div>
       }
@@ -39,6 +67,36 @@ export default function CodyList({ setisdetailOpen, handleSelectCody, moveScroll
   );
 }
 
+const searchBar = css`
+  width: 30%;
+  grid-row: 2;
+`;
+
+const tags = css`
+  width: 100%;
+  display:flex;
+  flex-wrap: wrap;
+`;
+
+const listContainer = css`
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: repeat(5,1fr);
+
+  grid-gap : 15px;
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${CodyBackgroundImg});
+  background-size: cover;
+  background-position: center;
+
+  padding: 10px;
+`;
+
+const title = css`
+  grid-row: 1;
+`;
+
 const message = css`
   margin: 0;
   position: absolute;
@@ -53,26 +111,26 @@ const message = css`
   width: 100%;
 `;
 
-const imgStyle = css`
-  width: 90%;
-  height: fit-content;
-`;
-
 const container = css`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 10px;
+  grid-row: 3;
 `;
 
 const btnContainer = css`
   display: grid;
   grid-template-columns: repeat(5,1fr);
+  grid-row: 4;
+  justify-self : center;
 `;
 
 const scrollBtn = css`
+  display:flex;
   width: 150px;
   height: 30px;
   grid-column:3;
-  justify-self: center;
+  justify-content: center;
+  align-items: center;
   margin: 20px;
 `;
