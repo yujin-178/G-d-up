@@ -16,6 +16,8 @@ export default function ClosetContainer() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const filteredClothes = useSelector(state => filteredClothesSelector(state));
+  const loggedInUser = useSelector(state => state.authSlice.userName);
+  const { userName } = useSelector(state => state.clothesSlice);
   console.log(filteredClothes);
 
   useEffect(() => {
@@ -41,6 +43,7 @@ export default function ClosetContainer() {
       filteredClothes={filteredClothes}
       onClickModal={handleClickModal}
       goBackHandler={goBackHandler}
+      isLoggedInUser={loggedInUser === userName}
     />
   );
 }
