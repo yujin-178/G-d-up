@@ -108,7 +108,6 @@ const form = css`
   padding: 2rem 2rem 2rem;
   background-color: white;
   margin-right: 20px;
-  border-radius: 10px;
   background-color: rgb(242, 241, 240);
   background-color: #2E2E2E;
 `;
@@ -123,7 +122,6 @@ const memo = css`
   margin-top: 15px;
   background-color: rgb(242, 241, 240);
   border: 1px solid rgb(153, 153, 153);
-  border-radius: 8px;
 `;
 
 const canvas = css`
@@ -132,7 +130,6 @@ const canvas = css`
   background-color: rgb(242, 241, 240);
   position: relative;
   border: 1px solid rgb(153, 153, 153);
-  border-radius: 8px;
   opacity: 1;
 `;
 

@@ -276,5 +276,4 @@ const clothesContainer = css`
   grid-auto-rows: minmax(100px, auto);
   grid-auto-columns: minmax(100px, auto);
   background-color: #BFAEA4;
-  border-radius: 0.5rem;
 `;
