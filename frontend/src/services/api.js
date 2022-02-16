@@ -28,7 +28,7 @@ export async function createFile(element) {
 export async function loadCodyByUserName(userName) {
   const res = await axios.get(`http://i6b108.p.ssafy.io:8000/cody/read/${userName}`);
   let cody = [];
-  if (res.data.dta){
+  if (res.data.data){
     cody = res.data.data.sort(function (a,b) {
       return a.updateDate > b.updateDate ? -1 : a.updateDate < b.updateDate ? 1 : 0;
     });
