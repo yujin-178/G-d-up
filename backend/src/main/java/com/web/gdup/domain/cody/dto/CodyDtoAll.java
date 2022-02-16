@@ -1,6 +1,7 @@
 package com.web.gdup.domain.cody.dto;
 
 import com.web.gdup.domain.cody.entity.CodyEntity;
+import com.web.gdup.domain.cody_clothing.entity.CodyClothingEntity;
 import com.web.gdup.domain.image.entity.ImageEntity;
 import lombok.*;
 
@@ -23,8 +24,9 @@ public class CodyDtoAll {
     private int secret;
     private ImageEntity imageModel;
     private List<String> hashList;
+    private List<CodyClothingEntity> codyClothingEntities;
 
-    public CodyDtoAll(CodyEntity codyEntity, List<String> tagList){
+    public CodyDtoAll(CodyEntity codyEntity, List<String> tagList,List<CodyClothingEntity> codyClothingEntities ){
         this.codyId = codyEntity.getCodyId();
         this.codyName = codyEntity.getCodyName();
         this.registrationDate = codyEntity.getRegistrationDate();
@@ -34,5 +36,6 @@ public class CodyDtoAll {
         this.secret = codyEntity.getSecret();
         this.imageModel = codyEntity.getImageModel();
         this.hashList = tagList;
+        this.codyClothingEntities = codyClothingEntities;
     }
 }
