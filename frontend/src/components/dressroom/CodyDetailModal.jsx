@@ -137,16 +137,14 @@ const Container = css`
 const imgContainer = css`
   grid-row : 1;
   grid-column: 1;
-  height: 380px;
-  width: 360px; 
-  background-color: #f2f2f2;
-  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+  margin-bottom : 10px;
 `;
 
 const codyImg = css`
   position: relative;
-  justify-content: center;
-  align-items:center;
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
 `;
 const inputContainer = css`
@@ -182,7 +180,8 @@ const tag = css`
   grid-column : 1;
   display: flex;
   flex-wrap: wrap;
-  margin : 5px;
+  margin-bottom : 15px;
+  margin-top: 10px;
   width: fit-content;
 `;
 
@@ -210,8 +209,26 @@ const contentContainer = css`
   color: #f2f2f2;
   border: 1px solid black;
   padding: 5px;
-  font-size: 23px;
+  font-size: 18px;
   height: 100px;
+  overflow-y : scroll;
+  word-break: break-all;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3.5px;
+    background-color: #BFAEA4;
+
+    &:hover {
+      background-color: #BFAEA4;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
 `;
 
 const toggleContainer = css`
@@ -367,8 +384,8 @@ const modalClass = css`
 }
 
 .ReactModal__Content--after-open {
-	width: 40%;
-	height: 70%;
+	width: 545px;
+	height: 680px;
 	grid-column:4;
 	background-color: #f2f2f2;
 	justify-content: center;
