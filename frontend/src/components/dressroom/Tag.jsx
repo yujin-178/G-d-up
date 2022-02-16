@@ -19,15 +19,15 @@ const tagItem = css`
   position: relative;
   display: flex;
   background-color: white;
-  height: 18px;
-  padding: 4px;
+  padding: 4px 5px;
   border-radius: 18px;
-  font-size: 10px;
+  font-size: 13px;
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
   margin: 5px;
   min-width: 30px;
   color: grey;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgb(242, 241, 240);
 `;
 
 const tagTitle = css`

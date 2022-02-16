@@ -19,7 +19,6 @@ const searchInputStyle = css`
   height: 35px;
   outline: 0;
   border: 0;
-  border-radius: 5px;
   border-bottom: 2px solid silver;
   width: 100%;
   font-size: 15px;

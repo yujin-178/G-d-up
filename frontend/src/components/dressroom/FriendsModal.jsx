@@ -129,7 +129,26 @@ const inBox = css`
 
 const contentArea = css`
   background-color: #fefefe;
-  height: 90%;
+  height: 88%;
   grid-column: 2 / 3;
   grid-row: 2 / 3;
+
+  // height: 88%;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3.5px;
+    background-color: #BFAEA4;
+
+    &:hover {
+      background-color: #BFAEA4;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
 `;
