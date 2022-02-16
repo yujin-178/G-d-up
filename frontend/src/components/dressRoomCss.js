@@ -10,11 +10,14 @@ export const DressRoom = css`
 `;
 
 export const BackBtn = css`
-  width: 5rem;
-  height: 3rem;
-  background: #ecc194;
-	border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
+  position: absolute;
+  right: 50px;
+  bottom: 35px;
+  width: 90px;
+  height: 40px;
+  background-color: white;
+  color: white;
+  border: 1.5px solid white;
+  background-color: #2E2E2E;
+  cursor: pointer;
 `;

@@ -39,6 +39,7 @@ export default function CodyList({ userName, isLoggedInUser, tagDelete, tagFilte
             {cards.map((card, index) => {
               return (
                 <div
+                  css={css`opacity:1;`}
                   key={index}
                   onClick={() => { handleSelectCody(index); setisdetailOpen(true); }}
                 >
@@ -65,8 +66,9 @@ export default function CodyList({ userName, isLoggedInUser, tagDelete, tagFilte
           <button
             onClick={() => moveScroll('u')}
             css={scrollBtn}
+            className="hvr-fade"
           >
-            슬라이드로 보기
+            Slide View
           </button>
         </div>
       </div>
@@ -150,7 +152,8 @@ const container = css`
   margin: 10px;
   padding: 20px;
   width: 90vw;
-  background : #f2f2f2;
+  background-color : #3A3D41; 
+  opacity: 0.9;
 `;
 
 const btnContainer = css`
@@ -162,16 +165,16 @@ const btnContainer = css`
 
 const scrollBtn = css`
   display:flex;
-  width: 150px;
-  height: 30px;
+
   grid-column:3;
   justify-content: center;
   align-items: center;
-  margin: 20px;
 
-  background: #c99f9f;
-  border: none;
-	border-radius: 4px;
-	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-	cursor: pointer;
+  width: 90px;
+  height: 40px;
+  background-color: white;
+  color: white;
+  border: 1.5px solid white;
+  background-color: #2E2E2E;
+  cursor: pointer;
 `;
