@@ -5,6 +5,7 @@ import AddClothesContainer from '../../containers/dressroom/AddClothesContainer.
 import ClothesDetailContainer from '../../containers/dressroom/ClothesDetailContainer.jsx';
 
 import { css } from '@emotion/react';
+
 import { Link } from 'react-router-dom';
 
 export default function ClosetPage({ filteredClothes, goBackHandler }) {
@@ -56,6 +57,7 @@ const Closet = css`
   display: flex;
   justify-content: center;
   width: 80%;
+  max-width: 80rem;
   height: 80%;
   vertical-align: middle;
   margin-top: 3%;
@@ -77,6 +79,7 @@ const BackBtn = css`
 const ItemsGridWrapper = css`
   position: relative;
   width: 62%;
+  max-width: 50rem;
   height: 100%;
   margin: 2.5rem auto;
 	display: grid;
