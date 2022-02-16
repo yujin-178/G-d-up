@@ -11,7 +11,6 @@ const initialState = {
   'scrollisTop': true,
   modalType: null,
   'cards': [],
-  'renderCount': 0,
   'isdetailOpen': false,
   'selectedCody': '',
   'transitionEnd': false,
@@ -63,11 +62,9 @@ export const codySlice = createSlice({
     },
     setCards(state, action) {
       const cards = action.payload;
-      const { renderCount } = state;
       return {
         ...state,
         cards,
-        renderCount: renderCount + 1
       };
     },
     setisdetailOpen(state, action) {
@@ -120,7 +117,7 @@ export const codySlice = createSlice({
       if (state.tagFilter.length >= 1) {
         const filter = state.codyList.filter(cody => {
           for (let i = 0; i < state.tagFilter.length; i++) {
-            if (cody.hashList.includes(`${state.tagFilter[i]}`)){
+            if (cody.hashList.includes(`${state.tagFilter[i]}`)) {
               return true;
             }
           }

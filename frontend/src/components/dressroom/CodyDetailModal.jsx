@@ -8,7 +8,7 @@ if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function CodyDetailModal({ handleResponse, isResOpen, resText, deleteCody, handleCodyEdit, iscodyEdit, selectedCody, isdetailOpen, handleCodyDetailOpen }) {
+export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResOpen, resText, deleteCody, handleCodyEdit, iscodyEdit, selectedCody, isdetailOpen, handleCodyDetailOpen }) {
   return (
     <div>
       <Global
@@ -95,20 +95,24 @@ export default function CodyDetailModal({ handleResponse, isResOpen, resText, de
           <div css={contentContainer}>
             {selectedCody.content}
           </div>
-          <div css={submitBtnContainer}>
-            <button
-              css={editBtn}
-              onClick={() => handleCodyEdit(true)}
-            >
-              수정
-            </button>
-            <button
-              css={delBtn}
-              onClick={() => deleteCody(selectedCody.codyId)}
-            >
-              삭제
-            </button>
-          </div>
+          {isLoggedInUser ?
+            <div css={submitBtnContainer}>
+              <button
+                css={editBtn}
+                onClick={() => handleCodyEdit(true)}
+              >
+                수정
+              </button>
+              <button
+                css={delBtn}
+                onClick={() => deleteCody(selectedCody.codyId)}
+              >
+                삭제
+              </button>
+            </div>
+            :
+            ''
+          }
           <ResModal
             isResOpen={isResOpen}
             resText={resText}

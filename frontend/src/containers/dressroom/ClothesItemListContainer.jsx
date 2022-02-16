@@ -3,7 +3,7 @@ import React from 'react';
 import ClothesItemList from '../../components/dressroom/ClothesItemList';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setClothes, selectClothes } from '../../slices/clothesSlice';
+import { setClothes, selectClothes, setUserName } from '../../slices/clothesSlice';
 import { debounce } from "lodash";
 import { useEffect } from 'react';
 import { filteredClothesSelector } from '../../filterSelector';
@@ -14,7 +14,13 @@ export default function ClothesItemListContainer() {
   const { userName } = useSelector(state => state.clothesSlice);
 
   useEffect(() => {
-    dispatch(setClothes(userName));
+    if (userName === '익명' && localStorage.getItem('friendName')) {
+      const userName = localStorage.getItem('friendName');
+      dispatch(setUserName(userName));
+      dispatch(setClothes(userName));
+    } else if (userName !== '익명'){
+      dispatch(setClothes(userName));
+    }
   }, []);
 
   const { selectedClothes } = useSelector(state => state.clothesSlice);

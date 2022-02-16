@@ -36,6 +36,7 @@ export const clothesSlice = createSlice({
   initialState,
   reducers: {
     setUserName(state, action) {
+      localStorage.setItem("friendName", `${action.payload}`);
       return {
         ...state,
         userName: action.payload,

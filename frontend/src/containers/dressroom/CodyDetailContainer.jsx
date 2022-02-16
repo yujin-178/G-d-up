@@ -13,7 +13,7 @@ import {
   changeResText
 } from '../../slices/modalSlice';
 
-export default function CodyDetailContainer() {
+export default function CodyDetailContainer({ isLoggedInUser }) {
   const dispatch = useDispatch();
   const cody = useSelector(state => state.codySlice);
   const { iscodyEdit, selectedCody, isdetailOpen } = cody;
@@ -57,6 +57,7 @@ export default function CodyDetailContainer() {
         isResOpen={isResOpen}
         resText={resText}
         handleResponse={handleResponse}
+        isLoggedInUser={isLoggedInUser}
       />
     </div>
   );

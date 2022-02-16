@@ -19,6 +19,7 @@ import {
   changeFilterCody
 } from '../../slices/codySlice';
 import { sessionLogin } from '../../slices/authSlice';
+import { setUserName } from '../../slices/clothesSlice';
 
 export default function CodyMainContainer() {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ export default function CodyMainContainer() {
   const tagRef = useRef();
 
   const cody = useSelector(state => state.codySlice);
-  const { filterCody ,tagFilter, selectedCody, isdetailOpen, renderCount, offsetRadius, showArrows, goToSlide, codyList, scrollisTop, cards, codyLoading } = cody;
+  const { filterCody, tagFilter, selectedCody, isdetailOpen, offsetRadius, showArrows, goToSlide, codyList, scrollisTop, cards, codyLoading } = cody;
   // const [scrollPosition, setScrollPosition] = useState(0);
   // function updateScroll() {
   //   setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -42,12 +43,19 @@ export default function CodyMainContainer() {
   const { userName } = useSelector(state => state.clothesSlice);
 
   useEffect(() => {
-    if (loggedInUser) {
+    if (userName === '익명' && localStorage.getItem('friendName')) {
+      const userName = localStorage.getItem('friendName');
+      dispatch(setUserName(userName));
+      dispatch(setCody(userName));
+    } else if (userName !== '익명') {
+      dispatch(setCody(userName));
+    } else if (loggedInUser) {
       dispatch(setCody(loggedInUser));
-      return;
     }
+  }, []);
 
-    if (localStorage.getItem('userInfo')){
+  useEffect(() => {
+    if (localStorage.getItem('userInfo')) {
       const loggedInUser = JSON.parse(localStorage.getItem('userInfo')).username;
       dispatch(sessionLogin(loggedInUser));
     } else {
@@ -55,7 +63,7 @@ export default function CodyMainContainer() {
     }
   }, [loggedInUser]);
 
-  useEffect(()=> {
+  useEffect(() => {
     if (tagFilter.length >= 1) {
       dispatch(setFilterCody());
     } else {
@@ -63,7 +71,7 @@ export default function CodyMainContainer() {
     }
   }, [tagFilter, codyList]);
 
-  let codyCard = setTimeout(() => {
+  useEffect(() => {
     if (codyLoading === false) {
       if (codyList) {
         dispatch(changeFilterCody(codyList));
@@ -87,11 +95,7 @@ export default function CodyMainContainer() {
         dispatch(setCards(cards));
       }
     }
-  }, 1000);
-
-  if (renderCount > 1) {
-    clearTimeout(codyCard);
-  }
+  }, [codyList]);
 
   // useEffect(() => {
   //   const watch = () => {
