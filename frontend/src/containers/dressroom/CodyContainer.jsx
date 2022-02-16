@@ -299,4 +299,5 @@ const backButton = css`
   color: white;
   border: 1.5px solid white;
   background-color: #2E2E2E;
+  cursor: pointer;
 `;
