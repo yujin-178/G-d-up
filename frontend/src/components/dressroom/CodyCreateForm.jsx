@@ -20,9 +20,9 @@ export default function CodyCreateForm(props) {
     isNotSecret,
     toggleIsNotSecret,
     saveHandler,
-    goBackHandler,
     activatedItemId,
     deleteCodyItem,
+    resetHandler,
   } = props;
 
   return (
@@ -89,7 +89,7 @@ export default function CodyCreateForm(props) {
         placeholder="내용 입력"
       />
       <div css={buttonGroup}>
-        <Button title='뒤로가기' onClick={goBackHandler} color={'#fff'}/>
+        <Button title='리셋하기' onClick={resetHandler} color={'#fff'}/>
         <Button title='저장하기' onClick={saveHandler} color={'#00acee'}/>
       </div>
     </div>
@@ -108,7 +108,6 @@ const form = css`
   padding: 2rem 2rem 2rem;
   background-color: white;
   margin-right: 20px;
-  background-color: rgb(242, 241, 240);
   background-color: #2E2E2E;
 `;
 
@@ -149,6 +148,7 @@ const toggleBtn = ({ isNotSecret }) => css`
   `
     background: #00acee;
   `}
+  cursor: pointer;
 `;
 
 const toggleBtnCircle = ({ isNotSecret }) => css`
