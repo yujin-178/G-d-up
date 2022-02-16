@@ -48,6 +48,10 @@ export default function FriendsModalContainer({ isOpen }) {
     dispatch(setSearchResult(e.target.value));
   }
 
+  function handleClickGoToUser(e) {
+    console.log(e.target.textContent);
+  }
+
   return (
     <FriendsModal
       isOpen={isOpen}
@@ -60,6 +64,7 @@ export default function FriendsModalContainer({ isOpen }) {
       onClickFollow={handleClickFollow}
       onClickUnfollow={handleClickUnfollow}
       onChangeSearchUser={handleChangeSearchUser}
+      onClickGoToUser={handleClickGoToUser}
     />
   );
 }
