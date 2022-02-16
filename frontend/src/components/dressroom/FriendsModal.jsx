@@ -9,7 +9,8 @@ export default function FriendsModal({
   onClickFollow,
   onClickUnfollow,
   onChangeSearchUser,
-  onClickGoToUser,
+  onClickGoToFollowing,
+  onClickGoToFollower,
   followers,
   followings,
   searchedUsers,
@@ -66,7 +67,7 @@ export default function FriendsModal({
               <li
                 css={[ListStyle, FollowListStyle]}
                 key={idx}
-                onClick={onClickGoToUser}
+                onClick={() => onClickGoToFollower(idx)}
               >
                 {user}
               </li>
@@ -79,7 +80,7 @@ export default function FriendsModal({
                 css={[ListStyle, FollowListStyle]}
                 key={idx}
               >
-                <span css={SpanStyle} onClick={onClickGoToUser}>{user}</span>
+                <span css={SpanStyle} onClick={() => onClickGoToFollowing(idx)}>{user}</span>
                 <button
                   css={[FollowItem, UnfollowBtn]}
                   onClick={() => onClickUnfollow(idx)}

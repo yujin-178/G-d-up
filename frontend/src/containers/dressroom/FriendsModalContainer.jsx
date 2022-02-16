@@ -9,6 +9,7 @@ import {
   unfollowUser,
   setSearchResult,
 } from '../../slices/friendsSlice';
+import { setUserName } from '../../slices/clothesSlice';
 import FriendsModal from '../../components/dressroom/FriendsModal';
 
 const userName = 'admin';
@@ -48,8 +49,16 @@ export default function FriendsModalContainer({ isOpen }) {
     dispatch(setSearchResult(e.target.value));
   }
 
-  function handleClickGoToUser(e) {
-    console.log(e.target.textContent);
+  function handleClickGoToFollowing(idx) {
+    const userName = followings[idx];
+    console.log(userName);
+    // dispatch(setUserName(userName));
+  }
+
+  function handleClickGoToFollower(idx) {
+    const userName = followers[idx];
+    console.log(userName);
+    // dispatch(setUserName(userName));
   }
 
   return (
@@ -64,7 +73,8 @@ export default function FriendsModalContainer({ isOpen }) {
       onClickFollow={handleClickFollow}
       onClickUnfollow={handleClickUnfollow}
       onChangeSearchUser={handleChangeSearchUser}
-      onClickGoToUser={handleClickGoToUser}
+      onClickGoToFollowing={handleClickGoToFollowing}
+      onClickGoToFollower={handleClickGoToFollower}
     />
   );
 }
