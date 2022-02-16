@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FriendsModalContainer from '../../containers/dressroom/FriendsModalContainer';
 import { Link } from 'react-router-dom';
 
@@ -9,22 +9,30 @@ import closetImg from '../../../public/images/closetBtn.svg';
 
 import { BackBtn } from '../dressRoomCss';
 import { PeopleFill } from '@emotion-icons/bootstrap/PeopleFill';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { sessionLogin } from '../../slices/authSlice';
 
 export default function DressRoomPage({ onClickModalOpen }) {
 
   const { isOpen } = useSelector(state => state.friendsSlice);
+  const dispatch = useDispatch();
+  const { userName } = useSelector(state => state.authSlice);
 
-  let userName = '익명';
+  const user = userName || '익명';
 
-  if (localStorage.getItem('userInfo')){
-    userName = JSON.parse(localStorage.getItem('userInfo')).username;
-  } 
-  
+  useEffect(() => {
+    if (userName) return;
+
+    if (localStorage.getItem('userInfo')){
+      const userName = JSON.parse(localStorage.getItem('userInfo')).username;
+      dispatch(sessionLogin(userName));
+    }
+  }, []);
+
   return (
     <div css={Container}>
       <div css={DressRoom}>
-        <h2 css={Title}>{`${userName}'s 드레스룸`}</h2>
+        <h2 css={Title}>{`${user}'s 드레스룸`}</h2>
         <FriendsModalContainer
           isOpen={isOpen}
         />

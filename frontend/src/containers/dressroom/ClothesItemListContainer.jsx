@@ -11,8 +11,7 @@ import { css } from "@emotion/react";
 
 export default function ClothesItemListContainer() {
   const dispatch = useDispatch();
-
-  const userName = JSON.parse(localStorage.getItem('userInfo')).username;
+  const { userName } = useSelector(state => state.authSlice);
 
   useEffect(() => {
     dispatch(setClothes(userName));

@@ -15,6 +15,7 @@ import {
   changeSelectCody,
   setisdetailOpen
 } from '../../slices/codySlice';
+import { sessionLogin } from '../../slices/authSlice';
 
 export default function CodyMainContainer() {
   const navigate = useNavigate();
@@ -32,11 +33,21 @@ export default function CodyMainContainer() {
   //     dispatch(setEnd(true));
   //   };
   // }
-  const userName = JSON.parse(localStorage.getItem('userInfo')).username;
+  const { userName } = useSelector(state => state.authSlice);
 
   useEffect(() => {
-    dispatch(setCody(userName));
-  }, []);
+    if (userName) {
+      dispatch(setCody(userName));
+      return;
+    }
+
+    if (localStorage.getItem('userInfo')){
+      const userName = JSON.parse(localStorage.getItem('userInfo')).username;
+      dispatch(sessionLogin(userName));
+    } else {
+      navigate('/login');
+    }
+  }, [userName]);
 
   let codyCard = setTimeout(() => {
     if (codyLoading === false) {
