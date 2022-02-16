@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import FriendsModalContainer from '../../containers/dressroom/FriendsModalContainer';
 import { Link } from 'react-router-dom';
 
@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 export default function DressRoomPage({ onClickModalOpen, onClickToMyDressRoom, userName, isMyRoom }) {
 
   const { isOpen } = useSelector(state => state.friendsSlice);
+  const [hover, setHover] = useState(false);
 
   return (
     <div css={Container}>
@@ -27,7 +28,14 @@ export default function DressRoomPage({ onClickModalOpen, onClickToMyDressRoom, 
           <PeopleFill
             css={FriendsBtn}
             onClick={onClickModalOpen}
+            onMouseEnter={() => setHover(true)}
+            onMouseLeave={() => setHover(false)}
           />
+          {hover ?
+            <p className="arrow_box">Friend List</p>
+            :
+            ''
+          }
         </div>
         <div css={contentContainer}>
           <Link to='/cody' className={'hvr-bob'} css={[BtnDiv, CodyBtnDiv, LinkStyle]}>

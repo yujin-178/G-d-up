@@ -4150,3 +4150,33 @@
 }
 
 /*# sourceMappingURL=hover.css.map */
+
+.arrow_box {
+  position: absolute;
+  width: 100px;
+  padding: 8px;
+  left: 7rem;
+  bottom: 7rem;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px;  
+  border-radius: 8px;
+  background: #BFAEA4;
+  color: #2E2E2E;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.arrow_box:after {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -10px;
+  border-top:10px solid #BFAEA4; 
+  border-left: 10px solid transparent; 
+  border-right: 10px solid transparent; 
+  border-bottom: 0px solid transparent; 
+  pointer-events: none;
+  content: " ";
+}
