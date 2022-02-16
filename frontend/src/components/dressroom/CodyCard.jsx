@@ -35,6 +35,7 @@ const cardStyle = css`
   width: 200px;
   height: 330px;
   padding: 10px;
+  margin: 10px;
 `;
 
 const imgStyle = css`
@@ -44,7 +45,7 @@ const imgStyle = css`
 
 const content = css`
   padding: 15px;
-  font-size: 23px;
+  font-size: 20px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

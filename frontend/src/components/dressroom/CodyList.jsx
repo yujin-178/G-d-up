@@ -3,13 +3,12 @@ import CodyCard from './CodyCard';
 import TagSearchBar from './TagSearchBar';
 import Tag from './Tag';
 
-import { css, Global } from "@emotion/react";
+import { css } from "@emotion/react";
 import CodyBackgroundImg from '../../../public/images/codybackground.jpg';
 
 export default function CodyList({ userName, isLoggedInUser, tagDelete, tagFilter, tagRef, onKeyPress, setisdetailOpen, handleSelectCody, moveScroll, cards }) {
   return (
     <div css={BackImg}>
-      <Global style={listStyle} />
       <div css={listContainer}>
         <h2 css={title}>{userName}님의 코디</h2>
         <div css={searchBar}>
@@ -40,7 +39,6 @@ export default function CodyList({ userName, isLoggedInUser, tagDelete, tagFilte
             {cards.map((card, index) => {
               return (
                 <div
-                  css={css`margin:15px;`}
                   key={index}
                   onClick={() => { handleSelectCody(index); setisdetailOpen(true); }}
                 >
@@ -102,6 +100,7 @@ const listContainer = css`
   grid-template-rows: 1fr 1fr 63vh 1fr;
   grid-gap : 15px;
   padding: 30px 30px 0px 30px;
+  transition: all 0.35s;
 `;
 
 const title = css`
@@ -149,7 +148,7 @@ const container = css`
     background: #ffffff;
   }
   margin: 10px;
-  padding: 10px;
+  padding: 20px;
   width: 90vw;
   background : #f2f2f2;
 `;
@@ -175,7 +174,4 @@ const scrollBtn = css`
 	border-radius: 4px;
 	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
-`;
-
-const listStyle = css`
 `;
