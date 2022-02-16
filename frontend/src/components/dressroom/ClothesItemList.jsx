@@ -48,11 +48,12 @@ const ItemListContainer = css`
 `;
 
 const AddIcon = ({ isLoggedInUser }) => css`
-  width: 60px;
-  height: 60px;
+  width: 5rem;
+  height: 5rem;
+  cursor: pointer;
   position: absolute;
-  right: -35px;
-  bottom: 1px;
+  right: -2rem;
+  bottom: -0.4rem;
   ${!isLoggedInUser &&
     `
       display: none;
