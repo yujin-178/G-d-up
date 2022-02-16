@@ -26,9 +26,9 @@ const imgStyle = ({ select }) => css`
 	border: 1px solid;
 	${select &&
   `
-			color: #00acee;
-			border-bottom: 2px solid #00acee;
-		`}
+		color: #00acee;
+		border: 1px solid #00acee;
+	`}
 `;
 
 const detail = css`
