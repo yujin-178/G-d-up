@@ -19,7 +19,6 @@ export default function ClothesDetail({ selectedClothes, deleteHandler, isLogged
             <img css={clothesImage} src={selectedClothes.clothing.imageModel.imageUrl} alt="image" />
           </div>
           <div css={infoWrapper}>
-            <p css={clothesInfo}><strong>옷 정보</strong></p>
             <div>
               <div css={clothesInfoGroup}>
                 <p><strong>카테고리</strong> <span css={description}>{selectedClothes.clothing.category}</span></p>
