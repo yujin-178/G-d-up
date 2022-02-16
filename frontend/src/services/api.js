@@ -57,7 +57,7 @@ export async function postCody(payload) {
     codyName: 'name',
     secret: isNotSecret ? 0 : 1,
     clothingList: itemsIncody,
-    codyTag: tags.join(),
+    codyTag: tags.join(' '),
     userName,
     content
   };
