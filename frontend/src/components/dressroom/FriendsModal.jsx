@@ -81,7 +81,7 @@ const UsersToFollowStyle = css`
   padding: 1rem;
   text-align: center;
   width: 40%;
-  height: 100%;
+  height: 95%;
   background-color: #fefefe;
 `;
 

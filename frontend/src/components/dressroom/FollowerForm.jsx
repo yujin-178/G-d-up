@@ -36,5 +36,5 @@ const FollowListStyle = css`
 const Follower = css`
   padding: 1rem;
   text-align: center;
-  height: 90%;
+  height: 85%;
 `;
