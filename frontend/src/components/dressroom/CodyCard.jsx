@@ -16,7 +16,7 @@ export default function Card({ imgurl }) {
       onMouseEnter={() => setShow(true)}
       onMouseLeave={() => setShow(false)}
     >
-      <img src={imgurl} alt='codyCard' />
+      <img src={imgurl} alt='codyCard' css={imgStyle} />
     </animated.div>
   );
 }
@@ -24,10 +24,13 @@ const cardStyle = css`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  background-color: bisque;
-  width: 20rem;
-  height: fit-content;
-  min-height: 20rem;
+  background-color: #685f60;
+  width: 240px;
+  height: 305px;
   padding: 10px;
   border-radius: 10px;
+`;
+
+const imgStyle = css`
+  max-height: 90%;
 `;

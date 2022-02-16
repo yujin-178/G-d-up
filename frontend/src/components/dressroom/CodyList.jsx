@@ -1,22 +1,26 @@
 import React from 'react';
+import CodyCard from './CodyCard';
 
 import { css } from "@emotion/react";
+import CodyBackgroundImg from  '../../../public/images/codybackground.jpg';
 
 export default function CodyList({ setisdetailOpen, handleSelectCody, moveScroll, cards }) {
   return (
-    <div >
-      <h2>Cody</h2>
+    <div css={listContainer}>
+      <h2 css={title}>Cody</h2>
 
       {cards ?
         <div css={container}>
           {cards.map((card, index) => {
             return (
-              <img
+              <div
                 key={index}
-                src={card.imageModel.imageUrl}
-                css={imgStyle}
-                onClick={() => {handleSelectCody(index); setisdetailOpen(true);}}
-              />
+                onClick={() => { handleSelectCody(index); setisdetailOpen(true); }}
+              >
+                <CodyCard
+                  imgurl={card.imageModel.imageUrl}
+                />
+              </div>
             );
           })}
         </div>
@@ -39,6 +43,21 @@ export default function CodyList({ setisdetailOpen, handleSelectCody, moveScroll
   );
 }
 
+const listContainer = css`
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: repeat(5,1fr);
+
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${CodyBackgroundImg});
+  background-size: cover;
+  background-position: center;
+`;
+
+const title = css`
+  grid-row: 1;
+`;
+
 const message = css`
   margin: 0;
   position: absolute;
@@ -53,26 +72,26 @@ const message = css`
   width: 100%;
 `;
 
-const imgStyle = css`
-  width: 90%;
-  height: fit-content;
-`;
-
 const container = css`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-gap: 10px;
+  grid-row: 3;
 `;
 
 const btnContainer = css`
   display: grid;
   grid-template-columns: repeat(5,1fr);
+  grid-row: 4;
+  justify-self : center;
 `;
 
 const scrollBtn = css`
+  display:flex;
   width: 150px;
   height: 30px;
   grid-column:3;
-  justify-self: center;
+  justify-content: center;
+  align-items: center;
   margin: 20px;
 `;

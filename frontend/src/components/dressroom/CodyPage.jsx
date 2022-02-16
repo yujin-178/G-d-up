@@ -3,13 +3,13 @@ import Carousel from 'react-spring-3d-carousel';
 import { config } from 'react-spring';
 
 import { css } from "@emotion/react";
-import CodyBackgroundImg from  '../../../public/images/codybackground.jpg';
+import CodyBackgroundImg from '../../../public/images/codybackground.jpg';
 
 import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
 import CodyDetailContainer from '../../containers/dressroom/CodyDetailContainer';
 
-export default function CodyPage({ setisdetailOpen ,selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
+export default function CodyPage({ setisdetailOpen, selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
   // const animatedItem = {
   //   0: useScrollFadeIn('down', 1, 0),
   //   1: useScrollFadeIn('down', 1, 0.2),
@@ -17,73 +17,77 @@ export default function CodyPage({ setisdetailOpen ,selectedCody, isdetailOpen, 
   // };
 
   return (
-    <div css={CodyBackground}>
-      <div css={isdetailOpen ? css`visibility: hidden;` : container}>
-        <h2>Cody</h2>
-        {cards ?
-          <div css={carousel}>
-            <Carousel
-              slides={cards}
-              goToSlide={goToSlide}
-              offsetRadius={offsetRadius}
-              showNavigation={showArrows}
-              animationConfig={config.gentle}
-            />
+    <div>
+      {scrollisTop ?
+        <div css={CodyBackground}>
+          <div css={isdetailOpen ? css`visibility: hidden;` : container}>
+            <h2>Cody</h2>
+            {cards ?
+              <div css={carousel}>
+                <Carousel
+                  slides={cards}
+                  goToSlide={goToSlide}
+                  offsetRadius={offsetRadius}
+                  showNavigation={showArrows}
+                  animationConfig={config.gentle}
+                />
+              </div>
+              :
+              ''
+            }
+
+            <div css={LeftArrow}>
+              <ArrowLeftSquare
+                size={40}
+                css={arrowStyle}
+                onClick={() => { handlegoToSlide(goToSlide - 1); }}
+              />
+            </div>
+            <div css={RightArrow}>
+              <ArrowRightSquare
+                size={40}
+                css={arrowStyle}
+                onClick={() => { handlegoToSlide(goToSlide + 1); }}
+              />
+            </div>
+            <button
+              onClick={() => moveScroll('d')}
+              css={scrollBtn}
+            >
+              전체 보기
+            </button>
+          </div>
           </div>
           :
-          ''
-        }
 
-        <div css={LeftArrow}>
-          <ArrowLeftSquare
-            size={40}
-            css={arrowStyle}
-            onClick={() => { handlegoToSlide(goToSlide - 1); }}
-          />
+          <div css={scrollisTop ? Fadeup : Fadein} id="fade">
+            <div>
+              <CodyList
+                cards={codyList}
+                moveScroll={moveScroll}
+                scrollisTop={scrollisTop}
+                handleSelectCody={handleSelectCody}
+                setisdetailOpen={setisdetailOpen}
+              />
+            </div>
         </div>
-        <div css={RightArrow}>
-          <ArrowRightSquare
-            size={40}
-            css={arrowStyle}
-            onClick={() => { handlegoToSlide(goToSlide + 1); }}
-          />
+}
+
+          <button css={createBtn} onClick={() => navigate('/codycreate')}>
+            새 코디 생성
+          </button>
+          <button
+            css={backBtn}
+            onClick={() => navigate('/dressroom')}>
+            Back
+          </button>
+          {selectedCody ?
+            <CodyDetailContainer
+            />
+            :
+            ''
+          }
         </div>
-        <button
-          onClick={() => moveScroll('d')}
-          css={scrollBtn}
-        >
-          전체 보기
-        </button>
-      </div>
-
-      <div css={scrollisTop ? Fadeup : Fadein} id="fade">
-        <div>
-          <CodyList
-            cards={codyList}
-            moveScroll={moveScroll}
-            scrollisTop={scrollisTop}
-            handleSelectCody={handleSelectCody}
-            setisdetailOpen={setisdetailOpen}
-          />
-        </div>
-      </div>
-
-      <button css={createBtn} onClick={() => navigate('/codycreate')}>
-        새 코디 생성하기
-      </button>
-      <button
-        css={backBtn}
-        onClick={() => navigate('/dressroom')}>
-        Back
-      </button>
-      {selectedCody ?
-        <CodyDetailContainer
-        />
-        :
-        ''
-      }
-
-    </div>
   );
 }
 
@@ -113,11 +117,17 @@ const Fadein = css`
 `;
 
 const scrollBtn = css`
-  width: 150px;
-  height: 30px;
   grid-column: 2;
   grid-row : 3;
   justify-self: center;
+
+  background: #c99f9f;
+	width: 8rem;
+  height: 2rem;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
 `;
 
 const LeftArrow = css`
@@ -126,6 +136,7 @@ const LeftArrow = css`
   grid-row: 2;
   grid-columns: repeat(7,1fr);
   grid-rows: repeat(7,1fr);
+  color: #f2f2f2;
 `;
 
 const RightArrow = css`
@@ -134,6 +145,7 @@ const RightArrow = css`
   grid-row: 2;
   grid-columns: repeat(7,1fr);
   grid-rows: repeat(7,1fr);
+  color: #f2f2f2;
 `;
 
 const arrowStyle = css`
@@ -162,14 +174,29 @@ const createBtn = css`
   position: fixed;
   top: 30px;
   right: 50px;
+
+  background: #c99f9f;
+	width: 8rem;
+  height: 2rem;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
 `;
 
 const backBtn = css`
-  width: 50px;
-  height: 30px;
   position: fixed;
   bottom: 30px;
   right: 50px;
+
+  background: #c99f9f;
+	padding: 0.5rem 1rem;
+	width: 4rem;
+  height: 2rem;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
 `;
 
 const carousel = css`
