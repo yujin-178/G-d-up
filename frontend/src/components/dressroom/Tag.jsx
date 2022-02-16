@@ -32,7 +32,7 @@ const tagItem = css`
 
 const tagTitle = css`
   margin: 0;
-  padding: 4px;
+  padding-left: 4px;
   vertical-align: middle;
 `;
 
