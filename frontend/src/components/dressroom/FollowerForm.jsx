@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 
 export default function FollowerForm({ followers, onClickGoToFollower }) {
   return (
-    <div css={container}>
+    <div>
       <div css={Follower}>
         {followers.map((user, idx) =>
           <li css={[ListStyle, FollowListStyle]}
@@ -39,10 +39,4 @@ const Follower = css`
   padding: 1rem;
   text-align: center;
   height: 90%;
-`;
-
-const container = css`
-  padding: 1rem;
-  text-align: center;
-  height: 80%;
 `;
