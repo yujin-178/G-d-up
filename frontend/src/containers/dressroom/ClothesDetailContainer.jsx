@@ -5,7 +5,8 @@ import { deleteClothesById } from '../../slices/clothesSlice';
 import { season } from '../../constants/filter';
 
 export default function ClothesDetailContainer() {
-  const { selectedClothes } = useSelector(state => state.clothesSlice);
+  const { selectedClothes, userName } = useSelector(state => state.clothesSlice);
+  const loggedInUser = useSelector(state => state.authSlice.userName);
   const dispatch = useDispatch();
   // todo: username과 clothes의 username이 일치하는 경우만 삭제 가능
   const deleteHandler = clothesId => {
@@ -17,6 +18,8 @@ export default function ClothesDetailContainer() {
       selectedClothes={selectedClothes}
       deleteHandler={deleteHandler}
       allSeason={season}
+      isLoggedInUser={loggedInUser === userName}
+      userName={userName}
     />
   );
 }

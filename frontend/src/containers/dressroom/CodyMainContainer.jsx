@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 // import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll';
@@ -13,15 +13,22 @@ import {
   setMoveScroll,
   setCards,
   changeSelectCody,
-  setisdetailOpen
+  setisdetailOpen,
+  setTagFilter,
+  setFilterCody,
+  changeFilterCody
 } from '../../slices/codySlice';
+import { sessionLogin } from '../../slices/authSlice';
+import { setUserName } from '../../slices/clothesSlice';
 
 export default function CodyMainContainer() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const tagRef = useRef();
+
   const cody = useSelector(state => state.codySlice);
-  const { selectedCody, isdetailOpen, renderCount, offsetRadius, showArrows, goToSlide, codyList, scrollisTop, cards, codyLoading } = cody;
+  const { filterCody, tagFilter, selectedCody, isdetailOpen, offsetRadius, showArrows, goToSlide, codyList, scrollisTop, cards, codyLoading } = cody;
   // const [scrollPosition, setScrollPosition] = useState(0);
   // function updateScroll() {
   //   setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -32,15 +39,42 @@ export default function CodyMainContainer() {
   //     dispatch(setEnd(true));
   //   };
   // }
-  const userName = JSON.parse(localStorage.getItem('userInfo')).username;
+  const loggedInUser = useSelector(state => state.authSlice.userName);
+  const { userName } = useSelector(state => state.clothesSlice);
 
   useEffect(() => {
-    dispatch(setCody(userName));
+    if (userName === '익명' && localStorage.getItem('friendName')) {
+      const userName = localStorage.getItem('friendName');
+      dispatch(setUserName(userName));
+      dispatch(setCody(userName));
+    } else if (userName !== '익명') {
+      dispatch(setCody(userName));
+    } else if (loggedInUser) {
+      dispatch(setCody(loggedInUser));
+    }
   }, []);
 
-  let codyCard = setTimeout(() => {
+  useEffect(() => {
+    if (localStorage.getItem('userInfo')) {
+      const loggedInUser = JSON.parse(localStorage.getItem('userInfo')).username;
+      dispatch(sessionLogin(loggedInUser));
+    } else {
+      navigate('/login');
+    }
+  }, [loggedInUser]);
+
+  useEffect(() => {
+    if (tagFilter.length >= 1) {
+      dispatch(setFilterCody());
+    } else {
+      dispatch(changeFilterCody(codyList));
+    }
+  }, [tagFilter, codyList]);
+
+  useEffect(() => {
     if (codyLoading === false) {
       if (codyList) {
+        dispatch(changeFilterCody(codyList));
         const cardList = codyList.map((card) => {
           return {
             key: card.codyId,
@@ -61,11 +95,7 @@ export default function CodyMainContainer() {
         dispatch(setCards(cards));
       }
     }
-  }, 1000);
-
-  if (renderCount > 1) {
-    clearTimeout(codyCard);
-  }
+  }, [codyList]);
 
   // useEffect(() => {
   //   const watch = () => {
@@ -100,6 +130,27 @@ export default function CodyMainContainer() {
   //   handleMoveScroll('u');
   // }
 
+  function onKeyPress(event) {
+    if (event.key === 'Enter') {
+      const value = tagRef.current.value;
+      if (tagFilter.includes(value)) {
+        tagRef.current.value = '';
+        return alert('이미 작성된 태그입니다');
+      }
+      if (value) {
+        dispatch(setTagFilter({ value: value, type: 'add' }));
+        tagRef.current.value = '';
+      } else {
+        return alert('내용을 입력해주세요');
+      }
+    }
+  }
+
+  function tagDelete(value) {
+    const newTags = tagFilter.filter(tag => tag !== value);
+    dispatch(setTagFilter({ value: newTags, type: 'del' }));
+  }
+
   return (
     <div>
       <CodyPage
@@ -116,6 +167,13 @@ export default function CodyMainContainer() {
         isdetailOpen={isdetailOpen}
         selectedCody={selectedCody}
         setisdetailOpen={handleDetailOpen}
+        tagRef={tagRef}
+        onKeyPress={onKeyPress}
+        tagFilter={tagFilter}
+        tagDelete={tagDelete}
+        filterCody={filterCody}
+        userName={userName}
+        isLoggedInUser={loggedInUser === userName}
       />
     </div>
   );

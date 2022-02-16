@@ -45,7 +45,7 @@ export default function AddClothesContainer() {
     },
   };
 
-  const userName = JSON.parse(localStorage.getItem('userInfo')).username;
+  const { userName } = useSelector(state => state.authSlice);
 
   function handleimgError({ type, text }) {
     dispatch(changeimgError({ type, text }));

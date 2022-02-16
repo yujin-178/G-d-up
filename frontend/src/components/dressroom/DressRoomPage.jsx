@@ -11,20 +11,14 @@ import { BackBtn } from '../dressRoomCss';
 import { PeopleFill } from '@emotion-icons/bootstrap/PeopleFill';
 import { useSelector } from 'react-redux';
 
-export default function DressRoomPage({ onClickModalOpen }) {
+export default function DressRoomPage({ onClickModalOpen, onClickToMyDressRoom, userName, isMyRoom }) {
 
   const { isOpen } = useSelector(state => state.friendsSlice);
 
-  let userName = '익명';
-
-  if (localStorage.getItem('userInfo')){
-    userName = JSON.parse(localStorage.getItem('userInfo')).username;
-  } 
-  
   return (
     <div css={Container}>
       <div css={DressRoom}>
-        <h2 css={Title}>{`${userName}'s 드레스룸`}</h2>
+        <h2 css={Title}>{`${userName}님의 드레스룸`}</h2>
         <FriendsModalContainer
           isOpen={isOpen}
         />
@@ -53,6 +47,11 @@ export default function DressRoomPage({ onClickModalOpen }) {
           </div>
         </div>
         <div css={BackBtnContainer}>
+          {!isMyRoom &&
+            <div>
+              <button onClick={onClickToMyDressRoom}>내 드레스룸으로</button>
+            </div>
+          }
           <Link to='/'>
             <button css={BackBtn}>
               뒤로

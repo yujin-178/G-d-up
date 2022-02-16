@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../slices/authSlice';
+import { setUserName } from '../../slices/clothesSlice';
 import { useNavigate } from 'react-router-dom';
 
 import LoginPage from '../../components/auth/LoginPage';
@@ -23,6 +24,9 @@ export default function LoginContainer() {
     const password = passwordRef.current.value;
     dispatch(login({ email, password }));
   }
+
+  const { userName } = useSelector(state => state.authSlice);
+  dispatch(setUserName(userName));
 
   return (
     <LoginPage

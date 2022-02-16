@@ -3,13 +3,13 @@ import Carousel from 'react-spring-3d-carousel';
 import { config } from 'react-spring';
 
 import { css } from "@emotion/react";
-import CodyBackgroundImg from  '../../../public/images/codybackground.jpg';
+import CodyBackgroundImg from '../../../public/images/codybackground.jpg';
 
 import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
 import CodyDetailContainer from '../../containers/dressroom/CodyDetailContainer';
 
-export default function CodyPage({ setisdetailOpen ,selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide }) {
+export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onKeyPress, setisdetailOpen, selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide, userName, isLoggedInUser }) {
   // const animatedItem = {
   //   0: useScrollFadeIn('down', 1, 0),
   //   1: useScrollFadeIn('down', 1, 0.2),
@@ -17,59 +17,69 @@ export default function CodyPage({ setisdetailOpen ,selectedCody, isdetailOpen, 
   // };
 
   return (
-    <div css={CodyBackground}>
-      <div css={isdetailOpen ? css`visibility: hidden;` : container}>
-        <h2>Cody</h2>
-        {cards ?
-          <div css={carousel}>
-            <Carousel
-              slides={cards}
-              goToSlide={goToSlide}
-              offsetRadius={offsetRadius}
-              showNavigation={showArrows}
-              animationConfig={config.gentle}
+    <div>
+      {scrollisTop ?
+        <div css={CodyBackground}>
+          <div css={isdetailOpen ? css`visibility: hidden;` : container}>
+            <h2 css={Title}>{userName}님의 코디</h2>
+            {cards ?
+              <div css={carousel}>
+                <Carousel
+                  slides={cards}
+                  goToSlide={goToSlide}
+                  offsetRadius={offsetRadius}
+                  showNavigation={showArrows}
+                  animationConfig={config.gentle}
+                />
+              </div>
+              :
+              ''
+            }
+
+            <div css={LeftArrow}>
+              <ArrowLeftSquare
+                size={40}
+                css={arrowStyle}
+                onClick={() => { handlegoToSlide(goToSlide - 1); }}
+              />
+            </div>
+            <div css={RightArrow}>
+              <ArrowRightSquare
+                size={40}
+                css={arrowStyle}
+                onClick={() => { handlegoToSlide(goToSlide + 1); }}
+              />
+            </div>
+            <button
+              onClick={() => moveScroll('d')}
+              css={scrollBtn}
+            >
+              전체 보기
+            </button>
+          </div>
+        </div>
+        :
+
+        <div css={scrollisTop ? Fadeup : Fadein} id="fade">
+          <div>
+            <CodyList
+              cards={filterCody}
+              moveScroll={moveScroll}
+              scrollisTop={scrollisTop}
+              handleSelectCody={handleSelectCody}
+              setisdetailOpen={setisdetailOpen}
+              tagRef={tagRef}
+              onKeyPress={onKeyPress}
+              tagFilter={tagFilter}
+              tagDelete={tagDelete}
+              isLoggedInUser={isLoggedInUser}
             />
           </div>
-          :
-          ''
-        }
-
-        <div css={LeftArrow}>
-          <ArrowLeftSquare
-            size={40}
-            css={arrowStyle}
-            onClick={() => { handlegoToSlide(goToSlide - 1); }}
-          />
         </div>
-        <div css={RightArrow}>
-          <ArrowRightSquare
-            size={40}
-            css={arrowStyle}
-            onClick={() => { handlegoToSlide(goToSlide + 1); }}
-          />
-        </div>
-        <button
-          onClick={() => moveScroll('d')}
-          css={scrollBtn}
-        >
-          전체 보기
-        </button>
-      </div>
+      }
 
-      <div css={scrollisTop ? Fadeup : Fadein} id="fade">
-        <div>
-          <CodyList
-            cards={codyList}
-            moveScroll={moveScroll}
-            scrollisTop={scrollisTop}
-            handleSelectCody={handleSelectCody}
-            setisdetailOpen={setisdetailOpen}
-          />
-        </div>
-      </div>
-
-      <button css={createBtn} onClick={() => navigate('/codycreate')}>
-        새 코디 생성하기
+      <button css={createBtn({ isLoggedInUser })} onClick={() => navigate('/codycreate')}>
+        새 코디 생성
       </button>
       <button
         css={backBtn}
@@ -77,15 +87,25 @@ export default function CodyPage({ setisdetailOpen ,selectedCody, isdetailOpen, 
         Back
       </button>
       {selectedCody ?
-        <CodyDetailContainer
+        < CodyDetailContainer
+          isLoggedInUser={isLoggedInUser}
         />
         :
         ''
       }
-
     </div>
   );
 }
+
+const Title = css`
+  padding: 2rem 0 0 0;
+  font-size: 50px;
+  margin: 0px;
+  color: #f2f2f2;
+  text-align : center;
+  grid-row : 1;
+  grid-column: 2;
+`;
 
 const CodyBackground = css`
   height: 100vh;
@@ -113,11 +133,17 @@ const Fadein = css`
 `;
 
 const scrollBtn = css`
-  width: 150px;
-  height: 30px;
   grid-column: 2;
   grid-row : 3;
   justify-self: center;
+
+  background: #c99f9f;
+	width: 8rem;
+  height: 2rem;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
 `;
 
 const LeftArrow = css`
@@ -126,6 +152,7 @@ const LeftArrow = css`
   grid-row: 2;
   grid-columns: repeat(7,1fr);
   grid-rows: repeat(7,1fr);
+  color: #f2f2f2;
 `;
 
 const RightArrow = css`
@@ -134,6 +161,7 @@ const RightArrow = css`
   grid-row: 2;
   grid-columns: repeat(7,1fr);
   grid-rows: repeat(7,1fr);
+  color: #f2f2f2;
 `;
 
 const arrowStyle = css`
@@ -156,20 +184,39 @@ const container = css`
   transform = translate3d(0, 50%, 0);
 `;
 
-const createBtn = css`
+const createBtn = ({ isLoggedInUser }) => css`
   width: 150px;
   height: 30px;
   position: fixed;
   top: 30px;
   right: 50px;
+
+  background: #c99f9f;
+  width: 8rem;
+  height: 2rem;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  ${!isLoggedInUser &&
+  `
+    display: none;
+  `}
 `;
 
 const backBtn = css`
-  width: 50px;
-  height: 30px;
   position: fixed;
   bottom: 30px;
   right: 50px;
+
+  background: #c99f9f;
+	padding: 0.5rem 1rem;
+	width: 4rem;
+  height: 2rem;
+	border: none;
+	border-radius: 4px;
+	box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
 `;
 
 const carousel = css`

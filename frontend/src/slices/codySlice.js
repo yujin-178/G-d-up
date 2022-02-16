@@ -11,11 +11,12 @@ const initialState = {
   'scrollisTop': true,
   modalType: null,
   'cards': [],
-  'renderCount': 0,
   'isdetailOpen': false,
-  'selectedCody' : '',
-  'transitionEnd' : false,
-  'iscodyEdit' : false,
+  'selectedCody': '',
+  'transitionEnd': false,
+  'iscodyEdit': false,
+  'tagFilter': [],
+  'filterCody': [],
 };
 
 export const setCody = createAsyncThunk(
@@ -61,14 +62,12 @@ export const codySlice = createSlice({
     },
     setCards(state, action) {
       const cards = action.payload;
-      const { renderCount } = state;
       return {
         ...state,
         cards,
-        renderCount : renderCount+1
       };
     },
-    setisdetailOpen(state, action){
+    setisdetailOpen(state, action) {
       const isdetailOpen = action.payload;
       return {
         ...state,
@@ -98,6 +97,38 @@ export const codySlice = createSlice({
     },
     changeCodyEdit(state, action) {
       state.iscodyEdit = action.payload;
+    },
+    setTagFilter(state, action) {
+      if (action.payload.type === 'add') {
+        const tag = action.payload.value;
+        const { tagFilter } = state;
+        return {
+          ...state,
+          tagFilter: [
+            ...tagFilter,
+            tag
+          ]
+        };
+      } else if (action.payload.type === 'del') {
+        state.tagFilter = action.payload.value;
+      }
+    },
+    setFilterCody(state) {
+      if (state.tagFilter.length >= 1) {
+        const filter = state.codyList.filter(cody => {
+          for (let i = 0; i < state.tagFilter.length; i++) {
+            if (cody.hashList.includes(`${state.tagFilter[i]}`)) {
+              return true;
+            }
+          }
+        });
+        state.filterCody = filter;
+      } else {
+        state.filterCody = state.codyList;
+      }
+    },
+    changeFilterCody(state, action) {
+      state.filterCody = action.payload;
     },
   },
   extraReducers: {
@@ -137,6 +168,9 @@ export const {
   changeSelectCody,
   setEnd,
   changeCodyEdit,
+  setTagFilter,
+  setFilterCody,
+  changeFilterCody,
 } = codySlice.actions;
 
 export default codySlice.reducer;

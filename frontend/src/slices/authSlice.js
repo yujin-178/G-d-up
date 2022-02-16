@@ -36,6 +36,12 @@ export const authSlice = createSlice({
         category
       };
     },
+    sessionLogin(state, { payload }) {
+      return {
+        ...state,
+        userName: payload
+      };
+    }
   },
   extraReducers: {
     [signin.pending]: (state) => {
@@ -71,7 +77,8 @@ export const authSlice = createSlice({
 });
 
 export const {
-  logout
+  logout,
+  sessionLogin,
 } = authSlice.actions;
 
 export default authSlice.reducer;

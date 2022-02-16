@@ -8,7 +8,7 @@ import BackImg from '../../../public/images/add_icon.svg';
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
-export default function ClosetPage({ onClickModal, filteredClothes, goBackHandler }) {
+export default function ClosetPage({ onClickModal, filteredClothes, goBackHandler, isLoggedInUser }) {
   console.log(filteredClothes);
 
   return (
@@ -19,7 +19,7 @@ export default function ClosetPage({ onClickModal, filteredClothes, goBackHandle
           <div css={ItemListStyle}>
             <ClothesItemListContainer />
             <img
-              css={AddIcon}
+              css={AddIcon({ isLoggedInUser })}
               src={BackImg}
               width="100rem"
               onClick={onClickModal}
@@ -72,12 +72,9 @@ const Closet = css`
 const BackBtn = css`
   width: 5rem;
   height: 3rem;
-<<<<<<< HEAD
   position: absolute;
   left: 100.6rem;
   top: 55.4rem;
-=======
->>>>>>> jyj
   background: #ecc194;
 	border: none;
 	border-radius: 4px;
@@ -99,13 +96,17 @@ const ItemsGridWrapper = css`
   border-radius: 0.5rem;
 `;
 
-const AddIcon = css`
+const AddIcon = ({ isLoggedInUser }) => css`
   position: relative;
   left: 32rem;
   bottom: 6rem;
   &:hover {
     bottom: 6.3rem;
-  }
+  };
+  ${!isLoggedInUser &&
+    `
+      display: none;
+    `}
 `;
 
 const ItemListStyle = css`

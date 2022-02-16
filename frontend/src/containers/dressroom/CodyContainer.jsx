@@ -13,6 +13,7 @@ import Button from '../../components/dressroom/Button';
 import { createCody, closeModal } from '../../slices/codySlice';
 import { css } from '@emotion/react';
 import { filteredClothesSelector } from '../../filterSelector';
+import { sessionLogin } from '../../slices/authSlice';
 
 export default function CodyContainer() {
   const { modalType } = useSelector(state => state.codySlice);
@@ -28,12 +29,20 @@ export default function CodyContainer() {
   const canvasRef = useRef();
   const [modalProps, setModalProps] = useState({});
   const [activatedItemId, setActivatedItemId] = useState(null);
-
-  const userName = JSON.parse(localStorage.getItem('userInfo')).username;
-  
+  const { userName } = useSelector(state => state.authSlice);
   useEffect(() => {
-    dispatch(setClothes(userName));
-  }, []);
+    if (userName) {
+      dispatch(setClothes(userName));
+      return;
+    }
+
+    if (localStorage.getItem('userInfo')){
+      const userName = JSON.parse(localStorage.getItem('userInfo')).username;
+      dispatch(sessionLogin(userName));
+    } else {
+      navigate('/login');
+    }
+  }, [userName]);
 
   useEffect(() => {
     if (modalType === 'POST') {
@@ -251,15 +260,21 @@ const container = css`
   justify-content: center;
   align-items: center;
   height: 100vh;
+  width: 100vm;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/dressroombackground.jpg");
+  background-size: cover;
+  background-position: center;
 `;
 
 const clothesContainer = css`
   position: relative;
-  width: 38%;
+  width: 45%;
+  height: 80%;
   display: grid;
-  grid-template-columns: 35% 65%;
-  grid-template-rows: 15% 75%;
+  grid-template-columns: 30% 70%;
+  grid-template-rows: 12% 88%;
+  grid-auto-rows: minmax(100px, auto);
+  grid-auto-columns: minmax(100px, auto);
   background-color: #BFAEA4;
   border-radius: 0.5rem;
-  height: 700px;
 `;

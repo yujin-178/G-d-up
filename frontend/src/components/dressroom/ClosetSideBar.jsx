@@ -87,8 +87,8 @@ const sidebarStyle = css`
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.l);
   box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.2);
   font-size: 20px;
-  background-color: #fff;
   border-radius: 0.7rem;
+  background-color: rgb(242, 241, 240);
 `;
 
 const menuItem = css`

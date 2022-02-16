@@ -8,7 +8,7 @@ if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function CodyDetailModal({ handleResponse, isResOpen, resText, deleteCody, handleCodyEdit, iscodyEdit, selectedCody, isdetailOpen, handleCodyDetailOpen }) {
+export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResOpen, resText, deleteCody, handleCodyEdit, iscodyEdit, selectedCody, isdetailOpen, handleCodyDetailOpen }) {
   return (
     <div>
       <Global
@@ -23,7 +23,9 @@ export default function CodyDetailModal({ handleResponse, isResOpen, resText, de
         style={{
           content: {
             backgroundColor: '#7c8186',
-            opacity: '80%',
+          },
+          overlay: {
+            backgroundColor: 'rgba(0,0,0,0.7)',
           }
         }}
       >
@@ -93,20 +95,24 @@ export default function CodyDetailModal({ handleResponse, isResOpen, resText, de
           <div css={contentContainer}>
             {selectedCody.content}
           </div>
-          <div css={submitBtnContainer}>
-            <button
-              css={editBtn}
-              onClick={() => handleCodyEdit(true)}
-            >
-              수정
-            </button>
-            <button
-              css={delBtn}
-              onClick={() => deleteCody(selectedCody.codyId)}
-            >
-              삭제
-            </button>
-          </div>
+          {isLoggedInUser ?
+            <div css={submitBtnContainer}>
+              <button
+                css={editBtn}
+                onClick={() => handleCodyEdit(true)}
+              >
+                수정
+              </button>
+              <button
+                css={delBtn}
+                onClick={() => deleteCody(selectedCody.codyId)}
+              >
+                삭제
+              </button>
+            </div>
+            :
+            ''
+          }
           <ResModal
             isResOpen={isResOpen}
             resText={resText}
@@ -359,8 +365,8 @@ const modalClass = css`
 }
 
 .ReactModal__Content--after-open {
-	width: 50%;
-	height: 80%;
+	width: 40%;
+	height: 70%;
 	grid-column:4;
 	background-color: #f2f2f2;
 	justify-content: center;

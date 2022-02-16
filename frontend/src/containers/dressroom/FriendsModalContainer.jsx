@@ -9,22 +9,22 @@ import {
   unfollowUser,
   setSearchResult,
 } from '../../slices/friendsSlice';
+import { setUserName } from '../../slices/clothesSlice';
 import FriendsModal from '../../components/dressroom/FriendsModal';
 
-const userName = 'admin';
-
 export default function FriendsModalContainer({ isOpen }) {
+  const { userName } = useSelector(state => state.authSlice);
   const dispatch = useDispatch();
-
-  function handleClickModalClose() {
-    dispatch(setIsOpen(false));
-  }
-
+  
   useEffect(() => {
     dispatch(setUsersToFollow(userName));
     dispatch(setFollowers(userName));
     dispatch(setFollowings(userName));
   }, []);
+  
+  function handleClickModalClose() {
+    dispatch(setIsOpen(false));
+  }
 
   const { 
     usersToFollow,
@@ -48,6 +48,19 @@ export default function FriendsModalContainer({ isOpen }) {
     dispatch(setSearchResult(e.target.value));
   }
 
+  function handleClickGoToFollowing(idx) {
+    const friendName = followings[idx];
+    localStorage.setItem("friendName", `${friendName}` );
+    dispatch(setUserName(friendName));
+
+  }
+
+  function handleClickGoToFollower(idx) {
+    const friendName = followers[idx];
+    localStorage.setItem("friendName", `${friendName}` );
+    dispatch(setUserName(friendName));
+  }
+
   return (
     <FriendsModal
       isOpen={isOpen}
@@ -60,6 +73,8 @@ export default function FriendsModalContainer({ isOpen }) {
       onClickFollow={handleClickFollow}
       onClickUnfollow={handleClickUnfollow}
       onChangeSearchUser={handleChangeSearchUser}
+      onClickGoToFollowing={handleClickGoToFollowing}
+      onClickGoToFollower={handleClickGoToFollower}
     />
   );
 }
