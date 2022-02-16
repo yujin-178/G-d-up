@@ -8,7 +8,12 @@ export default function ClothesDetail({ selectedClothes, deleteHandler, isLogged
       {selectedClothes ?
         <>
           <div css={buttonGroup}>
-            <button css={delBtn({ isLoggedInUser })} onClick={() => deleteHandler(selectedClothes.clothing.clothingId)}>삭제</button>
+            <button
+              css={delBtn({ isLoggedInUser })}
+              onClick={() => deleteHandler(selectedClothes.clothing.clothingId)}
+              className={'hvr-fade'}
+            >삭제
+            </button>
           </div>
           <div css={imageWrapper}>
             <img css={clothesImage} src={selectedClothes.clothing.imageModel.imageUrl} alt="image" />
@@ -95,7 +100,6 @@ const detailContainer = css`
   margin: 2.5rem 1rem;
   font-size: 18px;
   position: relative;
-  border-radius: 0.5rem;
   color:white;
   text-align: center;
   overflow-y: auto;
@@ -130,7 +134,6 @@ const clothesImage = css`
   height: 80%;
   margin: auto;
   background-color: white;
-  border-radius: 0.4rem;
 `;
 
 const clothesInfo = css`
@@ -152,21 +155,6 @@ const clothesInfoGroup = css`
   text-decoration: none;
   margin: 0 2rem;
   border-bottom: 1px solid silver;
-  justify-content: space-between;
-`;
-
-const ulStyle = css`
-  list-style:none;
-  display: flex;
-  padding: 0;
-  width: 80%;
-  justify-content: center;
-`;
-
-const tagTextStyle = css`
-  display: flex;
-  text-decoration: none;
-  margin: 0 2rem;
   justify-content: space-between;
 `;
 
@@ -216,7 +204,6 @@ const delBtn = ({ isLoggedInUser }) => css`
   height: 1.5rem;
   background: #ecc194;
   border: none;
-  border-radius: 4px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   ${!isLoggedInUser &&

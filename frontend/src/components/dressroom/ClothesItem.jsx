@@ -11,8 +11,8 @@ export default function ClothesItem(props) {
   } = props;
 
   return (
-    <div css={ClothesItemBox} className='hvr-reveal'>
-      <div css={ClothesItemImgDiv}>
+    <div css={ClothesItemBox}>
+      <div css={ClothesItemImgDiv} className='hvr-border-fade'>
         {(item && onMouseOverHandler) && (
           <img
             css={ClothesItemImg}

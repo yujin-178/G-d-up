@@ -77,14 +77,22 @@ const FriendsModalStyle = css`
   margin: 7% auto;
   width: 50%;
   height: 70%;
-  background-color: #fefefe;
-  opacity: 0.9;
+  background-color: #BFAEA4;
+  border: 0.5rem solid #80746E;
+`;
+
+const mainDiv = css`
+  background-color: #BFAEA4;
+  height: 70%;
 `;
 
 const FriendsModalTitle = css`
   margin: 2rem 1rem 2rem 1rem;
   text-align: center;
   padding: 0;
+  color: #CAE7FA;
+  font-weight: 100;
+  font-size: 1.2rem;
 `;
 
 const CloseBtn = css`
@@ -110,11 +118,6 @@ const GridWrapper = css`
 const inBox = css`
   padding: 2%;
   height: 100%;
-`;
-
-const mainDiv = css`
-  background-color: #fefefe;
-  height: 70%;
 `;
 
 const contentArea = css`

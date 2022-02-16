@@ -73,7 +73,7 @@ const DressRoom = css`
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   height: 100vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${dressroomBackground});
+  background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url(${dressroomBackground});
   background-size: cover;
   background-position: center;
 `;
@@ -95,6 +95,17 @@ const friendsBtnDiv = css`
   grid-row: 3 / 4;
   display: flex;
   align-items: center;
+`;
+
+const FriendsBtn = css`
+  position: relative;
+  margin: 1rem 5rem;
+  color: #fefefe;
+  width: 5rem;
+  cursor: pointer;
+  &:hover {
+    color: #7DDAD5;
+  }
 `;
 
 const BtnDiv = css`
@@ -130,14 +141,6 @@ const BtnText = css`
   color: #fefefe;
   font-size: 2rem;
   font-weight: 450;
-`;
-
-const FriendsBtn = css`
-  position: relative;
-  margin: 1rem 5rem;
-  color: #fefefe;
-  width: 5rem;
-  cursor: pointer;
 `;
 
 const BtnImg = css`

@@ -46,7 +46,7 @@ export default function ClosetSidebar(props) {
             const isSelected = selectedColors.includes(name);
             const colorCode = code || 'linear-gradient(to right, blue, green, yellow, pink, red)';
             return (
-              <li key={index} css={menuItem}>
+              <li key={index} css={menuItem} className='hvr-push'>
                 <button
                   data-testid={name}
                   css={colorButton({ colorCode, isSelected })}
@@ -87,13 +87,13 @@ const sidebarStyle = css`
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.l);
   box-shadow: 0px 0px 10px rgba(1, 1, 1, 0.2);
   font-size: 20px;
-  border-radius: 0.7rem;
   background-color: rgb(242, 241, 240);
 `;
 
 const menuItem = css`
   font-size: 15px;
   padding: 0.2rem 0px;
+  cursor: pointer;
 `;
 
 const seasonItems = css`
@@ -137,15 +137,18 @@ const tagContainer = css`
 const title = css`
   font-size: 16px;
   margin: 10px;
+  cursor: pointer;
 `;
 
 const checkbox = css`
   vertical-align: middle;
   position: relative;
   bottom: 0.5px;
+  cursor: pointer;
 `;
 
 const checkboxTitle = css`
   display: inline-block;
   margin-left: 10px;
+  cursor: pointer;
 `;

@@ -54,7 +54,7 @@ export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onK
               onClick={() => moveScroll('d')}
               css={scrollBtn}
             >
-              전체 보기
+              갤러리
             </button>
           </div>
         </div>
@@ -104,7 +104,7 @@ const Title = css`
   color: #f2f2f2;
   text-align : center;
   grid-row : 1;
-  grid-column: 2;
+  grid-column:2;
 `;
 
 const CodyBackground = css`
