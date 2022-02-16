@@ -52,14 +52,19 @@ export default function FriendsModalContainer({ isOpen }) {
     const friendName = followings[idx];
     localStorage.setItem("friendName", `${friendName}` );
     dispatch(setUserName(friendName));
-    isOpen = false;
+    dispatch(setIsOpen(false));
   }
 
   function handleClickGoToFollower(idx) {
     const friendName = followers[idx];
     localStorage.setItem("friendName", `${friendName}` );
     dispatch(setUserName(friendName));
-    isOpen = false;
+    dispatch(setIsOpen(false));
+  }
+
+  function modalToggle(boolean) {
+    dispatch(setIsOpen(false));
+    console.log(boolean);
   }
 
   return (
@@ -76,6 +81,7 @@ export default function FriendsModalContainer({ isOpen }) {
       onChangeSearchUser={handleChangeSearchUser}
       onClickGoToFollowing={handleClickGoToFollowing}
       onClickGoToFollower={handleClickGoToFollower}
+      modalToggle={modalToggle}
     />
   );
 }
