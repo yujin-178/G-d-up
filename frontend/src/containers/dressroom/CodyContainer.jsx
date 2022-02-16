@@ -12,6 +12,8 @@ import Messages from '../../components/dressroom/Messages';
 import Button from '../../components/dressroom/Button';
 import { createCody, closeModal } from '../../slices/codySlice';
 import { css } from '@emotion/react';
+import codyBackground from '../../../public/images/codybackground.jpg';
+
 import { filteredClothesSelector } from '../../filterSelector';
 import { sessionLogin } from '../../slices/authSlice';
 
@@ -272,7 +274,7 @@ const container = css`
   align-items: center;
   height: 100vh;
   width: 100vm;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/images/dressroombackground.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url(${codyBackground});
   background-size: cover;
   background-position: center;
 `;
@@ -280,6 +282,7 @@ const container = css`
 const clothesContainer = css`
   position: relative;
   width: 45%;
+  max-width: 47rem;
   height: 80%;
   display: grid;
   grid-template-columns: 30% 70%;
