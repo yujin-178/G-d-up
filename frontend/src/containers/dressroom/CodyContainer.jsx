@@ -60,10 +60,7 @@ export default function CodyContainer() {
         onClickCancel: () => {
           dispatch(closeModal());
           setModalProps({});
-          setCodyItems([]);
-          setTags([]);
-          setIsNotSecret(true);
-          contentRef.current.value = '';
+          resetHandler();
         },
       });
       return;
@@ -218,6 +215,13 @@ export default function CodyContainer() {
     setCodyItems(codyItems.filter(item => item.clothingId !== itemId));
   };
 
+  const resetHandler = () => {
+    setCodyItems([]);
+    setTags([]);
+    setIsNotSecret(true);
+    contentRef.current.value = '';
+  };
+
   return (
     <div css={container}>
       {modalType && (
@@ -244,6 +248,7 @@ export default function CodyContainer() {
         goBackHandler={goBackHandler}
         activatedItemId={activatedItemId}
         deleteCodyItem={deleteCodyItem}
+        resetHandler={resetHandler}
       />
       <div css={clothesContainer}>
         <FilterContainer />
@@ -252,10 +257,16 @@ export default function CodyContainer() {
           onClickHandler={onClickHandler}
         />
       </div>
+      <button
+        css={backButton}
+        onClick={goBackHandler}
+        className='hvr-fade'
+      > Back </button>
     </div>
   );
 }
 const container = css`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -276,4 +287,16 @@ const clothesContainer = css`
   grid-auto-rows: minmax(100px, auto);
   grid-auto-columns: minmax(100px, auto);
   background-color: #BFAEA4;
+`;
+
+const backButton = css`
+  position: absolute;
+  right: 50px;
+  bottom: 35px;
+  width: 90px;
+  height: 40px;
+  background-color: white;
+  color: white;
+  border: 1.5px solid white;
+  background-color: #2E2E2E;
 `;
