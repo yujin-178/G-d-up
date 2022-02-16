@@ -24,9 +24,9 @@ public class CodyDtoAll {
     private int secret;
     private ImageEntity imageModel;
     private List<String> hashList;
-    private List<CodyClothingEntity> codyClothingEntities;
+    private List<ClothingInCodyDto> codyClothingEntities;
 
-    public CodyDtoAll(CodyEntity codyEntity, List<String> tagList,List<CodyClothingEntity> codyClothingEntities ){
+    public CodyDtoAll(CodyEntity codyEntity, List<String> tagList,List<ClothingInCodyDto> codyClothingEntities ){
         this.codyId = codyEntity.getCodyId();
         this.codyName = codyEntity.getCodyName();
         this.registrationDate = codyEntity.getRegistrationDate();

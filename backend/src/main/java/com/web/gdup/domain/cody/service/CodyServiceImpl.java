@@ -1,10 +1,7 @@
 package com.web.gdup.domain.cody.service;
 
 
-import com.web.gdup.domain.cody.dto.ClothingInCody;
-import com.web.gdup.domain.cody.dto.CodyDtoAll;
-import com.web.gdup.domain.cody.dto.CreateCody;
-import com.web.gdup.domain.cody.dto.UpdateCody;
+import com.web.gdup.domain.cody.dto.*;
 import com.web.gdup.domain.cody_clothing.entity.CodyClothingEntity;
 import com.web.gdup.domain.cody.entity.CodyEntity;
 import com.web.gdup.domain.cody_hashtag.entity.CodyHashtagEntity;
@@ -66,9 +63,12 @@ public class CodyServiceImpl implements CodyService {
                 codyTagList.add(codyHashtagEntity.getTagName());
             }
             List<CodyClothingEntity> cclist = codyClothingRepository.getAllByCodyId(codyEntity.getCodyId());
+            List<ClothingInCodyDto> cicdtos = new ArrayList<>();
+            for(CodyClothingEntity codyClothingEntity :cclist){
+                cicdtos.add(new ClothingInCodyDto(codyClothingEntity,imageRepository.getOne(codyClothingEntity.getClothingId())));
+            }
 
-
-            codyDtoAlls.add(new CodyDtoAll(codyEntity, codyTagList,cclist));
+            codyDtoAlls.add(new CodyDtoAll(codyEntity, codyTagList,cicdtos));
         }
         return codyDtoAlls;
     }
@@ -120,8 +120,11 @@ public class CodyServiceImpl implements CodyService {
             cceList.add(cci);
             codyClothingRepository.save(cci);
         }
-
-        CodyDtoAll codyDtoAll = new CodyDtoAll(codyEntityOptional.get(), tagList,cceList);
+        List<ClothingInCodyDto> cicdtos = new ArrayList<>();
+        for(CodyClothingEntity codyClothingEntity :cceList){
+            cicdtos.add(new ClothingInCodyDto(codyClothingEntity,imageRepository.getOne(codyClothingEntity.getClothingId())));
+        }
+        CodyDtoAll codyDtoAll = new CodyDtoAll(codyEntityOptional.get(), tagList,cicdtos);
 
         return codyDtoAll;
     }
@@ -164,8 +167,11 @@ public class CodyServiceImpl implements CodyService {
             codyClothingRepository.save(cci);
         }
 
-
-        CodyDtoAll codyDtoAll = new CodyDtoAll(codyEntity.get(), tagList,cceList);
+        List<ClothingInCodyDto> cicdtos = new ArrayList<>();
+        for(CodyClothingEntity codyClothingEntity :cceList){
+            cicdtos.add(new ClothingInCodyDto(codyClothingEntity,imageRepository.getOne(codyClothingEntity.getClothingId())));
+        }
+        CodyDtoAll codyDtoAll = new CodyDtoAll(codyEntity.get(), tagList,cicdtos);
 
         return codyDtoAll;
 
