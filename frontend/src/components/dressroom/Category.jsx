@@ -3,7 +3,7 @@ import { css } from '@emotion/react';
 
 export default function Category ({ item, isSelected, handleClick }) {
   return (
-    <li css={liStyle}>
+    <li css={liStyle} className='hvr-shrink'>
       <button
         css={buttonStyle({ isSelected })}
         onClick={() => handleClick(item)}
