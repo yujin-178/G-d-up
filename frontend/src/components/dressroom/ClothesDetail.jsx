@@ -8,7 +8,7 @@ export default function ClothesDetail({ selectedClothes, deleteHandler, isLogged
       {selectedClothes ?
         <>
           <div css={buttonGroup}>
-            <button css={delBtn} onClick={() => deleteHandler(selectedClothes.clothing.clothingId)}>삭제</button>
+            <button css={delBtn({ isLoggedInUser })} onClick={() => deleteHandler(selectedClothes.clothing.clothingId)}>삭제</button>
           </div>
           <div css={imageWrapper}>
             <img css={clothesImage} src={selectedClothes.clothing.imageModel.imageUrl} alt="image" />
