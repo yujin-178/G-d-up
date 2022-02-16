@@ -23,4 +23,5 @@ const searchInputStyle = css`
   border-bottom: 2px solid silver;
   width: 100%;
   font-size: 15px;
+  background-color: rgb(242, 241, 240);
 `;

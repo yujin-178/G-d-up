@@ -47,7 +47,7 @@ export default function CodyCreateForm(props) {
         })}
       </div>
       <div css={css`display: flex; justify-content: space-between; width: 100%; margin-top: 10px`}>
-        <div css={css`width: 70%`}>
+        <div css={css`width: 200px; margin-top: 5px;`}>
           <TagSearchBar
             inputRef={inputRef}
             onKeyPress={onKeyPress}
@@ -60,8 +60,8 @@ export default function CodyCreateForm(props) {
             <div css={toggleBtnCircle({ isNotSecret })}></div>
           </div>
           {isNotSecret ?
-            <p css={css`margin-left: 10px`}> 공개 </p> :
-            <p css={css`margin-left: 10px`}> 비공개 </p>
+            <p css={css`margin-left: 10px; color: white;`}> 공개 </p> :
+            <p css={css`margin-left: 10px; color: white;`}> 비공개 </p>
           }
         </div>
       </div>
@@ -99,7 +99,8 @@ export default function CodyCreateForm(props) {
 const form = css`
   box-sizing: content-box;
   border: 0.5px solid grey;
-  width: 26%;
+  width: 30%;
+  height: 73%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -108,7 +109,8 @@ const form = css`
   background-color: white;
   margin-right: 20px;
   border-radius: 10px;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgb(242, 241, 240);
+  background-color: #2E2E2E;
 `;
 
 const memo = css`
@@ -119,14 +121,19 @@ const memo = css`
   width: 100%;
   min-height: 80px;
   margin-top: 15px;
+  background-color: rgb(242, 241, 240);
+  border: 1px solid rgb(153, 153, 153);
+  border-radius: 8px;
 `;
 
 const canvas = css`
   min-width: 100%;
   min-height: 380px;
-  background-color: white;
+  background-color: rgb(242, 241, 240);
   position: relative;
-  border: 1px solid grey;
+  border: 1px solid rgb(153, 153, 153);
+  border-radius: 8px;
+  opacity: 1;
 `;
 
 const toggleContainer = css`
