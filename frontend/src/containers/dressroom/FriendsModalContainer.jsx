@@ -56,7 +56,7 @@ export default function FriendsModalContainer({ isOpen }) {
   }
 
   function handleClickGoToFollower(idx) {
-    const friendName = followings[idx];
+    const friendName = followers[idx];
     localStorage.setItem("friendName", `${friendName}` );
     dispatch(setUserName(friendName));
   }
