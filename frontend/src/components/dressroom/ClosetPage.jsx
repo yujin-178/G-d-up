@@ -3,12 +3,11 @@ import ClothesItemListContainer from '../../containers/dressroom/ClothesItemList
 import FilterContainer from '../../containers/dressroom/FilterContainer.jsx';
 import AddClothesContainer from '../../containers/dressroom/AddClothesContainer.jsx';
 import ClothesDetailContainer from '../../containers/dressroom/ClothesDetailContainer.jsx';
-import BackImg from '../../../public/images/add_icon.svg';
 
 import { css } from '@emotion/react';
 import { Link } from 'react-router-dom';
 
-export default function ClosetPage({ onClickModal, filteredClothes, goBackHandler, isLoggedInUser }) {
+export default function ClosetPage({ filteredClothes, goBackHandler }) {
   console.log(filteredClothes);
 
   return (
@@ -18,13 +17,6 @@ export default function ClosetPage({ onClickModal, filteredClothes, goBackHandle
           <FilterContainer />
           <div css={ItemListStyle}>
             <ClothesItemListContainer />
-            <img
-              css={AddIcon({ isLoggedInUser })}
-              src={BackImg}
-              width="100rem"
-              onClick={onClickModal}
-              alt="추가아이콘"
-            />
           </div>
           <AddClothesContainer />
         </div>
@@ -93,19 +85,6 @@ const ItemsGridWrapper = css`
   grid-auto-rows: minmax(100px, auto);
   grid-auto-columns: minmax(100px, auto);
   background-color: #BFAEA4;
-`;
-
-const AddIcon = ({ isLoggedInUser }) => css`
-  position: relative;
-  left: 32rem;
-  bottom: 6rem;
-  &:hover {
-    bottom: 6.3rem;
-  };
-  ${!isLoggedInUser &&
-    `
-      display: none;
-    `}
 `;
 
 const ItemListStyle = css`
