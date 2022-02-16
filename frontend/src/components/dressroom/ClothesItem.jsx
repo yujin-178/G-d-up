@@ -11,7 +11,7 @@ export default function ClothesItem(props) {
   } = props;
 
   return (
-    <div css={ClothesItemBox}>
+    <div css={ClothesItemBox} className='hvr-reveal'>
       <div css={ClothesItemImgDiv}>
         {(item && onMouseOverHandler) && (
           <img
@@ -45,6 +45,7 @@ const ClothesItemBox = css`
   justify-self: center;
   border-radius: 0.4rem;
   display: table;
+  cursor: pointer;
 `;
 
 const ClothesItemImgDiv = css`
