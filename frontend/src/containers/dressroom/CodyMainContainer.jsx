@@ -38,21 +38,22 @@ export default function CodyMainContainer() {
   //     dispatch(setEnd(true));
   //   };
   // }
-  const { userName } = useSelector(state => state.authSlice);
+  const loggedInUser = useSelector(state => state.authSlice.userName);
+  const { userName } = useSelector(state => state.clothesSlice);
 
   useEffect(() => {
-    if (userName) {
-      dispatch(setCody(userName));
+    if (loggedInUser) {
+      dispatch(setCody(loggedInUser));
       return;
     }
 
     if (localStorage.getItem('userInfo')){
-      const userName = JSON.parse(localStorage.getItem('userInfo')).username;
-      dispatch(sessionLogin(userName));
+      const loggedInUser = JSON.parse(localStorage.getItem('userInfo')).username;
+      dispatch(sessionLogin(loggedInUser));
     } else {
       navigate('/login');
     }
-  }, [userName]);
+  }, [loggedInUser]);
 
   useEffect(()=> {
     if (tagFilter.length >= 1) {
@@ -167,6 +168,8 @@ export default function CodyMainContainer() {
         tagFilter={tagFilter}
         tagDelete={tagDelete}
         filterCody={filterCody}
+        userName={userName}
+        isLoggedInUser={loggedInUser === userName}
       />
     </div>
   );
