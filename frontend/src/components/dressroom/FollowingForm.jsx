@@ -7,7 +7,7 @@ export default function FollowingForm({ followings, onClickUnfollow, onClickGoTo
     <div css={FollowerFollowing}>
       {followings.map((user, idx) =>
         <>
-          <li css={[ListStyle, FollowListStyle]} key={idx}>
+          <li css={[ListStyle]} key={idx}>
             <span css={SpanStyle} onClick={() => onClickGoToFollowing(idx)}>{user}</span>
             <button
               css={[FollowItem, UnfollowBtn]}
@@ -39,12 +39,6 @@ const SpanStyle = css`
 
 const UnfollowBtn = css`
   width: 5rem;
-`;
-
-const FollowListStyle = css`
-  &:hover {
-    background-color: #E6B36D;
-  }
 `;
 
 const FollowerFollowing = css`
