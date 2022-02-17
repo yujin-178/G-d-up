@@ -97,6 +97,8 @@ export default function CodyDetailContainer({ isLoggedInUser }) {
     const codyTag = tagList.join(' ');
     const imageId = imageModel.imageId;
     dispatch(updatedCody({ imageId, content, clothingList, codyId, codyName, userName, secret, codyTag }));
+    dispatch(changeisResOpen(true));
+    dispatch(changeResText('수정이 완료되었습니다!'));
   };
 
   return (
