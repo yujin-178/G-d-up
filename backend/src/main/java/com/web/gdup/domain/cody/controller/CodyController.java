@@ -197,5 +197,41 @@ public class CodyController {
         return responseBody;
     }
 
+    @GetMapping(value = "/list/{userName}")
+    @ApiOperation(
+            value = "코디 목록 불러오기",
+            notes = "특정 유저의 코디 목록 불러오기"
+    )
+    public ResponseEntity<BasicResponse> readFriendCodyList(@PathVariable(name = "userName") final String userName) {
+
+        ResponseEntity<BasicResponse> responseBody;
+        BasicResponse result = new BasicResponse();
+        List<CodyDtoAll> codyDtoAlls = null;
+        try {
+            codyDtoAlls = cs.getFriendCodyList(userName);
+        } catch (Exception e) {
+            result.status = false;
+            result.message = "잘못된 정보 입력";
+            result.data = null;
+
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+            return responseBody;
+        }
+        if (codyDtoAlls.size() == 0) {
+            result.status = true;
+            result.message = userName + "의 코디 목록은 비어 있음";
+            result.data = null;
+
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            result.status = true;
+            result.message = userName + "의 코디 목록 불러오기 성공";
+            result.data = codyDtoAlls;
+
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        return responseBody;
+    }
+
 }
 

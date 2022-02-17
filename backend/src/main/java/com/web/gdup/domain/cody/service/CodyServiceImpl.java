@@ -82,6 +82,33 @@ public class CodyServiceImpl implements CodyService {
     }
 
     @Override
+    public List<CodyDtoAll> getFriendCodyList(String name) throws Exception {
+
+        List<CodyEntity> codyEntities = codyRepository.findAllByUserNameAndSecret(name, 0);
+        List<CodyDtoAll> codyDtoAlls = new ArrayList<>();
+        if(codyEntities.size() == 0)
+            throw new Exception("null");
+
+        for (CodyEntity codyEntity : codyEntities) {
+            List<String> codyTagList = new ArrayList<>();
+            List<CodyHashtagEntity> codyHashtagEntities = codyHashtagRepository.findAllByCodyId(codyEntity.getCodyId());
+            for (CodyHashtagEntity codyHashtagEntity : codyHashtagEntities) {
+                codyTagList.add(codyHashtagEntity.getTagName());
+            }
+            List<CodyClothingEntity> cclist = codyClothingRepository.getAllByCodyId(codyEntity.getCodyId());
+            List<ClothingInCodyDto> cicdtos = new ArrayList<>();
+            for(CodyClothingEntity codyClothingEntity :cclist){
+                Optional<ClothingEntity> clothing = clothingRepository.findById(codyClothingEntity.getClothingId());
+                ImageEntity imageEntity = clothing.get().getImageModel();
+                cicdtos.add(new ClothingInCodyDto(codyClothingEntity, imageEntity));
+            }
+
+            codyDtoAlls.add(new CodyDtoAll(codyEntity, codyTagList, cicdtos));
+        }
+        return codyDtoAlls;
+    }
+
+    @Override
     public int deleteCodyItem(int id) throws Exception {
 
         codyRepository.deleteById(id);
