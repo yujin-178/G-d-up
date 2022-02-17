@@ -281,8 +281,8 @@ const contentContainer = css`
 
   width: 16.5rem;
 
-  padding: 5px;
-  font-size: 18px;
+  padding: 10px;
+  font-size: 16px;
   height: 100px;
   overflow-y : scroll;
   word-break: break-all;

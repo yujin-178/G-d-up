@@ -20,6 +20,10 @@ export default function SignupContainer() {
     }
   }, [isLoggedIn]);
 
+  const toLogin = () => {
+    navigate('/login');
+  };
+
   const handleClickSubmit = () => {
     const email = emailRef.current.value;
     if (!email) {
@@ -56,6 +60,7 @@ export default function SignupContainer() {
       passwordRef={passwordRef}
       passwordConfirmRef={passwordConfirmRef}
       onClickSubmit={handleClickSubmit}
+      toLogin={toLogin}
     />
   );
 }

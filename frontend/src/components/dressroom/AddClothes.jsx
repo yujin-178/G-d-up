@@ -104,28 +104,28 @@ export default function AddClothes({ deleteTagHandler, isTagOpen, setisTagOpen, 
                 <div css={css`display: grid; grid-template-columns: 40px 160px`}>
                   <p css={label}> 색상 </p>
                   <div css={valueStyle2}>
-                    {tagInfo['color']}
+                    {isNull(tagInfo['color']) ? '없음' : tagInfo['color']}
                   </div>
                 </div>
 
                 <div css={css`display: grid; grid-template-columns: 40px 160px`}>
                   <p css={label}> 소재 </p>
                   <div css={valueStyle2}>
-                    {tagInfo['material']}
+                    {isNull(tagInfo['material']) ? '없음' : tagInfo['material']}
                   </div>
                 </div>
 
                 <div css={css`display: grid; grid-template-columns: 40px 160px`}>
                   <p css={label}> 패턴 </p>
                   <div css={valueStyle2}>
-                    {isNull(tagInfo['pattern']) ? '없음' : ''}
+                    {isNull(tagInfo['pattern']) ? '없음' : tagInfo['pattern']}
                   </div>
                 </div>
 
                 <div css={css`display: grid; grid-template-columns: 40px 160px`}>
                   <p css={label}> 핏 </p>
                   <div css={valueStyle2}>
-                    {isNull(tagInfo['fit']) ? '없음' : ''}
+                    {isNull(tagInfo['fit']) ? '없음' : tagInfo['fit']}
                   </div>
                 </div>
               </div>
@@ -171,7 +171,7 @@ export default function AddClothes({ deleteTagHandler, isTagOpen, setisTagOpen, 
                   태그
                   <button css={AddBtn}
                     onClick={() => setisTagOpen(!isTagOpen)}>
-                    +
+                    {isTagOpen ? <span>-</span> : <span>+</span> }
                   </button>
                 </p>
                 <input
@@ -276,7 +276,7 @@ const tagInput = ({ isTagOpen }) => css`
   border-radius: 5px;
   border-bottom: 2px solid silver;
   font-size: 15px;
-  padding-left: 30px;
+  padding-left: 35px;
   margin-left: 3rem;
   grid-column: 1;
   grid-row: 1;
@@ -440,6 +440,7 @@ const btnContainer = css`
 
 const inputTag = css`
 	display : none;
+  padding: 5px;
 `;
 
 const inputBtn = css`

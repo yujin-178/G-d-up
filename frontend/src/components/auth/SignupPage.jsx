@@ -1,14 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { css } from '@emotion/react';
-import dressroomBackground from  '../../../public/images/dressroombackground.jpg';
+import dressroomBackground from '../../../public/images/dressroombackground.jpg';
 
 export default function SignupPage({
   emailRef,
   userNameRef,
   passwordRef,
   passwordConfirmRef,
-  onClickSubmit
+  onClickSubmit,
+  toLogin
 }) {
   return (
     <div css={LivingRoom}>
@@ -25,21 +26,21 @@ export default function SignupPage({
               type="text"
               placeholder='이메일을 입력해주세요'
             />
-            <br/>
+            <br />
             <input css={inputStyle}
               ref={userNameRef}
               id="username"
               type="text"
               placeholder='이름을 입력해주세요'
             />
-            <br/>
+            <br />
             <input css={inputStyle}
               ref={passwordRef}
               id="username"
               type="password"
               placeholder='비밀번호를 입력해주세요'
             />
-            <br/>
+            <br />
             <input css={inputStyle}
               ref={passwordConfirmRef}
               id="confirmation"
@@ -49,9 +50,12 @@ export default function SignupPage({
           </div>
           <button css={LoginBtn} onClick={onClickSubmit}>가입</button>
           <hr css={hrStyle} />
-          <Link to='/login'>
-              이미 회원이신가요?
-          </Link>
+          <span>이미 회원이신가요?</span>&nbsp;&nbsp;
+          <span
+            css={loginStyle}
+            onClick={toLogin}>
+            로그인
+          </span>
         </div>
         <Link to='/'>
           <button css={BackBtn} className="hvr-fade">
@@ -62,6 +66,12 @@ export default function SignupPage({
     </div>
   );
 }
+
+const loginStyle = css`
+  text-decoration:none; 
+  cursor: pointer; 
+  color: #551a8b
+`;
 
 const LivingRoom = css`
   display: flex;
@@ -105,7 +115,7 @@ const inputGroup = css`
 `;
 
 const inputStyle = css`
-  width: 70%;
+  width: 68%;
   height: 45px;
   font-size: 15px;
   border: 0;
@@ -113,6 +123,7 @@ const inputStyle = css`
   outline: none;
   background-color: #F2F2F2;
   margin: 5px;
+  padding-left: 13px;
 `;
 
 const hrStyle = css`

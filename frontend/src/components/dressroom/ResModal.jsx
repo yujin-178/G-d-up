@@ -42,9 +42,12 @@ export default function ResModal({ resloading, resText, handleResponse, isResOpe
                 <p css={css`font-size: 18px;`}>{resText}</p>
                 <button
                   css={saveBtn}
-                  onClick={() => {handleResponse(false); window.location.reload();}}
+                  onClick={() => { handleResponse(false); }}
                 >
                   확인
+                </button>
+                <button css={cancelBtn} onClick={() => handleResponse(false)}>
+                  취소
                 </button>
               </div>
             }
@@ -54,6 +57,32 @@ export default function ResModal({ resloading, resText, handleResponse, isResOpe
     </div >
   );
 }
+
+const cancelBtn = css`
+margin-left: 10px;
+grid-column: 3;
+background: #C99F9F;
+padding: 0.6rem 1rem;
+width: 6rem;
+border: none;
+border-radius: 8px;
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+cursor: pointer;
+
+margin-top: 2rem;
+
+font-family: "Noto Sans KR", sans-serif;
+font-size: 1rem;
+font-weight: 300;
+text-align: center;
+transition: 0.5s;
+
+color: rgb(242, 241, 240);
+&:hover {
+  color: #4EBBFA;
+  background: rgb(242, 241, 240)
+}
+`;
 
 const loading = css`
   display: grid;
@@ -75,6 +104,7 @@ const Container = css`
 `;
 
 const saveBtn = css`
+  margin-right:10px;
 	grid-column: 3;
 	background: #6da0cf;
 	padding: 0.6rem 1rem;

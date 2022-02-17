@@ -1,7 +1,8 @@
 import React from 'react';
 import { css } from '@emotion/react';
+import ResModal from './ResModal';
 
-export default function ClothesDetail({ selectedClothes, deleteHandler, isLoggedInUser, userName }) {
+export default function ClothesDetail({ handleResponse ,selectedClothes, deleteHandler, isLoggedInUser, userName, setConfirm, isResOpen, resText }) {
 
   return (
     <div css={detailContainer}>
@@ -41,14 +42,6 @@ export default function ClothesDetail({ selectedClothes, deleteHandler, isLogged
                       }
                     </div>
                   ))}
-                  {/* <div css={tag}>
-                  <ul css={tagItem}>{selectedClothes.hashtag.map((item, index) => (
-                    // <li css={tagItem} key={index}>
-                    <li key={index}>
-                      {item}
-                    </li>
-                  ))}</ul>
-                </div> */}
                 </div>
               </p>
             </div>
@@ -75,6 +68,11 @@ export default function ClothesDetail({ selectedClothes, deleteHandler, isLogged
           )}
         </>
       }
+      <ResModal
+        isResOpen={isResOpen}
+        resText={resText}
+        handleResponse={handleResponse}
+      />
     </div>
   );
 }
@@ -211,7 +209,8 @@ const delBtn = ({ isLoggedInUser }) => css`
   height: 30px;
   color: white;
   border: 1.5px solid white;
-  background-color: #a63641;
+  background-color: #C99F9F;
+  margin: 20px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   ${!isLoggedInUser &&
