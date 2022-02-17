@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { css } from '@emotion/react';
 import dressroomBackground from  '../../../public/images/dressroombackground.jpg';
 
-export default function LoginPage({ emailRef, passwordRef, onClickLogin, error }) {
+export default function LoginPage({ emailRef, passwordRef, onClickLogin, error, toSignup }) {
   return (
     <div css={LivingRoom}>
       <div css={Closet}>
@@ -33,10 +33,8 @@ export default function LoginPage({ emailRef, passwordRef, onClickLogin, error }
             <button css={LoginBtn} onClick={onClickLogin}>로그인</button>
           </div>
           <hr css={hrStyle}/>
-          <p>아직 회원이 아니신가요?&nbsp;
-            <Link to='/signup'>
-              회원가입
-            </Link>
+          <p>아직 회원이 아니신가요?&nbsp;&nbsp;
+            <span onClick={toSignup} css={signupStyle}>회원가입</span>
           </p>
         </div>
         <Link to='/'>
@@ -48,6 +46,12 @@ export default function LoginPage({ emailRef, passwordRef, onClickLogin, error }
     </div>
   );
 }
+
+const signupStyle = css`
+  text-decoration:none; 
+  cursor: pointer; 
+  color: #551a8b
+`;
 
 const LivingRoom = css`
   display: flex;
@@ -91,7 +95,7 @@ const inputGroup = css`
 `;
 
 const inputStyle = css`
-  width: 70%;
+  width: 66%;
   height: 45px;
   font-size: 15px;
   border: 0;
@@ -99,6 +103,7 @@ const inputStyle = css`
   outline: none;
   background-color: #F2F2F2;
   margin: 5px;
+  padding-left: 13px;
 `;
 
 const hrStyle = css`

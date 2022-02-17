@@ -16,7 +16,7 @@ import {
   setisdetailOpen,
   setTagFilter,
   setFilterCody,
-  changeFilterCody
+  changeFilterCody,
 } from '../../slices/codySlice';
 import { sessionLogin } from '../../slices/authSlice';
 import { setUserName } from '../../slices/clothesSlice';
@@ -89,7 +89,7 @@ export default function CodyMainContainer() {
         const cards = cardList.map((element, index) => {
           return {
             ...element,
-            onClick: () => dispatch(setgoToSlide(index))
+            onClick: () => dispatch(setgoToSlide(index)),
           };
         });
         dispatch(setCards(cards));
@@ -97,6 +97,9 @@ export default function CodyMainContainer() {
         const cards = [];
         dispatch(setCards(cards));
       }
+      // if (localStorage.getItem('friendName') !== JSON.parse(localStorage.getItem('userInfo')).username){
+      //   setopenCard(cards.filter(card=>card.content.props.card.secret === 0));
+      // }
     }
   }, [codyList]);
 

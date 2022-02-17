@@ -4,6 +4,7 @@ const initialState = {
   'isModalOpen' : false,
   'isResOpen': false,
   'resText':'',
+  'confirm': false,
 };
 
 export const modalSlice = createSlice({
@@ -30,6 +31,9 @@ export const modalSlice = createSlice({
         ...state,
         resText
       };
+    },
+    setConfirm(state, action) {
+      state.confirm = action.payload;
     }
   },
 });
@@ -37,7 +41,8 @@ export const modalSlice = createSlice({
 export const {
   changeisModalOpen,
   changeisResOpen,
-  changeResText
+  changeResText,
+  setConfirm,
 } = modalSlice.actions;
 
 export default modalSlice.reducer;

@@ -5,12 +5,14 @@ import LaundryModalContainer from '../../containers/dressroom/LaundryModalContai
 import ResModal from './ResModal';
 import ScaleLoader from 'react-spinners/ScaleLoader';
 import { isNull } from 'lodash';
+import { Tags } from '@emotion-icons/fa-solid/Tags';
+import Tag from './Tag';
 
 if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function AddClothes({ imgError, resloading, resetClothes, loading, images, resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
+export default function AddClothes({ deleteTagHandler, isTagOpen, setisTagOpen, inputRef, onKeyPress, imgError, resloading, resetClothes, loading, images, resText, isResOpen, handleResponse, saveClothes, selectSeason, tagGroup, allSeason, tagInfo, selectedLaundry, onImgChange, preview, imgInput, modalToggle, isModalOpen, handleLaundry }) {
   return (
     <div>
       <Global
@@ -21,13 +23,13 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
         onRequestClose={() => { modalToggle(false); resetClothes(); }}
         closeTimeoutMS={500}
         onAfterOpen={() => { document.body.style.overflow = 'hidden'; }}
-        onAfterClose={() =>{ document.body.style.overflow = 'auto'; }}
+        onAfterClose={() => { document.body.style.overflow = 'auto'; }}
         style={{
           overlay: {
             backgroundColor: 'rgba(0, 0, 0, 0.75)',
           },
           content: {
-            borderRadius: '10px',
+            borderRadius: '0px',
             outline: 'none',
             overflowY: 'auto',
             padding: '16px',
@@ -83,7 +85,7 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
             </button>
           </div>
           <div>
-            <br/>
+            <br />
 
             <div>
               <div css={css`display: grid; grid-template-columns: 40px 360px;`}>
@@ -102,28 +104,28 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
                 <div css={css`display: grid; grid-template-columns: 40px 160px`}>
                   <p css={label}> 색상 </p>
                   <div css={valueStyle2}>
-                    {tagInfo['color']}
+                    {isNull(tagInfo['color']) ? '없음' : tagInfo['color']}
                   </div>
                 </div>
 
                 <div css={css`display: grid; grid-template-columns: 40px 160px`}>
                   <p css={label}> 소재 </p>
                   <div css={valueStyle2}>
-                    {tagInfo['material']}
+                    {isNull(tagInfo['material']) ? '없음' : tagInfo['material']}
                   </div>
                 </div>
 
                 <div css={css`display: grid; grid-template-columns: 40px 160px`}>
                   <p css={label}> 패턴 </p>
                   <div css={valueStyle2}>
-                    { isNull(tagInfo['pattern']) ? '없음' : ''}
+                    {isNull(tagInfo['pattern']) ? '없음' : tagInfo['pattern']}
                   </div>
                 </div>
 
                 <div css={css`display: grid; grid-template-columns: 40px 160px`}>
                   <p css={label}> 핏 </p>
                   <div css={valueStyle2}>
-                    { isNull(tagInfo['fit']) ? '없음' : ''}
+                    {isNull(tagInfo['fit']) ? '없음' : tagInfo['fit']}
                   </div>
                 </div>
               </div>
@@ -148,7 +150,7 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
               <p css={css`position: relative`}>세탁
                 <button css={AddBtn}
                   onClick={() => handleLaundry(true)}>
-                    +
+                  +
                 </button>
               </p>
               {selectedLaundry.map((i) => {
@@ -162,14 +164,38 @@ export default function AddClothes({ imgError, resloading, resetClothes, loading
               />
             </div>
 
-            <div css={css`display: flex;`}>
-              <p>태그</p>
+            <div>
+              <div css={inputContainer}>
+                <p
+                  css={css`grid-column: 1; grid-row:1; position: relative;`}>
+                  태그
+                  <button css={AddBtn}
+                    onClick={() => setisTagOpen(!isTagOpen)}>
+                    {isTagOpen ? <span>-</span> : <span>+</span> }
+                  </button>
+                </p>
+                <input
+                  id="taginput"
+                  ref={inputRef}
+                  css={tagInput({ isTagOpen })}
+                  type="text"
+                  placeholder="태그 추가"
+                  onKeyPress={onKeyPress}
+                />
+                <label htmlFor="taginput" css={inputLabel({ isTagOpen })}>
+                  <Tags size={20} />
+                </label>
+              </div>
+
               <div css={tagsGroup}>
-                {tagGroup.map((item, index) => (
-                  <div css={tagItem} key={index}>
-                    {item}
-                  </div>
-                ))}
+                {tagGroup.map((item, index) => {
+                  return (
+                    <Tag
+                      key={index}
+                      value={item}
+                      deleteTagHandler={deleteTagHandler} />
+                  );
+                })}
               </div>
             </div>
 
@@ -234,6 +260,40 @@ const valueStyle2 = css`
   text-align: center;
   vertical-align: middle;
   line-height: 30px;
+`;
+
+const inputContainer = css`
+  display: grid;
+  margin: 5px;
+`;
+
+const tagInput = ({ isTagOpen }) => css`
+  display: none;
+  width: 10rem;
+  height: 35px;
+  outline: 0;
+  border: 0;
+  border-radius: 5px;
+  border-bottom: 2px solid silver;
+  font-size: 15px;
+  padding-left: 35px;
+  margin-left: 3rem;
+  grid-column: 1;
+  grid-row: 1;
+  ${isTagOpen && `
+    display: inline-block;
+  `}
+`;
+
+const inputLabel = ({ isTagOpen }) => css`
+  display: none;
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 5px;
+  margin-left: 3.5rem;
+  ${isTagOpen && `
+  display:inline-block;
+`}
 `;
 
 const tagItem = css`
@@ -380,6 +440,7 @@ const btnContainer = css`
 
 const inputTag = css`
 	display : none;
+  padding: 5px;
 `;
 
 const inputBtn = css`
@@ -420,11 +481,14 @@ const inputBtn = css`
 `;
 
 const tagsGroup = css`
-  width: 85%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  margin-left: 10px;
-  margin-top: 4px;
+  grid-row: 2;
+  grid-column : 1;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom : 15px;
+  margin-top: 10px;
+  margin-left: 2rem;
+  max-width: 370px;
 `;
 
 const modalClass = css`
@@ -467,7 +531,6 @@ const modalClass = css`
 	bottom: auto;
 	margin: 0 auto;
 	border: 0;
-	border-radius: 8px;
 	outline: 0;
 	display: flex;
 	max-height:calc(100vh - 210px);

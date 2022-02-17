@@ -116,11 +116,12 @@ const memo = css`
   overflow: hidden;
   resize: none;
   outline: none;
-  width: 22rem;
+  width: 21rem;
   min-height: 100px;
   margin-top: 15px;
   background-color: rgb(242, 241, 240);
   border: 1px solid rgb(153, 153, 153);
+  padding: 10px;
 `;
 
 const canvas = css`

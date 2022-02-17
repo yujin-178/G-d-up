@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { loadCodyByUserName, createFile, postCody } from '../services/api';
+import { loadCodyByUserName, createFile, postCody, putCody } from '../services/api';
 import { animateScroll as scroll } from 'react-scroll';
 
 const initialState = {
@@ -17,6 +17,7 @@ const initialState = {
   'iscodyEdit': false,
   'tagFilter': [],
   'filterCody': [],
+  'updateloading':false,
 };
 
 export const setCody = createAsyncThunk(
@@ -33,6 +34,15 @@ export const createCody = createAsyncThunk(
     const { canvas } = codyInfo;
     const file = await createFile(canvas);
     const response = await postCody({ ...codyInfo, file });
+    return response.data.data;
+  }
+);
+
+export const updatedCody = createAsyncThunk(
+  'cody/updateCody',
+  async (codyInfo) => {
+    const response = await putCody( codyInfo );
+    console.log(response);
     return response.data.data;
   }
 );
@@ -154,6 +164,16 @@ export const codySlice = createSlice({
     },
     [createCody.rejected]: (state) => {
       state.loading = false;
+    },
+    [updatedCody.pending]: (state) => {
+      state.updateloading = true;
+    },
+    [updatedCody.fulfilled]: (state) => {
+      state.updateloading = false;
+    },
+    [updatedCody.rejected]: (state, action) => {
+      state.updateloading = false;
+      console.log(action);
     },
   }
 });

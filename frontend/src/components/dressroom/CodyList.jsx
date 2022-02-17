@@ -1,10 +1,10 @@
 import React from 'react';
 import CodyCard from './CodyCard';
-import TagSearchBar from './TagSearchBar';
 import Tag from './Tag';
 
 import { css } from "@emotion/react";
 import CodyBackgroundImg from '../../../public/images/codybackground.jpg';
+import Search from '../../../public/images/search.png';
 
 export default function CodyList({ userName, isLoggedInUser, tagDelete, tagFilter, tagRef, onKeyPress, setisdetailOpen, handleSelectCody, moveScroll, cards }) {
   return (
@@ -12,10 +12,15 @@ export default function CodyList({ userName, isLoggedInUser, tagDelete, tagFilte
       <div css={listContainer}>
         <h2 css={title}>{userName}님의 코디</h2>
         <div css={searchBar}>
-          <TagSearchBar
-            inputRef={tagRef}
+          <input
+            data-testid="input"
+            ref={tagRef}
+            css={searchInput}
+            type="text"
+            placeholder="태그 검색"
             onKeyPress={onKeyPress}
           />
+          <img src={Search} css={searchIcon} />
           <div css={tags}>
             {tagFilter.length ?
               tagFilter.map((tag, index) => {
@@ -76,11 +81,34 @@ export default function CodyList({ userName, isLoggedInUser, tagDelete, tagFilte
   );
 }
 
+const searchIcon = css`
+  display: inline-block;
+  grid-column: 1;
+  grid-row: 1;
+  margin-top: 5px;
+  margin-left: 0.3rem;
+`;
+
+const searchInput = css`
+  display: inline-block;
+  grid-column: 1;
+  grid-row: 1;
+  height: 35px;
+  outline: 0;
+  border: 0;
+  border-bottom: 2px solid silver;
+  width: 100%;
+  font-size: 15px;
+  background-color: rgb(242, 241, 240);
+  padding-left: 2.3rem;
+`;
+
 const searchBar = css`
   width: 30%;
   grid-row: 2;
   grid-column: 2;
   padding-left: 10px;
+  display: grid;
 `;
 
 const tags = css`

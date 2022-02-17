@@ -32,7 +32,7 @@ export default function DressRoomPage({ onClickModalOpen, onClickToMyDressRoom, 
             onMouseLeave={() => setHover(false)}
           />
           {hover ?
-            <p className="arrow_box">Friend List</p>
+            <p className="arrow_box">친구 목록</p>
             :
             ''
           }

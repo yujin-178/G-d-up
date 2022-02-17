@@ -1,7 +1,8 @@
 import React from 'react';
 import { css } from '@emotion/react';
+import ResModal from './ResModal';
 
-export default function ClothesDetail({ selectedClothes, deleteHandler, isLoggedInUser, userName }) {
+export default function ClothesDetail({ handleResponse ,selectedClothes, deleteHandler, isLoggedInUser, userName, setConfirm, isResOpen, resText }) {
 
   return (
     <div css={detailContainer}>
@@ -34,17 +35,13 @@ export default function ClothesDetail({ selectedClothes, deleteHandler, isLogged
                 <div css={tag}>
                   {selectedClothes.hashtag.map((item, index) => (
                     <div css={tagItem} key={index}>
-                      {item}
+                      {item.includes('#') ?
+                        <p>{item}</p>
+                        :
+                        <p># {item} </p>
+                      }
                     </div>
                   ))}
-                  {/* <div css={tag}>
-                  <ul css={tagItem}>{selectedClothes.hashtag.map((item, index) => (
-                    // <li css={tagItem} key={index}>
-                    <li key={index}>
-                      {item}
-                    </li>
-                  ))}</ul>
-                </div> */}
                 </div>
               </p>
             </div>
@@ -71,6 +68,11 @@ export default function ClothesDetail({ selectedClothes, deleteHandler, isLogged
           )}
         </>
       }
+      <ResModal
+        isResOpen={isResOpen}
+        resText={resText}
+        handleResponse={handleResponse}
+      />
     </div>
   );
 }
@@ -165,7 +167,7 @@ const tagItem = css`
   background-color: #BFAEA4;;
   height: 25px;
 	width : max-content;
-  margin: 2px;
+  margin: 5px;
   border-radius: 18px;
   
   font-size: 13px;
@@ -178,9 +180,11 @@ const tagItem = css`
 
 const tag = css`
   margin-top: 1%;
-  width: 100%;
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom : 15px;
+  margin-top: 10px;
+  max-width: 100%;
 `;
 
 const buttonGroup = css`
@@ -201,10 +205,12 @@ const infoWrapper = css`
 `;
 
 const delBtn = ({ isLoggedInUser }) => css`
-  width: 3rem;
-  height: 1.5rem;
-  background: #ecc194;
-  border: none;
+  width: 60px;
+  height: 30px;
+  color: white;
+  border: 1.5px solid white;
+  background-color: #C99F9F;
+  margin: 20px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   ${!isLoggedInUser &&

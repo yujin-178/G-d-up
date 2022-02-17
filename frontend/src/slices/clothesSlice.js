@@ -50,10 +50,10 @@ export const clothesSlice = createSlice({
     },
     changeTagInfo(state, action) {
       const tags = action.payload.data;
-      const tagList = [];
+      const tagList = [...state.tagGroup];
       for (let tag in tags) {
         if (tags[tag] !== null) {
-          tagList.push(`#${tags[tag]}`);
+          tagList.push(`${tags[tag]}`);
         }
       }
       return {
@@ -105,6 +105,9 @@ export const clothesSlice = createSlice({
           text
         }
       };
+    },
+    setTagGroup(state, action) {
+      state.tagGroup = action.payload;
     }
   },
   extraReducers: {
@@ -169,6 +172,7 @@ export const {
   resetClothes,
   changeresloading,
   changeimgError,
+  setTagGroup,
 } = clothesSlice.actions;
 
 export default clothesSlice.reducer;
