@@ -56,12 +56,12 @@ public class CodyController {
     }
 
 
-    @PutMapping(value = "/update")
+    @PutMapping(value = "/update/file")
     @ApiOperation(
-            value = "코디 수정",
+            value = "코디 수정 - 파일까지 수정한다.",
             notes = "수정된 코드 정보를 받아서 해당 코디를 수정합니다."
     )
-    public ResponseEntity<BasicResponse> updateCody(@RequestPart(value = "imageFile") MultipartFile file, @RequestPart(value = "updateCody") UpdateCody updateCody) {
+    public ResponseEntity<BasicResponse> updateCodyAndFile(@RequestPart(value = "imageFile") MultipartFile file, @RequestPart(value = "updateCody") UpdateCody updateCody) {
 
         ResponseEntity<BasicResponse> responseBody;
 
@@ -70,6 +70,44 @@ public class CodyController {
 
         try {
             codyDtoAll = Optional.ofNullable(cs.updateCodyItem(updateCody, file));
+        } catch (Exception e) {
+            result.status = false;
+            result.message = "잘못된 정보 입력";
+            result.data = null;
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+            return responseBody;
+        }
+
+        if (codyDtoAll.isPresent()) {
+            result.status = true;
+            result.message = "코디 수정 성공";
+            result.data = codyDtoAll;
+
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            result.status = true;
+            result.message = "코디 수정 실패";
+            result.data = null;
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        return responseBody;
+
+    }
+
+    @PutMapping(value = "/update")
+    @ApiOperation(
+            value = "코디 수정 - 파일은 원본 상태로",
+            notes = "수정된 코드 정보를 받아서 해당 코디를 수정합니다."
+    )
+    public ResponseEntity<BasicResponse> updateCody(@RequestBody UpdateCody updateCody) {
+        System.out.println(updateCody.getCodyId());
+        ResponseEntity<BasicResponse> responseBody;
+
+        BasicResponse result = new BasicResponse();
+        Optional<CodyDtoAll> codyDtoAll;
+
+        try {
+            codyDtoAll = Optional.ofNullable(cs.updateCodyItemId(updateCody));
         } catch (Exception e) {
             result.status = false;
             result.message = "잘못된 정보 입력";
@@ -135,6 +173,42 @@ public class CodyController {
         List<CodyDtoAll> codyDtoAlls = null;
         try {
             codyDtoAlls = cs.getUserCodyList(userName);
+        } catch (Exception e) {
+            result.status = false;
+            result.message = "잘못된 정보 입력";
+            result.data = null;
+
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+            return responseBody;
+        }
+        if (codyDtoAlls.size() == 0) {
+            result.status = true;
+            result.message = userName + "의 코디 목록은 비어 있음";
+            result.data = null;
+
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+        } else {
+            result.status = true;
+            result.message = userName + "의 코디 목록 불러오기 성공";
+            result.data = codyDtoAlls;
+
+            responseBody = new ResponseEntity<>(result, HttpStatus.OK);
+        }
+        return responseBody;
+    }
+
+    @GetMapping(value = "/list/{userName}")
+    @ApiOperation(
+            value = "코디 목록 불러오기",
+            notes = "특정 유저의 코디 목록 불러오기"
+    )
+    public ResponseEntity<BasicResponse> readFriendCodyList(@PathVariable(name = "userName") final String userName) {
+
+        ResponseEntity<BasicResponse> responseBody;
+        BasicResponse result = new BasicResponse();
+        List<CodyDtoAll> codyDtoAlls = null;
+        try {
+            codyDtoAlls = cs.getFriendCodyList(userName);
         } catch (Exception e) {
             result.status = false;
             result.message = "잘못된 정보 입력";

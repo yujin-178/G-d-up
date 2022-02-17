@@ -16,10 +16,13 @@ public interface CodyService {
 
     public List<CodyDtoAll> getUserCodyList(String id) throws Exception;
 
+    public List<CodyDtoAll> getFriendCodyList(String name) throws Exception;
+
     public int deleteCodyItem(int id) throws Exception;
 
     public CodyDtoAll addCodyItem(CreateCody cc, MultipartFile file) throws Exception;
 
     public CodyDtoAll updateCodyItem(UpdateCody uc, MultipartFile file) throws Exception;
 
+    public CodyDtoAll updateCodyItemId(UpdateCody updateCody) throws Exception;
 }
