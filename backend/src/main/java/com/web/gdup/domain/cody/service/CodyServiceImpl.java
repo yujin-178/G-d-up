@@ -1,15 +1,18 @@
 package com.web.gdup.domain.cody.service;
 
 
+import com.web.gdup.domain.clothing.entity.ClothingEntity;
+import com.web.gdup.domain.clothing.repository.ClothingRepository;
 import com.web.gdup.domain.cody.dto.*;
-import com.web.gdup.domain.cody_clothing.entity.CodyClothingEntity;
 import com.web.gdup.domain.cody.entity.CodyEntity;
-import com.web.gdup.domain.cody_hashtag.entity.CodyHashtagEntity;
-import com.web.gdup.domain.cody_clothing.repository.CodyClothingRepository;
-import com.web.gdup.domain.cody_hashtag.repository.CodyHashtagRepository;
 import com.web.gdup.domain.cody.repository.CodyRepository;
+import com.web.gdup.domain.cody_clothing.entity.CodyClothingEntity;
+import com.web.gdup.domain.cody_clothing.repository.CodyClothingRepository;
+import com.web.gdup.domain.cody_hashtag.entity.CodyHashtagEntity;
+import com.web.gdup.domain.cody_hashtag.repository.CodyHashtagRepository;
 import com.web.gdup.domain.hashtag.service.HashtagService;
 import com.web.gdup.domain.image.dto.ImageDto;
+import com.web.gdup.domain.image.entity.ImageEntity;
 import com.web.gdup.domain.image.repository.ImageRepository;
 import com.web.gdup.domain.image.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +44,9 @@ public class CodyServiceImpl implements CodyService {
     @Autowired
     private CodyHashtagRepository codyHashtagRepository;
 
+    @Autowired
+    private ClothingRepository clothingRepository;
+
     @Override
     public List<CodyEntity> getAllCodyList() {
 
@@ -65,10 +71,12 @@ public class CodyServiceImpl implements CodyService {
             List<CodyClothingEntity> cclist = codyClothingRepository.getAllByCodyId(codyEntity.getCodyId());
             List<ClothingInCodyDto> cicdtos = new ArrayList<>();
             for(CodyClothingEntity codyClothingEntity :cclist){
-                cicdtos.add(new ClothingInCodyDto(codyClothingEntity,imageRepository.getOne(codyClothingEntity.getClothingId())));
+                Optional<ClothingEntity> clothing = clothingRepository.findById(codyClothingEntity.getClothingId());
+                ImageEntity imageEntity = clothing.get().getImageModel();
+                cicdtos.add(new ClothingInCodyDto(codyClothingEntity, imageEntity));
             }
 
-            codyDtoAlls.add(new CodyDtoAll(codyEntity, codyTagList,cicdtos));
+            codyDtoAlls.add(new CodyDtoAll(codyEntity, codyTagList, cicdtos));
         }
         return codyDtoAlls;
     }
