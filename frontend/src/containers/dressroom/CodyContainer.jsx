@@ -294,7 +294,7 @@ const clothesContainer = css`
 
 const backButton = css`
   position: absolute;
-  right: 50px;
+  right: 10rem;
   bottom: 35px;
   width: 90px;
   height: 40px;

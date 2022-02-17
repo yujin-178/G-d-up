@@ -79,6 +79,7 @@ export default function CodyList({ userName, isLoggedInUser, tagDelete, tagFilte
 const searchBar = css`
   width: 30%;
   grid-row: 2;
+  grid-column: 2;
   padding-left: 10px;
 `;
 
@@ -91,7 +92,7 @@ const tags = css`
 
 const BackImg = css`
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${CodyBackgroundImg});
   background-size: cover;
   background-position: center;
@@ -100,6 +101,7 @@ const BackImg = css`
 const listContainer = css`
   display: grid;
   grid-template-rows: 1fr 1fr 63vh 1fr;
+  grid-template-columns: 1fr 3fr 1fr;
   grid-gap : 15px;
   padding: 30px 30px 0px 30px;
   transition: all 0.35s;
@@ -111,6 +113,7 @@ const title = css`
   color: #f2f2f2;
   text-align : center;
   grid-row : 1;
+  grid-column: 2;
 `;
 
 const message = css`
@@ -129,9 +132,10 @@ const message = css`
 
 const container = css`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 10px;
   grid-row: 3;
+  grid-column: 2;
   overflow-y:scroll;
   &::-webkit-scrollbar {
     width: 8px;
@@ -151,8 +155,7 @@ const container = css`
   }
   margin: 10px;
   padding: 20px;
-  width: 90vw;
-  background-color : #3A3D41; 
+  background-color : #BFAEA4; 
   opacity: 0.9;
 `;
 
@@ -160,6 +163,7 @@ const btnContainer = css`
   display: grid;
   grid-template-columns: repeat(5,1fr);
   grid-row: 4;
+  grid-column: 2;
   justify-self : center;
 `;
 

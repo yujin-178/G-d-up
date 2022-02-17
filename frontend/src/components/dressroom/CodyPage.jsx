@@ -159,6 +159,7 @@ const LeftArrow = css`
   grid-columns: repeat(7,1fr);
   grid-rows: repeat(7,1fr);
   color: #f2f2f2;
+  justify-content:end;
 `;
 
 const RightArrow = css`
@@ -168,6 +169,7 @@ const RightArrow = css`
   grid-columns: repeat(7,1fr);
   grid-rows: repeat(7,1fr);
   color: #f2f2f2;
+  justify-content: start;
 `;
 
 const arrowStyle = css`
@@ -193,7 +195,7 @@ const container = css`
 
 const createBtn = ({ isLoggedInUser }) => css`
   position: absolute;
-  right: 50px;
+  right: 10rem;
   top: 30px;
   width: 90px;
   height: 40px;
@@ -210,7 +212,7 @@ const createBtn = ({ isLoggedInUser }) => css`
 
 const backButton = css`
   position: absolute;
-  right: 50px;
+  right: 10rem;
   bottom: 35px;
   width: 90px;
   height: 40px;
