@@ -3,12 +3,13 @@ import { css, Global } from '@emotion/react';
 import Modal from 'react-modal';
 import { Tags } from '@emotion-icons/fa-solid/Tags';
 import ResModal from './ResModal';
+import Tag from './Tag';
 
 if (process.env.NODE_ENV !== 'test') {
   Modal.setAppElement('#app');
 }
 
-export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResOpen, resText, deleteCody, handleCodyEdit, iscodyEdit, selectedCody, isdetailOpen, handleCodyDetailOpen }) {
+export default function CodyDetailModal({ updateCody, editCancel, toggle, handleToggle, deleteTagHandler, tagList, inputRef, onKeyPress, contentRef, isLoggedInUser, handleResponse, isResOpen, resText, deleteCody, handleCodyEdit, iscodyEdit, selectedCody, isdetailOpen, handleCodyDetailOpen }) {
   return (
     <div>
       <Global
@@ -16,14 +17,15 @@ export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResO
       />
       <Modal
         isOpen={isdetailOpen}
-        onRequestClose={() => {handleCodyDetailOpen(false); handleCodyEdit(false);}}
+        onRequestClose={() => { handleCodyDetailOpen(false); handleCodyEdit(false); editCancel(); }}
         closeTimeoutMS={500}
         onAfterOpen={() => { document.body.style.overflow = 'hidden'; }}
-        onAfterClose={() =>{ document.body.style.overflow = 'auto'; }}
+        onAfterClose={() => { document.body.style.overflow = 'auto'; }}
         style={{
           content: {
             backgroundColor: '#2E2E2E',
-            width: '28rem',
+            width: '35rem',
+            height: '70rem',
             padding: '2rem 1rem 2rem'
           },
           overlay: {
@@ -35,7 +37,7 @@ export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResO
           <button
             className='hvr-fade'
             css={CloseBtn}
-            onClick={() => {handleCodyDetailOpen(false); handleCodyEdit(false);}}>
+            onClick={() => { handleCodyDetailOpen(false); handleCodyEdit(false); editCancel(); }}>
             X
           </button>
           <div css={imgContainer}>
@@ -47,23 +49,51 @@ export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResO
           </div>
 
           {iscodyEdit ?
-            <div css={inputContainer}>
-              <input
-                type="text"
-                label='태그'
-                placeholder='태그는 총 10개까지 입력 가능합니다.'
-                css={inputTag}
-                id='taginput'
-              />
-              <label htmlFor="taginput" css={inputLabel}>
-                <Tags size={20} />
-              </label>
+            <div css={css`grid-row: 2; grid-column : 1;`}>
+
+              <div css={inputContainer}>
+                <input
+                  id="taginput"
+                  ref={inputRef}
+                  css={inputTag}
+                  type="text"
+                  placeholder="태그 입력"
+                  onKeyPress={onKeyPress}
+                />
+                <label htmlFor="taginput" css={inputLabel}>
+                  <Tags size={20} />
+                </label>
+              </div>
+
+              <div css={tag}>
+                {tagList.length ?
+                  tagList.map((tag, index) => {
+                    return (
+                      <Tag
+                        key={index}
+                        value={tag}
+                        deleteTagHandler={deleteTagHandler}
+                      />
+                    );
+                  }) 
+                  :
+                  <Tag
+                    value={'ex 데일리'}
+                    deleteTagHandler={deleteTagHandler}
+                  />
+                }
+              </div>
+
             </div>
             :
             <div css={tag}>
               {selectedCody.hashList.map((item, index) => (
                 <div css={tagItem} key={index}>
-                  {item}
+                  {item.includes('#') ?
+                    <p>{item}</p>
+                    :
+                    <p># {item} </p>
+                  }
                 </div>
               ))}
             </div>
@@ -71,12 +101,12 @@ export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResO
           }
           <div css={toggleContainer}>
             {iscodyEdit ?
-              <div>
+              <div onClick={handleToggle}>
                 <div
                   data-testid="toggle"
-                  css={selectedCody.secret === 0 ? toggleBtn : toggleXBtn}
+                  css={toggle === 0 ? toggleBtn : toggleXBtn}
                 >
-                  <div css={selectedCody.secret === 0 ? toggleBtnCircle : toggleXBtnCircle}></div>
+                  <div css={toggle === 0 ? toggleBtnCircle : toggleXBtnCircle}></div>
                 </div>
                 <p css={toggleTitle}>공개 여부</p>
               </div>
@@ -94,27 +124,56 @@ export default function CodyDetailModal({ isLoggedInUser, handleResponse, isResO
               </div>
             }
           </div>
-
-          <div css={contentContainer}>
-            {selectedCody.content}
-          </div>
+          {iscodyEdit ?
+            <textarea
+              ref={contentRef}
+              css={contentContainer}
+              placeholder="내용 입력"
+              defaultValue={selectedCody.content}
+            />
+            :
+            <div css={contentContainer}>
+              {selectedCody.content}
+            </div>
+          }
 
           {isLoggedInUser ?
             <div css={submitBtnContainer}>
-              <button
-                className="hvr-fade"
-                css={editBtn}
-                onClick={() => handleCodyEdit(true)}
-              >
-                수정
-              </button>
-              <button
-                className='hvr-fade'
-                css={delBtn}
-                onClick={() => deleteCody(selectedCody.codyId)}
-              >
-                삭제
-              </button>
+              {iscodyEdit ?
+                <button
+                  className="hvr-fade"
+                  css={editBtn}
+                  onClick={updateCody}
+                >
+                  저장
+                </button>
+                :
+                <button
+                  className="hvr-fade"
+                  css={editBtn}
+                  onClick={() => handleCodyEdit(true)}
+                >
+                  수정
+                </button>
+              }
+              {iscodyEdit ?
+                <button
+                  className='hvr-fade'
+                  css={delBtn}
+                  onClick={() => { handleCodyEdit(false); editCancel(); }}
+                >
+                  취소
+                </button>
+                :
+
+                <button
+                  className='hvr-fade'
+                  css={delBtn}
+                  onClick={() => deleteCody(selectedCody.codyId)}
+                >
+                  삭제
+                </button>
+              }
             </div>
             :
             ''
@@ -154,8 +213,7 @@ const codyImg = css`
   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
 `;
 const inputContainer = css`
-  grid-row: 2;
-  grid-column : 1;
+
   width: max-content;
   display: grid;
   margin: 5px;
@@ -163,14 +221,15 @@ const inputContainer = css`
 
 const inputTag = css`
   display: inline-block;
-  width: 18rem;
+  width: 14rem;
   height: 35px;
   outline: 0;
   border: 0;
   border-radius: 5px;
   border-bottom: 2px solid silver;
   font-size: 15px;
-  padding-left: 25px;
+  padding-left: 40px;
+  margin-left: 1.8rem;
   grid-column: 1;
   grid-row: 1;
 `;
@@ -179,6 +238,7 @@ const inputLabel = css`
   grid-column: 1;
   grid-row: 1;
   margin-top: 5px;
+  margin-left: 2rem;
 `;
 
 const tag = css`
@@ -253,7 +313,7 @@ const toggleContainer = css`
 const toggleTitle = css`
   margin-left: 10px;
   margin: 0;
-  padding-left: 10px;
+  padding-top: 10px;
 `;
 
 const toggleXBtn = css`

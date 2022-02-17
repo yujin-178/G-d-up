@@ -23,6 +23,7 @@ import {
   changeresloading,
   setClothes,
   changeimgError,
+  setTagGroup,
 } from '../../slices/clothesSlice';
 
 export default function AddClothesContainer() {
@@ -38,6 +39,30 @@ export default function AddClothesContainer() {
 
   const imgInput = useRef(null);
   const [loading, setLoading] = useState(null);
+
+  const inputRef = useRef();
+  const [isTagOpen, setisTagOpen] = useState(false);
+
+  const onKeyPress = event => {
+    if (event.key === 'Enter'){
+      const value = inputRef.current.value;
+      if (tagGroup.includes(value)) {
+        inputRef.current.value = '';
+        return alert('이미 작성된 태그입니다');
+      }
+      if (value) {
+        dispatch(setTagGroup([...tagGroup, value]));
+        inputRef.current.value = '';
+      } else {
+        return alert('내용을 입력해주세요');
+      }
+    }
+  };
+
+  const deleteTagHandler = value => {
+    const deleted = tagGroup.filter(tag => tag !== value);
+    dispatch(setTagGroup(deleted));
+  };
 
   const config = {
     Headers: {
@@ -121,13 +146,13 @@ export default function AddClothesContainer() {
       formData.append('washing', selectedIcon.join(' '));
 
       axios.post(`http://i6b108.p.ssafy.io:8000/clothing/save`, formData, config)
-        .then((res) => {
+        .then(() => {
           handleresloading(false);
           dispatch(changeResText('성공적으로 저장되었습니다.'));
           handleresetClothes();
           dispatch(setClothes(userName));
         })
-        .catch((err) => {
+        .catch(() => {
           handleresloading(false);
           dispatch(changeResText('오류가 발생했습니다. 다시 시도해주세요.'));
         });
@@ -169,6 +194,11 @@ export default function AddClothesContainer() {
         resetClothes={handleresetClothes}
         resloading={resloading}
         imgError={imgError}
+        inputRef={inputRef}
+        onKeyPress={onKeyPress}
+        isTagOpen={isTagOpen}
+        setisTagOpen={setisTagOpen}
+        deleteTagHandler={deleteTagHandler}
       />
     </div>
   );

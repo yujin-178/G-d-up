@@ -26,15 +26,47 @@ export async function createFile(element) {
 }
 
 export async function loadCodyByUserName(userName) {
-  const res = await axios.get(`http://i6b108.p.ssafy.io:8000/cody/read/${userName}`);
+  let res = [];
+  if (localStorage.getItem('friendName') !== JSON.parse(localStorage.getItem('userInfo')).username){
+    res = await axios.get(`http://i6b108.p.ssafy.io:8000/cody/list/${userName}`);
+  } else {
+    res = await axios.get(`http://i6b108.p.ssafy.io:8000/cody/read/${userName}`);
+  }
   let cody = [];
-  if (res.data.data){
-    cody = res.data.data.sort(function (a,b) {
+  if (res.data.data) {
+    cody = res.data.data.sort(function (a, b) {
       return a.updateDate > b.updateDate ? -1 : a.updateDate < b.updateDate ? 1 : 0;
     });
   }
   return cody;
 }
+
+export async function putCody(payload) {
+  const { imageId, content, clothingList, codyId, codyName, userName, secret, codyTag } = payload;
+  const data = {
+    clothingList,
+    codyId,
+    codyName,
+    userName,
+    content,
+    secret,
+    codyTag,
+    imageId,
+  };
+  // const res = await axios.get(image, { responseType: "blob" });
+  // const blob = res.data;
+  // const file = new File([blob], "filename.jpeg");
+  // const fd = new FormData();
+  // fd.append('updateCody', new Blob([JSON.stringify(data)], { type: 'application/json' }));
+  // fd.append('imageId', imageId);
+  // const config = {
+  //   Headers: {
+  //     'Content-Type': 'application/json'
+  //   },
+  // };
+  const response = await axios.put('http://i6b108.p.ssafy.io:8000/cody/update', data);
+  return response;
+} 
 
 export async function postCody(payload) {
   const { file, codyItems, content, isNotSecret, tags, userName } = payload;

@@ -4,7 +4,11 @@ import { css } from '@emotion/react';
 export default function Tag({ value, deleteTagHandler }) {
   return (
     <li css={tagItem}>
-      <p css={tagTitle}>{value}</p>
+      {value.includes('#') ?
+        <p css={tagTitle}>{value}</p>
+        :
+        <p css={tagTitle}># {value} </p>
+      }
       <button
         css={tagDeleteBtn}
         onClick={event => {
