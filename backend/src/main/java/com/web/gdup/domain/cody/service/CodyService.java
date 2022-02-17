@@ -22,4 +22,5 @@ public interface CodyService {
 
     public CodyDtoAll updateCodyItem(UpdateCody uc, MultipartFile file) throws Exception;
 
+    public CodyDtoAll updateCodyItemId(UpdateCody updateCody, int imageId) throws Exception;
 }

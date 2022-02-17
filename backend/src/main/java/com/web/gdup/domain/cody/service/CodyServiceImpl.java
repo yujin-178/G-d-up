@@ -90,6 +90,52 @@ public class CodyServiceImpl implements CodyService {
     }
 
     @Override
+    public CodyDtoAll updateCodyItemId(UpdateCody updateCody, int imageId) throws Exception {
+        CodyEntity codyEntity = codyRepository.getOne(updateCody.getCodyId());
+        ImageDto imageDto = imageService.getImage(imageId);
+
+        codyHashtagRepository.deleteByCodyId(codyEntity.getCodyId());
+
+        Optional<CodyEntity> codyEntityOptional = Optional.of(codyRepository.save(updateCody.toEntity(imageDto.toEntity())));
+        codyEntityOptional.orElseThrow(() -> new Exception("null"));
+
+        StringTokenizer st = new StringTokenizer(updateCody.getCodyTag(), " ");
+        List<String> tagList = new ArrayList<>();
+        while (st.hasMoreTokens()) {
+            String tagTmp = st.nextToken();
+            hashtagService.findOrCreateHashtag(tagTmp);
+            CodyHashtagEntity codyHashtagEntity = CodyHashtagEntity.builder()
+                    .codyId(codyEntityOptional.get().getCodyId())
+                    .registrationDate(LocalDateTime.now())
+                    .tagName(tagTmp).build();
+            codyHashtagRepository.save(codyHashtagEntity);
+            tagList.add(tagTmp);
+        }
+
+        codyClothingRepository.deleteByCodyId(codyEntityOptional.get().getCodyId());
+
+        int len = updateCody.getClothingList().size();
+        List<ClothingInCody> cciList = updateCody.getClothingList();
+        List<CodyClothingEntity> cceList = new ArrayList<>();
+        for (int i = 0; i < len; i++) {
+            ClothingInCody tmp = cciList.get(i);
+            CodyClothingEntity cci = CodyClothingEntity.builder()
+                    .codyId(codyEntityOptional.get().getCodyId())
+                    .clothingId(tmp.getClothingId())
+                    .m(tmp.getM()).x(tmp.getX()).y(tmp.getY()).z(tmp.getZ()).build();
+            cceList.add(cci);
+            codyClothingRepository.save(cci);
+        }
+        List<ClothingInCodyDto> cicdtos = new ArrayList<>();
+        for(CodyClothingEntity codyClothingEntity :cceList){
+            cicdtos.add(new ClothingInCodyDto(codyClothingEntity,imageRepository.getOne(codyClothingEntity.getClothingId())));
+        }
+        CodyDtoAll codyDtoAll = new CodyDtoAll(codyEntityOptional.get(), tagList,cicdtos);
+
+        return codyDtoAll;
+    }
+
+    @Override
     public CodyDtoAll updateCodyItem(UpdateCody updateCody, MultipartFile file) throws Exception {
         CodyEntity codyEntity = codyRepository.getOne(updateCody.getCodyId());
 
