@@ -20,6 +20,7 @@ public class UpdateCody {
     private int secret;
     private String codyTag;
     private List<ClothingInCody> clothingList;
+    private int imageId;
 
     public CodyEntity toEntity(ImageEntity imageEntity){
         CodyEntity build = CodyEntity.builder()

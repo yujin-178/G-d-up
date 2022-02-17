@@ -90,9 +90,9 @@ public class CodyServiceImpl implements CodyService {
     }
 
     @Override
-    public CodyDtoAll updateCodyItemId(UpdateCody updateCody, int imageId) throws Exception {
+    public CodyDtoAll updateCodyItemId(UpdateCody updateCody) throws Exception {
         CodyEntity codyEntity = codyRepository.getOne(updateCody.getCodyId());
-        ImageDto imageDto = imageService.getImage(imageId);
+        ImageDto imageDto = imageService.getImage(updateCody.getImageId());
 
         codyHashtagRepository.deleteByCodyId(codyEntity.getCodyId());
 
