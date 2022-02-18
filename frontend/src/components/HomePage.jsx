@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { css } from '@emotion/react';
 import { HouseUser } from '@emotion-icons/fa-solid/HouseUser';
 import { Login } from '@emotion-icons/material-sharp/Login';
 import { Logout } from '@emotion-icons/material-sharp/Logout';
 import homeBackground from '../../public/images/homebackground.jpg';
+import '../css/animate.css';
+import '../css/hover.css';
 
 export default function HomePage() {
   function logout() {
@@ -12,12 +14,15 @@ export default function HomePage() {
     localStorage.removeItem('friendName');
     location.reload();
   }
+  const [hover1, setHover1] = useState(false);
+  const [hover2, setHover2] = useState(false);
+  const [hover3, setHover3] = useState(false);
 
   return (
     <div>
       <div css={LivingRoom}>
-        <div css={Title}>
-          <h1>{`G'd up`}</h1>
+        <div css={Title} className="mount1">
+          <h1 >{`G'd up`}</h1>
           <div css={BtnBody}>
             <Link to='/dressroom'>
               <button css={DressroomBtn}>Go to get dressed up!</button>
@@ -29,16 +34,43 @@ export default function HomePage() {
             <button
               css={css`background-color:transparent; border:none; cursor:pointer; position: absolute;`}
               onClick={logout}>
-              <Logout css={[FlexItem, SignInStyle]} />
+              <Logout
+                css={[FlexItem, SignInStyle]}
+                onMouseEnter={() => setHover3(true)}
+                onMouseLeave={() => setHover3(false)}
+              />
+              {hover3 ?
+                <p className="arrow_logout">로그아웃</p>
+                :
+                ''
+              }
             </button>
             :
             <div>
               <Link to='/login' css={FlexItem}>
-                <Login css={SignInStyle} />
+                <Login
+                  css={SignInStyle}
+                  onMouseEnter={() => setHover1(true)}
+                  onMouseLeave={() => setHover1(false)}
+                />
               </Link>
+              {hover1 ?
+                <p className="arrow_login">로그인</p>
+                :
+                ''
+              }
               <Link to='/signup' css={FlexItem}>
-                <HouseUser css={SignUpStyle} />
+                <HouseUser
+                  css={SignUpStyle}
+                  onMouseEnter={() => setHover2(true)}
+                  onMouseLeave={() => setHover2(false)}
+                />
               </Link>
+              {hover2 ?
+                <p className="arrow_signup">회원가입</p>
+                :
+                ''
+              }
             </div>
           }
         </div>
@@ -56,6 +88,7 @@ const LivingRoom = css`
   background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url(${homeBackground});
   background-size: cover;
   background-position: center;
+  overflow: hidden;
 `;
 
 const Title = css`
@@ -130,7 +163,7 @@ const FlexContainer = css`
 `;
 
 const FlexItem = css`
-  margin: 0 0.5rem;
+  margin: 0 1.9rem;
 `;
 
 const SignInStyle = css`

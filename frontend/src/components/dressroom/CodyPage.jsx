@@ -1,6 +1,9 @@
 import React from 'react';
 import Carousel from 'react-spring-3d-carousel';
 import { config } from 'react-spring';
+import { ViewTile } from '@emotion-icons/zondicons/ViewTile';
+import { TriangleDown } from '@emotion-icons/entypo/TriangleDown';
+import { ImageEdit } from '@emotion-icons/fluentui-system-regular/ImageEdit';
 
 import { css } from "@emotion/react";
 import CodyBackgroundImg from '../../../public/images/codybackground.jpg';
@@ -9,56 +12,64 @@ import { ArrowLeftSquare, ArrowRightSquare } from '@emotion-icons/bootstrap';
 import CodyList from '../../components/dressroom/CodyList';
 import CodyDetailContainer from '../../containers/dressroom/CodyDetailContainer';
 
-export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onKeyPress, setisdetailOpen, selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, codyList, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide, userName, isLoggedInUser }) {
-  // const animatedItem = {
-  //   0: useScrollFadeIn('down', 1, 0),
-  //   1: useScrollFadeIn('down', 1, 0.2),
-  //   2: useScrollFadeIn('up', 1, 0.3),
-  // };
+export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onKeyPress, setisdetailOpen, selectedCody, isdetailOpen, handleSelectCody, scrollisTop, moveScroll, handlegoToSlide, navigate, cards, offsetRadius, showArrows, goToSlide, userName, isLoggedInUser }) {
 
   return (
     <div>
       {scrollisTop ?
         <div css={CodyBackground}>
           <div css={isdetailOpen ? css`visibility: hidden;` : container}>
-            <h2 css={Title}>{userName}님의 코디</h2>
-            {cards ?
-              <div css={carousel}>
-                <Carousel
-                  slides={cards}
-                  goToSlide={goToSlide}
-                  offsetRadius={offsetRadius}
-                  showNavigation={showArrows}
-                  animationConfig={config.gentle}
-                />
-              </div>
-              :
-              ''
+            {isLoggedInUser ?
+              <h2 css={Title}>{userName}님의 코디</h2>
+              : <h2 css={Title}>{userName}님의 코디를 구경해보세요!</h2>
             }
-
-            <div css={LeftArrow}>
-              <ArrowLeftSquare
-                size={40}
-                css={arrowStyle}
-                onClick={() => { handlegoToSlide(goToSlide - 1); }}
-                className="hvr-fade"
-              />
-            </div>
-            <div css={RightArrow}>
-              <ArrowRightSquare
-                size={40}
-                css={arrowStyle}
-                onClick={() => { handlegoToSlide(goToSlide + 1); }}
-                className="hvr-fade"
-              />
-            </div>
+            {cards.length >= 1 ?
+              <>
+                <div css={carousel} id="cody2">
+                  <Carousel
+                    slides={cards}
+                    goToSlide={goToSlide}
+                    offsetRadius={offsetRadius}
+                    showNavigation={showArrows}
+                    animationConfig={config.gentle}
+                  />
+                </div>
+                <div css={LeftArrow}>
+                  <ArrowLeftSquare
+                    size={40}
+                    css={arrowStyle}
+                    onClick={() => { handlegoToSlide(goToSlide - 1); }}
+                    className="hvr-fade"
+                  />
+                </div>
+                <div css={RightArrow}>
+                  <ArrowRightSquare
+                    size={40}
+                    css={arrowStyle}
+                    onClick={() => { handlegoToSlide(goToSlide + 1); }}
+                    className="hvr-fade"
+                  />
+                </div>
+              </>
+              :
+              <div css={message}>
+                <p>아직 완성한 코디가 없습니다..</p>
+                {isLoggedInUser ?
+                  <p>우측 상단의 코디 생성하기 버튼을 눌러 나만의 코디를 완성해보세요! </p>
+                  :
+                  ''
+                }
+              </div>
+            }
             <button
               onClick={() => moveScroll('d')}
               css={scrollBtn}
-              className="hvr-fade"
             >
+              <ViewTile css={css`width:30px; margin: 10px; `} />
               Gallery
+              <TriangleDown css={css`width:30px; color:white; `} />
             </button>
+
           </div>
         </div>
         :
@@ -82,7 +93,8 @@ export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onK
         </div>
       }
 
-      <button css={createBtn({ isLoggedInUser })} onClick={() => navigate('/codycreate')} className='hvr-fade'>
+      <button css={createBtn({ isLoggedInUser })} onClick={() => navigate('/codycreate')}>
+        <ImageEdit css={css`width:70px; margin-right:10px;`} />
         Create
       </button>
       <button
@@ -100,6 +112,20 @@ export default function CodyPage({ filterCody, tagDelete, tagFilter, tagRef, onK
     </div>
   );
 }
+
+const message = css`
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: white;
+  font-size: 30px;
+  font-weight: lighter;
+  width: 100%;
+`;
 
 const Title = css`
   padding: 2rem 0 0 0;
@@ -137,19 +163,18 @@ const Fadein = css`
 `;
 
 const scrollBtn = css`
-  width: 90px;
-  height: 40px;
-  background-color: white;
+  width: 200px;
+  height: 50px;
   color: white;
-  border: 1.5px solid white;
-  background-color: #2E2E2E;
   cursor: pointer;
+  border : none;
+  font-size: 30px;
+  background: transparent;
 
   grid-column: 2;
   grid-row : 3;
   justify-self: center;
 
-  
 `;
 
 const LeftArrow = css`
@@ -195,14 +220,14 @@ const container = css`
 
 const createBtn = ({ isLoggedInUser }) => css`
   position: absolute;
-  right: 10rem;
+  right: 8rem;
   top: 30px;
-  width: 90px;
-  height: 40px;
-  background-color: white;
+  width: 150px;
+  height: 50px;
+  font-size: 25px;
+  background-color: transparent;
   color: white;
-  border: 1.5px solid white;
-  background-color: #2E2E2E;
+  border: none;
   cursor: pointer;
   ${!isLoggedInUser &&
   `

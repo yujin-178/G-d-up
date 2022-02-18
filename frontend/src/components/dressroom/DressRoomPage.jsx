@@ -20,7 +20,11 @@ export default function DressRoomPage({ onClickModalOpen, onClickToMyDressRoom, 
   return (
     <div css={Container}>
       <div css={DressRoom}>
-        <h2 css={Title}>{`${userName}님의 드레스룸`}</h2>
+        {isMyRoom ?
+          <h2 css={Title}>{`${userName}님의 드레스룸`}</h2>
+          :
+          <h2 css={Title}>{`${userName}님의 드레스룸에 오신걸 환영합니다!`}</h2>
+        }
         <FriendsModalContainer
           isOpen={isOpen}
         />
@@ -40,13 +44,13 @@ export default function DressRoomPage({ onClickModalOpen, onClickToMyDressRoom, 
         <div css={contentContainer}>
           <Link to='/cody' className={'hvr-bob'} css={[BtnDiv, CodyBtnDiv, LinkStyle]}>
             <div css={BtnItem}>
-              <p css={BtnText}>코디 목록으로</p>
+              <p css={BtnText}>{isMyRoom ? '코디 목록 보기' : '코디 목록 구경'} </p>
               <img css={[BtnImg, CodyBtnImg]} src={codyImg} alt="코디버튼" />
             </div>
           </Link>
           <Link to='/closet' className={'hvr-bob'} css={[BtnDiv, ClosetBtnDiv, LinkStyle]}>
             <div css={BtnItem}>
-              <p css={BtnText}>옷장 가기</p>
+              <p css={BtnText}>{isMyRoom ? '옷장 가기' : '옷장 구경'} </p>
               <img css={BtnImg} src={closetImg} alt="옷장버튼" />
             </div>
           </Link>

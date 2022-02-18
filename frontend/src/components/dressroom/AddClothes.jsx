@@ -167,7 +167,7 @@ export default function AddClothes({ deleteTagHandler, isTagOpen, setisTagOpen, 
             <div>
               <div css={inputContainer}>
                 <p
-                  css={css`grid-column: 1; grid-row:1; position: relative;`}>
+                  css={css`grid-column: 1; grid-row:1; position: relative; right:5px;`}>
                   태그
                   <button css={AddBtn}
                     onClick={() => setisTagOpen(!isTagOpen)}>
@@ -296,22 +296,22 @@ const inputLabel = ({ isTagOpen }) => css`
 `}
 `;
 
-const tagItem = css`
-  display: flex;
-	justify-content: center;
-  align-items: center;
+// const tagItem = css`
+//   display: flex;
+// 	justify-content: center;
+//   align-items: center;
 
-  background-color: #faefe8;
-  height: 25px;
-	width : max-content;
-  padding: 4px;
-  border-radius: 18px;
+//   background-color: #faefe8;
+//   height: 25px;
+// 	width : max-content;
+//   padding: 4px;
+//   border-radius: 18px;
 
-  font-size: 13px;
-  box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
-  margin: 5px;
-  min-width: 50px;
-`;
+//   font-size: 13px;
+//   box-shadow: 2px 2px 1px rgba(0, 0, 0, 0.1);
+//   margin: 5px;
+//   min-width: 50px;
+// `;
 
 const season = css`
   display: grid;

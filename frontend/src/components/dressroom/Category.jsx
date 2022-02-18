@@ -17,13 +17,14 @@ export default function Category ({ item, isSelected, handleClick }) {
 const liStyle = css`
   list-style-type: none;
   padding-right: 3%;
+  margin-left: 10px;
 `;
 
 const buttonStyle = ({ isSelected }) => css`
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 19px;
   ${isSelected &&
   `
     color: #00acee;

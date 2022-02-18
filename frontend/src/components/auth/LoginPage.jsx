@@ -39,7 +39,7 @@ export default function LoginPage({ emailRef, passwordRef, onClickLogin, error, 
         </div>
         <Link to='/'>
           <button css={BackBtn} className="hvr-fade">
-            뒤로
+            Back
           </button>
         </Link>
       </div>
