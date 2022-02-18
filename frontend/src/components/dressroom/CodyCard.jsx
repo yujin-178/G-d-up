@@ -45,7 +45,7 @@ const imgStyle = css`
 
 const content = css`
   padding: 15px;
-  font-size: 20px;
+  font-size: 25px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

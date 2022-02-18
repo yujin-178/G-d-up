@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { css } from '@emotion/react';
+import { css, Global } from '@emotion/react';
 import UsersToFollowForm from './UsersToFollowForm';
 import FollowerForm from './FollowerForm';
 import FollowingForm from './FollowingForm';
@@ -42,38 +42,44 @@ export default function FriendsModal({
   const clickHandler = (id) => setActiveId(id);
 
   return (
-    <Modal
-      css={FriendsModalStyle}
-      isOpen={isOpen}
-      onRequestClose={() => modalToggle(false)}
-    >
-      <div css={mainDiv}>
-        <div css={CloseBtn}>
-          <img css={CloseBtnImg} src={xSymbol} onClick={onClickModalClose}></img>
-        </div>
-        <div css={inBox}>
-          <div css={FriendsModalTitleDiv}>
-            <h2 css={FriendsModalTitle}>친구 목록</h2>
+    <>
+      <Global
+        styles={modalClass}
+      />
+      <Modal
+        css={FriendsModalStyle}
+        isOpen={isOpen}
+        onRequestClose={() => modalToggle(false)}
+        closeTimeoutMS={500}
+      >
+        <div css={mainDiv}>
+          <div css={CloseBtn}>
+            <img css={CloseBtnImg} src={xSymbol} onClick={onClickModalClose}></img>
           </div>
-          <div css={FlexWrapper}>
-            <UsersToFollowForm
-              onChangeSearchUser={onChangeSearchUser}
-              searchedUsers={searchedUsers}
-              searchUserInput={searchUserInput}
-              usersToFollow={usersToFollow}
-              onClickFollow={onClickFollow}
-            />
-            <div css={UsersToFollowStyle}>
-              <ul id="tabs">
-                <li id={activeId === 0 ? "current" : "after"} onClick={() => clickHandler(0)}><a href="#" name="tab1">팔로워</a></li>
-                <li onClick={() => clickHandler(1)}><a href="#" name="tab2">팔로잉</a></li>
-              </ul>
-              <div css={contentArea}>{obj[activeId]}</div>
+          <div css={inBox}>
+            <div css={FriendsModalTitleDiv}>
+              <h2 css={FriendsModalTitle}>친구 목록</h2>
+            </div>
+            <div css={FlexWrapper}>
+              <UsersToFollowForm
+                onChangeSearchUser={onChangeSearchUser}
+                searchedUsers={searchedUsers}
+                searchUserInput={searchUserInput}
+                usersToFollow={usersToFollow}
+                onClickFollow={onClickFollow}
+              />
+              <div css={UsersToFollowStyle}>
+                <ul id="tabs">
+                  <li id={activeId === 0 ? "current" : "after"} onClick={() => clickHandler(0)}><a href="#" name="tab1">팔로워</a></li>
+                  <li onClick={() => clickHandler(1)}><a href="#" name="tab2">팔로잉</a></li>
+                </ul>
+                <div css={contentArea}>{obj[activeId]}</div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </Modal >
+      </Modal >
+    </>
   );
 }
 
@@ -156,4 +162,49 @@ const contentArea = css`
   &::-webkit-scrollbar-track {
     background: #ffffff;
   }
+`;
+
+const modalClass = css`
+.ReactModal__Overlay {
+  position: fixed;
+	width: 100%;
+	height: 100%;
+	overflow-y: hidden;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+  background-color: #BFAEA4;
+	opacity: 0;
+	transition-property: background-color, opacity;
+	transition-duration: 500ms;
+	transition-timing-function: ease-in-out;
+}
+.ReactModal__Overlay--after-open {
+	background-color: #BFAEA4;
+	opacity: 1;
+}
+
+.ReactModal__Overlay--before-close {
+	background-color: #BFAEA4;
+	opacity: 0;
+}
+
+.ReactModal__Content {
+  height: 0%;
+	width: 0%;
+	background-color: transparent;
+	transition-property: background-color, width, height;
+	transition-duration: 500ms;
+	transition-timing-function: ease-in-out;
+}
+.ReactModal__Content--after-open {
+	width: 50%;
+	height: 70%;
+}
+.ReactModal__Content--before-close {
+	width: 0%;
+	height: 0%;
+	background-color: transparent;
+}
 `;

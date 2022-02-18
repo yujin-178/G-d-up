@@ -57,7 +57,7 @@ export const authSlice = createSlice({
     },
     [signin.rejected]: (state) => {
       state.loading = false;
-      state.error = '이미 존재하는 회원입니다.';
+      alert('이미 존재하는 회원입니다.');
     },
     [login.pending]: (state) => {
       state.loading = true;
@@ -70,8 +70,8 @@ export const authSlice = createSlice({
       state.error = null;
       localStorage.setItem("userInfo", JSON.stringify({ username: `${payload.userName}` }));
     },
-    [login.rejected]: (state) => {
-      state.error = '아이디와 비밀번호를 확인해주세요.';
+    [login.rejected]: () => {
+      alert('아이디와 비밀번호를 확인해주세요.');
     },
   }
 });

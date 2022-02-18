@@ -27,7 +27,7 @@ const CategoriesNav = css`
 
 const ulStyle = css`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   background-color: #fff;
   height: 4rem;

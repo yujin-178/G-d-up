@@ -1,6 +1,8 @@
 import React from 'react';
 import CodyCard from './CodyCard';
 import Tag from './Tag';
+import { ViewCarousel } from '@emotion-icons/material-outlined/ViewCarousel';
+import { TriangleUp } from '@emotion-icons/entypo/TriangleUp';
 
 import { css } from "@emotion/react";
 import CodyBackgroundImg from '../../../public/images/codybackground.jpg';
@@ -10,7 +12,10 @@ export default function CodyList({ userName, isLoggedInUser, tagDelete, tagFilte
   return (
     <div css={BackImg}>
       <div css={listContainer}>
-        <h2 css={title}>{userName}님의 코디</h2>
+        {isLoggedInUser ?
+          <h2 css={title}>{userName}님의 코디</h2>
+          : <h2 css={title}>{userName}님의 코디를 구경해보세요!</h2>
+        }
         <div css={searchBar}>
           <input
             data-testid="input"
@@ -40,7 +45,7 @@ export default function CodyList({ userName, isLoggedInUser, tagDelete, tagFilte
           </div>
         </div>
         {cards.length >= 1 ?
-          <div css={container}>
+          <div css={container} id="cody">
             {cards.map((card, index) => {
               return (
                 <div
@@ -71,9 +76,10 @@ export default function CodyList({ userName, isLoggedInUser, tagDelete, tagFilte
           <button
             onClick={() => moveScroll('u')}
             css={scrollBtn}
-            className="hvr-fade"
           >
+            <ViewCarousel css={css`width:40px; margin: 10px; `} />
             Slide View
+            <TriangleUp css={css`width:30px; margin: 10px; `} />
           </button>
         </div>
       </div>
@@ -120,10 +126,11 @@ const tags = css`
 
 const BackImg = css`
   width: 100vw;
-  height: 100%;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${CodyBackgroundImg});
+  height: 100vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url(${CodyBackgroundImg});
   background-size: cover;
   background-position: center;
+  overflow: hidden;
 `;
 
 const listContainer = css`
@@ -153,7 +160,7 @@ const message = css`
   transform: translate(-50%, -50%);
   text-align: center;
   color: white;
-  font-size: 20px;
+  font-size: 30px;
   font-weight: lighter;
   width: 100%;
 `;
@@ -189,24 +196,22 @@ const container = css`
 
 const btnContainer = css`
   display: grid;
-  grid-template-columns: repeat(5,1fr);
+  grid-template-columns: repeat(7,1fr);
   grid-row: 4;
   grid-column: 2;
   justify-self : center;
 `;
 
 const scrollBtn = css`
-  display:flex;
-
-  grid-column:3;
-  justify-content: center;
-  align-items: center;
-
-  width: 90px;
-  height: 40px;
-  background-color: white;
+  width: 300px;
+  height: 50px;
   color: white;
-  border: 1.5px solid white;
-  background-color: #2E2E2E;
   cursor: pointer;
+  border : none;
+  font-size: 30px;
+  background: transparent;
+
+  grid-column: 4;
+  grid-row : 1;
+  justify-self: center;
 `;

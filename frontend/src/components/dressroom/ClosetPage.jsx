@@ -14,10 +14,10 @@ export default function ClosetPage({ filteredClothes, goBackHandler }) {
 
   return (
     <div css={DressRoom}>
-      <div css={Closet}>
+      <div css={Closet} id="cody">
         <div css={ItemsGridWrapper}>
           <FilterContainer />
-          <div css={ItemListStyle}>
+          <div css={ItemListStyle} >
             <ClothesItemListContainer />
           </div>
           <AddClothesContainer />
@@ -53,6 +53,7 @@ const DressRoom = css`
   background-image: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url(${dressroomBackground});
   background-size: cover;
   background-position: center;
+  overflow: hidden;
 `;
 
 const Closet = css`
